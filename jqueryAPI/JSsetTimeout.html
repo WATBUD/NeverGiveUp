@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <!-- <div id="game"></div> -->
+    <script>//這個是jquery 取創造ID的話用#開頭"#name" 取HTML內建標籤則直接打 如"P" 
+        $(document).ready(function () {
+            $("p").click(function () {
+                alert("paragraph is clicked.");
+            });
+        });
+        $(document).ready(function () {
+            $("#NNN").click(function () {
+                $("#NNN").fadeOut(3000, function() {
+                    $(this).remove();
+                });
+                $("#removeButton").fadeOut(3000, function() {
+                    $(this).remove();
+                });
+                $("#container").fadeOut(3000, function() {
+                    $(this).remove();
+                });
+                $("p").fadeOut(3000, function() {
+                    $(this).remove();
+                });
+                // $("button").fadeOut(3000, function() {
+                //     $(this).remove();
+                // });
+            });
+        });
+
+    </script>
+    <p>sssssssssss</p>
+    <a id="NNN"class="notificationClose">aaaaaaaaaaa<img src="b.jpg" /></a>
+    <button id="removeButton">Remove Btn</button>
+    <div id="container"><button id="boundOnPageLoaded">Click Me</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>  
+    <meta charset="utf-8">  
+    <meta name="viewport" content="width=device-width">  
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>   -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>  
+
+    <title>JS Bin</title>
+  </head>
+  <body ng-app>
+    <p>請輸入您的名字：</p>  
+    <p><input id="" ng-model="name" type="text"></p>  
+    <input id="" ng-model="ss" type="text" >
+    <!-- *ngFor="let item of items" -->
+    <h1>{{ "Hello " + name +ss }}</h1>  
+
+    <div>
+        <strong>UserName:</strong>
+          <span *ngIf="user|async as _user; else elseTmpl">
+            {{ _user.name }}
+          </span>
+          <ng-template #elseTmpl>
+            loading user...
+          </ng-template>
+      </div>
+      
+      <div *ngIf="display">display</div>
+      <div *ngIf="!display">!display</div>
+
+      <div>Name: <span *ngIf="name; else noData">name</span></div>
+      <div>Ange: <span *ngIf="age; else noData">age</span></div>
+      <ng-template #noData><span>--</span></ng-template>
+
+
+  </body>
+</html>

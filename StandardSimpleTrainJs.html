@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        /* background: -webkit-linear-gradient(left, #F00 0%, #FF0 16.66%, #0F0 33.33%, #0FF 50%, #00F 66.66%, #F0F 83.33%, #F00 100%); */
+    }
+</style>
+
+<script src="./jquery-3.4.1.min.js"></script>
+<script src="./jquery-ui.js"></script>
+<script src="ColorPickerByLouisSample/CPLouis.js"></script>
+<link rel="stylesheet" href="ColorPickerByLouisSample/ColorPicker.css">
+<link rel="stylesheet" href="ColorPickerByLouisSample/ColorPickerLouis.css">
+
+
+
+<head>
+    <title>Example</title>
+</head>
+<script>
+    var myVar;     //alert("start Timeout");
+    myVar = setTimeout(function () { self.location.reload(); }, 1000); 
+</script>
+
+<body>
+        <!-- <div class="pa" style="
+        position: relative;;width: 500px;height: 500px;">
+            <div class="picker" style="left: 140px; top: 138px;"></div>
+        </div>
+-->
+        <!-- <div class="alpha">
+            <div class="alpha-mask" style="background-color: rgb(0, 0, 0);">
+            <div class="sp" style="left: 197px;"></div></div></div>  -->
+        <!-- <div class="t1" data-topic="picker" data-mode="HSL">
+            
+
+        
+        </div> -->
+    <input type="button" value="close" onclick="clearTimeout(myVar);"></input>
+    <div id="container">
+        <div id="picker" class="block">
+            <!-- <div class="t1" data-topic="picker" data-mode="HSL">
+            </div> -->
+            <div class="ui-color-picker" data-topic="picker" data-mode="HSL">
+            </div>
+        </div>
+       
+    
+
+
+        <!-- style="display: table;
+                margin-left: 500px;	
+                padding: 10px;
+            width: 980px;" -->
+
+
+
+              
+    </div>
+
+
+</body>
+
+</html>

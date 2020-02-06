@@ -1,0 +1,197 @@
+<html>
+
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="./Electron.js"></script>
+  <script src="./Angular.js"></script>
+  <script src="./HtmlInfo.js"></script>
+
+
+  <style>
+  input[type=button].InputBtnStyle:focus{
+  outline: none !important;
+  border:5px solid blue;
+  box-shadow: 0 0 10px yellow;
+  }
+  .selectBoxcs{
+    margin-left: 5%;
+    width: 500px;
+  }
+  .BlockSelect:hover{
+   background-color:#FFC757;
+
+  }
+  input[type="checkbox"] {
+            width: 50px;
+            height: 50px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: red;
+
+        }
+
+  input[type="checkbox"]:checked {
+            background: blue;
+        }
+
+
+  
+  </style>
+  <!-- <link rel="stylesheet" href=""> -->
+ </head>
+ <body>
+    <a id="conslogTxt">選澤想要查的資料</a>
+    <input type="button" id="s" onclick="clearTimeout(countdown);" 
+    value="close auto refresh"></input>
+    
+        <p><strong>Select</strong></p> 
+   
+  <select multiple size="8" class="selectBoxcs" id="selectBox" onchange="changeFunc(); ">
+   <option value="Angular">Angular.js</option>
+   <option value="Electron">Electron.js</option>
+   <option value="TypeScript">TypeScript</option>
+   <option value="PackageJson">PackageJson.js</option>
+   <option value="Html_border">Html_border</option>
+   <option value="html_SelectStyle">html_SelectStyle</option>
+   <option value="html_TextCenter">html_TextCenter</option>
+   <option value="html_ButtonBaseStyle">基本按鈕樣式</option>
+   <option value="html_ButtonStyleFrame">基本按鈕點擊後自定義邊框顏色</option>
+   <option value="BlockSelectList">區塊基本選單</option>
+   <option value="NewBlock">快速背景區塊選單</option>
+   <option value="ImageAddtext">圖片下面加文字</option>
+   <option value="CustomInputCheckbox">自定義InputCheckbox</option>
+   <option value="RegularExpressionTxt">RegularExpressionTxt</option>
+   <option value="AngularPractice">AngularPractice</option>
+   
+  </select>
+
+  
+
+
+</div>
+
+<!-- white-space: pre; 顯示原碼編譯-->
+</div>
+  
+  <div id="txtShow" style="background-color: black;margin-left: 5%;overflow-y: scroll;
+  color:yellow;
+  width:auto;height: 500px;">選澤想要查的資料</div>
+ 
+ <div style="background-color: black;width: 25px;height:25px;"></div>
+ <input type="text" name="input1" value="中国" disabled="disabled">
+
+ <section name="aaa">
+
+ <img src="./image/Share/KB1.png"
+ style="background-repeat: no-repeat;position: absolute;margin-left: 28%;margin-top:  7%;height: 41%;width:80%;">
+</img>
+</section>
+
+
+ </body>
+
+
+
+
+
+ 
+ <script type="text/javascript">
+    
+    function changeFunc() {
+        var selectBox = document.getElementById("selectBox");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        // alert("selectedValue"+selectedValue);
+        // alert("selectBox.selectedIndex"+selectBox.selectedIndex);
+        document.getElementById("conslogTxt").innerHTML=selectedValue;
+        var txtShow = document.getElementById("txtShow");
+        //alert(txtShow.innerHTML);
+        switch (selectedValue) {
+            case "Angular":
+                txtShow.innerHTML = Angulartxt;
+                break;
+            case "TypeScript":
+                txtShow.innerHTML = TypeScript;
+            case "Electron":
+                txtShow.innerHTML = Electrontxt;
+                break;
+            case "PackageJson":
+                txtShow.innerHTML = PackageJsontxt;
+                break;
+            case "Html_border":
+                txtShow.innerHTML = Html_bordertxt;
+                break;
+            case "html_SelectStyle":
+                // txtShow.innerText=html_SelectStyle.replace(/{/g,'\n{');
+                txtShow.innerText=html_SelectStyle.replace(/{/g,'{\n').replace(/}/g,'\n}\n');
+                //txtShow.innerHTML = html_SelectStyle;
+                break;
+            case "html_TextCenter":
+                txtShow.innerText = html_TextCenter;
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = html_TextCenter;
+                txtShow.appendChild(newDiv);
+                break;
+            case "html_ButtonBaseStyle":
+                txtShow.innerText = html_ButtonBaseStyle;
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = "<BR>" + html_ButtonBaseStyle;
+                txtShow.appendChild(newDiv);
+                break;
+            case "html_ButtonStyleFrame":
+                txtShow.innerText = html_ButtonStyleFrame;
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = "<BR>" + "<input type=\"button\"\
+                    class=\"InputBtnStyle\" value=\"FOUCS邊框自己訂\"></input>";
+                //newDiv.classList.add("InputBtnStyle");
+                //newDiv.style.cssText = ""; 
+                txtShow.appendChild(newDiv);
+                break;
+            case "BlockSelectList":
+                
+                txtShow.innerText=BlockSelectList.replace(/<div/g,'\n<div');
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = BlockSelectList;
+                txtShow.appendChild(newDiv);
+                break;
+            case "NewBlock":           
+                txtShow.innerText=NewBlock.replace(/<div/g,'\n<div');
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = NewBlock;
+                txtShow.appendChild(newDiv);
+                break;
+             case "ImageAddtext":           
+                txtShow.innerText=ImageAddtext.replace(/<div/g,'\n<div');
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = ImageAddtext;
+                txtShow.appendChild(newDiv);
+                break;
+            case "CustomInputCheckbox":           
+                txtShow.innerText=CustomInputCheckbox.replace(/{/g,'{\n').replace(/}/g,'\n}\n');
+                var newDiv = document.createElement("a");
+                newDiv.innerHTML = "<input type=\"checkbox\">";
+                txtShow.appendChild(newDiv);
+                break;  
+            case "RegularExpressionTxt":           
+                txtShow.innerText=RegularExpressionTxt.replace(/{/g,'{\n').replace(/}/g,'\n}\n');
+
+                break;  
+            case "AngularPractice":           
+                txtShow.innerText=AngularPractice.replace(/{/g,'{\n').replace(/}/g,'\n}\n');
+
+                break;  
+
+
+                
+        }
+
+    }
+    var countdown;
+    countdown= setTimeout(
+        function (){ self.location.reload(); 
+        }, 1000); 
+    
+  </script>
+
+
+</html>

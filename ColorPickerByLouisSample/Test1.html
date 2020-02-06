@@ -1,0 +1,89 @@
+<style>
+
+
+</style>
+<link rel="stylesheet" href="./ColorPickerLouis.css">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+
+<script>
+	var conutdown = setTimeout(
+		function () {
+			self.location.reload();
+		}, 1000);
+
+
+
+</script>
+<input id="Close" type="button" value="Close" onclick="clearTimeout(conutdown);">
+<div class="InputRange" style="background-color: white;">
+
+	R<input id="red" class="color-slider" type="range" min="0" max="255">
+	G<input id="green" class="color-slider" type="range" min="0" max="255">
+	B<input id="blue" class="color-slider" type="range" min="0" max="255">
+
+	<div id="hlsa">color.toHSLA():</div>
+	<div id="Hex">color.toHex():</div>
+	<span id="result">Your Color</span>
+
+
+
+</div>
+<br>
+<div id="ColorArea" style="background-color:rgb(250, 184, 184);display: flex;">
+
+
+
+
+	<div class="InputNumber" style="background-color:rgb(239, 184, 250);">
+		<br>
+		<div id="CreateBG" style="display: block;">color.RGB():
+
+		</div>
+		<label class="RGBtext" style="display: block;">
+			<input id="Hexa" style="width: 80px;" type="text" value="#000000"></label>
+
+		<label class="RGBtext" style="display: block;margin-top: 15px;">
+			R <input id="rText" type="number" value="0" min="0" max="255"></label>
+
+		<label class="RGBtext" style="display: block; margin-top: 15px;">
+			G <input id="gText" type="number" value="0" min="0" max="255"></label>
+
+		<label class="RGBtext" style="display: block; margin-top: 15px;">
+			B <input id="bText" type="number" value="0" min="0" max="255"></label>
+		<label class="RGBtext" style="display: block; margin-top: 15px;">
+			hue <input id="hueText" type="number" value="0" min="0" max="255"></label>
+	</div>
+	DefultColor=>
+	<div id="DFBtn" style="background-color: red;width: 50px;">
+		<input id="DFBtn1" type="button"
+			style="background-color:	#FF0000;margin-left: 0px;height: 20px;width: 20px;"></label>
+		<input id="gText" type="button"
+			style="background-color: red;margin-left: 5px;height: 20px;width: 20px;"></label>
+		<input id="gText" type="button"
+			style="background-color: red;margin-left: 0px;height: 20px;width: 20px;"></label>
+		<input id="gText" type="button"
+			style="background-color: red;margin-left: 5px;height: 20px;width: 20px;"></label>
+
+
+	</div>
+</div>
+
+<div id="hueDivID" class="hueDiv" style="background-color: red;">
+	<div id="SP" class="slider-picker">
+
+	</div>
+</div>
+<div class="pickingArea">
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript" src="js/LouisColorPicker.js"></script>

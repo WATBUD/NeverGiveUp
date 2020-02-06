@@ -1,0 +1,75 @@
+<script src="../jquery.js"></script>
+
+<body>
+    <!--整體背景div-->
+    <div class="warp">
+        <!--中間內容div-->
+        <div class="divContent">
+            <div class="content">
+                <ul class="contentUl">
+                    <li>
+                        <img src="../img/cursor.png" />
+                        <span>生命如歌，春天似夢 </span>
+                        <hr />
+                        <p>生命如歌，春天似夢，初春更是如詩如畫。春似花季靚女，讓人悸動，春似那雍容少婦，令人憧憬</p>
+                    </li>
+                    <li id="second">
+                        <img src="../img/cursor.png" />
+                        <span>如花的季節，讚揚 </span>
+                        <hr />
+                        <p>一切的生命力開始復甦，溫暖如我，正是如花的季節，不是嗎？</p>
+                    </li>
+                    <li>
+                        <img src="../img/cursor.png" />
+                        <span>夢想，不休不止</span>
+                        <hr />
+                        <p>畏懼忍受痛苦比忍受痛苦本身更加糟糕。沒有一個心靈在追逐它的夢想時會忍受痛苦。</p>
+                    </li>
+            
+                </ul>
+            </div>
+            <!--向左按鈕-->
+            <div class="leftBtn"><img src="../img/cursor.png" /></div>
+            <!--向右按鈕-->
+            <div class="rightBtn"><img src="../img/cursor.png" /></div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        //向左按鈕點選事件
+        var index = 0;
+        var liLen;
+        $(".leftBtn").click(function () {
+            index;
+            liLen = $(".content ul.contentUl li").length; //目前長度返回值為6
+            console.log()
+            if (index >= 4) {
+                $(".content ul.contentUl").stop();
+                alert("已經到達最後一頁！");
+                index = 3;
+            } else {
+                if (index == 1) {
+                    $(".content ul.contentUl").animate({ left: -index * 330 }, 700);
+                } else {
+                    $(".content ul.contentUl").animate({ left: -index * 305 }, 700);
+                }
+            }
+        });
+        //向右按鈕點選事件
+        $(".rightBtn").click(function () {
+            if (index == 0) {
+                $(".content ul.contentUl").stop();
+                alert("這是第一頁，不能再往前翻了！");
+            } else {
+                index--;
+                if (index == 0) {
+                    $(".content ul.contentUl").animate({ left: -40 }, 700);
+                } else {
+                    $(".content ul.contentUl").animate({ left: -index * 310 }, 700);
+                }
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,130 @@
+<style>
+
+
+</style>
+<link rel="stylesheet" href="./ColorPickerLIAN.css">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+
+<script>
+	var conutdown = setTimeout(
+		function () {
+			self.location.reload();
+		}, 1000);
+</script>
+
+<body>
+	<div>
+		//-ms代表【ie】內核識別碼
+		<br>
+		//-moz代表火狐【firefox】內核識別碼
+		<br>
+		//-webkit代表谷歌【chrome】/蘋果【safari】內核識別碼
+		<br>
+		//-o代表歐朋【opera】內核識別碼
+		Louis NOTE:<BR>
+		<P>
+			亮度(L):計算//最高顏色加最低顏色平均值取得亮度(L);
+			HSL和HSV都是一種將RGB色彩模型中的點在圓柱坐標系中的表示法。
+			<P>這兩種表示法試圖做到比基於笛卡爾坐標系的幾何結構RGB更加直觀。
+				<P>HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
+					<P>HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB <P>其中B即英語：Brightness。
+							<P>
+								RGB指的是紅色光（Red）、綠色光（Green）與藍色光（Blue）所組成的「三原色光模式」；
+								<P>人類透過將RGB三種單色光按照不同比例進行合成，就可以產出各種顏色的色光。
+
+
+	</div>
+
+
+
+	<div style="display:inline-flex; background-color: hsl(0,100%, 50%);height: 20px;width: 20px;"></div>
+	<div style="display:inline-flex;background-color: hsl(120,100%, 50%);height: 20px;width: 20px;"></div>
+	<div style="display:inline-flex;background-color: #0000ff;height: 20px;width: 20px;"></div>
+	<div class="gradientHSV" style="display:inline-flex;height: 200px;width: 200px;"></div>
+	<div class="gradientHue" style="display:inline-flex;height: 20px;width: 200px;">
+		<input id="hueRange" style="width: 200px; " type="range" value="0" min="0" max="360">
+
+	</div>
+	<div id="huetxt" style="display:inline-flex;height: 20px;width: 200px;font-size: larger;"> hue</div>
+
+	<div class="HSV_S" style="height: 20px;width: 200px;">
+		<input id="HSVRange" style="width: 200px; " type="range" value="0" min="0" max="100">
+	</div>
+	<div id="HSVtxt" style="display:inline-flex;height: 20px;width: 200px;font-size: larger;"> hue</div>
+	<div id="RecordArea" style="width:300px;height: 200px; background-color:#b8fab8;">
+		RecordArea<BR>
+		<div id="Colortxt" style="height: 20px;font-size: larger;"> Colortxt</div>
+
+		<input id="Color1" type="button" onclick="getButtonColor(this);" style="background-color: #8b7dc9;height: 20px;width: 20px;"></label>
+		<input id="Color2" type="button" onclick="getButtonColor(this);" style="background-color: #7070cc;height: 20px;width: 20px;"></label>
+		<input id="Color3" type="button" onclick="getButtonColor(this);" style="background-color: #348d34;height: 20px;width: 20px;"></label>
+		<input id="Color4" type="button" onclick="getButtonColor(this);" style="background-color: #bbff00;height: 20px;width: 20px;"></label>
+		<input id="Color5" type="button" onclick="getButtonColor(this);" style="background-color: #808080;height: 20px;width: 20px;"></label>
+		<input id="Color6" type="button" onclick="getButtonColor(this);" style="background-color:#4a027e;height: 20px;width: 20px;"></label>
+		<input id="Color7" type="button" onclick="getButtonColor(this);" style="background-color:#46466e;height: 20px;width: 20px;"></label>
+
+
+		<div id="DefultColorFrame1" style="width: 200px;height: 50px; 
+			border-style:dashed;display:inline-flex;">
+			<input id="RecordAreaBtn1" type="button" style="background-color:#FF0000;
+					margin-left: 0px;height: 40px;
+					width: 40px; margin-top: 5px; margin-left: 5px;">
+		
+			<div class="Colortxt" style="margin-top: 7px; margin-left: 10px;">#663333 <BR>is centered.sss</div>
+		</div>
+		<div id="DefultColorFrame2" style="width: 200px;height: 50px; 
+			border-style:dashed;display:inline-flex;margin-top: 5px;">
+			<input id="RecordAreaBtn2" type="button" style="background-color:#FF0000;
+					margin-left: 0px;height: 40px;
+					width: 40px; margin-top: 5px; margin-left: 5px;">
+		
+			<div style="margin-top: 7px; margin-left: 10px;">#663333 <BR>is centered.sss</div>
+		</div>
+		</div>
+
+
+
+	<input id="Close" type="button" value="Close" onclick="clearTimeout(conutdown);">
+	<div class="InputRange" style="background-color: white;">
+
+		R<input id="red" class="color-slider" type="range" min="0" max="255">
+		G<input id="green" class="color-slider" type="range" min="0" max="255">
+		B<input id="blue" class="color-slider" type="range" min="0" max="255">
+
+		<div class="HSVcs">color.HSV():</div>
+		<div class="HSVcs">color.HSV():</div>
+		<div class="HSVcs">color.HSV():</div>
+		<div class="HSVcs">color.HSV():</div>
+
+
+	</div>
+	<br>
+	<div id="ColorArea" style="background-color:rgb(250, 184, 184);display: flex;">
+		<div class="InputNumber" style="background-color:rgb(239, 184, 250);">
+			<br>
+			<div id="CreateBG" style="display: block;">color.RGB():
+
+			</div>
+			<label class="RGBtext" style="display: block;">
+				<input id="Hexa" style="width: 80px;" type="text" value="#000000"></label>
+
+			<label class="RGBtext" style="display: block;margin-top: 15px;">
+				R <input id="rText" type="number" value="0" min="0" max="255"></label>
+
+			<label class="RGBtext" style="display: block; margin-top: 15px;">
+				G <input id="gText" type="number" value="0" min="0" max="255"></label>
+
+			<label class="RGBtext" style="display: block; margin-top: 15px;">
+				B <input id="bText" type="number" value="0" min="0" max="255"></label>
+			<label class="RGBtext" style="display: block; margin-top: 15px;">
+				hue <input id="hueText" type="number" value="0" min="0" max="255"></label>
+		</div>
+	</div>
+</body>
+
+
+
+
+
+
+<script type="text/javascript" src="js/LouisColorPickerLIAN.js"></script>

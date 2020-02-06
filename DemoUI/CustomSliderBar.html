@@ -1,0 +1,107 @@
+<style>
+    .slidecontainer {
+        width: 100%;
+        /* Width of the outside container */
+
+    }
+
+    .SliderBarActive {
+        width: 1px;
+        /* Full-width */
+        height: 7px;
+        /* Specified height */
+        position: absolute;
+        top: 500px;
+        left: 500px;
+        background-image: url("../img/Btn/SliderBarActive.png");
+        pointer-events: none;
+
+    }
+    /* The slider itself */
+    .slider {
+        position: absolute;
+        top: 500px;
+        left: 500px;
+        -webkit-appearance: none;
+        /* Override default CSS styles */
+        appearance: none;
+        width: 108px;
+        /* Full-width */
+        height: 7px;
+        /* Specified height */
+        background: #d3d3d3;
+        /* Grey background */
+        outline: none;
+        /* Remove outline */
+        opacity: 0.7;
+        /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s;
+        /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+        /*background: url("../img/Btn/SliderBarNormal.png");*/
+        background-image: url("../img/Btn/SliderBarNormal.png");
+        background-repeat: no-repeat;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+        opacity: 1;
+        /* Fully shown on mouse-over */
+    }
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        /* Override default look */
+        appearance: none;
+        width: 14px;
+        /* Set a specific slider handle width */
+        height: 14px;
+        /* Slider handle height */
+        background: #4CAF50;
+        /* Green background */
+        cursor: pointer;
+        /* Cursor on hover */
+
+        background-image: url("../img/Btn/SliderBarBtnIcon.png");
+        background-repeat: no-repeat;
+    }
+</style>
+
+
+<body>
+
+    <div id="slidertxt" style="display:inline-flex;height: 20px;width: 200px;font-size: larger;"> hue</div>
+    <div class="slidecontainer">
+
+    </div>
+    <input type="range" min="0" max="100" step="10" value="50" class="slider" id="myRange">
+    <div class="SliderBarActive">
+
+    </div>
+
+</body>
+<script>
+        var slider = document.getElementsByClassName("slider");
+        console.log(slider[0].style);
+        var slidertxt = document.getElementById("slidertxt");
+        var SliderBarActive = document.getElementsByClassName("SliderBarActive")[0];
+        var myRange = document.getElementById("myRange");
+        var myRangeWidth=  parseInt(window.getComputedStyle(myRange, null).width)
+         console.log(slider[0],myRange,myRangeWidth);
+
+
+        slider[0].addEventListener('input', function (e) {
+
+            var result=(myRangeWidth/slider[0].step)*(slider[0].value/slider[0].step);
+            slidertxt.innerHTML = "_____" + slider[0].value;
+
+
+            console.log(result);
+
+
+            SliderBarActive.style.width=result+"px";
+
+        });
+    
+</script>

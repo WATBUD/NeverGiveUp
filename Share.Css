@@ -1,0 +1,50 @@
+/* <head>
+use example of html 
+  <link rel="stylesheet" href="Share.css">
+</head> */
+/* nav{
+  padding:0;
+	} */
+nav ul{
+	list-style-type: none;
+	margin:0;
+	padding:0;
+  overflow:auto;
+	}
+nav ul li{
+	float:left;
+  margin:0 15px;
+  background-color: red;
+	}
+.SwitchOff{
+  overflow: hidden;
+  /* display:none; */
+  width:60px;
+  height: 60px;
+  transition: all 0.6s ease-in-out;
+  background-color: blue;
+}
+.SwitchOffLater{
+  overflow: hidden;
+  /* display:none; */
+  width:60px;
+  height: 60px;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  transition-duration: 2s;
+  /* transition-delay: 2s; */
+  background-color: red;
+}
+
+.box:hover .top {
+    transition-delay: 0s;
+  }
+  .box:hover .right {
+    transition-delay: 0.4s;
+  }
+  .box:hover .bottom {
+    transition-delay: 0.7s;
+  }
+  .box:hover .left {
+    transition-delay: 1.0s;
+  }

@@ -1,0 +1,62 @@
+<!-- Learn about this code on MDN: https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Colors/Color_picker_tool -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head> </head>
+<script src="../jquery-3.4.1.min.js"></script>
+<script src="../jquery-ui.js"></script>
+<link rel="stylesheet" href="./ColorPicker.css">
+
+<script src="./CP.js"></script>
+
+<script>
+    var myVar;     //alert("start Timeout");
+    myVar = setTimeout(function () { self.location.reload(); }, 100000); 
+</script>
+
+<body>
+    <div>
+        //-ms代表【ie】內核識別碼
+        <br>
+        //-moz代表火狐【firefox】內核識別碼
+        <br>
+        //-webkit代表谷歌【chrome】/蘋果【safari】內核識別碼
+        <br>
+        //-o代表歐朋【opera】內核識別碼
+        Louis NOTE:<BR>
+        <P>
+            HSL和HSV都是一種將RGB色彩模型中的點在圓柱坐標系中的表示法。
+            <P>這兩種表示法試圖做到比基於笛卡爾坐標系的幾何結構RGB更加直觀。
+                <P>HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
+                    <P>HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB <P>其中B即英語：Brightness。
+                            <P>
+                                RGB指的是紅色光（Red）、綠色光（Green）與藍色光（Blue）所組成的「三原色光模式」；
+                                <P>人類透過將RGB三種單色光按照不同比例進行合成，就可以產出各種顏色的色光。
+    </div> 
+    <input type="button" id="s" onclick="clearTimeout(myVar);" 
+    value="close auto refresh"></input>
+    <div id="container">
+        <div id="picker" class="block">
+            <div class="T1" data-topic="picker" data-mode="HSL" >
+            </div>
+            <div class="ui-color-picker" data-topic="picker" data-mode="HSL" >
+            </div>
+        </div>
+        
+        <!-- style="display: table;
+        margin-left: 500px;	
+        padding: 10px;
+    width: 980px;" -->
+
+
+        <!-- <div id="picker" class="block">
+            <div class="ui-color-picker" data-topic="picker" data-mode="HSL"> </div>
+        </div>              -->
+
+              
+    </div>
+    <!-- <div class="Wall" style="width:100%;height:110px;
+            background-color: blue;">
+                <img src="img/Topleftcornerlogo.png" style="width: 200px;height: 70px;
+                        margin-left: 70px ;" />
+            </div>
+ -->     </div>
+</body>

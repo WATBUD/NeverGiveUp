@@ -1,0 +1,172 @@
+<!-- <script src="https://cdn.jsdelivr.net/npm/@jaames/iro/dist/iro.min.js"></script> -->
+<script src="iro.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script src="../jquery.js"></script>
+<html>
+
+<head>
+</head>
+<style>
+    body {
+        color: #fff;
+        background: #171F30;
+        line-height: 150%;
+    }
+
+
+    .wrap {
+        min-height: 100vh;
+        max-width: 720px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wrap .half {
+        width: 50%;
+        padding: 32px 0;
+    }
+
+
+
+    .title {
+        font-family: sans-serif;
+        line-height: 24px;
+        display: block;
+        padding: 8px 0;
+    }
+
+    .readout {
+        margin-top: 32px;
+        line-height: 180%;
+    }
+
+    #values {
+        font-family: monospace;
+        line-height: 150%;
+    }
+
+    .link {
+        margin-top: 16px;
+    }
+
+    .link a {
+        color: rgba(124, 104, 238, 0.274);
+    }
+
+    /* .colorPicker {
+        background-image: url(../img/Color/circleHue.png);
+        background-repeat: no-repeat;
+
+    } */
+
+    .T1 {
+        background-image: url(../img/Color/circleHue.png);
+        background-repeat: no-repeat;
+        width: auto;
+        /*or your image's width*/
+        height: auto;
+        /*or your image's height*/
+        margin: 0;
+        padding: 0;
+    }
+
+    input[type=range][orient=vertical] {
+        /* writing-mode: bt-lr; */
+        /* IE */
+        -webkit-appearance: slider-vertical;
+        /* WebKit */
+        width: 8px;
+        height: 175px;
+        padding: 0 5px;
+    }
+</style>
+
+<body>
+    <!-- <div class="colorPicker"></div> -->
+    <div class="wrap">
+        <div class="half">
+            <div class="colorPicker"></div>
+        </div>
+        <div class="half readout">
+            <!-- <p>
+                iro.js is an HSV color picker widget for JavaScript with a modern SVG-based user interface -- and no
+                jQuery or extra CSS / images.
+            </p>
+            <span class="title link">Head to <a href="https://iro.js.org?ref=codepen" target="blank">iro.js.org</a> for
+                full documentation and features, or check out the source code on <a
+                    href="https://github.com/jaames/iro.js" target="blank">GitHub</a>!
+            </span>
+            <span class="title">Selected Color:</span> -->
+            <div id="values"></div>
+        </div>
+    </div>
+    <input id="HueRange" style="width: 200px;" type="range" value="0" min="0" max="360">
+    <input id="RRange" style="width: 200px;" type="range" value="0" min="0" max="255">
+    <input id="VRange" type="range" orient="vertical" />
+</body>
+
+</html>
+<script>
+    // Create a new color picker instance
+    // https://iro.js.org/guide.html#getting-started
+    var colorPicker = new iro.ColorPicker(".colorPicker", {
+        width: 180,
+        color: "rgb(255, 0, 0)",
+        borderWidth: 1,
+        borderColor: "#fff",
+    });
+    var values = document.getElementById("values");
+    //colorPicker.color.rgbString ="rgb(255, 255, 255)";
+    colorPicker.color.hsl = { h: 100, s: 100, l: 50 };
+
+    values.innerHTML = [
+        "hex: " + colorPicker.color.hexString,
+        "rgb: " + colorPicker.color.rgbString,
+        "hsl: " + colorPicker.color.hslString,
+    ].join("<br>");
+    console.log(colorPicker.color.rgb.g);
+
+    $(document).on('input change', '#RRange', function () {
+        var data=colorPicker.color.rgb;
+        colorPicker.color.rgb = { r: $(this).val(), g: data.g, b: data.b };
+    });
+    $(document).on('input change', '#HueRange', function () {
+        var data=colorPicker.color.hsl;
+        colorPicker.color.hsl = { h: $(this).val(), s: data.s, l: data.l };
+    });
+    $(document).on('input change', '#VRange', function () {
+        var data=colorPicker.color.hsl;
+        colorPicker.color.hsl = { h: data.h, s: data.s, l: $(this).val() };
+    });
+
+
+    function showData() {
+        values.innerHTML = [
+            "hex: " + colorPicker.color.hexString,
+            "rgb: " + colorPicker.color.rgbString,
+            "hsl: " + colorPicker.color.hslString,
+        ].join("<br>");
+    }
+
+
+
+
+
+
+    // values.setChannel('rgb', 'r', 255);
+    // https://iro.js.org/guide.html#color-picker-events
+    colorPicker.on(["color:init", "color:change"], function (color) {
+        // Show the current color in different formats
+        // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+        values.innerHTML = [
+            "hex: " + color.hexString,
+            "rgb: " + color.rgbString,
+            "hsl: " + color.hslString,
+        ].join("<br>");
+    });
+
+
+</script>

@@ -1,0 +1,96 @@
+<style>
+
+
+</style>
+<!-- <link rel="stylesheet" href="./ColorPickerLIAN.css"> -->
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script src="../jquery.js"></script>
+<script>
+	var conutdown = setTimeout(
+		function () {
+			self.location.reload();
+		}, 1000);
+</script>
+<style>
+</style>
+<body>
+	<div>
+		//-ms代表【ie】內核識別碼
+		<br>
+		//-moz代表火狐【firefox】內核識別碼
+		<br>
+		//-webkit代表谷歌【chrome】/蘋果【safari】內核識別碼
+		<br>
+		//-o代表歐朋【opera】內核識別碼
+		Louis NOTE:<BR>
+		<P>
+			亮度(L):計算//最高顏色加最低顏色平均值取得亮度(L);
+			HSL和HSV都是一種將RGB色彩模型中的點在圓柱坐標系中的表示法。
+			<P>這兩種表示法試圖做到比基於笛卡爾坐標系的幾何結構RGB更加直觀。
+				<P>HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
+					<P>HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB <P>其中B即英語：Brightness。
+							<P>
+								RGB指的是紅色光（Red）、綠色光（Green）與藍色光（Blue）所組成的「三原色光模式」；
+								<P>人類透過將RGB三種單色光按照不同比例進行合成，就可以產出各種顏色的色光。
+
+
+	</div>
+	<!-- <div style="display:inline-flex; background-color: hsl(0,100%, 50%);height: 20px;width: 20px;"></div>
+	<div style="display:inline-flex;background-color: hsl(120,100%, 50%);height: 20px;width: 20px;"></div>
+	<div style="display:inline-flex;background-color: #0000ff;height: 20px;width: 20px;"></div> -->
+	<!-- <div class="gradientHSV" style="display:inline-flex;height: 200px;width: 200px;"></div>
+	<div class="gradientHue" style="display:inline-flex;height: 20px;width: 200px;"> -->
+	<div style="margin-left: 150px;">
+        
+		<input id="HueRange" style="width: 200px;" type="range" value="0" min="0" max="360">
+		<label id="Hvalue">Hue</label>
+		<input id="Saturation" style="width: 200px; " type="range" value="0" min="0" max="360">
+		<label id="Svalue">Saturation</label>
+		<input id="Value" style="width: 200px; " type="range" value="0" min="0" max="360">
+		<label id="Vvalue">Value</label>
+		<!-- <div id="huetxt" style="height: 20px;width: 200px;font-size: larger;"> hue</div> -->
+		<div id="HSVtxt" style="height: 20px;width: 200px;font-size: larger;"> hue</div>
+	</div>
+	<div style="display:inline-flex;background-color: hsl(120,100%, 50%);height: 20px;width: 20px;"></div>
+	<input id="Close" type="button" value="Close" onclick="clearTimeout(conutdown);">
+	<input id="Close" type="button" value="H=350" onclick="h350();">
+
+	<br>
+</body>
+
+
+<script type="text/javascript" >
+$(document).ready(function (){
+	
+    // $("#HSVtxt").bind("mouseout mouseover", function(e){        
+    //     $("#HSVtxt").html(e.type + " 事件觸發!")
+	// });
+});
+
+function h350(){
+	$('#HueRange').val(350);
+	$('#Hvalue').html( 'Hue:'+$(this).val() );
+}
+$(document).on('input change', '#HueRange', function() {
+	// $("label[for='Hue']").html("sssssssssssssssssssssss");
+        //alert($label.text())  
+    $('#Hvalue').html( 'Hue:'+$(this).val() );
+});
+$(document).on('input change', '#Saturation', function() {
+    $('#Svalue').html( 'Saturation:'+$(this).val() );
+});
+$(document).on('input change', '#Value', function() {
+    $('#Vvalue').html( 'Value:'+$(this).val() );
+});
+
+
+
+
+
+</script>
+
+
+
+
+
+<!-- <script type="text/javascript" src="js/LouisColorPickerLIAN.js"></script> -->

@@ -1,0 +1,50 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>position:fixed定位</title>
+<style type="text/css">
+
+/*內容區塊*/
+.bg {
+	background-color:#CCC;
+	width:600px;
+	height:1800px;
+	margin:0 auto;
+	
+}
+/*top鈕*/
+a.topBtn {
+	display:block;
+	background-image:url(img/Button.png);
+	width:36px;
+	height:36px;
+	
+	position:fixed;
+	bottom:50%;
+	margin-left:610px;/*改用margin-left來定位*/
+}
+
+
+
+/* a:hover.topBtn {
+	background-image:url(http://www.july.com.tw/downloads/image/technical_area/20141201_06.png);
+} */
+
+</style>
+</head>
+<body>
+<a href="#"
+ style="display:block;
+ position: fixed; width:239px; height:99px;
+ background-color:red;background-image:url(img/Button.png);" ></a>
+        
+<div class="bg">
+內容內容內容內容內容內容內容                                                                  
+<a href="#" class="topBtn"></a>
+
+
+</div>
+</body>
+</html>
