@@ -19,16 +19,20 @@
 
 </style>
 
-<script>
-    // var myVar;     //alert("start Timeout");
-    // myVar = setTimeout(function () { self.location.reload(); }, 3000); 
-</script>
+
 
 <div id='loading'>正在載入頁面資料...</div>
 <div class="loader"></div>
 
+<input id="test1" type="text" name="test1" ></input>
+
+
+qd1asd1as56d16as5d1
+<input id="test4" type="tel" name="test4" style="ime-mode:auto"></input>
+<input id="test4" type="number" name="test4" style="ime-mode:auto"></input>
 
 <style>
+    input {ime-mode: auto; }
     #loading{
     z-index: 1;
     padding: 10px 10px 5px;
@@ -45,3 +49,25 @@
   }
 
 </style>
+<script>
+  // var myVar;     //alert("start Timeout");
+  // myVar = setTimeout(function () { self.location.reload(); }, 3000); 
+
+  const inputElement = document.querySelector('input[type="text"]');
+
+  inputElement.addEventListener('compositionstart', (event) => {
+    console.log(`generated characters were: ${event.data}`);
+    //inputElement.innerHTML=55555;
+    //inputElement.value=55555;
+  });
+
+
+inputElement.addEventListener('compositionupdate', (event) => {
+    //inputElement.innerHTML=55555;
+    inputElement.value=66666;
+  });
+inputElement.addEventListener('compositionend',(event) => {
+    //inputElement.innerHTML=55555;
+    inputElement.value=77777;
+  });
+</script>
