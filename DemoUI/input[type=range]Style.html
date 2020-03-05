@@ -168,19 +168,29 @@
         <BR>
         <!-- <input type="text" id="textBox" onkeyup="checkText()" maxlength="5" /> 函數轉換<BR> -->
 
-        <input id="ForbidPunctuationCustom" type="text">自訂義英數中<BR>
+        <input id="ForbidPunctuationCustom" type="text">JS處理只能輸入數字<BR>
 
 
 
         <input id="ForbidPunctuation" type="text"
             onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^(/w)]/g,'').replace('(','').replace(')',''))"
-            onkeyup='this.value=this.value.replace(/\W/,"")'>只有英數預設W版<BR>
+            onkeyup='this.value=this.value.replace(/\W/,"")'>
+            
+            只有英數預設W版<BR>
 
-        <input id="2222" type="text" onkeyup='this.value=this.value.replace(/^[A-Za-z0-9u4e00-u9fa5]+$/,"")'>只有英數中<BR>
+        <input id="2222" type="text" onkeyup='this.value=this.value.replace(/^[A-Za-z0-9u4e00-u9fa5]+$/,"")'>
+
+
+        只有英數中<BR>
 
         <input id="ForbidPunctuation3" type="text"
-            onkeyup='this.value=this.value.replace(/[^u4e00-u9fa5w]/g,"")'>禁止標點只有英數強化版<BR>
+            onkeyup='this.value=this.value.replace(/[^u4e00-u9fa5w]/g,"")'>
+            禁止標點只有英數強化版<BR>
 
+
+
+        <input id="禁止輸入中文 只有英數" type="tel" max="100" min="0" onkeyup="value=value.replace(/[^\d]/g,'');
+                if(value>77){value=77}if(value<1){value=0}">type="tel" 禁止輸入中文 只有英數
 
         <div class="InputObject"
             style="height: 21px;width: 261px;margin-top: 2%;color: #fff;background-color: #ff8800;">
@@ -188,8 +198,7 @@
             <input class="LedInputTxtStyle" type="number" max="100" min="0" onkeyup="value=value.replace(/[^\d]/g,'');
             if(value>77){value=77}if(value<1){value=0}">
 
-            <!-- <input class="LedInputTxtStyle" type="tel" max="100" min="0" onkeyup="value=value.replace(/[^\d]/g,'');
-if(value>77){value=77}if(value<1){value=0}">ssss -->
+
 
 
 
@@ -203,7 +212,7 @@ if(value>77){value=77}if(value<1){value=0}">ssss -->
 <script>
     var validator = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+$');
     var txt = new RegExp(/[\"\'\[\]\=\-\<>%;*!@#$^)(&+/s.,\\]/);
-    var validator = new RegExp('^[A-Za-z0-9_]*$');
+    //var validator2 = new RegExp('^[A-Za-z0-9_]*$');
     //谷歌通过js修改填充进度条颜色
     var range = document.getElementById("rangeFull");
     range.onmousemove = function () {
@@ -229,20 +238,31 @@ if(value>77){value=77}if(value<1){value=0}">ssss -->
     //         event.preventDefault();
     //         event.stopPropagation();
     //     }
-    // });
-
+        // });
+        // var regex = /^[0-9\s]*$/;
+        // if (regex.test("123")) {
+        //     alert("這是數字");
+        // }
+        // else {
+        //     alert("格式錯誤");
+        // }
+        //     var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+        //     if (!regex.test("1qaz2wsx"))
+        //         alert("這是英文及數字混合字串");
+        //     else
+        //         alert("格式錯誤");
     var ForbidPunctuationCustom = document.getElementById('ForbidPunctuationCustom');
 
-    ForbidPunctuationCustom.addEventListener("keypress", (event) => {
-        //var obj = JSON.stringify(event.);    
+    ForbidPunctuationCustom.addEventListener("keypress", (event) => {    
         console.log("value" + event);
-        var value = event.target.value;
-
-        console.log("value" + JSON.stringify(event));
-        var runner = txt.test(event.key);//檢查是否有符號
-
-        if (runner) {
-            event.preventDefault();//不給打符號
+        //var value = event.target.value;
+        var regex = /^[0-9\s]*$/;
+        var validator = new RegExp(/^[0-9\s]*$/);
+     //var runner = txt.test(event.key);//檢查是否有符號
+        var error = validator.test(event.key);
+        console.log("error=" + error,"_event.key=",event.key,validator);
+        if (!error) {
+            event.preventDefault();//禁止的輸入則不給打
         }
         else {
             //event.preventDefault();
@@ -250,11 +270,14 @@ if(value>77){value=77}if(value<1){value=0}">ssss -->
     })
     ForbidPunctuationCustom.addEventListener("keyup", (event) => {
         var value = event.target.value;
-        console.log("ForbidPunctuationCustomvalue" + value);
+        console.log("ForbidPunctuationCustomvalue=" + value);
         //event.target.value = "";
-        if (event.code == "Enter")
-            event.target.value = value.replace(/[^\a-\z\A-\Z^0-9\u4E00-\u9FA5]/g, '');
-        console.log("value" + JSON.stringify(event));
+        if (event.code == "Enter"){
+            //event.target.value = value.replace(/[^\a-\z\A-\Z^0-9\u4E00-\u9FA5]/g, '');
+            event.target.value = value.replace(/[^\d]/g,'')
+            //value=value.replace(/[^\d]/g,'') "
+        console.log("Enter" + JSON.stringify(event));
+        }
       
     })
 
