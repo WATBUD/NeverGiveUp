@@ -7,20 +7,50 @@
     <div id="txt"></div>
     <input id="G" type="text" value="555"></input>
     <!-- <input id="bar"  type="range" min="0" max="6"  step="1" value="0"></input> -->
+    <video style="max-width: 1280px;
+    max-height: 800px;
+    position: absolute;
+    background-image: url(./image/FirstPage/BTN2.png);
+    width: 713px;
+    height: 325px;
+    margin-left: 40%;
+    margin-top: 2%;
+    z-index: 9999;" width="100%" height="100%"  controls>
+        <source src="http://watbud.ddns.net/ShowWebEffect/Music/%E9%A6%AE%E6%8F%90%E8%8E%AB%E6%88%91%E6%98%AF%E7%9C%9F%E7%9A%84%E6%84%9B%E4%B8%8A%E4%BD%A0.mp4" type="video/mp4">
+      
+    </video>
+
+    <iframe style="max-width:640px;
+    max-height: 400px;
+    position: absolute;
+    background-image: url(./image/FirstPage/BTN2.png);
+    width: 713px;
+    height:325px;
+    margin-left: 0%;
+    margin-top: 2%;" width="100%" height="100%" src="https://www.kemovebbs.com/video/Cheap%20Keyboards%20Are%20Getting%20SOOO%20GOOD%20-%20DIERYA%20x%20KEMOVE%20DK61%20[720p].mp4" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+        >
+    </iframe>
+
+
 </body>
 <script>
     // var show= document.getElementById(id);
     // show.innerText=""
     var a=5;
     var b=a;
+    var autoStart=[5,10]
+    this.autoStart[1]=this.autoStart[0];
+    this.autoStart[1]=20
     b=20;
     //document.getElementById('G').style.background='red';
     document.getElementById('txt').innerText=a;
     document.getElementById('bar').value='-4';
-
+    document.getElementById('txt').innerText=JSON.stringify(this.autoStart);
         // var $ = function(id){
         //     return document.getElementById(id);
         //    }
+
 
 </script>
         

@@ -17,12 +17,15 @@
 </body>
 <script>
     var anyString = "C:\\Users\\Louis\\Desktop\\5555.Macro";
+    var Usersindex=anyString.lastIndexOf("Louis\\");
     console.log("anyString" + anyString);
+    console.log("Usersindex" + Usersindex);
     var index=anyString.lastIndexOf("\\");
     var dot=anyString.lastIndexOf(".");
     var ProcessanyString = anyString.substring(index+1,dot);
     console.log("anyString=" + index,dot,"結果=",ProcessanyString);// Displays 8
     console.log("原字串" +anyString);// Displays 8
+    
     var validator = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+$');
     var txt = new RegExp(/[\"\'\[\]\=\-\<>%;*!@#$^)(&+/s.,\\]/);
     var ForbidPunctuationCustom = document.getElementById('ForbidPunctuationCustom');
