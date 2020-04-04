@@ -13,10 +13,23 @@
     }
   </style>
 
-  <script type="text/javascript" charset="utf-8">
 
-  </script>
 
 
 <input id="原本的" type="text" placeholder="輸入文字" value="adas">
 <input id="style1" type="text" placeholder="" value="我隱形了">
+<div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  <p>Value: <span id="demo"></span></p>
+</div>
+
+<script>
+  var slider = document.getElementById("myRange");
+  var output = document.getElementById("demo");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function () {
+    output.innerHTML = this.value;
+    console.log(this.value);
+  }
+</script>
