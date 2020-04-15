@@ -146,11 +146,11 @@
       var w = selDiv.offsetWidth;
       var h = selDiv.offsetHeight;
       for (var i = 0; i < fileDivs.length; i++) {
-        var objectOnWindowsLeft = fileDivs[i].offsetWidth + fileDivs[i].offsetLeft;//物件與父物件原點距離X
-        var objectOnWindowsTop = fileDivs[i].offsetHeight + fileDivs[i].offsetTop;//物件與父物件原點距離Y
+        var 目標物件右X = fileDivs[i].offsetWidth + fileDivs[i].offsetLeft;//物件與父物件原點距離X
+        var 目標物件下Y = fileDivs[i].offsetHeight + fileDivs[i].offsetTop;//物件與父物件原點距離Y
         //如果檢測物件的寬高+離父物件位移的距離 >框選範圍大於   
         //表示Element佔用的除去magin的部分。例:offsetWidth = width + padding + border
-        if (objectOnWindowsLeft > l && objectOnWindowsTop > t && fileDivs[i].offsetLeft < l + w && fileDivs[i].offsetTop < t + h) {
+        if (目標物件右X > l && 目標物件下Y > t && fileDivs[i].offsetLeft < l + w && fileDivs[i].offsetTop < t + h) {
           selectedEls.push(fileDivs[i]);
           fileDivs[i].style.backgroundColor = "red";
           fileDivs[i].style.width = "500px";
