@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		/* background: -webkit-linear-gradient(left, #F00 0%, #FF0 16.66%, #0F0 33.33%, #0FF 50%, #00F 66.66%, #F0F 83.33%, #F00 100%); */
+	}
+</style>
+
+<head>
+	<title>自製RGB測試頁面</title>
+	<div id="show"></div>
+	<input id="C_R" type="number" max="255" onkeyup="value=value.replace(/[^\d]/g,'');
+		if(value>255){value=255}if(value<1){value=0}" onchange=" Calculation()">輸入R<BR>
+	<input id="C_G" type="number" max="255" onkeyup="value=value.replace(/[^\d]/g,'');
+		if(value>255){value=255}if(value<1){value=0}" onchange="Calculation()">輸入G<BR>
+	<input id="C_B" type="number" max="255" onkeyup="value=value.replace(/[^\d]/g,'');
+		if(value>255){value=255}if(value<1){value=0}" onchange="Calculation()">輸入B<BR>
+	<input id="C_Alpha" type="number" max="1" onkeyup="value=value.replace(/[^\d]/g,'');
+		if(value>1){value=1}if(value<0){value=0}" onchange="Calculation()">輸入Alpha<BR>
+
+	<div id="HEXField">                               
+
+	</div>
+
+
+
+    <!-- <input id="禁止輸入中文 只有英數" type="tel" max="100" min="0" onkeyup="value=value.replace(/[^\d]/g,'');
+                if(value>77){value=77}if(value<1){value=0}">禁止輸入中文 只有英數 -->
+</head>
+
+<body>
+</body>
+<script>
+	//var num = 100;
+	console.log(Number(40).toString(16));
+		console.log(1 << 24);
+		function componentToHex(c) {
+			var hex = c.toString(16);
+			console.log("componentToHex",hex);
+			return hex.length == 1 ? "0" + hex : hex;
+		}
+
+		function rgbToHex(r, g, b) {
+			
+			return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+		}
+	function Calculation() {
+		var colors = [];
+		colors[0] = Number(document.getElementById("C_R").value);
+		colors[1] = Number(document.getElementById("C_G").value);
+		colors[2] = Number(document.getElementById("C_B").value);
+		colors[3] =  Number(document.getElementById("C_Alpha").value);
+
+		//colors[3]>1?1:colors[3]; 
+		var T_color = stringFormat("rgb({0},{1},{2},{3})", colors[0], colors[1], colors[2], colors[3]);
+		document.getElementById("show").innerText = "結果顏色" + "=" + T_color;
+		document.body.style.background = T_color;
+		console.log(rgbToHex(colors[0], colors[1], colors[2]));
+		document.getElementById("HEXField").innerText=rgbToHex(colors[0], colors[1], colors[2]);
+
+	}
+	
+	// function rgbToHex(r, g, b) {
+	// 		return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+	// 	}
+	function stringFormat() {
+		if (arguments.length == 0)
+			return null;
+		var str = arguments[0];
+		for (var i = 1; i < arguments.length; i++) {
+			var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+			str = str.replace(re, arguments[i]);
+		}
+		return str;
+	}
+		//HSVRange.style.backgroundColor = stringFormat("rgb({0},{1},{2})",t[0],t[1],t[2]);
+
+</script>
+
+</html>
