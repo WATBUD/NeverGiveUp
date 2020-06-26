@@ -49,8 +49,8 @@ function addMoveMouseEventListener(targetName = "") {
         if (isDown) {
             var ndx = event.pageX - md_x;//獲取新div滑鼠實時座標滑鼠與div=>X偏移量
             var ndy = event.pageY - md_y;//獲取新div滑鼠實時座標滑鼠與div=>X偏移量
-            move_div.style.left = ndx + "px";//把新div座標值賦給div物件
-            move_div.style.top = ndy + "px";//把新div座標值賦給div物件
+            move_div.style.marginLeft = ndx + "px";//把新div座標值賦給div物件
+            move_div.style.marginTop = ndy + "px";//把新div座標值賦給div物件
         };
     }
     document.onmouseup = function (e) {

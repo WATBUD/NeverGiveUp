@@ -63,7 +63,8 @@
    <option value="CustomInputCheckbox">自定義InputCheckbox</option>
    <option value="RegularExpressionTxt">RegularExpressionTxt</option>
    <option value="AngularPractice">AngularPractice</option>
-   
+   <option value="array.some">array.some</option>
+
   </select>
 
   
@@ -180,6 +181,13 @@
                 txtShow.innerText=AngularPractice.replace(/{/g,'{\n').replace(/}/g,'\n}\n');
 
                 break;  
+            case "array.some":           
+                txtShow.innerHTML="const array = [1, 2, 3, 4, 5];<br />\
+                const t=array.some((element) => element % 20 === 0);<br/>\
+                console.log(t);<br/>結果:<br/>false";
+
+
+                break;      
 
 
                 

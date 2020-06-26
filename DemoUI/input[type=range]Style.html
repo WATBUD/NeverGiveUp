@@ -45,7 +45,7 @@
             -webkit-appearance: none;
             width: 15px;
             height: 15px;
-            background: rgb(218, 46, 46);
+            background: rgba(46, 218, 75, 0.92);
             /* border-radius: 0 0 5px 5px; */
             border-radius: 50%;
             /* transform: translateY(-5px); */
@@ -151,7 +151,11 @@
 
 <body>
     <div>
-        <input id="rangeFull" type="range" max="100" min="0" value="0">
+        <style data="test" type="text/css"></style>
+
+
+        
+        <input data="test" id="rangeFull" type="range" max="100" min="0" value="0">
         <input id="RangeStyle2" type="range" max="100" min="0" value="0">
         <!-- <input name=key onkeyup="changed()"> -->
         <BR>
@@ -218,9 +222,23 @@
     range.onmousemove = function () {
         range.style.backgroundSize = range.value + '% 100%';
     }
+    
     document.getElementById("RangeStyle2").onmousemove = function () {
         this.style.backgroundSize = this.value + '% 100%';
     }
+    //var content = rangeFull.find(".track");
+    var b = window.getComputedStyle(range,'::-webkit-slider-thumb');
+    var style = document.querySelector('[data="test"]');
+
+    console.log('RangeStyle2"style',b);
+    console.log('RangeStyle2"style',range.innerHTML,range.cssText);
+
+
+    style.innerHTML = ".slider::-webkit-slider-thumb { width: " + 100 + "px !important; height: " + 100 + "px !important; }";
+
+
+
+
     // document.addEventListener('keypress', (event) => {
     //     console.log('eventkeypress', event);
     // });
@@ -280,9 +298,6 @@
         }
       
     })
-
-    
-     
 
 
 </script>
