@@ -49,8 +49,8 @@ class MouseBoxSelection {
       this.mouseOn = true;
       // this.startX = e.clientX - selectContainer.offsetLeft + selectContainer.scrollLeft;//減掉物件減掉卷軸
       // this.startY = e.clientY - selectContainer.offsetTop + selectContainer.scrollTop;//Element佔用的寬度除去magin的部分
-      this.startX = e.clientX;
-      this.startY = e.clientY;
+      this.startX = e.clientX- this.selectContainer.offsetLeft + this.selectContainer.scrollLeft;
+      this.startY = e.clientY- this.selectContainer.offsetTop + this.selectContainer.scrollTop;
       if (!checkExists("selectDiv")) {
         var selDiv = document.createElement('div');
         selDiv.style.cssText = 'position:absolute;width:0;height:0;\
@@ -58,7 +58,10 @@ class MouseBoxSelection {
             pointer-events:none;';
         selDiv.id = 'selectDiv';
         //document.appendChild(selDiv);
-        document.body.appendChild(selDiv);
+        //this.selectContainer.firstChild.appendChild(selDiv);
+        this.selectContainer.insertBefore(selDiv, this.selectContainer.firstChild);
+
+        //document.body.appendChild(selDiv);
       }
       var selDiv = document.getElementById('selectDiv');
 
@@ -76,8 +79,10 @@ class MouseBoxSelection {
       //var selectContainer = document.getElementById('selectContainer');
       // var _x = e.clientX - selectContainer.offsetLeft + selectContainer.scrollLeft;
       // var _y = e.clientY - selectContainer.offsetTop + selectContainer.scrollTop;
-      var _x = e.clientX;
-      var _y = e.clientY;
+      var _x = e.clientX- this.selectContainer.offsetLeft+ this.selectContainer.scrollLeft;
+      var _y = e.clientY- this.selectContainer.offsetTop+ this.selectContainer.scrollTop;
+      // this.startX = e.clientX- selectContainer.offsetLeft;
+      // this.startY = e.clientY- selectContainer.offsetTop;
       // var _H = selectContainer.clientHeight;
       // var _W = selectContainer.clientWidth;
       // // 向下拖拽
@@ -127,10 +132,10 @@ class MouseBoxSelection {
           var 框選範圍下Y = 框選範圍上Y + h;
 
 
-          目標物件右X= 目標物件右X* this.scaleConfig.scaleMultiple+this.selectContainer.offsetLeft-this.selectContainer.scrollLeft;
-          目標物件下Y= 目標物件下Y* this.scaleConfig.scaleMultiple+this.selectContainer.offsetTop-this.selectContainer.scrollTop;
-          目標物件左X= 目標物件左X* this.scaleConfig.scaleMultiple+this.selectContainer.offsetLeft-this.selectContainer.scrollLeft;
-          目標物件上Y= 目標物件上Y* this.scaleConfig.scaleMultiple+this.selectContainer.offsetTop-this.selectContainer.scrollTop;
+          目標物件右X= 目標物件右X* this.scaleConfig.scaleMultiple;
+          目標物件下Y= 目標物件下Y* this.scaleConfig.scaleMultiple;
+          目標物件左X= 目標物件左X* this.scaleConfig.scaleMultiple;
+          目標物件上Y= 目標物件上Y* this.scaleConfig.scaleMultiple;
           框選範圍右X= 框選範圍右X;
           框選範圍下Y= 框選範圍下Y;
 

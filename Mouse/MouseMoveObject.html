@@ -79,7 +79,9 @@ width:500px;height: 500px;">選澤想要查的資料</div>
 <script src="./MouseMoveObject.js"></script>
 <script src="./MouseBoxSelection.js"></script>
 <script>
-    
+    var a=Array(61).fill(false);
+    a[0]=true;
+    console.log(a);
     var MouseMoveObjectFn=new MouseMoveObjectManager();
     MouseMoveObjectFn.addMoveObject('KeyBoardUI');
     MouseMoveObjectFn.addMoveObject('KeyBoardUI2');
