@@ -22,7 +22,6 @@ class SharesFunction {
         return arr;
     }
     TipUIMessage(setMessage, targetDOM) {
-
         var BtnTextTip = document.getElementById("BtnTextTip");
         console.log("TipUIMessage,targetDOM", targetDOM);
 
@@ -40,6 +39,39 @@ class SharesFunction {
             BtnTextTip.style.display = "none";
         });
     }
+
+    TipUI_Module_TimeMessage(setMessage, targetDOM) {
+
+        var createDiv = document.createElement('div');
+        // createDiv.style.cssText = 'position: absolute;\
+        // background-color: yellow;\ssss
+        // width: 5%;\
+        // height: 100%;';
+        createDiv.id = 'LeftNameList';
+        createDiv.innerText = 'evenr.code:' + target_key;
+        createDiv.dataset.status = target_key;
+        targetDOM.appendChild(createDiv);
+        //createDiv.classList.add("circle");
+        
+        var BtnTextTip = document.getElementById("TipUI_Module_TimeMessage");
+        console.log("TipUIMessage,targetDOM", targetDOM);
+
+        BtnTextTip.children[0].innerHTML = "&nbsp;" + setMessage + "&nbsp;"
+        BtnTextTip.style.left =
+            //this.recordClientX
+            targetDOM.clientX + "px";
+        BtnTextTip.style.top =
+            //this.recordClientY
+            targetDOM.clientY + "px";
+
+        BtnTextTip.style.display = "block"
+        targetDOM.addEventListener('mouseenter', e => {
+            console.log("TipUIMessage,targetDOM_mouseleave", targetDOM);
+            //BtnTextTip.style.display = "none";
+        });
+    }
+
+
     TipUIHide() {
 
         var BtnTextTip = document.getElementById("BtnTextTip");

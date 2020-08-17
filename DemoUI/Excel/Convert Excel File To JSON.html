@@ -2,27 +2,24 @@
 <title> Convert Excel File To JSON </title>
 
 <head>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script>
+    <script src="../../jquery-3.4.1.min.js"></script>
+    <script src="xlsx.core.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> -->
+
     <script>
-// var z="{'axd': [0,0,0],'aaazzz': [0,0,0]}";
-// var z=[];
-// z.push({
-//     'axd': [0,0,0],'aaazzz': [0,0,0]}
+// var z={
+//     'axd': ["AUDIO BRILLIANT", "AUDIO BRILLIANT", "明亮音讯"],
+//     'aaazzz': ["AUDIO BRILLIANT", "AUDIO BRILLIANT", "明亮音讯"]
+// }
+// console.log("z ",z,JSON.stringify(z));
 
-// )
-var z={
-    'axd': ["AUDIO BRILLIANT", "AUDIO BRILLIANT", "明亮音讯"],
-    'aaazzz': ["AUDIO BRILLIANT", "AUDIO BRILLIANT", "明亮音讯"]
-
-}
-console.log("z ",z,JSON.stringify(z));
-
+console.log("XL_row_object=");
 
 
 
         $(document).ready(function () {
-            $("#filㄑeUploader").change(function (evt) {
+            $("#fileUploader").change(function (evt) {
                 var selectedFile = evt.target.files[0];
                 var reader = new FileReader();
                 reader.onload = function (event) {
@@ -32,16 +29,26 @@ console.log("z ",z,JSON.stringify(z));
                     });
                     workbook.SheetNames.forEach(function (sheetName) {
                         var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                        console.log("XL_row_object=", XL_row_object);
+
                         if (XL_row_object.length > 0) {
-                            console.log("XL_row_object=", XL_row_object);
                             let processArr = {};
                             for (let index = 0; index < XL_row_object.length; index++) {
                                 const element = XL_row_object[index];
                                 //processArr.push(element['參數名稱']);
-                                var T = [];
-                                T.push(element.EN);
-                                T.push(element.DE);
-                                T.push(element.CN);
+                                // var T = [];
+                                // T.push(element.EN);
+                                // T.push(element.DE);
+                                // T.push(element.CN);
+
+                                var T = {
+                                    EN:element.EN,
+                                    DE:element.DE,
+                                    CN:element.CN,
+                                };
+                                
+                                //delete T.參數名稱;
+                               
 
                                 processArr[element['參數名稱']] = T;
                                 //console.log("processArr=>processArr[element['參數名稱']] ", JSON.stringify(processArr[element['參數名稱']]));

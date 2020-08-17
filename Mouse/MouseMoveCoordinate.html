@@ -120,7 +120,7 @@
     //
     layer1.addEventListener("mousedown", function (e) {
         //mouseDownFunction(e);
-
+            
         document.onmousemove = function (e) {
             mouseMoveFunction(e);
         }
@@ -166,19 +166,28 @@
     document.addEventListener("mousemove", function (e) {
 
         spanArr[0].innerHTML = e.pageX + ", " + e.pageY;
+        console.log("document,mousemove", e);
+
     });
     document.addEventListener("mousedown", function (e) {
         spanArr[1].innerHTML = e.pageX + ", " + e.pageY;
+
     });
 
     document.addEventListener("mouseup", function (e) {
 
         document.onmousemove = null;
         //alert("mouseup");
+        console.log("document,mouseup", e);
+
     });
 
 
 
+    document.addEventListener("click", function (e) {
+        console.log("document,click", e);
+
+    });
 
 
 

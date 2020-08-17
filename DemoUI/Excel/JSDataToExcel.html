@@ -1,223 +1,48 @@
-<!-- 
-width: 50vw;
-height: 50vw;
-transform: rotate(0deg);
-z-index: 9999;
-            Y  width(不能超過width)      height(不能超過width)     X
-clip: rect(0vh,100vw                    ,100vw                   ,0vw); -->
-
-
-
-
-
-<style>
-  .circle-bar {
-    font-size: 200px;
-    width: 1em;
-    height: 1em;
-    /* position: relative; */
-    background-color: #333;
-    position: absolute;
-    left: 40%;
-    top: 40%;
-  }
-
-  .circle-bar-left,
-  .circle-bar-right {
-    width: 1em;
-    height: 1em;
-    background-color: #eee;
-  }
-
-  .circle-bar-right {
-    clip: rect(0, auto, auto, .5em);
-
-  }
-
-  .circle-bar-left {
-    clip: rect(0, .5em, auto, 0);
-  }
-
-  .mask {
-    width: 0.8em;
-    height: 0.8em;
-    background-color: #fff;
-    text-align: center;
-    line-height: 0.2em;
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  .mask :first-child {
-    font-size: 0.3em;
-    height: 0.8em;
-    line-height: 0.8em;
-    display: block;
-  }
-
-  /*所有的后代都水平垂直居中，这样就是同心圆了*/
-  .circle-bar * {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-  }
-
-  /*自身以及子元素都是圆*/
-  .circle-bar,
-  .circle-bar>* {
-    border-radius: 50%;
-  }
-
-  .body {
-
-    margin: 0;
-  }
-</style>
-
-
-
-
-
-<button onclick="exportToCsv()">export to CSV</button>
-
-
-
-<!-- 
-<div class="circle-bar">
-  <div class="circle-bar-left"></div>
-  <div class="circle-bar-right"></div>
-  <!-- 遮罩层，显示百分比 -->
-  <div class="mask">
-    <span class="percent">40%</span>
-  </div>
-</div> -->
-
-ccccc
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel批量處理</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script>
+</head>
+<body>
+<input type="file" id="excel-file">
 <script>
-var cc = [
-  ["Col1", "Col2", "Col3", "Col4"],
-  ["Data", 50, 100, 500],
-  ["Data", -100, 20, 100],
-];
+    //給input標籤繫結change事件，一上傳選中的.xls檔案就會觸發該函式
+    $('#excel-file').change(function(e) {
+        var files = e.target.files;
+        var fileReader = new FileReader();
+        fileReader.onload = function(ev) {
+            try {
+                var data = ev.target.result
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                }) // 以二進位制流方式讀取得到整份excel表格物件
+                var persons = []; // 儲存獲取到的資料
+            } catch (e) {
+                console.log('檔案型別不正確');
+                return;
+            }
+            // 表格的表格範圍，可用於判斷表頭是否數量是否正確
+            var fromTo = '';
+            // 遍歷每張表讀取
+            for (var sheet in workbook.Sheets) {
+              //console.log(sheet,workbook.Sheets);
+                if (workbook.Sheets.hasOwnProperty(sheet)) {
+                  console.log('hasOwnProperty',workbook.Sheets[sheet]);
 
-exportToCsv = function() {
-  var CsvString = "";
-  Results.forEach(function(RowItem, RowIndex) {
-    RowItem.forEach(function(ColItem, ColIndex) {
-      CsvString += ColItem + ',';
+                    fromTo = workbook.Sheets[sheet]['!ref'];
+                    persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+                    // break; // 如果只取第一張表，就取消註釋這行
+                }
+            }
+            //在控制檯打印出來表格中的資料
+            console.log(persons);
+        };
+        // 以二進位制方式開啟檔案
+        fileReader.readAsBinaryString(files[0]);
     });
-    CsvString += "\r\n";
-  });
-  CsvString = "data:application/csv," + encodeURIComponent(CsvString);
- var x = document.createElement("A");
- x.setAttribute("href", CsvString );
- x.setAttribute("download","somedata.csv");
- document.body.appendChild(x);
- x.click();
-}
-
-
-
-
-
-
-
-
-
-  var percent = 0;
-  //反正CSS3中的border-radius属性IE8是不支持了，所以这里就用新方法吧getElementsByClassName()走起
-
-    document.addEventListener('keydown', (event) => {
-      console.log(event);
-
-      if (event.key == "ArrowUp") {
-        percent += 1;
-
-      }
-
-      if (event.key == "ArrowDown") {
-        percent -= 1;
-
-      }
-      setRoundProgress();
-    });
-
-
-
-  //window.onload = 
-
-  function setRoundProgress() {
-
-    var circleBar = document.getElementsByClassName('circle-bar')[0];
-
-
-    //percent      = parseInt(circleBar.getElementsByClassName('percent')[0].firstChild.nodeValue);
-    var color = circleBar.css('background-color');
-    var left_circle = circleBar.getElementsByClassName('circle-bar-left')[0];
-    var right_circle = circleBar.getElementsByClassName('circle-bar-right')[0];
-    if (percent > 100) {
-      //percent=percent>100?0:percent;
-      percent = 0;
-      right_circle.css3('transform', 'rotate(0deg)');//右侧不旋转
-      left_circle.css3('transform', 'rotate(0deg)');
-      right_circle.css('background-color', '#eee');//背景色设置为进度条的颜色
-      left_circle.css('background-color', '#eee');//背景色设置为进度条的颜色
-
-    }
-    circleBar.getElementsByClassName('percent')[0].firstChild.nodeValue = percent + "%";
-
-    if (percent <= 50) {
-      var rotate = 'rotate(' + (percent * 3.6) + 'deg)';
-      right_circle.css3('transform', rotate);
-    } else {
-      var rotate = 'rotate(' + ((percent - 50) * 3.6) + 'deg)';
-      right_circle.css('background-color', color);//背景色设置为进度条的颜色
-      right_circle.css3('transform', 'rotate(0deg)');//右侧不旋转
-      left_circle.css3('transform', rotate);//左侧旋转
-    }
-  }
-
-  //封装了css3函数，主要是懒得重复书写代码，既然写了css3函数，顺便写个css吧，统一样式，好看一些
-  Element.prototype.css = function (property, value) {
-
-    if (value) {
-      //CSS中像background-color这样的属性，‘-’在JavaScript中不兼容，需要设置成驼峰格式
-      var index = property.indexOf('-');
-      if (index != -1) {
-        var char = property.charAt(index + 1).toUpperCase();
-        property.replace(/(-*){1}/, char);
-      }
-      this.style[property] = value;
-    } else {
-      //getPropertyValue()方法参数类似background-color写法，所以不要转驼峰格式
-      return window.getComputedStyle(this).getPropertyValue(property);
-    }
-  }
-
-  //封装一个css3函数，用来快速设置css3属性
-  Element.prototype.css3 = function (property, value) {
-    if (value) {
-      property = capitalize(property.toLowerCase());
-      this.style['webkit' + property] = value;
-      this.style['Moz' + property] = value;
-      this.style['ms' + property] = value;
-      this.style['O' + property] = value;
-      this.style[property.toLowerCase()] = value;
-    } else {
-      return window.getComputedStyle(this).getPropertyValue(
-        ('webkit' + property) || ('Moz' + property) || ('ms' + property) || ('O' + property) || property);
-      //老实说，我不知道为什么要把不带浏览器标记的放在最后，既然都这么用，我也这么做吧。不过这样对现代浏览器来说可能并不好，判断次数变多了
-    }
-
-    //首字母大写
-    function capitalize(word) {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }
-  }
-
-
-
 </script>
+</body>
+</html>
