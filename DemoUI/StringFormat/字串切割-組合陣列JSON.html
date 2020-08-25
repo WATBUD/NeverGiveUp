@@ -22,10 +22,10 @@ var sss='qweqttu';
 var string = "0,1";
 var sssyyy="[\"PWM\",\"QUIET\",\"HIGH SPEED\",\"FULL-SPEED\",\"MANUAL\"]";
 
-var sssyy4="[\"PWM\",\"QUIET\",\"HIGH SPEED\",\"FULL-SPEED\",\"MANUAL\"]";
+
 // console.log('JSON.stringify(sssyyy)',JSON.stringify(sssyyy));
 
-console.log(sssyyy,JSON.parse(sssyyy));
+console.log(JSON.parse(sssyyy));
 
 // var array = JSON.parse("[" + sssyyy + "]");
 // console.log(array);
@@ -88,25 +88,16 @@ console.log("XL_row_object=",dgdgdf);
                                 // T.push(element.EN);
                                 // T.push(element.DE);
                                 // T.push(element.CN);
-                                for (const [key, value] of Object.entries(element)) {
-                                    //element.style.width = '100px'
-                                    if(value.includes("[")){
 
-                                        element[key]=JSON.parse(element[key]);
-
-                                    } 
-                                    //console.log('key', key,'value', value);
-                                }
-                                
-                                // if(element.EN.includes("[")){
-                                //     console.log("element.EN",element.EN.toString());
-                                //     element.EN=JSON.parse(element.EN.toString());
-                                // }
                                 var T = {
                                     EN:element.EN,
+                                    DE:element.DE,
                                     CN:element.CN,
                                 };
+                                
                                 //delete T.參數名稱;
+                               
+
                                 processArr[element['參數名稱']] = T;
                                 //console.log("processArr=>processArr[element['參數名稱']] ", JSON.stringify(processArr[element['參數名稱']]));
                              
