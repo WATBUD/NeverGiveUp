@@ -52,9 +52,6 @@ user-select:none;
     var mouseOn = false;
     var layerRange = document.getElementById("layerRange");
     var targetDisX=0,targetDisY=0;;
-    
-
-
     //var circle = document.getElementById("circle");
     RGBcircleEventArr[0] = (e) => {
         if (e.buttons !== 1 || e.which !== 1) return;
@@ -74,7 +71,6 @@ user-select:none;
         RGBcircle.style.marginTop = targetDisY + "px";
 
     }
-
     RGBcircleEventArr[1] = (e) => {
         if (!mouseOn) return;
         console.log("mousemove", mouseOn, e);
@@ -134,9 +130,6 @@ user-select:none;
             RGBcircle.style.marginTop=e.clientY-parentDiv.offsetTop;
         }
     }
-
-
-
     RGBcircleEventArr[2] = (e) => {
         if (!mouseOn) return;
         //clearEventBubble(e);
