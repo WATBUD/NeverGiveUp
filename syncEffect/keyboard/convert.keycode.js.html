@@ -1,0 +1,128 @@
+﻿<div id="textarea"></div>
+<div id="input" style="font-size: 20pt; text-align: center;"></div>
+
+<script>
+//arr對應按鍵名稱
+KBId: any = [
+        "esc",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "f9",
+        "f10",
+        "f11",
+        "f12",
+        "printscreen",
+        "scrolllock",
+        "pausebreak",
+        "tilde",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "zero",
+        "underscore",
+        "plus",
+        "backspace",
+        "insert",
+        "home",
+        "pageup",
+        "numlock",
+        "numslash",
+        "numstar",
+        "numMinus",
+        "tab",
+        "q",
+        "w",
+        "e",
+        "r",
+        "t",
+        "y",
+        "u",
+        "i",
+        "o",
+        "p",
+        "openingbracket",
+        "closingbracket",
+        "pipe",
+        "delete",
+        "end",
+        "pagedown",
+        "numseven",
+        "numeight",
+        "numnine",
+        "numplus",
+        "caps",
+        "a",
+        "s",
+        "d",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "semicolon",
+        "doublequote",
+        "enter",
+        "numfour",
+        "numfive",
+        "numsix",
+        "leftshift",
+        "z",
+        "x",
+        "c",
+        "v",
+        "b",
+        "n",
+        "m",
+        "comma",
+        "dot",
+        "questionmark",
+        "rightshift",
+        "arrowup",
+        "numone",
+        "numtwo",
+        "numthree",
+        "numenter",
+        "leftctrl",
+        "windows",
+        "leftalt",
+        "space",
+        "rightalt",
+        "fn",
+        "book",
+        "rightctrl",
+        "leftarrow",
+        "downarrow",
+        "rightarrow",
+        "numzero",
+        "numdot"
+    ];
+</script>
+<script>
+var input = document.getElementById('input');
+var textarea = document.getElementById('textarea');
+
+var index = 0;
+input.innerHTML = any[index];
+
+window.onkeydown = function(e) {
+	e.preventDefault();
+}
+window.onkeyup = function(e) {
+	textarea.innerHTML += '{ "' + any[index] + '" , "' + e.code + '" }' + ", <br>";
+	input.innerHTML = any[++index];
+	window.scrollTo(0,document.body.scrollHeight);
+}
+</script>

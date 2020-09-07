@@ -1,0 +1,163 @@
+<canvas id="canvas" width="500" height="200"></canvas>
+<script src="dat.gui.min.js"></script>
+<script id="canvas.js">
+var animation = function() {
+	var canvas = document.getElementById("canvas");
+	var ctx    = canvas.getContext('2d');
+
+	var cx = canvas.width / 2;
+	var cy = canvas.height / 2;
+
+	var effect_list = [];
+	var gui_list = [];
+
+	var Radial = function() {
+		this.speed = 1;
+		this.hue = 0;
+		this.draw = function() {
+			var grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+//			var grad = ctx.createRadialGradient(cx, cy, 20, cx, cy, cx);
+			this.hue += 0.5 * this.speed;
+			var stop1 = this.hue % 360;
+			var stop2 = (this.hue + 60) % 360;
+			grad.addColorStop(0, 'hsla(' + stop1 + ', 80%, 60%, 1)');
+			grad.addColorStop(1, 'hsla(' + stop2 + ', 80%, 60%, 1)');
+			ctx.fillStyle = grad;
+			ctx.beginPath();
+			ctx.rect(0, 0, canvas.width, canvas.height);
+			ctx.fill();
+		}
+		this.parameter = function(gui) {
+			gui.add(this, "speed").min(1).max(10).step(1);
+		}
+	}
+	effect_list.push(new Radial());
+
+	var Conic = function() {
+		this.rotate = 0;
+		this.speed = 1;
+		this.draw = function() {
+			this.conic(cx, cy, Math.max(cx, cy) * 1.414);
+		}
+		this.conic = function(x, y, r) {
+			var n = 360;
+			var size = 360 / n;
+			for (let i=0; i<n; i++) {
+				var deg = (i * size + this.rotate) % 360;
+				ctx.fillStyle   = 'hsla(' + deg + ', 80%, 60%, 1)';
+				ctx.strokeStyle = 'hsla(' + deg + ', 80%, 60%, 1)';
+				var t1 = i     * size / 360 * 2 * Math.PI;
+				var t2 = (i+1) * size / 360 * 2 * Math.PI;
+				var x1 = x + r * Math.cos(t1);
+				var y1 = y + r * Math.sin(t1);
+				var x2 = x + r * Math.cos(t2);
+				var y2 = y + r * Math.sin(t2);
+				ctx.beginPath();
+				ctx.moveTo(x, y);
+				ctx.lineTo(x1, y1);
+				ctx.lineTo(x2, y2);
+				ctx.closePath();
+				ctx.fill();
+				ctx.stroke();
+			}
+			this.rotate = (this.rotate + this.speed) % 360;
+		}
+		this.parameter = function(gui) {
+			gui.add(this, "speed").min(1).max(5).step(1);
+		}
+	}
+	effect_list.push(new Conic());
+
+	var Band = function() {
+		this.speed = 1;
+		this.color1 = '#ebc247'; // 'hsla( 45, 80%, 60%, 1)';
+		this.color2 = '#47eb70'; // 'hsla(135, 80%, 60%, 1)';
+		this.color3 = '#4770eb'; // 'hsla(225, 80%, 60%, 1)';
+		this.color4 = '#eb47c2'; // 'hsla(315, 80%, 60%, 1)';
+		this.xposition = 0;
+		this.col2str = function(color) {
+			return color;
+		}
+		this.draw = function() {
+			this.xposition += this.speed;
+			this.xposition %= canvas.width;
+			var width = canvas.width / 4 / 2;
+
+			console.log(this.col2str(this.color1));
+
+			var x = this.xposition;
+			ctx.fillStyle = this.col2str(this.color1);
+			ctx.beginPath();
+			ctx.rect(x, 0, -width, canvas.height);
+			ctx.rect(x + canvas.width, 0, -width, canvas.height);
+			ctx.fill();
+
+			x = (x + width * 2) % canvas.width;
+			ctx.fillStyle = this.col2str(this.color2);
+			ctx.beginPath();
+			ctx.rect(x, 0, -width, canvas.height);
+			ctx.rect(x + canvas.width, 0, -width, canvas.height);
+			ctx.fill();
+
+			x = (x + width * 2) % canvas.width;
+			ctx.fillStyle = this.col2str(this.color3);
+			ctx.beginPath();
+			ctx.rect(x, 0, -width, canvas.height);
+			ctx.rect(x + canvas.width, 0, -width, canvas.height);
+			ctx.fill();
+
+			x = (x + width * 2) % canvas.width;
+			ctx.fillStyle = this.col2str(this.color4);
+			ctx.beginPath();
+			ctx.rect(x, 0, -width, canvas.height);
+			ctx.rect(x + canvas.width, 0, -width, canvas.height);
+			ctx.fill();
+		}
+		this.parameter = function(gui) {
+			gui.add(this, "speed").min(1).max(5).step(1);
+			gui.addColor(this, "color1");
+			gui.addColor(this, "color2");
+			gui.addColor(this, "color3");
+			gui.addColor(this, "color4");
+		}
+	}
+	effect_list.push(new Band());
+
+	for (let i=0; i<effect_list.length; ++i) {
+		var gui = new dat.GUI();
+		gui.hide();
+		effect_list[i].parameter(gui);
+		gui_list.push(gui);
+	}
+
+	var num = 0;
+	var effect = effect_list[num];
+	gui_list[num].show();
+
+	window.onkeydown = function(e) {
+		var key = e.keyCode - 49;
+		if (key < 0) return;
+		if (key >= effect_list.length) return;
+		gui_list[num].hide();
+		num = key;
+		gui_list[num].show();
+		effect = effect_list[num];
+		update();
+	}
+
+	var id;
+	canvas.tabIndex = 1;
+	canvas.style.position = "relative";
+	canvas.onmousedown = function(){
+		if (!id) {id = setInterval(update, 10);}
+		else     {clearInterval(id); id = 0;}
+	};
+
+	function update() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		effect.draw();
+	}
+
+	update();
+}();
+</script>

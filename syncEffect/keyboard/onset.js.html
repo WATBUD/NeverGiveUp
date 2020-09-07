@@ -1,0 +1,85 @@
+﻿<audio id="audio" src="bensound-littleidea.mp3" controls></audio>
+<canvas id="onset" width="800" height="128"></canvas>
+<canvas id="onset2" width="800" height="128"></canvas>
+<script id="onset.js">
+var onset = function() {
+var canvas       = document.getElementById('onset');
+var ctx          = canvas.getContext('2d');
+var canvas2      = document.getElementById('onset2');
+var ctx2         = canvas2.getContext('2d');
+
+var audio        = document.getElementById('audio');
+//audio.onloadedmetadata = function() {canvas.width = Math.ceil(audio.duration * 100);};
+
+var fsize        = 1024;
+var audioCtx     = new AudioContext();
+var analyser     = audioCtx.createAnalyser();
+analyser.fftSize = fsize;
+var freq         = new Uint8Array(analyser.frequencyBinCount);
+var data         = new Uint8Array(analyser.fftSize);
+var source       = audioCtx.createMediaElementSource(audio);
+source.connect(analyser);
+source.connect(audioCtx.destination);
+
+var lastx        = 0;
+var last_sum     = 0;
+var last_log_sum = 0;
+var log_magnitudes = new Float32Array(analyser.frequencyBinCount).fill(0);
+var magnitudes = new Float32Array(analyser.frequencyBinCount).fill(1);
+
+var id;
+audio.onplay  = function() {id = requestAnimationFrame(draw);};
+audio.onpause = function() {cancelAnimationFrame(id);};
+
+function draw() {
+	id = requestAnimationFrame(draw);
+
+	analyser.getByteFrequencyData(freq);
+	analyser.getByteTimeDomainData(data);
+
+	var log_sum = 0, sum = 0;
+	for (let i=0; i<freq.length; ++i) {
+		var log_magnitude = Math.log(1 + freq[i]);
+		log_sum += Math.max(0, log_magnitude - log_magnitudes[i]);
+		log_magnitudes[i] = log_magnitude;
+
+		var magnitude = (1 + freq[i]);
+		sum += Math.max(0, magnitude / magnitudes[i] - 1);
+		magnitudes[i] = magnitude;
+	}
+
+	var x = audio.currentTime * 100;
+	var x1 = lastx % canvas.width;
+	var x2 = x     % canvas.width;
+	if (x1 > x2) x1 -= canvas.width;
+
+	spectrum(ctx);
+	spectrum(ctx2);
+	function spectrum(ctx) {
+		for (var i = 0; i < freq.length; i++) {
+			var c = Math.round(freq[i]);
+			ctx.beginPath();
+			ctx.fillStyle = "rgb(" + c + "," + c + "," + c + ")";
+			ctx.fillRect(x1, canvas.height - i, x2 - x1, 1);
+		}
+	}
+
+	sum /= 32;
+	log_sum /= 8;
+	plot(ctx, last_sum, sum, "red");
+	plot(ctx2, last_log_sum, log_sum, "green");
+	function plot(ctx, lastenergy, energy, rgb) {
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = rgb;
+		ctx.beginPath();
+		ctx.moveTo(x1, canvas.height - (lastenergy - 10) * 10);
+		ctx.lineTo(x2, canvas.height - (energy - 10) * 10);
+		ctx.stroke();
+	}
+
+	last_sum = sum;
+	last_log_sum = log_sum;
+	lastx = x;
+}
+}();
+</script>

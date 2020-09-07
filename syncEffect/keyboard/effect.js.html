@@ -1,0 +1,1778 @@
+﻿<style>body {color: white; background-color: black;}</style>
+<script src="dat.gui.min.js"></script>
+<script id="utility.dat.gui.js">
+var eachController = function(func) {
+	for (var controllerName in dat.controllers)
+		if (dat.controllers.hasOwnProperty(controllerName))
+			func(dat.controllers[controllerName]);
+}
+
+var setTitle = function(v) {
+	// __li is the root dom element of each controller
+	if (v) this.__li.setAttribute('title', v);
+	else   this.__li.removeAttribute('title');
+	return this;
+};
+
+eachController(function(controller) {
+	if (!controller.prototype.hasOwnProperty('title'))
+		controller.prototype.title = setTitle;
+});
+</script>
+<script id="utility.canvas.js">
+CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+	if (typeof radius === 'undefined') {radius = 0;}
+	this.beginPath();
+	this.moveTo(x + radius, y);
+	this.lineTo(x + width - radius, y);
+	this.quadraticCurveTo(x + width, y, x + width, y + radius);
+	this.lineTo(x + width, y + height - radius);
+	this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+	this.lineTo(x + radius, y + height);
+	this.quadraticCurveTo(x, y + height, x, y + height - radius);
+	this.lineTo(x, y + radius);
+	this.quadraticCurveTo(x, y, x + radius, y);
+	this.closePath();
+	return this;
+}
+</script>
+<audio id="audio" src="bensound-summer-20sec.mp3" controls></audio>
+<input type="file" id="input"></input>
+<script id="audio.js">
+class AudioCapture {
+	constructor() {
+		var that = this;
+		this.audio = document.getElementById('audio');
+		this.audio.onplay  = function() {that.onplay = true;};
+		this.audio.onpause = function() {that.onplay = false;};
+		this.audio.onfocus = function() {that.audioContext.resume();};
+
+		this.audioContext = new AudioContext();
+		this.analyser = this.audioContext.createAnalyser();
+		this.analyser.fftSize = 1024;
+		this.data     = new Uint8Array(this.analyser.frequencyBinCount);
+		this.source   = this.audioContext.createMediaElementSource(this.audio);
+		this.source.connect(this.analyser);
+		this.source.connect(this.audioContext.destination);
+
+		this.log_magnitudes = new Float32Array(this.analyser.frequencyBinCount).fill(1);
+		this.queue = new Array(0);
+
+		this.onsetting = false;
+		this.onset = false;
+	}
+	update() {
+		this.analyser.getByteFrequencyData(this.data);
+		this.onsetDetection();
+	}
+	onsetDetection() {
+		var new_sum = 0;
+		for (let i=0; i<this.data.length; ++i) {
+			var new_log_magnitude = Math.log(1 + this.data[i]);
+			new_sum += Math.max(0, new_log_magnitude - this.log_magnitudes[i]);
+			this.log_magnitudes[i] = new_log_magnitude;
+		}
+
+		this.queue.push(new_sum);
+		if (this.queue.length < 8) return;	// 8-points smoothing
+		var old_sum = this.queue.shift();
+
+		if (new_sum > old_sum && new_sum > this.data.length * 0.1) {
+			if (this.onsetting) this.onset = false;
+			else this.onsetting = this.onset = true;
+		} else {
+			this.onsetting = this.onset = false;
+		}
+	}
+	load(file) {
+		if (file && file.type.match('audio.*|video.*')) {
+			var that = this;
+			var reader = new FileReader;
+			reader.onload = function(e) {
+				that.audio.src = e.target.result;
+				that.audio.focus();
+				that.audio.play();
+			}
+			reader.readAsDataURL(file);
+		}
+	}
+};
+
+var audioCapture = new AudioCapture();
+
+document.getElementById('input').onchange = function(e) {
+	audioCapture.load(e.target.files[0]);
+};
+document.body.ondrop = function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+	audioCapture.load(e.dataTransfer.files[0]);
+};
+document.body.ondragover = function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+	e.dataTransfer.dropEffect = 'move';
+};
+</script>
+<script id="coordinate.js">
+//[0]:左上角 [1]:右上角 [2]:右下角 [3]:左下角
+var keyboard 
+= [[{"x":416,"y":187},{"x":473,"y":187},{"x":473,"y":244},{"x":416,"y":244}],[{"x":547,"y":187},{"x":604,"y":187},{"x":604,"y":244},{"x":547,"y":244}],[{"x":613,"y":187},{"x":670,"y":187},{"x":670,"y":244},{"x":613,"y":244}],[{"x":679,"y":187},{"x":736,"y":187},{"x":736,"y":244},{"x":679,"y":244}],[{"x":746,"y":187},{"x":803,"y":187},{"x":803,"y":244},{"x":746,"y":244}],[{"x":844,"y":187},{"x":901,"y":187},{"x":901,"y":244},{"x":844,"y":244}],[{"x":911,"y":187},{"x":968,"y":187},{"x":968,"y":244},{"x":911,"y":244}],[{"x":977,"y":187},{"x":1034,"y":187},{"x":1034,"y":244},{"x":977,"y":244}],[{"x":1042,"y":187},{"x":1099,"y":187},{"x":1099,"y":244},{"x":1042,"y":244}],[{"x":1141,"y":187},{"x":1198,"y":187},{"x":1198,"y":244},{"x":1141,"y":244}],[{"x":1207,"y":187},{"x":1264,"y":187},{"x":1264,"y":244},{"x":1207,"y":244}],[{"x":1273,"y":187},{"x":1330,"y":187},{"x":1330,"y":244},{"x":1273,"y":244}],[{"x":1339,"y":187},{"x":1396,"y":187},{"x":1396,"y":244},{"x":1339,"y":244}],[{"x":1409,"y":187},{"x":1466,"y":187},{"x":1466,"y":244},{"x":1409,"y":244}],[{"x":1475,"y":187},{"x":1532,"y":187},{"x":1532,"y":244},{"x":1475,"y":244}],[{"x":1541,"y":187},{"x":1598,"y":187},{"x":1598,"y":244},{"x":1541,"y":244}],[{"x":416,"y":253},{"x":473,"y":253},{"x":473,"y":310},{"x":416,"y":310}],[{"x":481,"y":253},{"x":538,"y":253},{"x":538,"y":310},{"x":481,"y":310}],[{"x":547,"y":253},{"x":604,"y":253},{"x":604,"y":310},{"x":547,"y":310}],[{"x":613,"y":253},{"x":670,"y":253},{"x":670,"y":310},{"x":613,"y":310}],[{"x":679,"y":253},{"x":736,"y":253},{"x":736,"y":310},{"x":679,"y":310}],[{"x":745,"y":253},{"x":802,"y":253},{"x":802,"y":310},{"x":745,"y":310}],[{"x":811,"y":253},{"x":868,"y":253},{"x":868,"y":310},{"x":811,"y":310}],[{"x":877,"y":253},{"x":934,"y":253},{"x":934,"y":310},{"x":877,"y":310}],[{"x":943,"y":253},{"x":1000,"y":253},{"x":1000,"y":310},{"x":943,"y":310}],[{"x":1009,"y":253},{"x":1066,"y":253},{"x":1066,"y":310},{"x":1009,"y":310}],[{"x":1075,"y":253},{"x":1132,"y":253},{"x":1132,"y":310},{"x":1075,"y":310}],[{"x":1141,"y":253},{"x":1198,"y":253},{"x":1198,"y":310},{"x":1141,"y":310}],[{"x":1208,"y":253},{"x":1265,"y":253},{"x":1265,"y":310},{"x":1208,"y":310}],[{"x":1272,"y":253},{"x":1399,"y":253},{"x":1399,"y":310},{"x":1272,"y":310}],[{"x":1409,"y":253},{"x":1466,"y":253},{"x":1466,"y":310},{"x":1409,"y":310}],[{"x":1475,"y":253},{"x":1532,"y":253},{"x":1532,"y":310},{"x":1475,"y":310}],[{"x":1539,"y":253},{"x":1596,"y":253},{"x":1596,"y":310},{"x":1539,"y":310}],[{"x":1610,"y":253},{"x":1667,"y":253},{"x":1667,"y":310},{"x":1610,"y":310}],[{"x":1676,"y":253},{"x":1733,"y":253},{"x":1733,"y":310},{"x":1676,"y":310}],[{"x":1741,"y":253},{"x":1798,"y":253},{"x":1798,"y":310},{"x":1741,"y":310}],[{"x":1808,"y":253},{"x":1865,"y":253},{"x":1865,"y":310},{"x":1808,"y":310}],[{"x":416,"y":319},{"x":509,"y":319},{"x":509,"y":376},{"x":416,"y":376}],[{"x":514,"y":319},{"x":571,"y":319},{"x":571,"y":376},{"x":514,"y":376}],[{"x":581,"y":319},{"x":638,"y":319},{"x":638,"y":376},{"x":581,"y":376}],[{"x":646,"y":319},{"x":703,"y":319},{"x":703,"y":376},{"x":646,"y":376}],[{"x":712,"y":319},{"x":769,"y":319},{"x":769,"y":376},{"x":712,"y":376}],[{"x":779,"y":319},{"x":836,"y":319},{"x":836,"y":376},{"x":779,"y":376}],[{"x":844,"y":319},{"x":901,"y":319},{"x":901,"y":376},{"x":844,"y":376}],[{"x":910,"y":319},{"x":967,"y":319},{"x":967,"y":376},{"x":910,"y":376}],[{"x":977,"y":319},{"x":1034,"y":319},{"x":1034,"y":376},{"x":977,"y":376}],[{"x":1042,"y":319},{"x":1099,"y":319},{"x":1099,"y":376},{"x":1042,"y":376}],[{"x":1108,"y":319},{"x":1165,"y":319},{"x":1165,"y":376},{"x":1108,"y":376}],[{"x":1174,"y":319},{"x":1231,"y":319},{"x":1231,"y":376},{"x":1174,"y":376}],[{"x":1240,"y":319},{"x":1297,"y":319},{"x":1297,"y":376},{"x":1240,"y":376}],[{"x":1306,"y":319},{"x":1397,"y":319},{"x":1397,"y":376},{"x":1306,"y":376}],[{"x":1409,"y":319},{"x":1466,"y":319},{"x":1466,"y":376},{"x":1409,"y":376}],[{"x":1474,"y":319},{"x":1531,"y":319},{"x":1531,"y":376},{"x":1474,"y":376}],[{"x":1540,"y":319},{"x":1597,"y":319},{"x":1597,"y":376},{"x":1540,"y":376}],[{"x":1611,"y":319},{"x":1668,"y":319},{"x":1668,"y":376},{"x":1611,"y":376}],[{"x":1676,"y":319},{"x":1733,"y":319},{"x":1733,"y":376},{"x":1676,"y":376}],[{"x":1742,"y":319},{"x":1799,"y":319},{"x":1799,"y":376},{"x":1742,"y":376}],[{"x":1809,"y":319},{"x":1866,"y":319},{"x":1866,"y":446},{"x":1809,"y":446}],[{"x":416,"y":384},{"x":524,"y":384},{"x":524,"y":441},{"x":416,"y":441}],[{"x":533,"y":384},{"x":590,"y":384},{"x":590,"y":441},{"x":533,"y":441}],[{"x":599,"y":384},{"x":656,"y":384},{"x":656,"y":441},{"x":599,"y":441}],[{"x":665,"y":384},{"x":722,"y":384},{"x":722,"y":441},{"x":665,"y":441}],[{"x":731,"y":384},{"x":788,"y":384},{"x":788,"y":441},{"x":731,"y":441}],[{"x":797,"y":384},{"x":854,"y":384},{"x":854,"y":441},{"x":797,"y":441}],[{"x":863,"y":384},{"x":920,"y":384},{"x":920,"y":441},{"x":863,"y":441}],[{"x":929,"y":384},{"x":986,"y":384},{"x":986,"y":441},{"x":929,"y":441}],[{"x":995,"y":384},{"x":1052,"y":384},{"x":1052,"y":441},{"x":995,"y":441}],[{"x":1061,"y":384},{"x":1118,"y":384},{"x":1118,"y":441},{"x":1061,"y":441}],[{"x":1127,"y":384},{"x":1184,"y":384},{"x":1184,"y":441},{"x":1127,"y":441}],[{"x":1193,"y":384},{"x":1250,"y":384},{"x":1250,"y":441},{"x":1193,"y":441}],[{"x":1259,"y":384},{"x":1396,"y":384},{"x":1396,"y":441},{"x":1259,"y":441}],[{"x":1611,"y":384},{"x":1668,"y":384},{"x":1668,"y":441},{"x":1611,"y":441}],[{"x":1676,"y":384},{"x":1733,"y":384},{"x":1733,"y":441},{"x":1676,"y":441}],[{"x":1741,"y":384},{"x":1798,"y":384},{"x":1798,"y":441},{"x":1741,"y":441}],[{"x":416,"y":450},{"x":556,"y":450},{"x":556,"y":507},{"x":416,"y":507}],[{"x":566,"y":450},{"x":623,"y":450},{"x":623,"y":507},{"x":566,"y":507}],[{"x":633,"y":450},{"x":690,"y":450},{"x":690,"y":507},{"x":633,"y":507}],[{"x":698,"y":450},{"x":755,"y":450},{"x":755,"y":507},{"x":698,"y":507}],[{"x":764,"y":450},{"x":821,"y":450},{"x":821,"y":507},{"x":764,"y":507}],[{"x":831,"y":450},{"x":888,"y":450},{"x":888,"y":507},{"x":831,"y":507}],[{"x":896,"y":450},{"x":953,"y":450},{"x":953,"y":507},{"x":896,"y":507}],[{"x":963,"y":450},{"x":1020,"y":450},{"x":1020,"y":507},{"x":963,"y":507}],[{"x":1028,"y":450},{"x":1085,"y":450},{"x":1085,"y":507},{"x":1028,"y":507}],[{"x":1094,"y":450},{"x":1151,"y":450},{"x":1151,"y":507},{"x":1094,"y":507}],[{"x":1160,"y":450},{"x":1217,"y":450},{"x":1217,"y":507},{"x":1160,"y":507}],[{"x":1227,"y":450},{"x":1396,"y":450},{"x":1396,"y":507},{"x":1227,"y":507}],[{"x":1475,"y":450},{"x":1532,"y":450},{"x":1532,"y":507},{"x":1475,"y":507}],[{"x":1611,"y":450},{"x":1668,"y":450},{"x":1668,"y":507},{"x":1611,"y":507}],[{"x":1676,"y":450},{"x":1733,"y":450},{"x":1733,"y":507},{"x":1676,"y":507}],[{"x":1741,"y":450},{"x":1798,"y":450},{"x":1798,"y":507},{"x":1741,"y":507}],[{"x":1809,"y":450},{"x":1866,"y":450},{"x":1866,"y":577},{"x":1809,"y":577}],[{"x":416,"y":517},{"x":508,"y":517},{"x":508,"y":574},{"x":416,"y":574}],[{"x":514,"y":517},{"x":571,"y":517},{"x":571,"y":574},{"x":514,"y":574}],[{"x":581,"y":517},{"x":673,"y":517},{"x":673,"y":574},{"x":581,"y":574}],[{"x":680,"y":517},{"x":1067,"y":517},{"x":1067,"y":574},{"x":680,"y":574}],[{"x":1075,"y":517},{"x":1167,"y":517},{"x":1167,"y":574},{"x":1075,"y":574}],[{"x":1174,"y":517},{"x":1231,"y":517},{"x":1231,"y":574},{"x":1174,"y":574}],[{"x":1241,"y":517},{"x":1298,"y":517},{"x":1298,"y":574},{"x":1241,"y":574}],[{"x":1306,"y":517},{"x":1398,"y":517},{"x":1398,"y":574},{"x":1306,"y":574}],[{"x":1409,"y":517},{"x":1466,"y":517},{"x":1466,"y":574},{"x":1409,"y":574}],[{"x":1475,"y":517},{"x":1532,"y":517},{"x":1532,"y":574},{"x":1475,"y":574}],[{"x":1541,"y":517},{"x":1598,"y":517},{"x":1598,"y":574},{"x":1541,"y":574}],[{"x":1610,"y":517},{"x":1737,"y":517},{"x":1737,"y":574},{"x":1610,"y":574}],[{"x":1743,"y":517},{"x":1800,"y":517},{"x":1800,"y":574},{"x":1743,"y":574}],[{"x":1619,"y":181},{"x":1631,"y":181},{"x":1631,"y":193},{"x":1619,"y":193}],[{"x":1619,"y":201},{"x":1631,"y":201},{"x":1631,"y":213},{"x":1619,"y":213}],[{"x":1619,"y":221},{"x":1631,"y":221},{"x":1631,"y":233},{"x":1619,"y":233}],[{"x":1657,"y":178},{"x":1714,"y":178},{"x":1714,"y":235},{"x":1657,"y":235}],[{"x":1786,"y":178},{"x":1843,"y":178},{"x":1843,"y":235},{"x":1786,"y":235}]]
+var keycodes = ["Escape","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","PrintScreen","ScrollLock","Pause","Backquote","Digit1","Digit2","Digit3","Digit4","Digit5","Digit6","Digit7","Digit8","Digit9","Digit0","Minus","Equal","Backspace","Insert","Home","PageUp","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Tab","KeyQ","KeyW","KeyE","KeyR","KeyT","KeyY","KeyU","KeyI","KeyO","KeyP","BracketLeft","BracketRight","Backslash","Delete","End","PageDown","Numpad7","Numpad8","Numpad9","NumpadAdd","CapsLock","KeyA","KeyS","KeyD","KeyF","KeyG","KeyH","KeyJ","KeyK","KeyL","Semicolon","Quote","Enter","Numpad4","Numpad5","Numpad6","ShiftLeft","KeyZ","KeyX","KeyC","KeyV","KeyB","KeyN","KeyM","Comma","Period","Slash","ShiftRight","ArrowUp","Numpad1","Numpad2","Numpad3","NumpadEnter","ControlLeft","OSLeft","AltLeft","Space","AltRight","Function","ContextMenu","ControlRight","ArrowLeft","ArrowDown","ArrowRight","Numpad0","NumpadDecimal"];
+var mouse = [[{"x":0,"y":100},{"x":20,"y":100},{"x":20,"y":120},{"x":0,"y":120}],[{"x":200,"y":100},{"x":220,"y":100},{"x":220,"y":120},{"x":200,"y":120}],[{"x":40 ,"y":0},{"x":60,"y":0},{"x":60,"y":20},{"x":40,"y":20}],[{"x":170 ,"y":0},{"x":190,"y":0},{"x":190,"y":20},{"x":170,"y":20}],[{"x":70 ,"y":280},{"x":160,"y":280},{"x":160,"y":340},{"x":70,"y":340}]];
+</script>
+<img src="keyboard.png" id="keyboard.png" style="display: none;">
+<img src="mouse.png" id="mouse.png" style="display: none;">
+<script>
+var imageKeyboard = document.getElementById("keyboard.png");
+var imageMouse    = document.getElementById("mouse.png");
+</script>
+<script id="device.js">
+class Device {
+	constructor(device_type, coordinates, keycodes, image) {
+		this.type = device_type;
+		if (!keycodes) keycodes = [];
+
+		var x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9;
+		for (let i=0; i<coordinates.length; ++i)
+			for (let j=0; j<4; ++j) {
+				x1 = Math.min(x1, coordinates[i][j].x);
+				y1 = Math.min(y1, coordinates[i][j].y);
+				x2 = Math.max(x2, coordinates[i][j].x);
+				y2 = Math.max(y2, coordinates[i][j].y);
+			}
+
+		this.position = {
+			x      : -14,
+			y      : -24,
+			width  : image.width,
+			height : image.height,
+		}
+
+		this.region = {
+			x      : 0,
+			y      : 0,
+			width  : x2 - x1,
+			height : y2 - y1,
+		};
+
+		this.lights = new Array(coordinates.length);
+		for (let i=0; i<coordinates.length; ++i) {
+			var light = {};
+			light.x1 = coordinates[i][0].x - x1;
+			light.y1 = coordinates[i][0].y - y1;
+			light.x2 = coordinates[i][2].x - x1;
+			light.y2 = coordinates[i][2].y - y1;
+			light.x  = (light.x1 + light.x2) / 2;
+			light.y  = (light.y1 + light.y2) / 2;
+//			light.code = (i < keycodes.length) ? keycodes[i] : '';
+			this.lights[i] = light;
+		}
+
+		// given name, return light index
+		var array = new Array(keycodes.length);
+		for (let i=0; i<keycodes.length; ++i)
+			array[i] = [keycodes[i], i];
+		this.keycodemap = new Map(array);
+
+		this.keyframes = new Array(keycodes.length).fill(0);
+		this.keydowns  = new Array(keycodes.length).fill(false);
+
+		this.image = image;
+	}
+	move(dx, dy) {
+		this.position.x += dx;
+		this.position.y += dy;
+		this.region.x += dx;
+		this.region.y += dy;
+		for (let light of this.lights) {
+			light.x1 += dx;
+			light.y1 += dy;
+			light.x2 += dx;
+			light.y2 += dy;
+			light.x  += dx;
+			light.y  += dy;
+		}
+	}
+	draw(ctx, colors, selects) {
+		ctx.roundRect(this.position.x, this.position.y, this.position.width, this.position.height, 16);
+		ctx.fillStyle = 'rgb(32,32,32)';
+		ctx.fill();
+
+		if (this.image)
+			ctx.drawImage(this.image, this.position.x, this.position.y);
+
+		for (let i=0; i<this.lights.length; ++i) {
+			var light = this.lights[i];
+			ctx.roundRect(light.x1, light.y1, light.x2 - light.x1, light.y2 - light.y1, 6);
+			if (colors && colors[i]) {
+				ctx.fillStyle = 'rgba(' + colors[i][0] + ',' + colors[i][1] + ',' + colors[i][2] + ', 0.6)';
+				ctx.fill();
+			}
+			if (selects && selects[i]) {
+				ctx.lineWidth = 1;
+				ctx.strokeStyle = 'rgba(204,172,0,1.0)';
+				ctx.stroke();
+			}
+		}
+	}
+}
+</script>
+<script id="color.js">
+function hsl2rgb(h, s, l) {
+	if (!isFinite(h)) h = 0;
+	if (!isFinite(s)) s = 0;
+	if (!isFinite(l)) l = 0;
+
+	h /= 60;
+	if (h < 0) h = 6 - (-h % 6);
+	h %= 6;
+
+	s = Math.max(0, Math.min(1, s / 100));
+	l = Math.max(0, Math.min(1, l / 100));
+
+	var c = (1 - Math.abs((2 * l) - 1)) * s;
+	var x = c * (1 - Math.abs((h % 2) - 1));
+
+	if      (h < 1) {r = c; g = x; b = 0;}
+	else if (h < 2) {r = x; g = c; b = 0;}
+	else if (h < 3) {r = 0; g = c; b = x;}
+	else if (h < 4) {r = 0; g = x; b = c;}
+	else if (h < 5) {r = x; g = 0; b = c;}
+	else            {r = c; g = 0; b = x;}
+
+	var m = l - c / 2;
+	var r = Math.round((r + m) * 255);
+	var g = Math.round((g + m) * 255);
+	var b = Math.round((b + m) * 255);
+	return [r, g, b];
+}
+
+function assigncolor(color, color1) {
+	for (let i=0; i<3; ++i)
+		color[i] = color1[i];
+}
+
+function addcolor(color, color1) {
+	for (let i=0; i<3; ++i)
+		color[i] += color1[i];
+}
+
+function mulcolor(color, ratio) {
+	for (let i=0; i<3; ++i)
+		color[i] *= ratio;
+}
+
+function interpolatecolor(color, color1, color2, ratio) {
+	for (let i=0; i<3; ++i)
+		color[i] = color1[i] * (1 - ratio) + color2[i] * ratio;
+}
+
+function blendcolor(color, color1, opacity, blend_mode) {
+	if (blend_mode === 'add') {
+		for (let i=0; i<3; ++i)
+			color[i] += color1[i] * opacity;
+	} else if (blend_mode === 'maximum') {
+		for (let i=0; i<3; ++i)
+			color[i] = Math.max(color[i], color1[i] * opacity);
+	} else if (blend_mode === 'overlap') {
+//		interpolatecolor(color, color, color1, opacity);
+		for (let i=0; i<3; ++i)
+			color[i] = color[i] * (1 - opacity) + color1[i] * opacity;
+	} else if (blend_mode === 'overwrite') {
+		for (let i=0; i<3; ++i)
+			color[i] = color1[i] * opacity;
+	}
+}
+</script>
+<script id="bitmap.js">
+class Bitmap {
+	constructor(size, region) {
+		this.size = size;	// KEY WIDTH & HEIGHT
+		this.X = Math.ceil(region.width  / this.size);
+		this.Y = Math.ceil(region.height / this.size);
+		this.array = new Array(this.Y + 1);
+		for (let y=0; y<this.array.length; ++y)
+			this.array[y] = new Float32Array(this.X).fill(0);
+	}
+	read(x, y, region, index) {
+		x = (x - region.x1) / this.size; var x0 = x | 0;
+		y = (y - region.y1) / this.size; var y0 = y | 0;
+		var inside = (x0 >= 0 && x0 < this.X
+				   && y0 >= 0 && y0 < this.Y);
+		if (index || !inside) return [inside, x0, y0, 0];
+		var x1 = x0 + 1; if (x1 == this.X) x1 = x0;
+		var y1 = y0 + 1; if (y1 == this.Y) y1 = y0;
+		var s1 = x - x0; var s0 = 1 - s1;
+		var t1 = y - y0; var t0 = 1 - t1;
+//		var scale = this.array[y0][x0];
+		var scale = s0 * (t0 * this.array[y0][x0] + t1 * this.array[y1][x0])
+		          + s1 * (t0 * this.array[y0][x1] + t1 * this.array[y1][x1]);
+		return [inside, x0, y0, scale];
+	}
+}
+</script>
+<script id="effect.js">
+class Effect {
+	constructor() {
+		// interact block
+		this.audio = 'random';
+		this.autoplay = 'null';
+		this.interact = 'interact';
+		this.x = 0;
+		this.y = 0;
+		this.interact_x = 0;	// local
+		this.interact_y = 0;	// local
+		this.interact_mode = 'press';
+		// animation block
+		this.during = 300;
+		this.delay = 0;
+		this.cooldown = 100;
+		this.fadein = 0;
+		this.fadeout = 0;
+		this.animations = [];	// local
+		this.queue_size = 100;	// local
+		this.frame = 0;			// local
+		// layer block
+		this.hide = false;
+		this.opacity = 1.0;
+		this.blend_mode = 'overlap';
+		this.local_blend_mode = 'overlap';
+		// color block
+		this.gradient = false;
+		this.use_scales = false;
+		this.defaultcolors = [
+			hsl2rgb( 45, 60, 60),
+			hsl2rgb(135, 60, 60),
+			hsl2rgb(225, 60, 60),
+			hsl2rgb(315, 60, 60),
+			[192,192,192]
+		];
+		this.defaultscales = [
+			0, 0.2, 0.4, 0.6, 0.8
+		];
+		this.colors = new Array(this.defaultcolors.length);
+		for (let i=0; i<this.defaultcolors.length; ++i) {
+			this.colors[i] = [0,0,0];
+			assigncolor(this.colors[i], this.defaultcolors[i]);
+		}
+		this.scales = this.defaultscales.slice(0);
+		this.color_number = this.defaultcolors.length;	// local
+	}
+	initGUI() {
+		this.gui = new dat.GUI({hideable: false});
+		this.gui.hide();
+
+		var that = this;
+		var folder = this.gui.addFolder('interact');
+		folder.open();
+		var location_mode = ['null','interact','random','center','predefine'];
+		folder.add(this, "audio", location_mode)
+		.title('音訊：無、互動地點、隨機地點、指定地點、正中央');
+		folder.add(this, "autoplay", location_mode)
+		.title('自動：無、互動地點、隨機地點、指定地點、正中央');
+		folder.add(this, "interact", location_mode)
+		.title('互動：無、互動地點、隨機地點、指定地點、正中央');
+		folder.add(this, "x").min(0).max(1024).step(1)
+		.title('指定地點X座標　範圍:正負整數　單位:像素');
+		folder.add(this, "y").min(0).max(768).step(1)
+		.title('指定地點Y座標　範圍:正負整數　單位:像素');
+		folder.add(this, "interact_mode", ['down','press'])
+		.title('互動模式：按下播放、按住播放');
+
+		var folder = this.gui.addFolder('animation');
+		folder.open();
+		folder.add(this, "during").min(0).max(1000).step(10)
+		.title('播放長度　範圍:[0,1000]　單位:幀');
+		folder.add(this, "delay").min(0).max(1000).step(10)
+		.title('延遲時間（首次CD時間）　範圍:[0,1000]　單位:幀');
+		folder.add(this, "cooldown").min(0).max(1000).step(10)
+		.title('間距時間（每次CD時間）　範圍:[0,1000]　單位:幀');
+		folder.add(this, "fadein").min(0).max(1).step(0.1)
+		.title('淡入時間比例　範圍:[0,1]　單位:比例');
+		folder.add(this, "fadeout").min(0).max(1).step(0.1)
+		.title('淡出時間比例　範圍:[0,1]　單位:比例');
+
+		var folder = this.gui.addFolder('layer');
+		folder.open();
+		folder.add(this, "hide").onChange(function(){manager.showEffectNames();})
+		.title('隱藏');
+		folder.add(this, "opacity").min(0).max(1).step(0.1)
+		.title('不透明程度　範圍:[0,1]　單位:比例');
+		folder.add(this, "blend_mode", ['add','maximum','overlap','overwrite'])
+		.title('混色模式：相加、最大值、重疊、覆寫');
+		folder.add(this, "local_blend_mode", ['add','maximum','overlap','overwrite'])
+		.title('同層互動效果混色模式：相加、最大值、重疊、覆寫');
+
+		var folder = this.gui.addFolder('color');
+		folder.open();
+		this.folder = folder;
+		folder.add(this, "gradient")
+		.title('色彩漸層');
+		folder.add(this, "use_scales").onChange(function(){that.toggleScale();})
+		.title('色彩播放速度編輯器')
+		this.guicolors = new Array(this.defaultcolors.length);
+		this.guiscales = new Array(this.defaultscales.length);
+		for (let i=0; i<this.color_number; ++i) {
+			this.guicolors[i] = folder.addColor(this.colors, i, this.colors[i]).name('color ' + (i+1)).title('色彩 範圍:[0,255]');
+			if (this.use_scales) this.guiscales[i] = folder.add(this.scales, i, this.scales[i]).name('scale ' + (i+1)).min(0).max(1).step(.1).title('色彩位置　範圍:[0,1)　單位:比例');
+		}
+	}
+	createColor() {
+		if (this.color_number >= this.defaultcolors.length) return;
+		var i = this.color_number++;
+		assigncolor(this.colors[i], this.defaultcolors[i]);
+		this.scales[i] = this.defaultscales[i];
+
+		this.guicolors[i] = this.folder.addColor(this.colors, i, this.colors[i]).name('color ' + (i+1)).title('色彩 範圍:[0,255]');
+		if (this.use_scales) this.guiscales[i] = this.folder.add(this.scales, i, this.scales[i]).name('scale ' + (i+1)).min(0).max(1).step(.1).title('色彩位置　範圍:[0,1)　單位:比例');
+	}
+	removeColor() {
+		if (this.color_number <= 1) return;
+		var i = --this.color_number;
+
+		this.folder.remove(this.guicolors[i]);
+		if (this.use_scales) this.folder.remove(this.guiscales[i]);
+	}
+	toggleScale() {
+		if (this.use_scales) {
+			for (let i=0; i<this.color_number; ++i)
+				this.folder.remove(this.guicolors[i]);
+			for (let i=0; i<this.color_number; ++i) {
+				this.guicolors[i] = this.folder.addColor(this.colors, i, this.colors[i]).name('color ' + (i+1)).title('色彩 範圍:[0,255]');
+				this.guiscales[i] = this.folder.add(this.scales, i, this.scales[i]).name('scale ' + (i+1)).min(0).max(1).step(.1).title('色彩位置　範圍:[0,1)　單位:比例');
+			}
+		} else {
+			for (let i=0; i<this.color_number; ++i)
+				this.folder.remove(this.guiscales[i]);
+		}
+	}
+	getColor(result, scale, loop) {
+		scale -= Math.floor(scale);	// [0, 1)
+		if (!this.use_scales) {
+			if (!this.gradient) {
+				scale *= this.color_number;
+				var index = Math.floor(scale);
+				assigncolor(result, this.colors[index]);
+			} else {
+				if (loop) scale *= this.color_number;
+				else      scale *= (this.color_number - 1);
+				if (loop) scale -= 0.5;		// align to !gradient
+				var index = Math.floor(scale);
+				var color1 = this.colors[(index + this.color_number) % this.color_number];
+				var color2 = this.colors[(index + 1) % this.color_number];
+				var ratio = scale - index;
+				interpolatecolor(result, color1, color2, ratio);
+			}
+		} else {
+			var min_index = 0;
+			var min_scale = 1.1;
+			var max_index = 0;
+			var max_scale = 0;
+			for (let i=0; i<this.color_number; ++i) {
+				if (this.scales[i] >= max_scale)
+					max_scale = this.scales[max_index = i];
+				if (this.scales[i] < min_scale)
+					min_scale = this.scales[min_index = i];
+			}
+
+			var lower_index = -1;
+			var lower_scale = 0;
+			var upper_index = this.color_number;
+			var upper_scale = 1;
+			for (let i=0; i<this.color_number; ++i)
+				if (this.scales[i] <= scale) {
+					if (this.scales[i] >= lower_scale)
+						lower_scale = this.scales[lower_index = i];
+				} else {
+					if (this.scales[i] < upper_scale)
+						upper_scale = this.scales[upper_index = i];
+				}
+
+			if (loop) {
+				if (lower_index == -1)
+					lower_scale = this.scales[lower_index = max_index] - 1;
+				if (upper_index == this.color_number)
+					upper_scale = this.scales[upper_index = min_index] + 1;
+			} else {
+				if (lower_index == -1)
+					lower_scale = this.scales[lower_index = min_index];
+				if (upper_index == this.color_number)
+					upper_scale = this.scales[upper_index = max_index];
+			}
+
+			if (!this.gradient) {
+				assigncolor(result, this.colors[lower_index]);
+			} else {
+				if (lower_scale == upper_scale)
+					assigncolor(result, this.colors[lower_index]);
+				else {
+					var color1 = this.colors[lower_index];
+					var color2 = this.colors[upper_index];
+					var ratio = (scale - lower_scale) / (upper_scale - lower_scale);
+					interpolatecolor(result, color1, color2, ratio);
+				}
+			}
+		}
+	}
+	clearAnimations() {
+		this.animations = [];
+	}
+	initAnimationStatus(interact_type) {
+		var status = 'delay';
+		if (this.interact_mode === 'press' && interact_type === 'interact') {
+			if (this.delay == 0) status = 'hold';
+		} else {
+			if (this.delay == 0) status = 'play';
+			if (this.during == 0) status = 'end';
+		}
+		return status;
+	}
+	pushAnimations(interact_type, key, x, y) {
+		// empty
+	}
+	unholdAnimations(interact_type, key) {
+		if (this.interact_mode !== 'press') return;
+		for (let animation of this.animations)
+			if (animation.status === 'hold'
+			 && animation.interact_type === interact_type
+			 && animation.key === key) {
+				animation.status = 'play';
+				animation.holdframe = animation.frame;
+				animation.frame = 0;
+			}
+	}
+	update(region, devices) {
+		this.updateAnimations(region, devices);
+		this.interactAnimations(region, devices);
+		this.autoplayAnimations(region, devices);
+		this.audioAnimations(region, devices);
+	}
+//		const STATUS_DELAY = 0;
+//		const STATUS_HOLD  = 1;
+//		const STATUS_PLAY  = 2;
+//		const STATUS_END   = 3;
+//		const STATUS_MASK  = 3;
+//		const STATUS_SHIFT = 0;
+//		function assign(status, mask, shift) {
+//			animation.status &= ~mask;
+//			animation.status |= (status << shift);
+//		}
+//		function equal(status, mask, shift) {
+//			return (animation.status & mask) == (status << shift);
+//		}
+	updateAnimations(region, devices) {
+		while (this.animations.length > this.queue_size)
+			this.animations.shift();
+
+		for (let animation of this.animations) {
+			animation.frame++;
+			if (animation.frame > 10000) {
+				animation.status = 'end';
+				animation.frame = 0;
+			}
+			if (animation.status === 'delay'
+			 && animation.frame >= this.delay) {
+				animation.status = 'play';
+				if (this.interact_mode === 'press' && animation.interact_type === 'interact') animation.status = 'hold';
+				animation.frame = 0;
+			}
+			if (animation.status === 'hold') {
+				// change status via unholdAnimation()
+			}
+			if (animation.status === 'play'
+			 && animation.frame >= this.during) {
+				animation.status = 'end';
+				animation.frame = 0;
+			}
+		}
+
+		while (this.animations.length > 0 && this.animations[0].status === 'end')
+			this.animations.shift();
+	}
+	interactAnimations(region, devices) {
+//		if (this.interact === 'null') return;
+		for (let i=0; i<devices.length; ++i) {
+			for (let index=0; index<devices[i].keyframes.length; ++index) {
+				var keyframe = devices[i].keyframes[index];
+				var keydown  = devices[i].keydowns[index];
+				var light    = devices[i].lights[index];
+				if (keydown) {
+					this.interact_x = light.x;
+					this.interact_y = light.y;
+					if (this.interact === 'null') continue;
+					if ((this.cooldown == 0 && keyframe == 0)
+					 || (this.cooldown > 0 && keyframe % this.cooldown == 0)) {
+						var [x, y] = this.getLocation(region, devices, this.interact);
+						this.pushAnimations('interact', index, x, y);
+					}
+				} else {
+					if (keyframe == 0) {
+						this.unholdAnimations('interact', index);
+					}
+				}
+			}
+		}
+	}
+	audioAnimations(region, devices) {
+		if (this.audio === 'null') return;
+		if (audioCapture.onset) {
+			var index = 0xffff;
+			var [x, y] = this.getLocation(region, devices, this.audio);
+			this.pushAnimations('audio', index, x, y);
+		}
+	}
+	autoplayAnimations(region, devices) {
+		if (this.autoplay === 'null') return;
+		if (this.cooldown == 0) return;
+
+		if (this.frame == 0) {
+			var index = 0xffff;
+			var [x, y] = this.getLocation(region, devices, this.autoplay);
+			this.pushAnimations('autoplay', index, x, y);
+		}
+		this.frame ++;
+		this.frame %= this.cooldown;
+	}
+	getRandomLight(devices) {
+		var length = 0;
+		for (let i=0; i<devices.length; ++i)
+			length += devices[i].lights.length;
+		if (length == 0) return [-1, null];
+
+		var index = Math.floor(Math.random() * length);
+		var i = 0;
+		for (i=0; index >= devices[i].lights.length; ++i)
+			index -= devices[i].lights.length;
+		return [index, devices[i].lights[index]];
+	}
+	getLocation(region, devices, location_mode) {
+		if (location_mode === 'interact') {
+			return [this.interact_x, this.interact_y];
+		} else if (location_mode === 'random') {
+			var [index, light] = this.getRandomLight(devices);
+			return [light.x, light.y];
+		} else if (location_mode === 'center') {
+			return [region.cx, region.cy];
+		} else if (location_mode === 'predefine') {
+			return [this.x, this.y];
+		} else {
+			return [0, 0];
+		}
+	}
+	setLocation(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	init(region) {
+		this.x = region.cx;
+		this.y = region.cy;
+		this.interact_x = region.cx;
+		this.interact_y = region.cy;
+	}
+	draw(ctx) {
+		ctx.strokeStyle = "lightgreen";
+		ctx.lineWidth = 2;
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, 8, 0, 2*Math.PI);
+		ctx.stroke();
+	}
+}
+
+class Band extends Effect {
+	constructor() {
+		super();
+		this.description = "彩帶";
+		this.shape = 'linear';
+		this.speed = 20;
+		this.width = 1000;
+		this.angle = 0;
+		this.direction = true;
+		this.queue_size = 1;	// local
+	}
+	initGUI() {
+		super.initGUI();
+		var folder = this.gui.addFolder('effect');
+		folder.open();
+		folder.add(this, "shape", ['linear','conic','radial'])
+		.title('造型');
+		folder.add(this, "speed").min(1).max(20).step(1)
+		.title('移動速度　範圍:[1,oo]　單位:像素/幀');
+		folder.add(this, "width").min(100).max(10000).step(100)
+		.title('寬度　範圍:[1,oo]　單位:像素');
+		folder.add(this, "angle").min(0).max(360).step(20)
+		.title('移動方向（直線造型）　範圍:無限制(360循環)　單位:幅角');
+		folder.add(this, "direction")
+		.title('移動方向　範圍:朝外/朝內');
+	}
+	pushAnimations(interact_type, key, x, y) {
+		this.animations.push({
+			status : this.initAnimationStatus(interact_type),
+			interact_type : interact_type,
+			key : key,
+			frame : 0,
+			holdframe : 0,
+			x: x,
+			y: y,
+		});
+	}
+	render(lights, region, outputs, selects) {
+		if (this.animations.length === 0) return;
+		var animation = this.animations[0];
+		if (animation.status === 'delay') return;
+		if (animation.status === 'end') return;
+
+		var theta = 2 * Math.PI * this.angle / 360;
+		var dx =  Math.cos(theta);
+		var dy = -Math.sin(theta);
+		if (Math.abs(dx) < 1e-5) dx = 0;
+		if (Math.abs(dy) < 1e-5) dy = 0;
+
+		for (let i=0; i<lights.length; ++i) {
+			if (!selects[i]) continue;
+			var light = lights[i];
+
+			var d = 0;
+			if (this.shape === 'linear') {
+				d = light.x * dx + light.y * dy;
+			} else if (this.shape === 'conic') {
+				d = Math.hypot(light.x - animation.x, light.y - animation.y);
+			} else if (this.shape === 'radial') {
+				d = Math.atan2(light.y - animation.y, light.x - animation.x);
+				d = d / (2 * Math.PI) * 360;
+			}
+
+			var frame = animation.holdframe + animation.frame;
+			var position = frame * this.speed;
+			position *= (this.direction ? +1 : -1);
+			var width = (this.shape === 'radial') ? 360 : this.width;
+			if (width > 0) position %= width;
+
+			var scale = 0;
+			if (width > 0) scale = (d - position) / width;
+			var output = [0,0,0];
+			this.getColor(output, scale, true);
+
+			if (this.during > 0 && animation.status === 'play') {
+				var ratio   = frame / this.during;
+				var fadein  = (this.fadein  == 0) ? 1.0 : (ratio / this.fadein);
+				var fadeout = (this.fadeout == 0) ? 1.0 : ((1.0 - ratio) / this.fadeout);
+				if (this.interact_mode === 'press') fadein = 1.0;
+				var opacity = Math.min(1.0, fadein, fadeout);
+				mulcolor(output, opacity);
+			}
+			blendcolor(outputs[i], output, this.opacity, this.blend_mode);
+		}
+	}
+}
+
+class Wave extends Effect {
+	constructor() {
+		super();
+		this.description = "波紋/星光/呼吸/下雨";
+		this.shape = 'linear';
+		this.speed = 20;
+		this.width = 100;
+		this.angle = 0;
+		this.boundary = false;
+		this.soft = false;
+		this.ground = false;
+		this.concatenate = false;
+		this.color_index = 0;	// local
+	}
+	initGUI() {
+		super.initGUI();
+		var folder = this.gui.addFolder('effect');
+		folder.open();
+		folder.add(this, "shape", ['linear','symmetric linear','conic','rain','flame','firework','breath'])
+		.title('造型');
+		folder.add(this, "speed").min(1).max(20).step(1)
+		.title('移動速度　範圍:[1,oo]　單位:像素/幀');
+		folder.add(this, "width").min(100).max(10000).step(100)
+		.title('寬度　範圍:[1,oo]　單位:像素');
+		folder.add(this, "angle").min(0).max(360).step(20)
+		.title('移動方向　範圍:無限制(360循環)　單位:幅角');
+		folder.add(this, "boundary")
+		.title('於邊界啟動');
+		folder.add(this, "soft")
+		.title('柔邊');
+		folder.add(this, "ground")
+		.title('背景色彩平均分配');
+		folder.add(this, "concatenate")
+		.title('色彩連鎖　一次按鍵連續播放每個色彩');
+	}
+	pushAnimations(interact_type, key, x, y) {
+		this.animations.push({
+			status : this.initAnimationStatus(interact_type),
+			interact_type : interact_type,
+			key : key,
+			frame : 0,
+			holdframe : 0,
+			x : x,
+			y : y,
+			color : this.colors[this.color_index],
+		});
+		this.color_index = (this.color_index + 1) % this.color_number;
+	}
+	render(lights, region, outputs, selects) {
+		var theta = 2 * Math.PI * this.angle / 360;
+		var dx =  Math.cos(theta);
+		var dy = -Math.sin(theta);
+		if (Math.abs(dx) < 1e-5) dx = 0;
+		if (Math.abs(dy) < 1e-5) dy = 0;
+		var rx = (dx > 0) ? 0 : region.width;
+		var ry = (dy > 0) ? 0 : region.height;
+
+		for (let i=0; i<lights.length; ++i) {
+			if (!selects[i]) continue;
+			var light = lights[i];
+			var output = [0,0,0];
+			var has_output = false;
+			for (let animation of this.animations) {
+				if (animation.status === 'delay') continue;
+				if (animation.status === 'end') continue;
+
+				var x = animation.x;
+				var y = animation.y;
+				if (this.boundary) {
+					if (this.shape === 'linear' || this.shape === 'symmetric linear') {
+						x = rx;
+						y = ry;
+					} else {
+						var px = (dx == 0) ? 1e5 : (rx - x) / dx;
+						var py = (dy == 0) ? 1e5 : (ry - y) / dy;
+						if (Math.abs(px) < Math.abs(py)) {x = rx; y += dy * px;}
+						else                             {y = ry; x += dx * py;}
+					}
+				}
+
+				var frame = animation.holdframe + animation.frame;
+				var scale = 0, ratio = 0.5;
+				if (this.shape === 'linear' || this.shape === 'symmetric linear') {
+					var d = (light.x - x) * dx + (light.y - y) * dy;
+					if (this.shape === 'symmetric linear') d = Math.abs(d);
+					if (d < 0) continue;
+					var position = frame * this.speed;
+					if (!(d >= position - this.width && d < position)) continue;
+					position = d - (position - this.width);
+					if (this.width > 0) scale = position / this.width;
+					if (this.width > 0) ratio = position / this.width;
+				} else if (this.shape === 'conic') {
+					var d = Math.hypot(light.x - x, light.y - y);
+					var position = frame * this.speed;
+					if (!(d >= position - this.width && d < position)) continue;
+					position = d - (position - this.width);
+					if (this.width > 0) scale = position / this.width;
+					if (this.width > 0) ratio = position / this.width;
+				} else if (this.shape === 'rain') {
+					var position = frame * this.speed;
+					x += position * dx;
+					y += position * dy;
+					if (!(x >= light.x1 && x <= light.x2
+					   && y >= light.y1 && y <= light.y2)) continue;
+					if (this.during > 0) scale = frame / this.during;
+					if (animation.status === 'hold') scale = 0;
+					ratio = 0.5;
+				} else if (this.shape === 'flame') {
+					var position = frame * this.speed;
+					x += position * dx;
+					y += position * dy;
+					var d = Math.hypot(light.x - x, light.y - y);
+					if (d > this.width / 2) continue;
+					if (this.during > 0) scale = frame / this.during;
+					if (animation.status === 'hold') scale = 0;
+					if (this.width > 0)  ratio = 0.5 - d / this.width;
+				} else if (this.shape === 'firework') {
+					var d = Math.hypot(light.x - x, light.y - y);
+					if (d > this.width / 2) continue;
+					if (this.during > 0) scale = frame / this.during;
+					if (animation.status === 'hold') scale = 0;
+					if (this.width > 0)  ratio = 0.5 - d / this.width;
+				} else if (this.shape === 'breath') {
+					if (this.during > 0) scale = frame / this.during;
+					if (animation.status === 'hold') scale = 0;
+					ratio = 0.5;
+				}
+
+				var color = [0,0,0];
+				if (this.ground) {
+//					var d = (light.x - region.x1) * dx
+//					      + (light.y - region.y1) * dy;
+//					d -= dmin;
+//					var D = Math.abs(region.width  * dx)
+//					      + Math.abs(region.height * dy);
+					var d = light.x - region.x1;
+					var D = region.width;
+					var scale = d / D;
+					this.getColor(color, scale, false);
+				} else if (this.concatenate) {
+					this.getColor(color, scale, false);
+				} else {
+					assigncolor(color, animation.color);
+				}
+				var soft = 1.0;
+				if (this.soft) {
+					ratio = 1 - Math.abs(ratio * 2 - 1);	// linear mountain
+					ratio = 1 - Math.pow(2, -5 * ratio);	// easeOutExpo
+					soft = ratio;
+				}
+				var fade = 1.0;
+				if (this.during > 0 && animation.status === 'play') {
+					var ratio   = animation.frame / this.during;
+					var fadein  = (this.fadein  == 0) ? 1.0 : (ratio / this.fadein);
+					var fadeout = (this.fadeout == 0) ? 1.0 : ((1.0 - ratio) / this.fadeout);
+					if (this.interact_mode === 'press') fadein = 1.0;
+					fade = Math.min(1.0, fadein, fadeout);
+				}
+				var opacity = soft * fade;
+				blendcolor(output, color, opacity, this.local_blend_mode);
+				has_output = true;
+			}
+			if (has_output)
+				blendcolor(outputs[i], output, this.opacity, this.blend_mode);
+		}
+	}
+}
+
+class Fire extends Effect {
+	constructor() {
+		super();
+		this.description = "火焰";
+		this.diffuse = 0.1;
+		this.fire = 0.5;
+		this.boundary = true;
+	}
+	initGUI() {
+		super.initGUI();
+		var folder = this.gui.addFolder('effect');
+		folder.open();
+		folder.add(this, "diffuse").min(0).max(1).step(0.1)
+		.title('傳遞速度　範圍:[0,1]　單位:比例');
+		folder.add(this, "fire").min(0).max(1).step(0.1)
+		.title('興旺程度　範圍:[0,1]　單位:比例');
+		folder.add(this, "boundary")
+		.title('於邊界啟動');
+	}
+	init(region) {
+		super.init(region);
+		this.bitmap = new Bitmap(50, region);
+		this.array = this.bitmap.array;
+		this.X = this.bitmap.X;
+		this.Y = this.bitmap.Y;
+	}
+	pushAnimations(interact_type, key, x, y) {
+		this.animations.push({
+			status : this.initAnimationStatus(interact_type),
+			interact_type : interact_type,
+			key : key,
+			frame : 0,
+			holdframe : 0,
+			x : x,
+			y : y,
+		});
+	}
+	render(lights, region, outputs, selects) {
+		for (let animation of this.animations) {
+			if (animation.status === 'delay') continue;
+			if (animation.status === 'end') continue;
+			var [inside, x0, y0] = this.bitmap.read(animation.x, animation.y, region, true);
+			if (!inside) continue;
+			if (this.boundary) y0 = this.Y;
+			this.array[y0][x0] += this.fire * (1 + Math.random() / 2);
+			if (this.array[y0][x0] > 100) this.array[y0][x0] = 100;
+		}
+
+		var one_minus_diffuse = 1 - this.diffuse;
+		for (let y=0; y<this.Y; ++y) {
+			for (let x=0; x<this.X; ++x) {
+				this.array[y][x] *= one_minus_diffuse;
+				var value = 0;
+				if (x == 0) {
+					value += this.array[y+1][x];
+					value += this.array[y+1][x+1];
+					this.array[y][x] += value / 2 * this.diffuse;
+				} else if (x == this.X - 1) {
+					value += this.array[y+1][x];
+					value += this.array[y+1][x-1];
+					this.array[y][x] += value / 2 * this.diffuse;
+				} else {
+					value += this.array[y+1][x];
+					value += this.array[y+1][x-1];
+					value += this.array[y+1][x+1];
+					this.array[y][x] += value / 3 * this.diffuse;
+				}
+			}
+		}
+
+		for (let x=0; x<this.X; ++x)
+			this.array[this.Y][x] *= one_minus_diffuse;
+
+		for (let i=0; i<lights.length; ++i) {
+			if (!selects[i]) continue;
+			var light = lights[i];
+			var output = [255, 32, 2];
+			var [inside, x0, y0, scale] = this.bitmap.read(light.x, light.y, region);
+			if (!inside) continue;
+			mulcolor(output, scale);
+//			this.getColor(output, scale, false);
+			blendcolor(outputs[i], output, this.opacity, this.blend_mode);
+		}
+	}
+}
+
+class Spectrum extends Effect {
+	constructor() {
+		super();
+		this.description = "音訊";
+	}
+	initGUI() {
+		super.initGUI();
+		var folder = this.gui.addFolder('effect');
+		folder.open();
+	}
+	init(region) {
+		super.init(region);
+		this.bitmap = new Bitmap(50, region);
+		this.array = this.bitmap.array;
+		this.X = this.bitmap.X;
+		this.Y = this.bitmap.Y;
+	}
+	render(lights, region, outputs, selects) {
+		if (!audioCapture.onplay) return;
+		var magnitudes = audioCapture.data;
+
+		const shift = 2;
+		for (let i=0; i<this.X && i+shift<magnitudes.length; ++i) {
+			var scale = Math.max(0, magnitudes[i + shift] - 64) / (256 - 64 - 1);
+			var height = Math.floor(scale * this.Y);
+			for (let j=0; j<this.Y; ++j)
+				this.array[this.Y-1-j][i] = (j < height ? 1 : 0);
+		}
+
+		for (let i=0; i<lights.length; ++i) {
+			if (!selects[i]) continue;
+			var light = lights[i];
+			var output = [0,0,0];
+			var scale = (light.x - region.x1) / region.width;
+			this.getColor(output, scale, false);
+			var [inside, x0, y0, scale] = this.bitmap.read(light.x, light.y, region);
+			if (!inside) continue;
+			if (scale == 0) continue;
+			mulcolor(output, scale);
+			blendcolor(outputs[i], output, this.opacity, this.blend_mode);
+		}
+	}
+}
+</script>
+<div id="output" style="font-size: 12pt; text-align: left; height: 1.5em;"></div>
+<script>
+var output = document.getElementById("output");
+</script>
+<script id="manager.js">
+class Manager {
+	constructor() {
+		this.devices = [];
+		this.effects = [];
+		this.outputs = [];	// device -> [r,g,b] array
+		this.selects = [];	// (device, effect) -> bool array
+
+		this.region = {
+			x1       : 0,
+			y1       : 0,
+			x2       : 0,
+			y2       : 0,
+			x        : 0,
+			y        : 0,
+			width    : 0,
+			height   : 0,
+			diameter : 0,
+		};
+
+		this.effect_index = -1;
+		this.effect = null;
+		this.device_index = -1;
+		this.device = null;
+
+		this.show_effect = null;
+	}
+	reset() {
+		this.outputs = new Array(this.devices.length);
+		for (let i=0; i<this.devices.length; ++i) {
+			this.outputs[i] = new Array(this.devices[i].lights.length);
+			for (let j=0; j<this.outputs[i].length; ++j) {
+				this.outputs[i][j] = [0,0,0];
+			}
+		}
+
+		this.selects = new Array(this.devices.length);
+		for (let i=0; i<this.devices.length; ++i) {
+			this.selects[i] = new Array(this.effects.length);
+			for (let j=0; j<this.effects.length; ++j) {
+				this.selects[i][j] = new Array(this.devices[i].lights.length).fill(true);
+			}
+		}
+	}
+	updateRegion() {
+		var x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9;
+		if (this.devices.length == 0) x1 = y1 = x2 = y2 = 0;
+		for (let device of this.devices) {
+			x1 = Math.min(x1, device.region.x);
+			y1 = Math.min(y1, device.region.y);
+			x2 = Math.max(x2, device.region.x + device.region.width);
+			y2 = Math.max(y2, device.region.y + device.region.height);
+		}
+		this.region.x1 = x1;
+		this.region.y1 = y1;
+		this.region.x2 = x2;
+		this.region.y2 = y2;
+		this.region.cx = (x1 + x2) / 2;
+		this.region.cy = (y1 + y2) / 2;
+		this.region.width  = x2 - x1;
+		this.region.height = y2 - y1;
+		this.region.diameter = Math.hypot(x2 - x1, y2 - y1);
+	}
+	setBlendMode(blend_mode) {
+		for (let i=0; i<this.effects.length; ++i) {
+			this.effects[i].blend_mode = blend_mode;
+			this.effects[i].gui.updateDisplay();
+		}
+	}
+	setOpacity(opacity) {
+		for (let i=0; i<this.effects.length; ++i) {
+			this.effects[i].opacity = opacity;
+			this.effects[i].gui.updateDisplay();
+		}
+	}
+	pushDevice(device) {
+		this.devices.push(device);
+
+		var outputs = new Array(device.lights.length);
+		for (let j=0; j<outputs.length; ++j)
+			outputs[j] = [0,0,0];
+		this.outputs.push(outputs);
+
+		var selects = new Array(this.effects.length);
+		for (let j=0; j<selects.length; ++j)
+			selects[j] = new Array(device.lights.length).fill(true);
+		this.selects.push(selects);
+
+		// screen position
+		var x = this.devices.length * 20;
+		var y = this.devices.length * 20;
+		device.move(x, y);
+		this.updateRegion();
+	}
+	popDevice() {
+		this.devices.pop();
+		this.outputs.pop();
+		this.selects.pop();
+		this.updateRegion();
+	}
+	pushEffect(effect) {
+		effect.init(this.region);
+		this.effects.push(effect);
+		for (let i=0; i<this.devices.length; ++i) {
+			var selects = new Array(this.devices[i].lights.length).fill(true);
+			this.selects[i].push(selects);
+		}
+
+		if (this.effect_index < 0)
+			this.effect = this.effects[this.effect_index = 0];
+
+		effect.initGUI();
+		this.showGUI();
+	}
+	popEffect() {
+		if (this.effects.length == 0) return;
+
+		this.effects.pop();
+		for (let i=0; i<this.devices.length; ++i)
+			this.selects[i].pop();
+
+		if (this.effect_index >= this.effects.length)
+			this.effect_index--;
+		if (this.effect_index < 0)
+			this.effect = null;
+		else
+			this.effect = this.effects[this.effect_index];
+
+		this.showGUI();
+	}
+	insertEffect(effect) {
+		if (this.effect_index < 0) this.effect_index = 0;
+
+		effect.init(this.region);
+		this.effects.splice(this.effect_index, 0, effect);
+		for (let i=0; i<this.devices.length; ++i) {
+			var selects = new Array(this.devices[i].lights.length).fill(true);
+			this.selects[i].splice(this.effect_index, 0, selects);
+		}
+
+		this.effect = this.effects[this.effect_index];
+
+		effect.initGUI();
+		this.showGUI();
+	}
+	insertAfterEffect(effect) {
+		this.effect_index++;
+		this.insertEffect(effect);
+	}
+	deleteEffect() {
+		if (this.effects.length == 0) return;
+
+		this.effects.splice(this.effect_index, 1);
+		for (let i=0; i<this.devices.length; ++i)
+			this.selects[i].splice(this.effect_index, 1);
+
+		if (this.effect_index >= this.effects.length)
+			this.effect_index--;
+		if (this.effect_index < 0)
+			this.effect = null;
+		else
+			this.effect = this.effects[this.effect_index];
+
+		this.showGUI();
+	}
+	selectEffect(index) {
+		if (!(index >= 0 && index < this.effects.length)) return;
+		this.effect = this.effects[this.effect_index = index];
+		this.showGUI();
+	}
+	changeEffect(diff) {
+		var index = this.effect_index + diff;
+		if (index < 0) index = 0;
+		if (index >= this.effects.length - 1) index = this.effects.length - 1;
+		if (index == this.effect_index) return;
+		this.effect = this.effects[this.effect_index = index];
+		this.showGUI();
+	}
+//	initGUI() {
+//		for (let effect of this.effects) effect.initGUI();
+//		this.effect_index = 0;
+//		this.effect = this.effects[this.effect_index];
+//		this.showGUI();
+//	}
+	showGUI() {
+		if (this.show_effect)
+			this.show_effect.gui.hide();
+		if (this.effect_index < 0) {
+			this.show_effect = null;
+		} else {
+			this.show_effect = this.effect;
+			this.show_effect.gui.show();
+		}
+		this.showEffectNames();
+	}
+	showEffectNames() {
+		if (this.effects.length == 0) {
+			output.innerHTML = '請新增燈效';
+			return;
+		}
+		var str = '';
+		for (let i=0; i<this.effects.length; ++i) {
+			var effect = this.effects[i];
+			if (effect == this.effect) str += '<strong><span style="color: gold;">'
+			if (effect.hide) str += '<span style="opacity: 0.3;">';
+			str += ' 🠊 ';
+			str += effect.description;
+//			str += ' ' + effect.constructor.name;
+			if (effect.hide) str += '</span>';
+			if (effect == this.effect) str += '</span></strong>'
+		}
+		output.innerHTML = str;
+	}
+	setLocation(x, y) {
+		if (!this.effect) return;
+		this.effect.setLocation(x, y);
+		this.effect.gui.updateDisplay();
+	}
+	event(device_type, keycode, trigger) {
+		for (let i=0; i<this.devices.length; ++i) {
+			var device = this.devices[i];
+			if (device.type != device_type) continue;
+			if (device.type === 'keyboard') {
+				var index = device.keycodemap.get(keycode);
+				if (index === 'undefined') continue;
+			} else if (device.type === 'mouse') {
+				var index = device.lights.length - 1;
+				if (index < 0) continue;
+			}
+			device.keyframes[index] = 0;
+			device.keydowns[index] = trigger;
+		}
+	}
+	update() {
+		for (let effect of this.effects)
+			effect.update(this.region, this.devices);
+
+		for (let i=0; i<this.devices.length; ++i) {
+			for (let j=0; j<this.devices[i].keyframes.length; ++j) {
+				this.devices[i].keyframes[j]++;
+				this.devices[i].keyframes[j] %= 1000000; // lcm(effect.cooldown)
+			}
+		}
+	}
+	render() {
+		for (let i=0; i<this.devices.length; ++i)
+			for (let j=0; j<this.outputs[i].length; ++j)
+				assigncolor(this.outputs[i][j], [0,0,0]);
+
+		if (!this.effect) return;
+		if (this.effect.hide) return;
+		for (let i=0; i<this.devices.length; ++i) {
+			var device = this.devices[i];
+			var outputs = this.outputs[i];
+			var selects = this.selects[i][this.effect_index];
+			this.effect.render(device.lights, this.region, outputs, selects);
+		}
+	}
+	draw(ctx) {
+		for (let i=0; i<this.devices.length; ++i) {
+			var device = this.devices[i];
+			var outputs = this.outputs[i];
+			var selects = this.selects[i][this.effect_index];
+			device.draw(ctx, outputs, selects);
+		}
+		if (this.effect) this.effect.draw(ctx);
+	}
+	renderAll() {
+		for (let i=0; i<this.devices.length; ++i)
+			for (let j=0; j<this.outputs[i].length; ++j)
+				assigncolor(this.outputs[i][j], [0,0,0]);
+
+		for (let i=0; i<this.devices.length; ++i) {
+			var device = this.devices[i];
+			var outputs = this.outputs[i];
+			for (let j=0; j<this.effects.length; ++j) {
+				var effect = this.effects[j];
+				var selects = this.selects[i][j];
+				if (effect.hide) continue;
+				effect.render(device.lights, this.region, outputs, selects);
+			}
+		}
+	}
+	drawAll(ctx) {
+		console.log('drawAll',ctx);
+		for (let i=0; i<this.devices.length; ++i) {
+			var device = this.devices[i];
+			var outputs = this.outputs[i];
+			device.draw(ctx, outputs, null);
+		}
+	}
+	selectAll(bool) {
+		if (!(this.effect_index >= 0 && this.effect_index < this.effects.length)) return;
+		for (let i=0; i<this.devices.length; ++i) {
+			var select = this.selects[i][this.effect_index];
+			for (let j=0; j<select.length; ++j)
+				select[j] = bool;
+		}
+	}
+	selectXY(x, y, bool) {
+		if (!(this.effect_index >= 0 && this.effect_index < this.effects.length)) return;
+		for (let i=0; i<this.devices.length; ++i) {
+			var select = this.selects[i][this.effect_index];
+			for (let j=0; j<select.length; ++j) {
+				var light = this.devices[i].lights[j];
+				if (x >= light.x1 && x <= light.x2
+				 && y >= light.y1 && y <= light.y2)
+					select[j] = bool;
+			}
+		}
+	}
+	selectSegment(x1, y1, x2, y2, bool) {
+		if (!(this.effect_index >= 0 && this.effect_index < this.effects.length)) return;
+		for (let i=0; i<this.devices.length; ++i) {
+			var select = this.selects[i][this.effect_index];
+			for (let j=0; j<select.length; ++j) {
+				var light = this.devices[i].lights[j];
+				if (x1 < light.x1 && x2 < light.x1) continue;
+				if (x1 > light.x2 && x2 > light.x2) continue;
+				if (y1 < light.y1 && y2 < light.y1) continue;
+				if (y1 > light.y2 && y2 > light.y2) continue;
+				var dx = x2 - x1;
+				var dy = y2 - y1;
+				var c = x1 * y2 - x2 * y1;
+				var c1 = light.x1 * dy - light.y1 * dx - c;
+				var c2 = light.x1 * dy - light.y2 * dx - c;
+				var c3 = light.x2 * dy - light.y1 * dx - c;
+				var c4 = light.x2 * dy - light.y2 * dx - c;
+				if (c1 > 0 && c2 > 0 && c3 > 0 && c4 > 0) continue;
+				if (c1 < 0 && c2 < 0 && c3 < 0 && c4 < 0) continue;
+				select[j] = bool;
+			}
+		}
+	}
+	selectRegion(x1, y1, x2, y2, bool) {
+		if (!(this.effect_index >= 0 && this.effect_index < this.effects.length)) return;
+		if (x1 > x2) [x1, x2] = [x2, x1];
+		if (y1 > y2) [y1, y2] = [y2, y1];
+		for (let i=0; i<this.devices.length; ++i) {
+			var select = this.selects[i][this.effect_index];
+			for (let j=0; j<select.length; ++j) {
+				var light = this.devices[i].lights[j];
+				if (!(light.x2 <= x1 || light.x1 >= x2
+				   || light.y2 <= y1 || light.y1 >= y2))
+					select[j] = bool;
+			}
+		}
+	}
+	holdDevice(x, y) {
+		this.device_index = -1;
+		this.device = null;
+		for (let i=this.devices.length-1; i>=0; --i) {
+			var position = this.devices[i].position;
+			if (x >= position.x && x <= position.x + position.width
+			 && y >= position.y && y <= position.y + position.height) {
+				this.device_index = i;
+				this.device = this.devices[i];
+				return;
+			}
+		}
+	}
+	dragDevice(dx, dy) {
+		if (!this.device) return;
+		this.device.move(dx, dy);
+		this.updateRegion();
+	}
+	dropDevice(x, y) {
+		this.device_index = -1;
+		this.device = null;
+		this.updateRegion();
+	}
+	createColor() {
+		if (!this.effect) return;
+		this.effect.createColor();
+	}
+	removeColor() {
+		if (!this.effect) return;
+		this.effect.removeColor();
+	}
+	toggleScale() {
+		if (!this.effect) return;
+		this.effect.toggleScale();
+	}
+}
+</script>
+<script id="init.js">
+var manager = new Manager();
+
+var images_count = 0;
+var images = document.querySelectorAll("img");
+for (let image of images) image.onload = init;
+
+function init() {
+	if (++images_count < images.length) return;
+	manager.pushDevice(new Device('keyboard', keyboard, keycodes, imageKeyboard));
+//	manager.pushDevice(new Device('mouse', mouse, null, imageMouse));
+//	manager.pushEffect(new Band());
+	manager.pushEffect(new Wave());
+//	manager.pushEffect(new Fire());
+//	manager.pushEffect(new Spectrum());
+}
+
+var keydown = new Set();
+document.addEventListener('keydown', function(e){
+	if (keydown.has(e.code)) return;
+	keydown.add(e.code);
+	manager.event('keyboard', e.code, true);
+});
+document.addEventListener('keyup', function(e){
+	keydown.delete(e.code);
+	manager.event('keyboard', e.code, false);
+});
+document.addEventListener('mousedown', function(e){
+	if (e.target.constructor.name === 'HTMLCanvasElement')
+		manager.event('mouse', null, true);
+});
+document.addEventListener('mouseup', function(e) {
+	if (e.target.constructor.name === 'HTMLCanvasElement')
+		manager.event('mouse', null, false);
+});
+
+window.onkeydown = function(e) {
+//	e.preventdefault();
+//	e.stopPropagation();
+	if      (e.code === 'ArrowUp')    {manager.removeColor(); return;}
+	else if (e.code === 'ArrowDown')  {manager.createColor(); return;}
+	else if (e.code === 'ArrowLeft')  {manager.changeEffect(-1); return;}
+	else if (e.code === 'ArrowRight') {manager.changeEffect(+1); return;}
+	else if (e.code === 'Delete')     {manager.deleteEffect(); return;}
+//	else if (e.code === 'KeyZ') {manager.toggleScale(); return;}
+}
+</script>
+<style>canvas {border: 1px dashed lightgray;}</style>
+<canvas id="canvas" width="980" height="300"></canvas>
+<script id="main.js">
+	var canvas = document.getElementById("canvas");
+	var ctx    = canvas.getContext('2d');
+
+	var scale = 0.5;
+	ctx.scale(scale, scale);
+
+	var all = false;
+	var draw = true;
+
+	function main() {
+		console.log('main');
+
+		if (audioCapture.onplay) audioCapture.update();
+		manager.update();
+		all ? manager.renderAll() : manager.render();
+		if (draw) {
+			ctx.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
+			all ? manager.drawAll(ctx) : manager.draw(ctx);
+			drawSelectRegion(ctx);
+		}
+	}
+</script>
+<button class="select" mode="selectNone"   >清除燈光</button>
+<button class="toggle" mode="selectSegment">點選燈光</button>
+<button class="toggle" mode="selectRegion" >框選燈光</button>
+<button class="select" mode="selectAll"    >全選燈光</button>
+|
+<button class="toggle" mode="dragDevice"          >拖曳鍵盤滑鼠</button>
+<button class="device" mode="pushDevice(keyboard)">新增鍵盤</button>
+<button class="device" mode="pushDevice(mouse)"   >新增滑鼠</button>
+<button class="device" mode="popDevice"           >移除設備</button>
+|<br>
+<button class="opacity" mode="setOpacity(1.0)">通通不透明</button>
+<button class="opacity" mode="setOpacity(0.5)">通通半透明</button>
+|
+<button class="blend" mode="setBlendMode('add')"      >通通相加</button>
+<button class="blend" mode="setBlendMode('maximum')"  >通通最大值</button>
+<button class="blend" mode="setBlendMode('overlap')"  >通通重疊</button>
+<button class="blend" mode="setBlendMode('overwirte')">通通覆寫</button>
+|
+<button class="color" mode="createColor">減少色彩(↑)</button>
+<button class="color" mode="removeColor">增加色彩(↓)</button>
+|<br>
+<button class="effect" mode="changeEffect(-1)">上個燈效(←)</button>
+<button class="effect" mode="changeEffect(+1)">下個燈效(→)</button>
+<button class="effect" mode="deleteEffect">刪除燈效(Del)</button>
+|<br>
+<div class="effect" mode="insertAfterEffect" style="display: inline;"></div>
+<br>
+<input type="checkbox" id="all">顯示全部燈效</input>
+<input type="checkbox" id="draw">停止繪圖、維持計算、然後你可以測CPU rate</input>
+<script id="button.js">
+	var toggle_buttons = document.querySelectorAll("button.toggle");
+	var button_mode = '';
+
+	function toggleButton(button) {
+		for (let b of toggle_buttons) if (b != button) {
+			b.style.borderStyle = '';
+		}
+		if (button == null) return;
+		if (button_mode == button.getAttribute('mode')) {
+			button.style.borderStyle = '';
+			button_mode = '';
+		} else {
+			button.style.borderStyle = 'inset';
+			button_mode = button.getAttribute('mode');
+		}
+	}
+
+	for (let button of toggle_buttons)
+		button.onmousedown = function(e) {toggleButton(button);}
+
+	var selectRegion = false;
+	var x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+
+	function drawSelectRegion(ctx) {
+		console.log('drawSelectRegion');
+		if (!selectRegion) return;
+		ctx.lineWidth = 2;
+		ctx.fillStyle = "rgba(128,128,128,0.3)";
+		ctx.strokeStyle = "rgba(192,192,192,0.3)";
+		ctx.beginPath();
+		ctx.rect(x1, y1, x2 - x1, y2 - y1);
+		ctx.fill();
+		ctx.stroke();
+	}
+
+	var mouse_pressed = false;
+//	canvas.tabIndex = 1;
+	canvas.style.position = "relative";
+
+	canvas.addEventListener('mousedown', function(e){
+		mouse_pressed = true;
+		x1 = x2 = Math.round(e.layerX / scale);
+		y1 = y2 = Math.round(e.layerY / scale);
+		if (button_mode === '') {
+			manager.setLocation(x1, y1);
+		} else if (button_mode === 'selectSegment') {
+			manager.selectSegment(x1, y1, x1, y1, true);
+		} else if (button_mode === 'selectRegion') {
+			selectRegion = true;
+		} else if (button_mode === 'dragDevice') {
+			manager.holdDevice(x1, y1);
+		}
+	});
+	canvas.addEventListener('mouseup', function(e){
+		if (!mouse_pressed) return;
+		mouse_pressed = false;
+		var xt = x2;
+		var yt = y2;
+		x2 = Math.round(e.layerX / scale);
+		y2 = Math.round(e.layerY / scale);
+		if (button_mode === 'selectSegment') {
+			manager.selectSegment(xt, yt, x2, y2, true);
+		} else if (button_mode === 'selectRegion') {
+			manager.selectRegion(x1, y1, x2, y2, true);
+			selectRegion = false;
+		} else if (button_mode === 'dragDevice') {
+			manager.dragDevice(x2 - xt, y2 - yt);
+			manager.dropDevice();
+		}
+	});
+	canvas.addEventListener('mouseout', function(e){
+		if (!mouse_pressed) return;
+		mouse_pressed = false;
+		var xt = x2;
+		var yt = y2;
+		var rect = canvas.getBoundingClientRect();
+		x2 = Math.round((e.clientX - rect.left) / scale);
+		y2 = Math.round((e.clientY - rect.top)  / scale);
+		if (button_mode === 'selectSegment') {
+			manager.selectSegment(xt, yt, x2, y2, true);
+		} else if (button_mode === 'selectRegion') {
+			manager.selectRegion(x1, y1, x2, y2, true);
+			selectRegion = false;
+		} else if (button_mode === 'dragDevice') {
+			manager.dragDevice(x2 - xt, y2 - yt);
+			manager.dropDevice();
+		}
+	});
+	canvas.addEventListener('mousemove', function(e){
+		if (!mouse_pressed) return;
+		var xt = x2;
+		var yt = y2;
+		x2 = Math.round(e.layerX / scale);
+		y2 = Math.round(e.layerY / scale);
+		if (button_mode === 'selectSegment') {
+			manager.selectSegment(xt, yt, x2, y2, true);
+		} else if (button_mode === 'dragDevice') {
+			manager.dragDevice(x2 - xt, y2 - yt);
+		}
+	});
+
+	var select_buttons = document.querySelectorAll("button.select");
+	select_buttons[0].onmousedown = function(e) {manager.selectAll(false);}
+	select_buttons[1].onmousedown = function(e) {manager.selectAll(true);}
+
+	var device_buttons = document.querySelectorAll("button.device");
+	device_buttons[0].onmousedown = function(e) {manager.pushDevice(new Device('keyboard', keyboard, keycodes, imageKeyboard));}
+	device_buttons[1].onmousedown = function(e) {manager.pushDevice(new Device('mouse', mouse, null, imageMouse));}
+	device_buttons[2].onmousedown = function(e) {manager.popDevice();}
+
+	var opacity_buttons = document.querySelectorAll("button.opacity");
+	opacity_buttons[0].onmousedown = function(e) {manager.setOpacity(1.0);}
+	opacity_buttons[1].onmousedown = function(e) {manager.setOpacity(0.5);}
+
+	var blend_buttons = document.querySelectorAll("button.blend");
+	blend_buttons[0].onmousedown = function(e) {manager.setBlendMode('add');}
+	blend_buttons[1].onmousedown = function(e) {manager.setBlendMode('maximum');}
+	blend_buttons[2].onmousedown = function(e) {manager.setBlendMode('overlap');}
+	blend_buttons[3].onmousedown = function(e) {manager.setBlendMode('overwrite');}
+
+	var color_buttons = document.querySelectorAll("button.color");
+	color_buttons[0].onmousedown = function(e) {manager.removeColor();}
+	color_buttons[1].onmousedown = function(e) {manager.createColor();}
+
+	var effect_buttons = document.querySelectorAll("button.effect");
+	effect_buttons[0].onmousedown = function(e) {manager.changeEffect(-1);}
+	effect_buttons[1].onmousedown = function(e) {manager.changeEffect(+1);}
+	effect_buttons[2].onmousedown = function(e) {manager.deleteEffect();}
+
+	var script = document.querySelector("script#effect\\.js");
+	console.log(script);
+	var re = /class (.*) extends/g;
+	var classes = [];
+	for (let m; m = re.exec(script.innerHTML); ){
+		classes.push(m[1]);
+		console.log('classes.push',m);
+
+	}
+	var re = /this\.description \= "(.*)";/g;
+	var descriptions = [];
+	for (let m; m = re.exec(script.innerHTML); ) descriptions.push(m[1]);
+
+	var div = document.querySelector("div.effect");
+	for (let i=0; i<classes.length; ++i) {
+		var classname = classes[i];
+		var description = descriptions[i];
+		console.log('description',description);
+
+		var button = document.createElement('button');
+		button.innerHTML = description + '<br>' + classname;
+		button.onmousedown = function(e) {
+			manager.insertAfterEffect(eval('new ' + classname + '()'));
+		}
+		div.appendChild(button);
+		console.log(button);
+	}
+
+	var checkbox = document.querySelector("input#all");
+	checkbox.checked = all;
+	checkbox.onchange = function(e) {
+		all = e.target.checked;
+		// console.log(radios);
+		// for (let radio of radios) radio.disabled = !e.target.checked;
+	}
+
+	var checkbox = document.querySelector("input#draw");
+	checkbox.checked = !draw;
+	checkbox.onchange = function(e) {draw = !e.target.checked;}
+</script>
+<br><div id="fps"></div>
+<script id="fps.js">
+	var fps = document.getElementById("fps");
+	var lastDate = 0, thisDate = 0, diffDate = 0, frame = 0;
+
+	var id;
+	function simulation(now) {
+//		id = requestAnimationFrame(simulation);
+//		thisDate = now;
+		thisDate = performance.now();
+		// console.log('thisDate',thisDate);
+		// console.log('lastDate',lastDate);
+
+		frame ++;
+		main();
+	};
+
+	window.onload = function() {
+//		if (id) cancelAnimationFrame(id);
+//		id = requestAnimationFrame(simulation);
+		if (id) clearInterval(id);
+		id = setInterval(simulation, 4);
+
+		lastDate = performance.now();
+		setInterval(function(){
+			diffDate = thisDate - lastDate;
+			fps.innerHTML = (1000 * frame / diffDate).toFixed(1) + " fps";
+			lastDate = thisDate;
+			frame = 0;
+		}, 1000);
+	}
+</script>
+<div id="tooltip"></div>
+<script id="tooltip.js">
+//	var out = document.getElementById('tooltip');
+//	var script = document.querySelector("script#effect\\.js");
+//	var re = /.add\(this, \"(.*)\"\)/g;
+//	var variables = [];
+//	for (let m; m = re.exec(script.innerHTML); ) variables.push(m[1]);
+//	var re = /.title\(\'(.*)\'\);/g;
+//	var tooltips = [];
+//	for (let m; m = re.exec(script.innerHTML); ) tooltips.push(m[1]);
+//
+//	for (let i=0; i<variables.length; ++i)
+//		for (let j=0; j<variables.length-1; ++j)
+//			if (variables[j] > variables[j+1]) {
+//				[variables[j], variables[j+1]] = [variables[j+1], variables[j]];
+//				[tooltips[j], tooltips[j+1]] = [tooltips[j+1], tooltips[j]];
+//			}
+//	for (let i=0; i<variables.length; ++i)
+//		out.innerHTML += variables[i] + '　' + tooltips[i] + '<BR>';
+</script>

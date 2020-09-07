@@ -1,0 +1,418 @@
+<canvas id="canvas" width="600" height="200"></canvas>
+<script src="dat.gui.min.js"></script>
+<script id="utility.js">
+CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+	if (typeof radius === 'undefined') {radius = 0;}
+	this.beginPath();
+	this.moveTo(x + radius, y);
+	this.lineTo(x + width - radius, y);
+	this.quadraticCurveTo(x + width, y, x + width, y + radius);
+	this.lineTo(x + width, y + height - radius);
+	this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+	this.lineTo(x + radius, y + height);
+	this.quadraticCurveTo(x, y + height, x, y + height - radius);
+	this.lineTo(x, y + radius);
+	this.quadraticCurveTo(x, y, x + radius, y);
+	this.closePath();
+	return this;
+}
+
+function hsl2rgb(h, s, l) {
+	if (!isFinite(h)) h = 0;
+	if (!isFinite(s)) s = 0;
+	if (!isFinite(l)) l = 0;
+
+	h /= 60;
+	if (h < 0) h = 6 - (-h % 6);
+	h %= 6;
+
+	s = Math.max(0, Math.min(1, s / 100));
+	l = Math.max(0, Math.min(1, l / 100));
+
+	var c = (1 - Math.abs((2 * l) - 1)) * s;
+	var x = c * (1 - Math.abs((h % 2) - 1));
+
+	if      (h < 1) {r = c; g = x; b = 0;}
+	else if (h < 2) {r = x; g = c; b = 0;}
+	else if (h < 3) {r = 0; g = c; b = x;}
+	else if (h < 4) {r = 0; g = x; b = c;}
+	else if (h < 5) {r = x; g = 0; b = c;}
+	else            {r = c; g = 0; b = x;}
+
+	var m = l - c / 2;
+	var r = Math.round((r + m) * 255);
+	var g = Math.round((g + m) * 255);
+	var b = Math.round((b + m) * 255);
+	return [r, g, b];
+}
+
+function addcolor(color1, color2) {
+	const alpha = 0.8;
+	for (let i=0; i<3; ++i)
+		color1[i] = color1[i] * (1 - alpha) + color2[i] * alpha;
+}
+</script>
+<script id="keyboard.js">
+	var KEY = {
+		WIDTH  : 15.5,
+		HEIGHT : 15,
+		GAP    : 3.3,
+		LSIZE  : [1, 1.5, 1.75, 2.25],
+//		RSIZE  : [2, 1.5, 2.25, 2.75],
+		RSIZE  : [2, 1.5, 2.45, 3.15],
+	};
+	var KEYBOARD = {
+		WIDTH  : (KEY.WIDTH  * 15) + (KEY.GAP * 15),
+		HEIGHT : (KEY.HEIGHT * 5)  + (KEY.GAP * 6),
+	}
+
+	var keys = function initKey() {
+		var keys = [];
+
+		var chars = [
+			[].concat('`').concat("1234567890-=".split('')).concat('¡ö'),
+			[].concat('tab').concat("QWERTYUIOP[]\\".split('')),
+			[].concat('caps').concat("ASDFGHJKL;'".split('')).concat('?'),
+			[].concat('shift').concat("ZXCVBNM,./".split('')).concat('shift')
+		];
+
+		for (let i=0; i<chars.length; ++i) {
+			var x = 0;
+			for (let j=0; j<chars[i].length; ++j) {
+				var key = {};
+				key.name = chars[i][j];
+				if (j == 0) {
+					key.size = KEY.LSIZE[i];
+					key.align = 'left';
+				} else if (j == chars[i].length - 1) {
+					key.size = KEY.RSIZE[i];
+					key.align = 'right';
+				} else {
+					key.size = 1;
+					key.align = 'center';
+				}
+				key.x = x;
+				key.y = i * (KEY.HEIGHT + KEY.GAP);
+				x += KEY.WIDTH * key.size + KEY.GAP;
+				keys.push(key);
+			}
+		}
+
+		var chars = ['ctrl', '?', 'alt', ' ', 'alt', '?', '??', 'ctrl'];
+		var sizes  = [1.75, 1, 1.75, 6, 1.75, 1, 1, 2];
+		var x = 0;
+
+		for (let i=4; i<5; ++i) {
+			for (let j=0; j<chars.length; ++j) {
+				var key = {};
+				key.name = chars[j];
+				key.size = sizes[j];
+				if (j == 0) {
+					key.align = 'left';
+				} else if (j == chars.length - 1) {
+					key.align = 'right';
+				} else {
+					key.align = 'center';
+				}
+				key.x = x;
+				key.y = i * (KEY.HEIGHT + KEY.GAP);
+				x += KEY.WIDTH * key.size + KEY.GAP;
+				keys.push(key);
+			}
+		}
+
+		for (let key of keys) {
+			key.x += KEY.GAP;
+			key.y += KEY.GAP;
+			key.cx = key.x + KEY.WIDTH * key.size / 2;
+			key.cy = key.y + KEY.HEIGHT / 2;
+
+			key.x1 = key.x - KEY.GAP;
+			key.y1 = key.y - KEY.GAP;
+			key.x2 = key.x + key.width  + KEY.GAP;
+			key.y2 = key.y + KEY.HEIGHT + KEY.GAP;
+			key.width  = KEY.WIDTH * key.size + 2 * KEY.GAP;
+			key.height = KEY.HEIGHT + 2 * KEY.GAP;
+		}
+
+		return keys;
+	}();
+
+	function drawKeyboard(ctx) {
+		// board
+		var grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+		grad.addColorStop(0, 'rgb(25, 25, 25)');
+		grad.addColorStop(1, 'rgb(0, 0, 0)');
+		ctx.fillStyle = grad;
+		ctx.beginPath();
+		ctx.roundRect(0, 0, KEYBOARD.WIDTH, KEYBOARD.HEIGHT, 2);
+		ctx.fill();
+
+		// key
+		for (let key of keys) {
+			// edge
+			ctx.lineWidth = 1;
+			ctx.strokeStyle = "gray";
+			ctx.roundRect(key.x, key.y, KEY.WIDTH * key.size, KEY.HEIGHT, 3);
+			ctx.stroke();
+
+			// effect
+			ctx.fillStyle = 'rgb(' + key.color[0] + ',' + key.color[1] + ',' + key.color[2] + ')';
+			ctx.fill();
+
+			// text
+			ctx.beginPath();
+			ctx.fillStyle = "white";
+			ctx.font = "6pt Helvetica";
+			ctx.textBaseline = "middle";
+			ctx.textAlign = key.align;
+			if (key.align === 'left')
+				ctx.fillText(' ' + key.name, key.x, key.cy);
+			else if (key.align === 'center')
+				ctx.fillText(key.name, key.cx, key.cy);
+			else if (key.align === 'right')
+				ctx.fillText(key.name + ' ', key.x + KEY.WIDTH * key.size, key.cy);
+			ctx.fill();
+		}
+	}
+</script>
+<script id="effect.js">
+var effect_list = [];
+var gui_list = [];
+
+var LinearBand = function() {
+	this.speed = 1;
+	this.colors = [
+		hsl2rgb( 45, 40, 30),
+		hsl2rgb(135, 40, 30),
+		hsl2rgb(225, 40, 30),
+		hsl2rgb(315, 40, 30),
+	];
+	this.bandwidth = 40;
+	this.x = 0;
+	this.update = function() {
+		this.x += this.speed;
+		this.x %= this.bandwidth * KEYBOARD.WIDTH;
+	}
+	this.render = function() {
+		for (let key of keys) {
+			key.color = [0,0,0];
+			var index = Math.floor((key.cx - this.x) / this.bandwidth);
+			index %= this.colors.length;
+			index += this.colors.length;
+			index %= this.colors.length;
+			if (this.colors[index]) key.color = this.colors[index];
+		}
+	}
+	this.parameter = function(gui) {
+		gui.add(this, "speed").min(1).max(5).step(1);
+		gui.add(this, "bandwidth").min(40).max(100).step(10);
+		gui.addColor(this.colors, 0, this.colors[0]).name('color 1');
+		gui.addColor(this.colors, 1, this.colors[1]).name('color 2');
+		gui.addColor(this.colors, 2, this.colors[2]).name('color 3');
+		gui.addColor(this.colors, 3, this.colors[3]).name('color 4');
+	}
+}
+effect_list.push(new LinearBand());
+
+var ConicBand = function() {
+	this.speed = 1;
+	this.colors = [
+		hsl2rgb( 45, 40, 30),
+		hsl2rgb(135, 40, 30),
+		hsl2rgb(225, 40, 30),
+		hsl2rgb(315, 40, 30),
+	];
+	this.cx = KEYBOARD.WIDTH  / 2;
+	this.cy = KEYBOARD.HEIGHT / 2;
+	this.bandwidth = 40;
+	this.x = 0;
+	this.update = function() {
+		this.x += this.speed;
+		this.x %= this.bandwidth * KEYBOARD.WIDTH / 2;
+	}
+	this.render = function() {
+		function dist(x1, y1, x2, y2) {
+			return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
+		}
+		for (let key of keys) {
+			key.color = [0,0,0];
+			var d = dist(key.cx, key.cy, this.cx, this.cy) - this.x;
+			var index = Math.floor(d / this.bandwidth);
+			index %= this.colors.length;
+			index += this.colors.length;
+			index %= this.colors.length;
+			if (this.colors[index]) key.color = this.colors[index];
+		}
+	}
+	this.parameter = function(gui) {
+		gui.add(this, "speed").min(1).max(5).step(1);
+		gui.add(this, "bandwidth").min(40).max(100).step(10);
+		gui.addColor(this.colors, 0, this.colors[0]).name('color 1');
+		gui.addColor(this.colors, 1, this.colors[1]).name('color 2');
+		gui.addColor(this.colors, 2, this.colors[2]).name('color 3');
+		gui.addColor(this.colors, 3, this.colors[3]).name('color 4');
+	}
+}
+effect_list.push(new ConicBand());
+
+var RadialBand = function() {
+	this.speed = 1;
+	this.colors = [
+		hsl2rgb( 45, 40, 30),
+		hsl2rgb(135, 40, 30),
+		hsl2rgb(225, 40, 30),
+		hsl2rgb(315, 40, 30),
+	];
+	this.cx = KEYBOARD.WIDTH  / 2;
+	this.cy = KEYBOARD.HEIGHT / 2;
+	this.bandangle = 60;	// degree
+	this.angle = 0;			// degree
+	this.update = function() {
+		this.angle += this.speed;
+		this.angle %= this.bandangle * 360;
+	}
+	this.render = function() {
+		for (let key of keys) {
+			key.color = [0,0,0];
+			var t = Math.atan2(key.cy - this.cy, key.cx - this.cx);
+			t = (t + Math.PI) / (2 * Math.PI) * 360;
+			t += this.angle;
+			var index = Math.floor(t / this.bandangle);
+			index %= this.colors.length;
+			index += this.colors.length;
+			index %= this.colors.length;
+			if (this.colors[index]) key.color = this.colors[index];
+		}
+	}
+	this.parameter = function(gui) {
+		gui.add(this, "speed").min(1).max(5).step(1);
+		gui.add(this, "bandangle").min(60).max(330).step(30);
+		gui.addColor(this.colors, 0, this.colors[0]).name('color 1');
+		gui.addColor(this.colors, 1, this.colors[1]).name('color 2');
+		gui.addColor(this.colors, 2, this.colors[2]).name('color 3');
+		gui.addColor(this.colors, 3, this.colors[3]).name('color 4');
+	}
+}
+//effect_list.push(new RadialBand());
+
+var Rain = function() {
+	this.speed = 1;
+	this.colors = [
+		hsl2rgb( 45, 40, 30),
+		hsl2rgb(135, 40, 30),
+		hsl2rgb(225, 40, 30),
+		hsl2rgb(315, 40, 30),
+	];
+	this.particles = function() {
+		var p = new Array(4);
+		for (let i=0; i<p.length; ++i) {
+			p[i] = {
+				x: Math.random() * KEYBOARD.WIDTH,
+				y: Math.random() * KEYBOARD.HEIGHT,
+//				color: hsl2rgb(Math.random() * 360 | 0, 80, 60),
+				color_idx: i,
+			};
+		}
+		return p;
+	}();
+
+	this.update = function() {
+		for (let p of this.particles) {
+			p.y += this.speed;
+			if (p.y > KEYBOARD.HEIGHT) {
+				p.x = Math.random() * KEYBOARD.WIDTH;
+				p.y = 0;
+			}
+		}
+	}
+	this.render = function() {
+		for (let key of keys) key.color = [0,0,0];
+		for (let p of this.particles) {
+			for (let key of keys) {
+				if (p.x >= key.x - KEY.GAP / 2
+				 && p.x <  key.x + KEY.WIDTH * key.size + KEY.GAP / 2
+				 && p.y >= key.y1
+				 && p.y <= key.y2) {
+					addcolor(key.color, this.colors[p.color_idx]);
+				}
+			}
+		}
+	}
+//	this.render = function() {
+//		function dist2(x1, y1, x2, y2) {
+//			return (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
+//		}
+//		for (let key of keys) key.color = [0,0,0];
+//		for (let p of particles) {
+//			var mind = 1e9;
+//			var matchedkey = null;
+//			for (let key of keys) {
+//				var d = dist2(p.x, p.y, key.cx, key.cy);
+//				if (d < mind) {mind = d; matchedkey = key;}
+//			}
+//			addcolor(matchedkey.color, this.colors[p.color_idx]);
+//		}
+//	}
+	this.parameter = function(gui) {
+		gui.add(this, "speed").min(1).max(5).step(1);
+		gui.addColor(this.colors, 0, this.colors[0]).name('color 1');
+		gui.addColor(this.colors, 1, this.colors[1]).name('color 2');
+		gui.addColor(this.colors, 2, this.colors[2]).name('color 3');
+		gui.addColor(this.colors, 3, this.colors[3]).name('color 4');
+	}
+}
+effect_list.push(new Rain());
+
+for (let i=0; i<effect_list.length; ++i) {
+	var gui = new dat.GUI();
+	gui.hide();
+	effect_list[i].parameter(gui);
+	gui_list.push(gui);
+}
+
+var num = 0;
+var effect = effect_list[num];
+gui_list[num].show();
+
+var display = true;
+
+window.onkeydown = function(e) {
+	if (e.keyCode == 90) {display = !display; return;}	// z
+
+	var key = e.keyCode - 49;
+	if (key < 0) return;
+	if (key >= effect_list.length) return;
+	gui_list[num].hide();
+	num = key;
+	gui_list[num].show();
+	effect = effect_list[num];
+	update();
+}
+</script>
+<script id="animation.js">
+	var canvas = document.getElementById("canvas");
+	var ctx    = canvas.getContext('2d');
+
+	var scale = 2;
+	ctx.scale(scale, scale);
+
+	var id;
+	canvas.tabIndex = 1;
+	canvas.style.position = "relative";
+	canvas.onmousedown = function(){
+		if (!id) {id = setInterval(update, 10);}
+		else     {clearInterval(id); id = 0;}
+	};
+
+	function update() {
+		effect.update();
+		effect.render();
+		if (display) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			drawKeyboard(ctx);
+		}
+	}
+
+	update();
+</script>

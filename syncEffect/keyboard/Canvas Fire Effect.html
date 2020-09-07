@@ -1,0 +1,109 @@
+<canvas id="fire" width="100" height="100" style="width: 200; height: 200"></canvas>
+<script>
+var canvas    = document.getElementById('fire');
+var ctx       = canvas.getContext('2d');
+var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+var data      = imageData.data;
+
+var colors = new Array(256);
+for (let i = 0; i < 256; i++) {
+	colors[i] = [0, 0, 0];
+}
+for (let i = 0; i < 32; i++) {
+	colors[i][2] = i << 1;
+	colors[i + 32][0] = i << 3;
+	colors[i + 32][1] = 0;
+	colors[i + 32][2] = 64 - (i << 1);
+	colors[i + 64][0] = 255;
+	colors[i + 64][1] = i << 3;
+	colors[i + 64][2] = 0;
+	colors[i + 96][0] = 255;
+	colors[i + 96][1] = 255;
+	colors[i + 96][2] = i << 2;
+	colors[i + 128][0] = 255;
+	colors[i + 128][1] = 255;
+	colors[i + 128][2] = 64 + (i << 2);
+	colors[i + 160][0] = 255;
+	colors[i + 160][1] = 255;
+	colors[i + 160][2] = 128 + (i << 2);
+	colors[i + 192][0] = 255;
+	colors[i + 192][1] = 255;
+	colors[i + 192][2] = 192 + i;
+	colors[i + 224][0] = 255;
+	colors[i + 224][1] = 255;
+	colors[i + 224][2] = 224 + i;
+}
+
+var threshold = 0.5;
+var fire = new Array(canvas.width * canvas.height).fill(0);
+
+window.requestAnimationFrame(frame, canvas);
+
+function frame() {
+	window.requestAnimationFrame(frame, canvas);
+	update();
+	draw();
+}
+
+function update() {
+	// sometimes change fire intensity
+	if (Math.random() > 0.95) {
+		threshold += Math.random() * 0.2 - 0.1;
+		threshold = Math.max(threshold, 0.5);
+		threshold = Math.min(threshold, 0.8);
+	}
+
+	// draw random pixels at the bottom line
+	var bottomLine = canvas.width * (canvas.height - 1);
+	for (var x = 0; x < canvas.width; x++) {
+		fire[bottomLine + x] = (Math.random() > threshold) ? 255 : 0;
+	}
+	
+	// move flip upwards, start at bottom
+	for (var y = 0; y < canvas.height; ++y) {
+		for (var x = 0; x < canvas.width; ++x) {
+			var value = 0;
+			if (x == 0) {
+				value += fire[bottomLine + x];
+				value += fire[bottomLine + x + 1];
+				value += fire[bottomLine - canvas.width + x];
+				value /= 3;
+			} else if (x == canvas.width -1) {
+				value += fire[bottomLine + x];
+				value += fire[bottomLine + x - 1];
+				value += fire[bottomLine - canvas.width + x];
+				value /= 3;
+			} else {
+				value += fire[bottomLine + x];
+				value += fire[bottomLine + x - 1];
+				value += fire[bottomLine + x + 1];
+				value += fire[bottomLine - canvas.width + x];
+				value /= 4;
+			}
+			
+			value = Math.floor(value);
+			if (value > 1) value--;
+			fire[bottomLine - canvas.width + x] = value;
+		}
+		
+		bottomLine -= canvas.width;
+	}
+}
+
+function draw() {
+	// render the flames using our color table
+	var skipRows = 2; // skip the bottom 2 rows
+	for (var y = skipRows; y < canvas.height; ++y) {
+		for (var x = 0; x < canvas.width; ++x) {
+			var index = (y * canvas.width + x) * 4;
+			var value = fire[(y - skipRows) * canvas.width + x];
+			
+			data[index]   = colors[value][0];
+			data[++index] = colors[value][1];
+			data[++index] = colors[value][2];
+			data[++index] = 255;
+		}
+	}
+	ctx.putImageData(imageData, 0, 0);
+}
+</script>
