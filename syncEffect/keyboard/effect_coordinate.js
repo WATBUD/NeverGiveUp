@@ -3,8 +3,6 @@ var keyboard = [[{"x":416,"y":187},{"x":473,"y":187},{"x":473,"y":244},{"x":416,
 var keycodes = ["Escape","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","PrintScreen","ScrollLock","Pause","Backquote","Digit1","Digit2","Digit3","Digit4","Digit5","Digit6","Digit7","Digit8","Digit9","Digit0","Minus","Equal","Backspace","Insert","Home","PageUp","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Tab","KeyQ","KeyW","KeyE","KeyR","KeyT","KeyY","KeyU","KeyI","KeyO","KeyP","BracketLeft","BracketRight","Backslash","Delete","End","PageDown","Numpad7","Numpad8","Numpad9","NumpadAdd","CapsLock","KeyA","KeyS","KeyD","KeyF","KeyG","KeyH","KeyJ","KeyK","KeyL","Semicolon","Quote","Enter","Numpad4","Numpad5","Numpad6","ShiftLeft","KeyZ","KeyX","KeyC","KeyV","KeyB","KeyN","KeyM","Comma","Period","Slash","ShiftRight","ArrowUp","Numpad1","Numpad2","Numpad3","NumpadEnter","ControlLeft","OSLeft","AltLeft","Space","AltRight","Function","ContextMenu","ControlRight","ArrowLeft","ArrowDown","ArrowRight","Numpad0","NumpadDecimal"];
 var mouse = [[{"x":0,"y":100},{"x":20,"y":100},{"x":20,"y":120},{"x":0,"y":120}],[{"x":200,"y":100},{"x":220,"y":100},{"x":220,"y":120},{"x":200,"y":120}],[{"x":40 ,"y":0},{"x":60,"y":0},{"x":60,"y":20},{"x":40,"y":20}],[{"x":170 ,"y":0},{"x":190,"y":0},{"x":190,"y":20},{"x":170,"y":20}],[{"x":70 ,"y":280},{"x":160,"y":280},{"x":160,"y":340},{"x":70,"y":340}]];
 
-//export var ttt=keycodes;  
-//export const foo = 5; 
 
-export const foo = Math.sqrt(2); 
+
 
