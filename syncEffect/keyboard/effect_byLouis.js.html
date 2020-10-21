@@ -4,6 +4,46 @@
 <script src="effect_color.js"></script>
 <script src="manager.js"></script>
 
+<audio id="audio" src="bensound-summer-20sec.mp3" controls></audio>
+<input type="file" id="input"></input>
+<img src="keyboard.png" id="keyboard.png" style="display: none;">
+<img src="mouse.png" id="mouse.png" style="display: none;">
+<div id="output" style="font-size: 12pt; text-align: left; height: 1.5em;"></div>
+<style>canvas {border: 1px dashed lightgray;}</style>
+<canvas id="canvas" width="980" height="300"></canvas>
+
+
+<button class="select" onmousedown ="manager.selectAll(false);" mode="selectNone"   >清除燈光</button>
+<button class="toggle" mode="selectSegment">點選燈光</button>
+<button class="toggle" mode="selectRegion" >框選燈光</button>
+<button class="select" onmousedown ="manager.selectAll(true);" mode="selectAll"    >全選燈光</button>
+|
+<button class="toggle" mode="dragDevice"          >拖曳鍵盤滑鼠</button>
+<button class="device" mode="pushDevice(keyboard)">新增鍵盤</button>
+<button class="device" mode="pushDevice(mouse)"   >新增滑鼠</button>
+<button class="device" mode="popDevice"           >移除設備</button>
+|<br>
+
+<button class="opacity" onmousedown ="manager.setOpacity(1.0)"  mode="setOpacity(1.0)">通通不透明</button>
+<button class="opacity" onmousedown ="manager.setOpacity(0.5)"  mode="setOpacity(0.5)">通通半透明</button>
+<button class="blend" onmousedown ="manager.setBlendMode('add');" mode="setBlendMode('add')"      >通通相加</button>
+<button class="blend" onmousedown ="manager.setBlendMode('maximum');" mode="setBlendMode('maximum')"  >通通最大值</button>
+<button class="blend" onmousedown ="manager.setBlendMode('overlap');" mode="setBlendMode('overlap')"  >通通重疊</button>
+<button class="blend" onmousedown ="manager.setBlendMode('overwrite');" mode="setBlendMode('overwirte')">通通覆寫</button>
+|
+<button class="color" onmousedown ="manager.removeColor();" mode="createColor">減少色彩(↑)</button>
+<button class="color" onmousedown ="manager.createColor();" mode="removeColor">增加色彩(↓)</button>
+|<br>
+<button class="effect" onmousedown ="manager.changeEffect(-1);" mode="changeEffect(-1)">上個燈效(←)</button>
+<button class="effect" onmousedown ="manager.changeEffect(+1);" mode="changeEffect(+1)">下個燈效(→)</button>
+<button class="effect" onmousedown ="manager.deleteEffect();" mode="deleteEffect">刪除燈效(Del)</button>
+|<br>
+<div class="effect" mode="insertAfterEffect" style="display: inline;"></div>
+<br>
+<input type="checkbox" id="all">顯示全部燈效</input>
+<input type="checkbox" id="draw">停止繪圖、維持計算、然後你可以測CPU rate</input>
+<br><div id="fps"></div>
+
 
 <script id="utility.dat.gui.js">
 var eachController = function(func) {
@@ -23,8 +63,6 @@ eachController(function(controller) {
 	if (!controller.prototype.hasOwnProperty('title'))
 		controller.prototype.title = setTitle;
 });
-</script>
-<script id="utility.canvas.js">
 CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
 	if (typeof radius === 'undefined') {radius = 0;}
 	this.beginPath();
@@ -41,12 +79,7 @@ CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, rad
 	return this;
 }
 </script>
-<audio id="audio" src="bensound-summer-20sec.mp3" controls></audio>
-<input type="file" id="input"></input>
 <script src="audio.js"></script>
-
-<img src="keyboard.png" id="keyboard.png" style="display: none;">
-<img src="mouse.png" id="mouse.png" style="display: none;">
 <script src="device.js"></script>
 <script id="bitmap.js">
 class Bitmap {
@@ -76,7 +109,6 @@ class Bitmap {
 }
 </script>
 <script  src="effect.js"></script>
-<div id="output" style="font-size: 12pt; text-align: left; height: 1.5em;"></div>
 <script>
 // import foo from './effect_coordinate.js';
 // console.log(foo);	
@@ -92,8 +124,8 @@ function init() {
 	if (++images_count < images.length) return;
 	manager.pushDevice(new Device('keyboard', keyboard, keycodes, imageKeyboard));
 //	manager.pushDevice(new Device('mouse', mouse, null, imageMouse));
-//	manager.pushEffect(new Band());
-	manager.pushEffect(new Wave());
+	manager.pushEffect(new Band());
+//	manager.pushEffect(new Wave());
 //	manager.pushEffect(new Fire());
 //	manager.pushEffect(new Spectrum());
 }
@@ -129,12 +161,25 @@ window.onkeydown = function(e) {
 //	else if (e.code === 'KeyZ') {manager.toggleScale(); return;}
 }
 </script>
-
-
-
-<style>canvas {border: 1px dashed lightgray;}</style>
-<canvas id="canvas" width="980" height="300"></canvas>
 <script id="main.js">
+	var fps = document.getElementById("fps");
+	var lastDate = 0, thisDate = 0, diffDate = 0, frame = 0;
+
+	var id;
+	window.onload = function() {
+//		if (id) cancelAnimationFrame(id);
+//		id = requestAnimationFrame(simulation);
+		if (id) clearInterval(id);
+		id = setInterval(simulation, 100);
+
+		lastDate = performance.now();
+		setInterval(function(){
+			diffDate = thisDate - lastDate;
+			fps.innerHTML = (1000 * frame / diffDate).toFixed(1) + " fps";
+			lastDate = thisDate;
+			frame = 0;
+		}, 1000);
+	}
 	var canvas = document.getElementById("canvas");
 	var ctx    = canvas.getContext('2d');
 
@@ -143,6 +188,13 @@ window.onkeydown = function(e) {
 
 	var all = false;
 	var draw = true;
+	function simulation(now) {
+//		id = requestAnimationFrame(simulation);
+//		thisDate = now;
+		thisDate = performance.now();
+		frame ++;
+		main();
+	};
 
 	function main() {
 		if (audioCapture.onplay) audioCapture.update();
@@ -155,38 +207,6 @@ window.onkeydown = function(e) {
 		}
 	}
 </script>
-
-<button class="select" onmousedown ="manager.selectAll(false);" mode="selectNone"   >清除燈光</button>
-<button class="toggle" mode="selectSegment">點選燈光</button>
-<button class="toggle" mode="selectRegion" >框選燈光</button>
-<button class="select" onmousedown ="manager.selectAll(true);" mode="selectAll"    >全選燈光</button>
-|
-<button class="toggle" mode="dragDevice"          >拖曳鍵盤滑鼠</button>
-<button class="device" mode="pushDevice(keyboard)">新增鍵盤</button>
-<button class="device" mode="pushDevice(mouse)"   >新增滑鼠</button>
-<button class="device" mode="popDevice"           >移除設備</button>
-|<br>
-
-<button class="opacity" onmousedown ="manager.setOpacity(1.0)"  mode="setOpacity(1.0)">通通不透明</button>
-<button class="opacity" onmousedown ="manager.setOpacity(0.5)"  mode="setOpacity(0.5)">通通半透明</button>
-<button class="blend" onmousedown ="manager.setBlendMode('add');" mode="setBlendMode('add')"      >通通相加</button>
-<button class="blend" onmousedown ="manager.setBlendMode('maximum');" mode="setBlendMode('maximum')"  >通通最大值</button>
-<button class="blend" onmousedown ="manager.setBlendMode('overlap');" mode="setBlendMode('overlap')"  >通通重疊</button>
-<button class="blend" onmousedown ="manager.setBlendMode('overwrite');" mode="setBlendMode('overwirte')">通通覆寫</button>
-|
-<button class="color" onmousedown ="manager.removeColor();" mode="createColor">減少色彩(↑)</button>
-<button class="color" onmousedown ="manager.createColor();" mode="removeColor">增加色彩(↓)</button>
-|<br>
-<button class="effect" onmousedown ="manager.changeEffect(-1);" mode="changeEffect(-1)">上個燈效(←)</button>
-<button class="effect" onmousedown ="manager.changeEffect(+1);" mode="changeEffect(+1)">下個燈效(→)</button>
-<button class="effect" onmousedown ="manager.deleteEffect();" mode="deleteEffect">刪除燈效(Del)</button>
-|<br>
-<div class="effect" mode="insertAfterEffect" style="display: inline;"></div>
-<br>
-<input type="checkbox" id="all">顯示全部燈效</input>
-<input type="checkbox" id="draw">停止繪圖、維持計算、然後你可以測CPU rate</input>
-
-
 <script id="button.js">
 	var toggle_buttons = document.querySelectorAll("button.toggle");
 	var button_mode = '';
@@ -335,32 +355,6 @@ window.onkeydown = function(e) {
 	checkbox.checked = !draw;
 	checkbox.onchange = function(e) {draw = !e.target.checked;}
 </script>
-<br><div id="fps"></div>
 <script id="fps.js">
-	var fps = document.getElementById("fps");
-	var lastDate = 0, thisDate = 0, diffDate = 0, frame = 0;
-
-	var id;
-	function simulation(now) {
-//		id = requestAnimationFrame(simulation);
-//		thisDate = now;
-		thisDate = performance.now();
-		frame ++;
-		main();
-	};
-
-	window.onload = function() {
-//		if (id) cancelAnimationFrame(id);
-//		id = requestAnimationFrame(simulation);
-		if (id) clearInterval(id);
-		id = setInterval(simulation, 4);
-
-		lastDate = performance.now();
-		setInterval(function(){
-			diffDate = thisDate - lastDate;
-			fps.innerHTML = (1000 * frame / diffDate).toFixed(1) + " fps";
-			lastDate = thisDate;
-			frame = 0;
-		}, 1000);
-	}
+	
 </script>

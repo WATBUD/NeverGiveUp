@@ -265,6 +265,8 @@ function mulcolor(color, ratio) {
 function interpolatecolor(color, color1, color2, ratio) {
 	for (let i=0; i<3; ++i)
 		color[i] = color1[i] * (1 - ratio) + color2[i] * ratio;
+
+	console.log('interpolatecolor',color);	
 }
 
 function blendcolor(color, color1, opacity, blend_mode) {
@@ -447,12 +449,16 @@ class Effect {
 		}
 	}
 	getColor(result, scale, loop) {
+		//console.log('scale前',scale,Math.floor(scale));
 		scale -= Math.floor(scale);	// [0, 1)
+		//console.log('scale後',scale);
 		if (!this.use_scales) {
 			if (!this.gradient) {
-				scale *= this.color_number;
+				scale *= this.color_number;//5
 				var index = Math.floor(scale);
 				assigncolor(result, this.colors[index]);
+				//console.log('assigncolor',result,this.colors[index],index,scale);	
+
 			} else {
 				if (loop) scale *= this.color_number;
 				else      scale *= (this.color_number - 1);
@@ -721,9 +727,11 @@ class Band extends Effect {
 		if (animation.status === 'delay') return;
 		if (animation.status === 'end') return;
 
-		var theta = 2 * Math.PI * this.angle / 360;
-		var dx =  Math.cos(theta);
-		var dy = -Math.sin(theta);
+		var theta = this.angle2 * Math.PI / 180;//弧度 0
+		var dx =  Math.cos(theta);// 1
+		var dy = -Math.sin(theta);//0
+		console.log(theta,dx,dy);
+
 		if (Math.abs(dx) < 1e-5) dx = 0;
 		if (Math.abs(dy) < 1e-5) dy = 0;
 
@@ -737,8 +745,9 @@ class Band extends Effect {
 			} else if (this.shape === 'conic') {
 				d = Math.hypot(light.x - animation.x, light.y - animation.y);
 			} else if (this.shape === 'radial') {
-				d = Math.atan2(light.y - animation.y, light.x - animation.x);
-				d = d / (2 * Math.PI) * 360;
+				d = Math.atan2(light.y - animation.y, light.x - animation.x);//弧度
+				d=d*180/Math.PI;//角度=弧度*180/PI;
+				//console.log('shape ===radial',zzz,d);
 			}
 
 			var frame = animation.holdframe + animation.frame;
@@ -1462,8 +1471,8 @@ function init() {
 	if (++images_count < images.length) return;
 	manager.pushDevice(new Device('keyboard', keyboard, keycodes, imageKeyboard));
 //	manager.pushDevice(new Device('mouse', mouse, null, imageMouse));
-//	manager.pushEffect(new Band());
-	manager.pushEffect(new Wave());
+    manager.pushEffect(new Band());
+	//manager.pushEffect(new Wave());
 //	manager.pushEffect(new Fire());
 //	manager.pushEffect(new Spectrum());
 }

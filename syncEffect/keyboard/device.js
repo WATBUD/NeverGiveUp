@@ -6,12 +6,12 @@ class Device {
 		var x1 = 1e9, y1 = 1e9, x2 = -1e9, y2 = -1e9;
 		for (let i=0; i<coordinates.length; ++i)
 			for (let j=0; j<4; ++j) {
-				x1 = Math.min(x1, coordinates[i][j].x);
+				x1 = Math.min(x1, coordinates[i][j].x);//[0]:左上角 [1]:右上角 [2]:右下角 [3]:左下角
 				y1 = Math.min(y1, coordinates[i][j].y);
 				x2 = Math.max(x2, coordinates[i][j].x);
 				y2 = Math.max(y2, coordinates[i][j].y);
 			}
-
+        console.log('Device',x1,y1,x2,y2);
 		this.position = {
 			x      : -14,
 			y      : -24,
