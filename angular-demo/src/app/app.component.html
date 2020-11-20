@@ -1,24 +1,83 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-  
-</ul>
 
+      <div id="EventCanBoxSelectRange" class="Keyboard-content">
+          <div id="GMMK_0x320F0x5044" class="Content1">
+              <div style="position: absolute; display: flex">
+                  <img
+                      src="assets/image/GMMK3.png"
+                      style="width: 834px; height: 372px; z-index: 3"
+                  />
+                  <div id="keyAssignPrompt"
+                      style="
+                          position: absolute;
+                          margin-top: -146px;
+                          margin-left: -65px;
+                          visibility: visible;
+                          width: 130px;
+                          display: flex;
+                          height: 117px;
+                          justify-content: center;
+                          align-items: flex-end;
+                          background-image: url('./image/keybinding/Indicator.png');
+                          z-index: 5;
+                      "
+                      [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'"
+                  >
+                      <div
+                          id="keyAssignPromptline"
+                          style="background-color: rgb(255, 255, 255); position: absolute; width: 1px; display: flex"
+                      ></div>
+                      <div
+                          id="KeyDefaultValue"
+                          style="
+                              color: white;
+                              margin-bottom: 84px;
+                              width: 50%;
+                              text-overflow: ellipsis;
+                              overflow: hidden;
+                              white-space: nowrap;
+                              text-align: center;
+                          "
+                      >
+                          {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue }}
+                      </div>
+                      <div id="SingleKeyClass" style="position: absolute; color: white; margin-top: -57px">
+                          {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
+                      </div>
+                      <div id="SingleKeyAssignValue" style="    position: absolute;
+                                              color: white;
+                                              margin-top: -25px;
+                                              width: 50%;
+                                              text-overflow: ellipsis;
+                                              overflow: hidden;
+                                              white-space: nowrap;
+                                              text-align: center;
+                                              ">
+                          {{ switchChangAllkey() }}
+                      </div>
+                  </div>                    
+                  <div id="KeyLightUI_section" style="position: absolute;
+                  display: flex;
+                  WIDTH: auto;
+                  HEIGHT: 100%;">
+                      <div [style.display]="lightingflag ? 'flex' : 'none'"
+                          *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
+                          [style.background-color]="KeyBoardLightLed.AllBlockColor[i].color" [attr.data-index]="i"></div>
+                  </div>
+                  <!-- -->
+                  <!-- <div id="KeyAssignBlock_section" style="position: absolute;
+                  display: flex;
+                  WIDTH: auto;
+                  HEIGHT: 100%;">
+                      <div id="KeyAssignBlock" [style.display]="keybindingflag ? 'flex' : 'none'"
+                          *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index"
+                          (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i" [style.background-color]="setkeyUIColor(i)" 
+                          class="KeyAssignUIStyle">
+                          <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}" class="KeyAssignHasValue"></div>
+                      </div>
+                  </div> -->
+
+              </div>
+          </div>
+
+
+      </div>
