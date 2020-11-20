@@ -139,6 +139,7 @@ export class AppComponent implements OnInit {
         //Add 'implements AfterViewInit' to the class.
         //this.macroService.setMacroPageEnter();
         this.LightPageRegisterEvent_Box_selection();
+        this.DeveloperControl();
     }
     switchChangAllkey() {
 
@@ -149,6 +150,8 @@ export class AppComponent implements OnInit {
         this.KeyBoardLightLed.BSApage1.setSelectContainer('EventCanBoxSelectRange')
         var RGBCBSList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         this.KeyBoardStyle.applyStyles(RGBCBSList);
+         console.log(RGBCBSList.length);  
+
         // RGBCBSList
         // var coordinates = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         // var element = coordinates[0] as HTMLElement;
@@ -187,9 +190,7 @@ export class AppComponent implements OnInit {
             }
             this.KeyBoardLightLed.AllBlockColor[index].coordinateData=obj;
             //console.log(String(index), obj);  
-            if(dist(24,22,obj.x1[0],obj.x1[1])>500){
-            element.style.backgroundColor='#FFFF00';
-            }
+
         }
 
 
@@ -206,9 +207,37 @@ export class AppComponent implements OnInit {
                 // if(this.dist(24,22,obj.x1[0],obj.x1[1])>500){
                 //     element.style.backgroundColor='#FFFF00';
                 // }
+                this.KeyBoardLightLed.AddBlockIndex();
+                var StartingPoint=this.KeyBoardLightLed.getNowBlock().coordinateData;
+                this.KeyBoardLightLed.getNowBlock().color='blue';
+                var target=this.KeyBoardLightLed.AllBlockColor;
+                for (let index = 0; index < target.length; index++) {
+                    const element = target[index];
+                    console.log('this.KeyBoardLightLed.AddBlockIndex();',element);  
+                    var compareResult=this.dist(StartingPoint.x1[0],StartingPoint.x1[1],element.coordinateData.x1[0],element.coordinateData.x1[1]);
+                    if(compareResult>5&&compareResult<200){
+                        element.color='#FFFF00';
+                    }
+                    else{
+                        element.color='#00FF00';
+                    }
+                }
             }
             if (event.keyCode == 109) {//-
-
+                this.KeyBoardLightLed.SubBlockIndex();
+                var StartingPoint=this.KeyBoardLightLed.getNowBlock().coordinateData;
+                this.KeyBoardLightLed.getNowBlock().color='blue';
+                var target=this.KeyBoardLightLed.AllBlockColor;
+                for (let index = 0; index < target.length; index++) {
+                    const element = target[index];
+                    var compareResult=this.dist(StartingPoint.x1[0],StartingPoint.x1[1],element.coordinateData.x1[0],element.coordinateData.x1[1]);
+                    if(compareResult>5&&compareResult<200){
+                        element.color='#FFFF00';
+                    }
+                    else{
+                        element.color='#00FF00';
+                    }
+                }
             }
             if (event.keyCode == 84) {//T
 

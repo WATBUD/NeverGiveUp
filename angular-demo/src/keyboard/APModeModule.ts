@@ -373,7 +373,7 @@ export class KeyBoardLightLed {
     maxkaycapNumber = 0
     ledcoordinates: any = []
     AllBlockColor: any = [] //TOTAL NUMBER
-    
+    currentBlockIndex=0;
     mode_name: any = [
         'Wave',
         'ConicBand',
@@ -408,7 +408,7 @@ export class KeyBoardLightLed {
             new AudioCap(this.maxkaycapNumber),
         ]
         this.recordModeArr = [new Wave(this.maxkaycapNumber)]
-        for (var i = 0; i <= this.maxkaycapNumber; i++) {
+        for (var i = 0; i < this.maxkaycapNumber; i++) {
             //61Key
             //this.AllBlockColor.push({color:"#FFFFFF",border:true});
             //this.AllBlockColor.push({ color: '#000000', border: true })
@@ -420,7 +420,23 @@ export class KeyBoardLightLed {
         console.log('getNameSortposition_indexOf=', this.mode_name.indexOf(name))
         return this.mode_name.indexOf(name)
     }
-
+    AddBlockIndex(){
+        if(this.currentBlockIndex<this.AllBlockColor.length-1){
+            this.currentBlockIndex+=1;
+        }
+        else{
+        }
+    }
+    SubBlockIndex(){
+        if(this.currentBlockIndex>0){
+            this.currentBlockIndex-=1;
+        }
+        else{
+        }
+    }
+    getNowBlock() {
+        return this.AllBlockColor[this.currentBlockIndex];
+    }
     ImportLedClassData(InputData) {
         console.log('ImportLedClassData', InputData)
         var arr = Object.keys(this.getTarget())

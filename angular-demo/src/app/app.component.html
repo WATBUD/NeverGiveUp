@@ -2,10 +2,10 @@
       <div id="EventCanBoxSelectRange" class="Keyboard-content">
           <div id="GMMK_0x320F0x5044" class="Content1">
               <div style="position: absolute; display: flex">
-                  <img
+                  <!-- <img
                       src="assets/image/GMMK3.png"
                       style="width: 834px; height: 372px; z-index: 3"
-                  />
+                  <!-- /> -->
                   <div id="keyAssignPrompt"
                       style="
                           position: absolute;
@@ -54,11 +54,11 @@
                                               ">
                           {{ switchChangAllkey() }}
                       </div>
-                  </div>                    
+                  </div>                     -->
                   <div id="KeyLightUI_section" style="position: absolute;
                   display: flex;
-                  WIDTH: auto;
-                  HEIGHT: 100%;">
+                  WIDTH:  834px;
+                  HEIGHT: 372px;">
                       <div [style.display]="lightingflag ? 'flex' : 'none'"
                           *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
                           [style.background-color]="KeyBoardLightLed.AllBlockColor[i].color" [attr.data-index]="i"></div>
