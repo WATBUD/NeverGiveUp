@@ -1,0 +1,127 @@
+
+        #ysm_hotword_module3 a {color: #3b8dbd;outline: 0 none; text-decoration: none;}
+#ysm_hotword_module3 a:hover {color: #444;}
+
+#ysm_hotword_module3 a, a:before, a:after {transition-duration: 0.2s;transition-timing-function: ease;}
+#ysm_hotword_module3 a img {transition: opacity 0.2s ease 0s;}
+
+#ysm_hotword_module3 { font: 13px/1.231 arial;color: #333333;font-weight: normal;font-style: normal;}
+#ysm_hotword_module3 .hd .title {float: left;line-height: 30px;margin-left: 10px;}
+#ysm_hotword_module3 .hd a {padding: 15px 30px 15px 0;text-decoration: none;font: bold 16px/22px'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft JhengHei', 微軟正黑體, sans-serif;}
+#ysm_hotword_module3 h2 {float: left;width: 100px;font-size: 18px;margin: 0;margin-left: 8px;font-weight: bold;text-decoration: none;text-align: left;margin-top:8px;color:#000000;}
+
+#ysm_hotword_module3 ul {list-style-type:disc ;
+/*padding: 0;*/
+}
+#ysm_hotword_module3 li {padding: 1px;
+/*display: inline-block;*/
+width: auto;line-height: 1;order-top: none;color:#0080FF;
+}
+#ysm_hotword_module3 li a {
+display: inline-block;
+white-space: nowrap;
+padding: 2px 6px 1px !important;
+font: 15px/25px 'ProximaNovaBold', Arial, Helvetica, sans-serif;color: #0080FF;text-align: center;
+text-transform: uppercase;
+/*border-bottom: 1px solid #b2b382;
+border-right: 1px solid #d9d9a0;
+background: #FE0;
+border-radius: 3px;*/
+margin: 1px 5px 0 0;
+letter-spacing: 0px;
+}
+#ysm_hotword_module3 li a:hover {color: #ffffff;background: #07e;}
+
+#ysm_hotword_module3 .line {width:100%;height:2px;background-color:#0080FF;display: block;}
+
+#ysm_hotword_module3 .hd {
+border: 0px solid #e1e1e1;
+border-bottom: 0;
+border-top: 0px solid #07a;
+/*background-color: #fbfbf9;*/
+position: relative;
+/*-webkit-box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);
+-moz-box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);
+box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);*/
+margin:0 0 10px 0;
+}
+#ysm_hotword_module3 .hd {
+background: #f4f7f9;
+zoom: 1;
+color: #333;
+font-size: 12px;
+}
+#ysm_hotword_module3 .bd {
+/*background-color: rgba(46, 46, 44, .07);*/
+/*padding: 3px 5px 12px 8px;
+box-shadow: 0 5px 5px -6px silver;
+border: 1px solid #e1e1e1;*/
+}
+#ysm_hotword_module3 .ysmBlock {
+width: 100%;
+float: left;
+display: block;
+margin: 5px 0 10px 0;
+}
+#ysm_hotword_module3 .ysmBlock img {
+float: left;
+width: 85px;
+}
+#ysm_hotword_module3 .ysmImg {
+float: left;
+width: 25%;
+}
+#ysm_hotword_module3 .ysmLink {
+width: 100%;
+line-height: 18px;
+margin-top: 3px;
+border-top: none;
+line-height: 4px;
+overflow: hidden;
+text-align: left;
+float: left;
+}
+#ysm_hotword_module3 .ysmLink ul {
+margin: 0;
+}
+.clearfix {
+*zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+display: table;
+line-height: 0;
+content: "";
+}
+.clearfix:after {
+clear: both;
+}
+        
+        @charset "utf-8";
+#ysm_hotword_module4 a {color: #3b8dbd;outline: 0 none;text-decoration: none;}
+#ysm_hotword_module4 a:hover {color: #444;}
+#ysm_hotword_module4 img {height: auto;max-width: 80px;}
+#ysm_hotword_module4 a,a:before,a:after {transition-duration: 0.2s;transition-timing-function: ease;}
+#ysm_hotword_module4 a img {transition: opacity 0.2s ease 0s;}
+#ysm_hotword_module4 {font: 13px/1.231 arial;color: #333333;font-weight: normal;font-style: normal;}
+#ysm_hotword_module4 .hd .title {float: left;line-height: 30px;margin-left: 10px;}
+#ysm_hotword_module4 .hd a {padding: 15px 30px 15px 0;text-decoration: none;font: bold 16px/22px'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft JhengHei', 微軟正黑體, sans-serif;}
+#ysm_hotword_module4 h2 {float: left;width: 100px;font-size: 15px;margin: 0;margin-left: 4px;font-weight: bold;text-decoration: none;text-align: left;}
+#ysm_hotword_module4 h2 a {text-decoration: none;font: bold 16px/22px'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft JhengHei', 微軟正黑體, sans-serif;}
+#ysm_hotword_module4 ul {padding: 0;}
+#ysm_hotword_module4 li {padding: 2px;display: inline-block;width: auto;line-height: 1;border-top: none;position: relative;}
+#ysm_hotword_module4 li a {color: #07a;text-decoration: none;line-height: 1.4;font-family: 'Raleway', sans-serif;font-size: 12px;font-weight: 400;letter-spacing: 0.1em;color: #ffffff;text-transform: uppercase;cursor: pointer;/*-webkit-border-radius: 4px;-moz-border-radius: 4px;-ms-border-radius: 4px;-o-border-radius: 4px;border-radius: 4px;display: -moz-inline-stack;*/display: inline-block;vertical-align: middle;zoom: 1;	width: 80px;}
+#ysm_hotword_module4 .hd {border: 1px solid #e1e1e1;border-bottom: 0;border-top: 1px solid #07a;background-color: #fbfbf9;position: relative;-webkit-box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);-moz-box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);box-shadow: 0 1px 2px rgba(71, 73, 72, 0.09999999999999998);}
+#ysm_hotword_module4 .hd {background: #f4f7f9;zoom: 1;color: #333;font-size: 12px;}
+#ysm_hotword_module4 .bd {}
+#ysm_hotword_module4 .ysmBlock {float: left;display: block;margin: 5px 0 0 0;}
+#ysm_hotword_module4 .ysmBlock img {float: left;width: 85px;}
+#ysm_hotword_module4 .ysmImg {float: left;}
+#ysm_hotword_module4 .ysmLink {line-height: 18px;border-top: none;line-height: 4px;overflow: hidden;text-align: left;float: left;	background-color: rgba(46, 46, 44, .07);box-shadow: 0 5px 5px -6px silver;border: 0px solid #e1e1e1;}
+#ysm_hotword_module4 .ysmLink ul {margin: 0;}
+.clearfix {*zoom: 1;}
+.clearfix:before,.clearfix:after {display: table;line-height: 0;content: "";}
+.clearfix:after {clear: both;}
+#ysm_hotword_module4 .d2s {margin: 1px 8px 1px 7px;width: 80px;height: 80px;opacity: 0.85;float: left;/*box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);*/}
+#ysm_hotword_module4 .d2s .title {padding-left: 0px;padding-right: 0px;padding-top: 0;padding-bottom: 0;overflow: hidden;text-align: center;color: #fff;text-decoration: none;font-weight: normal;position: absolute;top: 66px;	width: 80px;	background: rgba(0, 0, 0, 0.65);	filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=1, startColorStr='#8D000000',endColorStr='#8D000000');}
+        

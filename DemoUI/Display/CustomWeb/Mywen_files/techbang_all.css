@@ -1,0 +1,37 @@
+/*body {
+	background:#000;
+}*/
+#techbang-header {	
+	height:90px;
+	width:1000px;
+	/*background:#FFFFFF;*/
+	margin:0;
+	display:block;
+}
+#techbang-header a {
+	display:block;
+}
+
+
+
+#techbang-top3 {
+	position:absolute;
+	/*width:auto;*/
+	
+	left:0;
+	top:20px;
+	
+	/*border:#000 solid 1px;*/
+}
+
+
+#techbang-top3 a {
+	text-decoration:none;
+	color: #00F;
+	/*border:#000 solid 1px;*/
+}
+
+#techbang-top3 a:hover {
+	text-decoration:underline;
+}
+

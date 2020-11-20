@@ -35,8 +35,11 @@
     //         * 0: 相等
     //  * 1: 大于
     //  * -1: 小于
-    console.log(versionCompare('2.3', '2.3.0.4', 2)); // -1
-    // console.log(versionCompare('2.3', '2.3.0.4', 3)); // -1
+    console.log(versionCompare('99.99.99.99', '10.03.03.01', 2)); // -1
+    //console.log(versionCompare('10.03.03.01', '00.10.03.04', 2)); // 1
+    // console.log(versionCompare('01.01.00.00', '00.03.03.04', 2)); // 1
+
+    // console.log(versionCompare('1.0.2', '1.0.7', 2));
     // console.log(versionCompare('2.3', '2.3.0.4', 4)); // -1
     // console.log(versionCompare('2.3', '2.3.0.4', 8)); // 0
 
