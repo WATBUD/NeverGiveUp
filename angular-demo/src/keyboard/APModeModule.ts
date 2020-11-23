@@ -19,7 +19,6 @@
 // AudioCap 音樂
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-
 @Injectable()
 export class ModeParameter {
     frame_selection_range: any = []
@@ -388,6 +387,7 @@ export class KeyBoardLightLed {
         'AudioCap',
     ]
     //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
+    imageMaxWidth=0;
     modeClassArr: any = []
     recordModeArr: any = []
     currentModeIndex: any = 0
@@ -420,14 +420,14 @@ export class KeyBoardLightLed {
         console.log('getNameSortposition_indexOf=', this.mode_name.indexOf(name))
         return this.mode_name.indexOf(name)
     }
-    AddBlockIndex(){
+    addBlockIndex(){
         if(this.currentBlockIndex<this.AllBlockColor.length-1){
             this.currentBlockIndex+=1;
         }
         else{
         }
     }
-    SubBlockIndex(){
+    subBlockIndex(){
         if(this.currentBlockIndex>0){
             this.currentBlockIndex-=1;
         }
@@ -525,6 +525,54 @@ export class KeyBoardLightLed {
             }
         }
     }
+
+    distanceCalculation(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));//å…©é»žè·�é›¢
+    }
+    mode_Wave(){
+        //this.addBlockIndex();
+        this.currentBlockIndex=30;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        setInterval(()=>{
+            var StartPoint = this.getNowBlock().coordinateData;
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                console.log('this.KeyBoardLightLed.addBlockIndex();', element);
+                //var compareResult = this.distanceCalculation(StartPoint.centerPoint[0], StartPoint.centerPoint[1], element.coordinateData.centerPoint[0], element.coordinateData.centerPoint[1]);
+                //+(repeatCount*50)
+                //console.log('setCoordinate', StartPoint.centerPoint[0],element.coordinateData.centerPoint[0])
+                //var compareResult =Math.abs(0-element.coordinateData.centerPoint[0]);
+                var compareResult =(repeatCount*180);
+                repeatMax=compareResult+200;
+                if (compareResult>element.coordinateData.x1[0] &&repeatMax<element.coordinateData.x2[0]) {
+                    element.color = '#FFFF00';
+                }
+                else if (compareResult<element.coordinateData.x1[0] &&repeatMax>element.coordinateData.x1[0]) {
+                    element.color = '#FFFF00';
+                }
+                // if (compareResult > repeatMin+(repeatCount*50) && compareResult < repeatMax+(repeatCount*50)) {
+                //     element.color = '#FFFF00';
+                // }
+                else {
+                    element.color = '#00FF00';
+                }
+            }
+            if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+                repeatCount+=1;
+            }
+            else{
+                repeatCount=0;
+            }
+        },500)
+        
+    }
+
+
+
 
     showSelectionRange() {
         for (let index = 0; index < this.AllBlockColor.length; index++) {

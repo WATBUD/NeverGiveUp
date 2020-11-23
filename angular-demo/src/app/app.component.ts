@@ -150,12 +150,12 @@ export class AppComponent implements OnInit {
         this.KeyBoardLightLed.BSApage1.setSelectContainer('EventCanBoxSelectRange')
         var RGBCBSList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         this.KeyBoardStyle.applyStyles(RGBCBSList);
-         console.log(RGBCBSList.length);  
+        console.log(RGBCBSList.length);
 
         // RGBCBSList
         // var coordinates = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         // var element = coordinates[0] as HTMLElement;
-      
+
         // this.BoxSelectFnArrP1[0] = (e: MouseEvent) => {
         //     this.KeyBoardLightLed.BSApage1.mousedown(e)
         // }
@@ -187,55 +187,58 @@ export class AppComponent implements OnInit {
                 "x2": [element.offsetLeft + element.clientWidth, element.offsetTop],
                 "y1": [element.offsetLeft, element.offsetTop + element.clientHeight],
                 "y2": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
+                "centerPoint": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
             }
-            this.KeyBoardLightLed.AllBlockColor[index].coordinateData=obj;
+            this.KeyBoardLightLed.AllBlockColor[index].coordinateData = obj;
             //console.log(String(index), obj);  
 
         }
+        this.KeyBoardLightLed.imageMaxWidth=834;
 
 
     }
-    
+
 
     dist(x1, y1, x2, y2) {
-        return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2),2));//兩點距離
+        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));//兩點距離
     }
-    DeveloperControl(){
-        document.addEventListener('keyup', (event) => {
+    DeveloperControl() {
+        this.KeyBoardLightLed.mode_Wave();
+        document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+
                 // if(this.dist(24,22,obj.x1[0],obj.x1[1])>500){
                 //     element.style.backgroundColor='#FFFF00';
                 // }
-                this.KeyBoardLightLed.AddBlockIndex();
-                var StartingPoint=this.KeyBoardLightLed.getNowBlock().coordinateData;
-                this.KeyBoardLightLed.getNowBlock().color='blue';
-                var target=this.KeyBoardLightLed.AllBlockColor;
+                this.KeyBoardLightLed.addBlockIndex();
+                var StartingPoint = this.KeyBoardLightLed.getNowBlock().coordinateData;
+                this.KeyBoardLightLed.getNowBlock().color = 'blue';
+                var target = this.KeyBoardLightLed.AllBlockColor;
                 for (let index = 0; index < target.length; index++) {
                     const element = target[index];
-                    console.log('this.KeyBoardLightLed.AddBlockIndex();',element);  
-                    var compareResult=this.dist(StartingPoint.x1[0],StartingPoint.x1[1],element.coordinateData.x1[0],element.coordinateData.x1[1]);
-                    if(compareResult>5&&compareResult<200){
-                        element.color='#FFFF00';
+                    console.log('this.KeyBoardLightLed.addBlockIndex();', element);
+                    var compareResult = this.dist(StartingPoint.x1[0], StartingPoint.x1[1], element.coordinateData.x1[0], element.coordinateData.x1[1]);
+                    if (compareResult > 5 && compareResult < 350) {
+                        element.color = '#FFFF00';
                     }
-                    else{
-                        element.color='#00FF00';
+                    else {
+                        element.color = '#00FF00';
                     }
                 }
             }
             if (event.keyCode == 109) {//-
-                this.KeyBoardLightLed.SubBlockIndex();
-                var StartingPoint=this.KeyBoardLightLed.getNowBlock().coordinateData;
-                this.KeyBoardLightLed.getNowBlock().color='blue';
-                var target=this.KeyBoardLightLed.AllBlockColor;
+                this.KeyBoardLightLed.subBlockIndex();
+                var StartingPoint = this.KeyBoardLightLed.getNowBlock().coordinateData;
+                this.KeyBoardLightLed.getNowBlock().color = 'blue';
+                var target = this.KeyBoardLightLed.AllBlockColor;
                 for (let index = 0; index < target.length; index++) {
                     const element = target[index];
-                    var compareResult=this.dist(StartingPoint.x1[0],StartingPoint.x1[1],element.coordinateData.x1[0],element.coordinateData.x1[1]);
-                    if(compareResult>5&&compareResult<200){
-                        element.color='#FFFF00';
+                    var compareResult = this.dist(StartingPoint.x1[0], StartingPoint.x1[1], element.coordinateData.x1[0], element.coordinateData.x1[1]);
+                    if (compareResult > 5 && compareResult < 350) {
+                        element.color = '#FFFF00';
                     }
-                    else{
-                        element.color='#00FF00';
+                    else {
+                        element.color = '#00FF00';
                     }
                 }
             }
@@ -249,68 +252,68 @@ export class AppComponent implements OnInit {
             if (event.keyCode == 13) {//Enter
 
             }
-            if (event.keyCode == 83){//S this.gradient.onPlay=false
+            if (event.keyCode == 83) {//S this.gradient.onPlay=false
 
-                
-            }     
-            if (event.keyCode == 97){//1 this.gradient.onPlay=false
 
             }
-            if (event.keyCode == 98){//2 this.gradient.onPlay=false
+            if (event.keyCode == 97) {//1 this.gradient.onPlay=false
 
             }
-            if (event.keyCode == 99){//3
+            if (event.keyCode == 98) {//2 this.gradient.onPlay=false
 
             }
-            if (event.keyCode == 100){//4
+            if (event.keyCode == 99) {//3
 
             }
-            if (event.keyCode == 49){//Digit1
+            if (event.keyCode == 100) {//4
 
-;
             }
-            if (event.keyCode == 50){//Digit2
+            if (event.keyCode == 49) {//Digit1
 
-;
+                ;
             }
-            if (event.keyCode == 51){//Digit3
+            if (event.keyCode == 50) {//Digit2
 
-;
+                ;
             }
-            if (event.keyCode == 52){//Digit4
+            if (event.keyCode == 51) {//Digit3
 
-;
+                ;
             }
-            if (event.keyCode == 53){//Digit5
+            if (event.keyCode == 52) {//Digit4
 
-;
+                ;
             }
-            if (event.keyCode == 54){//Digit6
+            if (event.keyCode == 53) {//Digit5
 
-;
+                ;
             }
-            if (event.keyCode == 55){//Digit7
+            if (event.keyCode == 54) {//Digit6
 
-;
+                ;
             }
-            if (event.keyCode == 56){//Digit8
+            if (event.keyCode == 55) {//Digit7
 
-;
+                ;
             }
-            if (event.keyCode == 57){//Digit9
+            if (event.keyCode == 56) {//Digit8
 
-;
+                ;
             }
-            if (event.keyCode == 58){//Digit10
+            if (event.keyCode == 57) {//Digit9
 
-;
+                ;
             }
-            if (event.keyCode == 59){//Digit11
+            if (event.keyCode == 58) {//Digit10
 
-;
+                ;
+            }
+            if (event.keyCode == 59) {//Digit11
+
+                ;
             }
         });
     }
-    }
-
 }
+
+
