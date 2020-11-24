@@ -6,7 +6,7 @@ declare var System
 // let KeyMapping = System._nodeRequire('./backend/others/SupportData').KeyMapping
 import { KeyAssignManager } from '../keyboard/KeyAssignManager'
 import { KeyBoardManager, KeyBoardStyle } from '../keyboard/KeyBoardManager'
-import { KeyBoardLightLed } from '../keyboard/APModeModule'
+import { M_Light_CS } from '../keyboard/APModeModule'
 import { MatDialogRef } from '@angular/material'
 
 import {
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
     FlashSideLightEnable: boolean = true
     sidelightBreathingEnable: boolean = true
     KeyBoardStyle = new KeyBoardStyle()
-    KeyBoardLightLed = new KeyBoardLightLed(83)
+    M_Light_CS = new M_Light_CS(83)
     KeyBoardManager = new KeyBoardManager(83)
     KeyAssignManager = new KeyAssignManager();
 
@@ -147,7 +147,7 @@ export class AppComponent implements OnInit {
     LightPageRegisterEvent_Box_selection() {
         //var RGBCBSList = this.elementRef.nativeElement.querySelectorAll('.RGBColorBlockStyle')
         //console.log('RGBCBSList', RGBCBSList)
-        this.KeyBoardLightLed.BSApage1.setSelectContainer('EventCanBoxSelectRange')
+        this.M_Light_CS.BSApage1.setSelectContainer('EventCanBoxSelectRange')
         var RGBCBSList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         this.KeyBoardStyle.applyStyles(RGBCBSList);
         console.log(RGBCBSList.length);
@@ -157,20 +157,20 @@ export class AppComponent implements OnInit {
         // var element = coordinates[0] as HTMLElement;
 
         // this.BoxSelectFnArrP1[0] = (e: MouseEvent) => {
-        //     this.KeyBoardLightLed.BSApage1.mousedown(e)
+        //     this.M_Light_CS.BSApage1.mousedown(e)
         // }
         // this.BoxSelectFnArrP1[1] = (e: MouseEvent) => {
-        //     this.KeyBoardLightLed.BSApage1.mousemove(e)
+        //     this.M_Light_CS.BSApage1.mousemove(e)
         // }
         // this.BoxSelectFnArrP1[2] = (e: MouseEvent) => {
-        //     if (this.KeyBoardLightLed.BSApage1.mouseup(e) == 'Finish') {
-        //         this.KeyBoardLightLed.setModeFrameRange()
+        //     if (this.M_Light_CS.BSApage1.mouseup(e) == 'Finish') {
+        //         this.M_Light_CS.setModeFrameRange()
         //         //this.setColorDataToServer('setModeFrameRange')
         //     }
         // }
-        // this.KeyBoardLightLed.BSApage1.selectContainer.addEventListener('mousedown', this.BoxSelectFnArrP1[0])
-        // this.KeyBoardLightLed.BSApage1.selectContainer.addEventListener('mousemove', this.BoxSelectFnArrP1[1])
-        // this.KeyBoardLightLed.BSApage1.selectContainer.addEventListener('mouseup', this.BoxSelectFnArrP1[2])
+        // this.M_Light_CS.BSApage1.selectContainer.addEventListener('mousedown', this.BoxSelectFnArrP1[0])
+        // this.M_Light_CS.BSApage1.selectContainer.addEventListener('mousemove', this.BoxSelectFnArrP1[1])
+        // this.M_Light_CS.BSApage1.selectContainer.addEventListener('mouseup', this.BoxSelectFnArrP1[2])
 
         for (let index = 0; index < RGBCBSList.length; index++) {
             let element = RGBCBSList[index];
@@ -183,64 +183,30 @@ export class AppComponent implements OnInit {
                 "offsetLeft": element.offsetLeft,
                 "offsetTop": element.offsetTop,
                 "scroll": element.scroll,
-                "x1": [element.offsetLeft, element.offsetTop],
-                "x2": [element.offsetLeft + element.clientWidth, element.offsetTop],
-                "y1": [element.offsetLeft, element.offsetTop + element.clientHeight],
-                "y2": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
-                "centerPoint": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
+                "top_Left": [element.offsetLeft, element.offsetTop],
+                "top_Right": [element.offsetLeft + element.clientWidth, element.offsetTop],
+                "bottom_Left": [element.offsetLeft, element.offsetTop + element.clientHeight],
+                "bottom_Right": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
+                "center_Point": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
             }
-            this.KeyBoardLightLed.AllBlockColor[index].coordinateData = obj;
+            this.M_Light_CS.AllBlockColor[index].coordinateData = obj;
             //console.log(String(index), obj);  
 
         }
-        this.KeyBoardLightLed.imageMaxWidth=834;
+        this.M_Light_CS.imageMaxWidth=834;
 
 
     }
 
-
-    dist(x1, y1, x2, y2) {
-        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));//兩點距離
-    }
     DeveloperControl() {
-        this.KeyBoardLightLed.mode_Wave();
+        this.M_Light_CS.mode_T2();
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+
-                // if(this.dist(24,22,obj.x1[0],obj.x1[1])>500){
-                //     element.style.backgroundColor='#FFFF00';
-                // }
-                this.KeyBoardLightLed.addBlockIndex();
-                var StartingPoint = this.KeyBoardLightLed.getNowBlock().coordinateData;
-                this.KeyBoardLightLed.getNowBlock().color = 'blue';
-                var target = this.KeyBoardLightLed.AllBlockColor;
-                for (let index = 0; index < target.length; index++) {
-                    const element = target[index];
-                    console.log('this.KeyBoardLightLed.addBlockIndex();', element);
-                    var compareResult = this.dist(StartingPoint.x1[0], StartingPoint.x1[1], element.coordinateData.x1[0], element.coordinateData.x1[1]);
-                    if (compareResult > 5 && compareResult < 350) {
-                        element.color = '#FFFF00';
-                    }
-                    else {
-                        element.color = '#00FF00';
-                    }
-                }
+
             }
             if (event.keyCode == 109) {//-
-                this.KeyBoardLightLed.subBlockIndex();
-                var StartingPoint = this.KeyBoardLightLed.getNowBlock().coordinateData;
-                this.KeyBoardLightLed.getNowBlock().color = 'blue';
-                var target = this.KeyBoardLightLed.AllBlockColor;
-                for (let index = 0; index < target.length; index++) {
-                    const element = target[index];
-                    var compareResult = this.dist(StartingPoint.x1[0], StartingPoint.x1[1], element.coordinateData.x1[0], element.coordinateData.x1[1]);
-                    if (compareResult > 5 && compareResult < 350) {
-                        element.color = '#FFFF00';
-                    }
-                    else {
-                        element.color = '#00FF00';
-                    }
-                }
+             
             }
             if (event.keyCode == 84) {//T
 

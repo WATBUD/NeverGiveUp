@@ -1,22 +1,7 @@
 // HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
 // HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB其中B即英語：Brightness。
 //Louis Architecture => Hex=>SET RGB=>SET HSV
-//    "波紋",   "螺旋"   ,"循環""撞擊","爆炸","呼吸","下雨","火焰","單顆點亮","音樂"
-//  Wave, ConicBand,Spiral,Cycle,LinearWave,Ripple,Breathing,Rain,Fire,Trigger,AudioCap：音樂
-// var $ = require('jquery');
-// window.$ = $;
-// window.jQuery = $;
-// Wave 波浪
-// ConicBand 撞击
-// Spiral 螺旋
-// Cycle 循环
-// LinearWave 触发
-// Breathing 呼吸
-// Ripple 涟漪
-// Rain 下雨
-// Fire 火焰
-// trigger 点亮
-// AudioCap 音樂
+
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
 @Injectable()
@@ -82,6 +67,7 @@ class ModeParameter {
 export class M_Light_CS {
     //左上,右上,左下,右下
     maxkaycapNumber = 0
+    repeater;
     ledcoordinates: any = []
     AllBlockColor: any = [] //TOTAL NUMBER
     LightingEffectData: any = [
@@ -352,27 +338,28 @@ export class M_Light_CS {
 
     mode_Wave(){
         //this.addBlockIndex();
+        clearInterval(this.repeater);
         this.currentBlockIndex=30;
         //this.getNowBlock().color = 'blue';
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
-        setInterval(()=>{
+        this.repeater=setInterval(()=>{
             var StartPoint = this.getNowBlock().coordinateData;
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
                 console.log('this.M_Light_PRESETS.addBlockIndex();', element);
-                //var compareResult = this.distanceCalculation(StartPoint.centerPoint[0], StartPoint.centerPoint[1], element.coordinateData.centerPoint[0], element.coordinateData.centerPoint[1]);
+                //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
                 //+(repeatCount*50)
-                //console.log('setCoordinate', StartPoint.centerPoint[0],element.coordinateData.centerPoint[0])
-                //var compareResult =Math.abs(0-element.coordinateData.centerPoint[0]);
+                //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
+                //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
                 var compareResult =(repeatCount*180);
                 repeatMax=compareResult+200;
-                if (compareResult>element.coordinateData.x1[0] &&repeatMax<element.coordinateData.x2[0]) {
+                if (compareResult>element.coordinateData.top_Left[0] &&repeatMax<element.coordinateData.top_Right[0]) {
                     element.color = '#FFFF00';
                 }
-                else if (compareResult<element.coordinateData.x1[0] &&repeatMax>element.coordinateData.x1[0]) {
+                else if (compareResult<element.coordinateData.top_Left[0] &&repeatMax>element.coordinateData.top_Left[0]) {
                     element.color = '#FFFF00';
                 }
                 // if (compareResult > repeatMin+(repeatCount*50) && compareResult < repeatMax+(repeatCount*50)) {
@@ -389,8 +376,63 @@ export class M_Light_CS {
                 repeatCount=0;
             }
         },500)
-        
     }
+
+    mode_T2(){
+        //this.addBlockIndex();
+        clearInterval(this.repeater);
+        this.currentBlockIndex=30;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var sub_disL=StartPoint.center_Point[0];
+        var sub_disR=StartPoint.center_Point[1];
+        this.repeater=setInterval(()=>{
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                console.log('this.M_Light_PRESETS.addBlockIndex();', element);
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                //+(repeatCount*50)
+                //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
+                //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
+                //if()
+                var compareResult =(repeatCount*180);
+                var sub_disL=StartPoint.top_Left[1];
+                var sub_disR=StartPoint.top_Right[1];
+
+                repeatMax=compareResult+200;
+                var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+                if (Ysdis < 5) {
+                    if (compareResult > element.coordinateData.top_Left[0] && repeatMax < element.coordinateData.top_Right[0]) {
+                        element.color = '#FFFF00';
+                    }
+                    else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
+                        element.color = '#FFFF00';
+                    }
+                }
+                // if (compareResult > repeatMin+(repeatCount*50) && compareResult < repeatMax+(repeatCount*50)) {
+                //     element.color = '#FFFF00';
+                // }
+                else {
+                    element.color = '#00FF00';
+                }
+            }
+            if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+                repeatCount+=1;
+            }
+            else{
+                repeatCount=0;
+            }
+        },500)
+        //clearInterval(this.repeater);
+    }
+
+
+
+
 
     showSelectionRange() {
         for (let index = 0; index < this.AllBlockColor.length; index++) {
