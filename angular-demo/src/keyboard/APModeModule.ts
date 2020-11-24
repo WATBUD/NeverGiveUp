@@ -381,16 +381,19 @@ export class M_Light_CS {
     mode_T2(){
         //this.addBlockIndex();
         clearInterval(this.repeater);
-        this.currentBlockIndex=30;
+        this.currentBlockIndex=36;
         //this.getNowBlock().color = 'blue';
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
         var StartPoint = this.getNowBlock().coordinateData;
-        var sub_disL=StartPoint.center_Point[0];
-        var sub_disR=StartPoint.center_Point[1];
+ 
         this.repeater=setInterval(()=>{
+            this.mode_reset();
             var target = this.AllBlockColor;
+            // sub_disL-=50;
+            // sub_disR+=50;
+
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
                 console.log('this.M_Light_PRESETS.addBlockIndex();', element);
@@ -399,28 +402,27 @@ export class M_Light_CS {
                 //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
                 //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
                 //if()
-                var compareResult =(repeatCount*180);
-                var sub_disL=StartPoint.top_Left[1];
-                var sub_disR=StartPoint.top_Right[1];
-
-                repeatMax=compareResult+200;
+                var compareResult =(repeatCount*50);
+                
+                //repeatMax=compareResult+200;
                 var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
                 if (Ysdis < 5) {
-                    if (compareResult > element.coordinateData.top_Left[0] && repeatMax < element.coordinateData.top_Right[0]) {
-                        element.color = '#FFFF00';
+                    if (dis>compareResult) {
+                        element.color = '#FF0000';
                     }
-                    else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
-                        element.color = '#FFFF00';
+                    //else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
+                    else{
+                        element.color = '#0000FF';
                     }
                 }
                 // if (compareResult > repeatMin+(repeatCount*50) && compareResult < repeatMax+(repeatCount*50)) {
                 //     element.color = '#FFFF00';
                 // }
-                else {
-                    element.color = '#00FF00';
-                }
+                // else {
+                //     element.color = '#00FF00';
+                // }
             }
-            if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+            if(repeatCount<15 &&compareResult<this.imageMaxWidth){
                 repeatCount+=1;
             }
             else{
@@ -430,6 +432,14 @@ export class M_Light_CS {
         //clearInterval(this.repeater);
     }
 
+
+    mode_reset() {
+        var target = this.AllBlockColor;
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            element.color = '#000000';
+        }
+    }
 
 
 
