@@ -20,7 +20,7 @@
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
 @Injectable()
-export class ModeParameter {
+class ModeParameter {
     frame_selection_range: any = []
     coordinateX: any = 0
     coordinateY: any = 0
@@ -78,294 +78,6 @@ export class ModeParameter {
         }
     }
 }
-interface RGBMode {
-    sortPosition: any
-    iconpath: any
-    showlimit: any
-    name: any
-    coordinateX: any
-    coordinateY: any
-    canEffectCenter: any
-    opacity: number //不透明度0~1
-    color: any //RGB
-    speed: number //速度1~10
-    bandwidth: number //帶寬50~500
-    angle: any //0~360
-    number: any //1~10
-    fire: any //0~1
-    gap: number //0~500
-    bump: any ///0~5;
-    randomspeed: any //0~360
-    time: any //0.5~3
-    radius: any //0~300
-    amplitude: number //振幅200~8000
-    separate: any //true,false
-    direction: any //true,false
-    soft: any //true,false
-    fixed: any //true,false
-    bidirectional: any //true,false
-    saturation: number //飽和度 0~1
-    value: number //明度 0~1
-}
-export class Wave extends ModeParameter implements RGBMode {
-    sortPosition: any = 0
-    iconpath: any = ['./image/ColorSet/Off/Wave.png', './image/ColorSet/On/Wave.png']
-    showlimit: any = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
-
-    name: any = 'Wave'
-
-    speed: number = 5 //速度1~10~
-    bandwidth: number = 200 //帶寬50~500
-
-    constructor(inputmax) {
-        super(inputmax)
-        this.gradient = true //true,false
-    }
-}
-class ConicBand extends ModeParameter implements RGBMode {
-    sortPosition: any = 1
-    iconpath: any = ['./image/ColorSet/Off/ConicBand.png', './image/ColorSet/On/ConicBand.png']
-    showlimit: any = [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
-    canEffectCenter: any = true
-    name: any = 'ConicBand'
-    speed: number = 5 //速度1~10
-    bandwidth: number = 100 //帶寬50~500
-    constructor(inputmax) {
-        super(inputmax)
-        this.gradient = true //true,false
-    }
-}
-class Spiral extends ModeParameter implements RGBMode {
-    sortPosition: any = 2
-    iconpath: any = ['./image/ColorSet/Off/Spiral.png', './image/ColorSet/On/Spiral.png']
-    showlimit: any = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
-    canEffectCenter: any = true
-    name: any = 'Spiral'
-    speed: number = 5 //速度1~10
-    constructor(inputmax) {
-        super(inputmax)
-        this.gradient = true //true,false
-    }
-}
-class Cycle extends ModeParameter implements RGBMode {
-    sortPosition: any = 3
-    iconpath: any = ['./image/ColorSet/Off/Cycle.png', './image/ColorSet/On/Cycle.png']
-    showlimit: any = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    name: any = 'Cycle'
-
-    speed: number = 2 //速度1~10
-    bandwidth: number = 0 //帶寬50~500
-
-    constructor(inputmax) {
-        super(inputmax)
-        this.gradient = true //true,false
-    }
-}
-class LinearWave extends ModeParameter implements RGBMode {
-    sortPosition: any = 4
-    iconpath: any = ['./image/ColorSet/Off/LinearWave.png', './image/ColorSet/On/LinearWave.png']
-    showlimit: any = [1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-
-    name: any = 'LinearWave'
-    color: any = [
-        '#ff0000',
-        '#ff8000',
-        '#80ff00',
-        '#00ff00',
-        '#00ffff',
-        '#0000ff',
-        '#8000ff',
-        '#ff00ff',
-        '#ff0080',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-    ] //RGB
-
-    speed: number = 10 //速度1~10
-    bump: any = false ///0~5;
-
-    constructor(inputmax) {
-        super(inputmax)
-        this.soft = true //true,false
-        this.bidirectional = true //true,false
-        this.gradient = true //true,false
-    }
-}
-class Ripple extends ModeParameter implements RGBMode {
-    sortPosition: any = 5
-    iconpath: any = ['./image/ColorSet/Off/Ripple.png', './image/ColorSet/On/Ripple.png']
-    showlimit: any = [1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0]
-    name: any = 'Ripple'
-    speed: number = 10 //速度1~10
-    gradient: any = true //true,false
-    constructor(inputmax) {
-        super(inputmax)
-        this.soft = true //true,false
-    }
-}
-class Breathing extends ModeParameter implements RGBMode {
-    sortPosition: any = 6
-    iconpath: any = ['./image/ColorSet/Off/Breathing.png', './image/ColorSet/On/Breathing.png']
-    showlimit: any = [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    name: any = 'Breathing'
-    speed: number = 2 //速度1~10
-    bandwidth: number = 500 //帶寬50~500
-    fixed: any = true //true,false
-    constructor(inputmax) {
-        super(inputmax)
-    }
-}
-class Rain extends ModeParameter implements RGBMode {
-    sortPosition: any = 7
-    iconpath: any = ['./image/ColorSet/Off/Rain.png', './image/ColorSet/On/Rain.png']
-    showlimit: any = [1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    name: any = 'Rain'
-    speed: number = 8 //速度1~10
-    bandwidth: number = 500 //帶寬50~500
-    fixed: any = true //true,false
-    constructor(inputmax) {
-        super(inputmax)
-        this.number = 5
-    }
-}
-class Fire extends ModeParameter implements RGBMode {
-    sortPosition: any = 8
-    iconpath: any = ['./image/ColorSet/Off/Fire.png', './image/ColorSet/On/Fire.png']
-    showlimit: any = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    name: any = 'Fire'
-    color: any = [
-        '#FF2000',
-        '#ff8000',
-        '#80ff00',
-        '#00ff00',
-        '#00ffff',
-        '#0000ff',
-        '#8000ff',
-        '#ff00ff',
-        '#ff0080',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-    ] //RGB
-    speed: number = 0 //速度1~10
-    bandwidth: number = 0 //帶寬50~500
-    gap: number = 0 //0~500
-    time: any = 0 //0.5~3
-    fixed: any = true //true,false
-    constructor(inputmax) {
-        super(inputmax)
-        this.fire = 0.5 //0~1
-        this.color_ShowLimit = 0
-    }
-}
-
-class Trigger extends ModeParameter implements RGBMode {
-    sortPosition: any = 9
-    iconpath: any = ['./image/ColorSet/Off/Trigger.png', './image/ColorSet/On/Trigger.png']
-    showlimit: any = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]
-    name: any = 'Trigger'
-    color: any = [
-        '#FF2000',
-        '#ff8000',
-        '#80ff00',
-        '#00ff00',
-        '#00ffff',
-        '#0000ff',
-        '#8000ff',
-        '#ff00ff',
-        '#ff0080',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-    ] //RGB
-    speed: number = 0 //速度1~10
-    bandwidth: number = 0 //帶寬50~500
-    time: any = 3 //0.5~3
-    constructor(inputmax) {
-        super(inputmax)
-        this.soft = true //true,false
-    }
-}
-class AudioCap extends ModeParameter implements RGBMode {
-    sortPosition: any = 10
-    iconpath: any = ['./image/ColorSet/Off/AudioCap.png', './image/ColorSet/On/AudioCap.png']
-    showlimit: any = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-
-    check: any = true
-    name: any = 'AudioCap'
-    color: any = [
-        '#FF2000',
-        '#ff8000',
-        '#80ff00',
-        '#00ff00',
-        '#00ffff',
-        '#0000ff',
-        '#8000ff',
-        '#ff00ff',
-        '#ff0080',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-    ] //RGB
-    speed: number = 0 //速度1~10
-    bandwidth: number = 0 //帶寬50~500
-    time: any = 3 //0.5~3
-
-    constructor(inputmax) {
-        super(inputmax)
-        this.amplitude = 500
-        this.color_quantity = 1
-        this.color_ShowLimit = 1
-    }
-}
-
-class Static extends ModeParameter implements RGBMode {
-    sortPosition: any = 11
-    iconpath: any = ['./image/ColorSet/Off/Static.png', './image/ColorSet/On/Static.png']
-    showlimit: any = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    name: any = 'Static'
-    speed: number = 5 //速度1~10
-    constructor(inputmax) {
-        super(inputmax)
-        this.color_quantity = 1
-        this.color_ShowLimit = 1
-        this.bandwidth = 100
-    }
-}
 
 export class M_Light_CS {
     //左上,右上,左下,右下
@@ -393,14 +105,7 @@ export class M_Light_CS {
         { name: 'Surmount', value: 18, translate: 'Surmount' },
         { name: 'LEDOFF', value: 8, translate: 'LEDOFF' },
     ]
-    lightData={
-        rate:50,
-        brightness:50,
-        colorHex:'#000000',
-        colorPickerValue:[0,0,255],
-        sideLightSync:true,
-        lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' },
-    };
+    lightData;
     currentBlockIndex=0;
     mode_name: any = [
         'Wave',
@@ -418,33 +123,15 @@ export class M_Light_CS {
     nowSettingColorkeyName=''
     //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
     imageMaxWidth=0;
-    modeClassArr: any = []
     recordModeArr: any = []
     currentModeIndex: any = 0
     BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
-        this.modeClassArr = [
-            new Wave(this.maxkaycapNumber),
-            new ConicBand(this.maxkaycapNumber),
-            new Spiral(this.maxkaycapNumber),
-            new Cycle(this.maxkaycapNumber),
-            new LinearWave(this.maxkaycapNumber),
-            new Ripple(this.maxkaycapNumber),
-            new Breathing(this.maxkaycapNumber),
-            new Rain(this.maxkaycapNumber),
-            new Fire(this.maxkaycapNumber),
-            new Trigger(this.maxkaycapNumber),
-            new AudioCap(this.maxkaycapNumber),
-        ]
-        this.recordModeArr = [new Wave(this.maxkaycapNumber)]
         for (var i = 0; i < this.maxkaycapNumber; i++) {
-            //61Key
-            //this.AllBlockColor.push({color:"#FFFFFF",border:true});
-            //this.AllBlockColor.push({ color: '#000000', border: true })
-            //this.AllBlockColor.push({ color: '#000000', border: true })
-            this.AllBlockColor.push({ color: 'red', border: true,coordinateData:[]})
+            this.AllBlockColor.push({ color: '#FF0000', border: true,coordinateData:[]})
         }
+        this.resetDefault();
     }
 
     findLightData(findValue) {
@@ -458,15 +145,18 @@ export class M_Light_CS {
       
      this.lightData= JSON.parse(JSON.stringify(obj));
     }
-    resetDefault(){
-    this.lightData=this.defaultSetlightData();
+    resetDefault() {
+        this.lightData = this.defaultSetlightData();
+        for (var i = 0; i < this.maxkaycapNumber; i++) {
+            this.AllBlockColor[i].color='#FF0000';
+        }
     }
     defaultSetlightData(type = '') {
         var T = {
             rate:50,
             brightness:50,
-            colorHex:'#000000',
-            colorPickerValue:[0,0,255],
+            colorHex:'#0000',
+            colorPickerValue:[255,0,0],
             sideLightSync:true,
             lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' }
         }
@@ -497,6 +187,24 @@ export class M_Light_CS {
         else{
         }
     }
+    setColorPickerValue(RGB_Arr){
+       var target=this.lightData.colorPickerValue;
+       target[0]=RGB_Arr[0];
+       target[1]=RGB_Arr[1];
+       target[2]=RGB_Arr[2];
+       this.lightData.colorHex=this.rgbToHex(target[0],target[1],target[2]);
+       
+    }
+    rgbToHex(r, g, b) {
+        r = Number(r);
+        g = Number(g);
+        b = Number(b);
+        return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    }
+    componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
     getNowBlock() {
         return this.AllBlockColor[this.currentBlockIndex];
     }
@@ -518,7 +226,6 @@ export class M_Light_CS {
 
     getTarget() {
         //console.log(" this.recordModeArr[this.currentModeIndex];", this.recordModeArr[this.currentModeIndex]);
-
         return this.recordModeArr[this.currentModeIndex]
     }
     switchEffectMode(index) {
@@ -545,8 +252,6 @@ export class M_Light_CS {
         if (this.recordModeArr.length > 10) {
             return
         }
-
-        this.recordModeArr.push(new Wave(this.maxkaycapNumber))
     }
 
     setModeFrameRange() {
@@ -554,7 +259,7 @@ export class M_Light_CS {
         var selectedEls = this.BSApage1.selectedEls
         if (isAllTrue) {
             for (var i = 0; i < this.BSApage1.selectedEls.length; i++) {
-                this.AllBlockColor[selectedEls[i]].color = '#000000'
+                this.AllBlockColor[selectedEls[i]].color = '#0000'
                 this.AllBlockColor[selectedEls[i]].border = false
             }
         } else {
@@ -565,10 +270,6 @@ export class M_Light_CS {
         }
         console.log('Result_isAllTrue', isAllTrue)
         console.log('Result_selectedEls', selectedEls)
-        var nowMode = this.recordModeArr[this.currentModeIndex]
-        for (let index = 0; index < selectedEls.length; index++) {
-            nowMode.frame_selection_range[selectedEls[index]] = !isAllTrue
-        }
 
         this.updateframe_selection_range()
         this.BSApage1.mouseOn = false
@@ -588,18 +289,6 @@ export class M_Light_CS {
 
     //原有邊框架構 因客戶要求不顯示邊框 這邊採用border判斷是否顯示此格
     updateframe_selection_range() {
-        var range = this.recordModeArr[this.currentModeIndex].frame_selection_range
-        // console.log("LEDModeSelect:range:",range);
-        for (let i = 0; i < range.length; i++) {
-            //const element = range[index];
-            if (range[i] == true) {
-                //console.log("LEDModeSelect:true:",i);
-                this.AllBlockColor[i].border = true
-            } else {
-                //console.log("LEDModeSelect:false:",i);
-                this.AllBlockColor[i].border = false
-            }
-        }
     }
 
     distanceCalculation(x1, y1, x2, y2) {
@@ -708,7 +397,7 @@ export class M_Light_CS {
             if (this.AllBlockColor[index].border) {
                 this.AllBlockColor[index].color = '#FFFFFF'
             } else {
-                this.AllBlockColor[index].color = '#000000'
+                this.AllBlockColor[index].color = '#0000'
             }
         }
     }
