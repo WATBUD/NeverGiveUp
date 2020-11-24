@@ -367,11 +367,40 @@ class Static extends ModeParameter implements RGBMode {
     }
 }
 
-export class KeyBoardLightLed {
+export class M_Light_CS {
     //左上,右上,左下,右下
     maxkaycapNumber = 0
     ledcoordinates: any = []
     AllBlockColor: any = [] //TOTAL NUMBER
+    LightingEffectData: any = [
+        { name: 'GloriousMode', value: 0, translate: 'GloriousMode' },
+        { name: 'Wave#1', value: 1, translate: 'Wave#1' },
+        { name: 'Wave#2', value: 3, translate: 'Wave#2' },
+        { name: 'SpiralingWave', value: 4, translate: 'SpiralingWave' },
+        { name: 'AcidMode', value: 5, translate: 'AcidMode' },
+        { name: 'Breathing', value: 2, translate: 'Breathing' },
+        { name: 'NormallyOn', value: 6, translate: 'NormallyOn' },
+        { name: 'RippleGraff', value: 7, translate: 'Ripple Graff' },
+        { name: 'PassWithoutTrace', value: 9, translate: 'PassWithoutTrace' },
+        { name: 'FastRunWithoutTrace', value: 10, translate: 'FastRunWithoutTrace' },
+        { name: 'Matrix2', value: 11, translate: 'Matrix2' },
+        { name: 'Matrix3', value: 12, translate: 'Matrix3' },
+        { name: 'Rainbow', value: 13, translate: 'Rainbow' },
+        { name: 'HeartbeatSensor', value: 14, translate: 'HeartbeatSensor' },
+        { name: 'DigitTimes', value: 15, translate: 'DigitTimes' },
+        { name: 'Kamehemeha', value: 16, translate: 'Kamehemeha' },
+        { name: 'Pingpong', value: 17, translate: 'Pingpong' },
+        { name: 'Surmount', value: 18, translate: 'Surmount' },
+        { name: 'LEDOFF', value: 8, translate: 'LEDOFF' },
+    ]
+    lightData={
+        rate:50,
+        brightness:50,
+        colorHex:'#000000',
+        colorPickerValue:[0,0,255],
+        sideLightSync:true,
+        lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' },
+    };
     currentBlockIndex=0;
     mode_name: any = [
         'Wave',
@@ -386,6 +415,7 @@ export class KeyBoardLightLed {
         'Trigger',
         'AudioCap',
     ]
+    nowSettingColorkeyName=''
     //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
     imageMaxWidth=0;
     modeClassArr: any = []
@@ -416,6 +446,33 @@ export class KeyBoardLightLed {
             this.AllBlockColor.push({ color: 'red', border: true,coordinateData:[]})
         }
     }
+
+    findLightData(findValue) {
+        let obj = this.LightingEffectData.find((x) => x.value == findValue)
+        if (obj != undefined) {
+            alert('Lighting Select fail');
+        }
+        return obj;
+    } 
+    setlightData(obj){
+      
+     this.lightData= JSON.parse(JSON.stringify(obj));
+    }
+    resetDefault(){
+    this.lightData=this.defaultSetlightData();
+    }
+    defaultSetlightData(type = '') {
+        var T = {
+            rate:50,
+            brightness:50,
+            colorHex:'#000000',
+            colorPickerValue:[0,0,255],
+            sideLightSync:true,
+            lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' }
+        }
+        return T
+    }
+
     getNameSortposition(name) {
         console.log('getNameSortposition_indexOf=', this.mode_name.indexOf(name))
         return this.mode_name.indexOf(name)
@@ -426,6 +483,12 @@ export class KeyBoardLightLed {
         }
         else{
         }
+    }
+    setGroupArrayColor(groupArray,assignColor){  
+        var target=this.AllBlockColor;
+        groupArray.forEach(function(value, index, array){//array=GroupArray
+            target[value].color = assignColor ;
+        });
     }
     subBlockIndex(){
         if(this.currentBlockIndex>0){
@@ -446,6 +509,7 @@ export class KeyBoardLightLed {
             }
         }
     }
+    
     ImportCreateLedData(InputData) {
         console.log('ImportCreateLedData', InputData)
         InputData = JSON.parse(JSON.stringify(InputData))
@@ -510,6 +574,18 @@ export class KeyBoardLightLed {
         this.BSApage1.mouseOn = false
         return 'Finish'
     }
+    
+    stringFormat() {
+        if (arguments.length == 0)
+            return null;
+        var str = arguments[0];
+        for (var i = 1; i < arguments.length; i++) {
+            var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+            str = str.replace(re, arguments[i]);
+        }
+        return str;
+    }
+
     //原有邊框架構 因客戶要求不顯示邊框 這邊採用border判斷是否顯示此格
     updateframe_selection_range() {
         var range = this.recordModeArr[this.currentModeIndex].frame_selection_range
@@ -529,6 +605,62 @@ export class KeyBoardLightLed {
     distanceCalculation(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));//å…©é»žè·�é›¢
     }
+    
+    setNowLightMode() {
+        switch (this.lightData.lightSelected.translate) {
+            case 'GloriousMode':
+                break;
+            case 'Wave#1':
+                break;
+            case 'Wave#2':
+                break;
+            case 'SpiralingWave':
+                break;
+            case 'AcidMode':
+                break;
+            case 'Breathing':
+                break;
+            case 'NormallyOn':
+                break;
+            case 'RippleGraff':
+                break;
+            case 'PassWithoutTrace':
+                break;
+            case 'FastRunWithoutTrace':
+                break;
+            case 'Matrix2':
+                break;
+            case 'Matrix3':
+                break;
+            case 'Rainbow':
+                break;
+            case 'HeartbeatSensor':
+                break;
+            case 'DigitTimes':
+                break;
+            case 'Kamehemeha':
+                break;
+            case 'Pingpong':
+                break;
+            case 'Surmount':
+                break;
+            case 'LEDOFF':
+                this.mode_LEDOFF();
+                break;
+            default:
+                break;
+        }
+    }
+    mode_LEDOFF() {
+        var target = this.AllBlockColor;
+        for (let index = 0; index < target.length; index++) {
+            let element = target[index];
+            element.color = 'black';
+        }
+    }
+
+    
+
     mode_Wave(){
         //this.addBlockIndex();
         this.currentBlockIndex=30;
@@ -541,7 +673,7 @@ export class KeyBoardLightLed {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                console.log('this.KeyBoardLightLed.addBlockIndex();', element);
+                console.log('this.M_Light_PRESETS.addBlockIndex();', element);
                 //var compareResult = this.distanceCalculation(StartPoint.centerPoint[0], StartPoint.centerPoint[1], element.coordinateData.centerPoint[0], element.coordinateData.centerPoint[1]);
                 //+(repeatCount*50)
                 //console.log('setCoordinate', StartPoint.centerPoint[0],element.coordinateData.centerPoint[0])
@@ -571,9 +703,6 @@ export class KeyBoardLightLed {
         
     }
 
-
-
-
     showSelectionRange() {
         for (let index = 0; index < this.AllBlockColor.length; index++) {
             if (this.AllBlockColor[index].border) {
@@ -583,7 +712,6 @@ export class KeyBoardLightLed {
             }
         }
     }
-
     setCoordinate(X, Y) {
         console.log('setCoordinate', X, Y)
         this.recordModeArr[this.currentModeIndex].coordinateX = X
