@@ -199,7 +199,7 @@ export class AppComponent implements OnInit {
     }
 
     DeveloperControl() {
-        this.M_Light_CS.mode_T2();
+        this.M_Light_CS.mode_FastRunWithoutTrace();
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+

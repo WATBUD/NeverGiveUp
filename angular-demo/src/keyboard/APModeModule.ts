@@ -4,6 +4,7 @@
 
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
+import { endTimeRange } from '@angular/core/src/profile/wtf_impl'
 @Injectable()
 class ModeParameter {
     frame_selection_range: any = []
@@ -297,11 +298,11 @@ export class M_Light_CS {
                 break;
             case 'NormallyOn':
                 break;
-            case 'RippleGraff':
+            case 'RippleGraff'://彩色擴散
                 break;
-            case 'PassWithoutTrace':
+            case 'PassWithoutTrace'://單點
                 break;
-            case 'FastRunWithoutTrace':
+            case 'FastRunWithoutTrace'://一排
                 break;
             case 'Matrix2':
                 break;
@@ -326,6 +327,19 @@ export class M_Light_CS {
                 break;
         }
     }
+
+    getRandom(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    };
+    toCssRGB(RGBA=[255,0,0,1]){
+          return 'rgb('+RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ',' + RGBA[3] + ')';
+    }
+//     case 'RippleGraff'://彩色擴散
+//     break;
+// case 'PassWithoutTrace'://單點
+//     break;
+// case 'FastRunWithoutTrace'://一排
+
     mode_LEDOFF() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -333,9 +347,6 @@ export class M_Light_CS {
             element.color = 'black';
         }
     }
-
-    
-
     mode_Wave(){
         //this.addBlockIndex();
         clearInterval(this.repeater);
@@ -378,7 +389,284 @@ export class M_Light_CS {
         },500)
     }
 
-    mode_T2(){
+
+    mode_SpreadLeftAndRight(setColor='#FF0000'){
+        //this.addBlockIndex();
+        clearInterval(this.repeater);
+        this.currentBlockIndex=77;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+ 
+        this.repeater=setInterval(()=>{
+            this.mode_reset();
+
+            var target = this.AllBlockColor;
+            // sub_disL-=50;
+            // sub_disR+=50;
+            var horizontalList=[];
+            if(repeatCount==0){
+                this.getNowBlock().color=setColor;
+            }
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+                if (Ysdis < 10) {
+                    horizontalList.push(index);               
+                }
+            }
+            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (resultL == undefined && resultR == undefined) {
+                repeatCount=0;
+            }
+            else{
+                if (resultL != undefined) {
+                    target[resultL].color = setColor;
+                }
+                if (resultR != undefined) {
+                    target[resultR].color = setColor
+                };
+                repeatCount+=1;
+
+            }
+           
+        },50)
+        //clearInterval(this.repeater);
+    }
+    mode_T0(colors=[]){
+        colors =[[255,0,0,0],[0,255,0,0],[0,0,255,0]];
+        //this.addBlockIndex();
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList=[];
+        var target = this.AllBlockColor;
+        var setColorArr;
+        var randomValue=this.getRandom(0,colors.length-1);
+             
+        var setColor=this.toCssRGB(colors[randomValue]);
+        var step_End=false;
+        console.log('setColor', setColor)
+        this.mode_reset();
+        if(repeatCount==0){
+            this.getNowBlock().color=setColor;
+        } 
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+            if (Ysdis < 10) {
+                horizontalList.push(index);               
+            }
+        }
+        
+        this.repeater=setInterval(()=>{
+            setColor=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (step_End) {
+                if (Brightness > 0) {
+                    Brightness -= 0.05;
+                    for (let index = 0; index < horizontalList.length; index++) {
+                        const element = target[horizontalList[index]];
+                        var temp=colors[this.getRandom(0,colors.length-1)];
+                        temp[3]=Brightness;
+                        element.color =this.toCssRGB(temp);
+                    }
+                }
+                else {
+                    Brightness = 1;
+                    //step_End = false;
+                    //clearInterval(this.repeater);
+                }
+                return;
+            }
+            else
+            if (resultL == undefined && resultR == undefined) {
+
+                repeatCount=0;
+                step_End=true;
+            }
+            else{
+                if (resultL != undefined) {
+                    target[resultL].color = setColor;
+                }
+                if (resultR != undefined) {
+                    target[resultR].color = setColor
+                };
+                repeatCount+=1;
+            }
+        },50)
+        // this.repeaterTimeout=if(Brightness>0){
+        //     Brightness-=0.01;
+        // }
+        //clearInterval(this.repeater);
+    }
+    mode_T1(colors=[]){
+        colors =[[255,0,0,0],[0,255,0,0],[0,0,255,0]];
+        //thisxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.addBlockIndex();
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList=[];
+        var target = this.AllBlockColor;
+        var randomValue=this.getRandom(0,colors.length-1);
+        var setColor=this.toCssRGB(colors[randomValue]);
+
+
+        var step_End=false;
+        console.log('setColor', setColor)
+        this.mode_reset();
+        if(repeatCount==0){
+            this.getNowBlock().color=setColor;
+        } 
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+            //if (Ysdis < 10) {
+                horizontalList.push(index);               
+            //}
+        }
+        
+        this.repeater=setInterval(()=>{
+            setColor=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (step_End) {
+                if (Brightness > 0) {
+                    Brightness -= 0.05;
+                    for (let index = 0; index < horizontalList.length; index++) {
+                        const element = target[horizontalList[index]];
+                        var temp=colors[this.getRandom(0,colors.length-1)];
+                        temp[3]=Brightness;
+                        element.color =this.toCssRGB(temp);
+                    }
+                }
+                else {
+                    Brightness = 1;
+                    step_End = false;
+                    clearInterval(this.repeater);
+                }
+                return;
+            }
+            else
+            if (resultL == undefined && resultR == undefined) {
+
+                repeatCount=0;
+                step_End=true;
+            }
+            else{
+                if (resultL != undefined) {
+                    target[resultL].color = setColor;
+                }
+                if (resultR != undefined) {
+                    target[resultR].color = setColor
+                };
+                repeatCount+=1;
+            }
+        },50)
+        // this.repeaterTimeout=if(Brightness>0){
+        //     Brightness-=0.01;
+        // }
+        //clearInterval(this.repeater);
+    }
+    mode_T2(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList=[];
+        var target = this.AllBlockColor;
+        var randomValue=this.getRandom(0,colors.length-1);
+        var setColor=this.toCssRGB(colors[randomValue]);
+
+
+        var step_End=false;
+        console.log('setColor', setColor)
+        this.mode_reset();
+        if(repeatCount==0){
+            this.getNowBlock().color=setColor;
+        } 
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+            //if (Ysdis < 10) {
+                horizontalList.push(index);               
+            //}
+        }
+        
+        this.repeater=setInterval(()=>{
+            setColor=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (step_End) {
+                if (Brightness > 0) {
+                    Brightness -= 0.05;
+                    for (let index = 0; index < horizontalList.length; index++) {
+                        const element = target[horizontalList[index]];
+                        var temp=colors[this.getRandom(0,colors.length-1)];
+                        temp[3]=Brightness;
+                        element.color =this.toCssRGB(temp);
+                    }
+                }
+                else {
+                    Brightness = 1;
+                    step_End = false;
+                    clearInterval(this.repeater);
+                }
+                return;
+            }
+            else
+            if (resultL == undefined && resultR == undefined) {
+
+                repeatCount=0;
+                step_End=true;
+            }
+            else{
+                if (resultL != undefined) {
+                    target[resultL].color = setColor;
+                }
+                if (resultR != undefined) {
+                    target[resultR].color = setColor
+                };
+                repeatCount+=1;
+            }
+        },50)
+        // this.repeaterTimeout=if(Brightness>0){
+        //     Brightness-=0.01;
+        // }
+        //clearInterval(this.repeater);
+    }
+    mode_T3(){
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=36;
@@ -402,12 +690,16 @@ export class M_Light_CS {
                 //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
                 //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
                 //if()
-                var compareResult =(repeatCount*50);
-                
+                var compareValueL =StartPoint.center_Point[0]+(repeatCount*StartPoint.clientWidth);
+                var compareValueR =StartPoint.center_Point[0]-(repeatCount*StartPoint.clientWidth);
+
                 //repeatMax=compareResult+200;
                 var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
                 if (Ysdis < 5) {
-                    if (dis>compareResult) {
+                    if (compareValueR > element.coordinateData.top_Left[0] && compareValueR < element.coordinateData.top_Right[0]) {
+                        element.color = '#FF0000';
+                    }
+                    else if (compareValueL > element.coordinateData.top_Left[0] && compareValueL < element.coordinateData.top_Right[0]) {
                         element.color = '#FF0000';
                     }
                     //else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
@@ -422,7 +714,7 @@ export class M_Light_CS {
                 //     element.color = '#00FF00';
                 // }
             }
-            if(repeatCount<15 &&compareResult<this.imageMaxWidth){
+            if(repeatCount<15 &&compareValueL<this.imageMaxWidth&&compareValueR<this.imageMaxWidth){
                 repeatCount+=1;
             }
             else{
@@ -431,8 +723,6 @@ export class M_Light_CS {
         },500)
         //clearInterval(this.repeater);
     }
-
-
     mode_reset() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -440,23 +730,88 @@ export class M_Light_CS {
             element.color = '#000000';
         }
     }
+    mode_FastRunWithoutTrace(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList=[];
+        var target = this.AllBlockColor;
+        var randomValue=this.getRandom(0,colors.length-1);
 
 
-
-
-    showSelectionRange() {
-        for (let index = 0; index < this.AllBlockColor.length; index++) {
-            if (this.AllBlockColor[index].border) {
-                this.AllBlockColor[index].color = '#FFFFFF'
-            } else {
-                this.AllBlockColor[index].color = '#0000'
+        var step_End=false;
+        //console.log('setColor', setColor)
+        this.mode_reset();
+        horizontalList.push(this.currentBlockIndex:{
+               a:0,
+        })
+        horizontalList.push(this.currentBlockIndex); 
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+            if (Ysdis < 10) {
+                horizontalList.push(index);               
             }
         }
+        
+        this.repeater=setInterval(()=>{
+            // if(repeatCount==0){
+            //     var setColor=this.toCssRGB(colors[randomValue]);
+            //     repeatCount+=1;
+            //     this.getNowBlock().color=setColor;
+            //     return;
+            // } 
+            var setColor=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (step_End) {
+                if (Brightness > 0) {
+                    Brightness -= 0.05;
+                    for (let index = 0; index < horizontalList.length; index++) {
+                        const element = target[horizontalList[index]];
+                        var temp=colors[this.getRandom(0,colors.length-1)];
+                        temp[3]=Brightness;
+                        element.color =this.toCssRGB(temp);
+                    }
+                }
+                else {
+                    Brightness = 1;
+                    step_End = false;
+                    clearInterval(this.repeater);
+                }
+                return;
+            }
+            else
+            if (resultL == undefined && resultR == undefined) {
+
+                repeatCount=0;
+                step_End=true;
+            }
+            else{
+                if (resultL != undefined) {
+                    target[resultL].color = setColor;
+                }
+                if (resultR != undefined) {
+                    target[resultR].color = setColor
+                };
+                repeatCount+=1;
+            }
+        },500)
+        // this.repeaterTimeout=if(Brightness>0){
+        //     Brightness-=0.01;
+        // }
+        //clearInterval(this.repeater);
     }
-    setCoordinate(X, Y) {
-        console.log('setCoordinate', X, Y)
-        this.recordModeArr[this.currentModeIndex].coordinateX = X
-        this.recordModeArr[this.currentModeIndex].coordinateY = Y
-    }
+
     setDefault() { }
 }
