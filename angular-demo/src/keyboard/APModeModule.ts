@@ -744,44 +744,45 @@ export class M_Light_CS {
         var repeatMax=200;
         var repeatCount=0;
         var StartPoint = this.getNowBlock().coordinateData;
-        var horizontalList=[];
+        var horizontalList={
+        };
         var target = this.AllBlockColor;
         var randomValue=this.getRandom(0,colors.length-1);
-
-
         var step_End=false;
         //console.log('setColor', setColor)
         this.mode_reset();
-        horizontalList.push(this.currentBlockIndex:{
-               a:0,
-        })
-        horizontalList.push(this.currentBlockIndex); 
+        horizontalList[this.currentBlockIndex]={
+               color:this.toCssRGB(colors[this.getRandom(0,colors.length-1)])
+        }
+        //horizontalList.push(this.currentBlockIndex); 
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
             if (Ysdis < 10) {
-                horizontalList.push(index);               
+                horizontalList[index]={
+                    color:colors[this.getRandom(0,colors.length-1)])
+                }
+                //horizontalList.push(index);               
             }
         }
-        
+        // console.log('horizontalList', horizontalList)
+        console.log('horizontalList',Object.keys(horizontalList))
         this.repeater=setInterval(()=>{
-            // if(repeatCount==0){
-            //     var setColor=this.toCssRGB(colors[randomValue]);
-            //     repeatCount+=1;
-            //     this.getNowBlock().color=setColor;
-            //     return;
-            // } 
-            var setColor=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
-            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
-            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            var LIndex=this.currentBlockIndex-repeatCount;
+            var RIndex=this.currentBlockIndex+repeatCount;
+            var resultL = horizontalList[LIndex];
+            //horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList[RIndex];
+            //horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
             if (step_End) {
                 if (Brightness > 0) {
                     Brightness -= 0.05;
-                    for (let index = 0; index < horizontalList.length; index++) {
-                        const element = target[horizontalList[index]];
-                        var temp=colors[this.getRandom(0,colors.length-1)];
+                    var arr=Object.keys(horizontalList);
+                    for (let index = 0; index < arr.length; index++) {
+                        var index_num=parseInt(arr[index])
+                        var temp=horizontalList[index_num].color;
                         temp[3]=Brightness;
-                        element.color =this.toCssRGB(temp);
+                        target[index_num].color =this.toCssRGB(temp);
                     }
                 }
                 else {
@@ -793,20 +794,19 @@ export class M_Light_CS {
             }
             else
             if (resultL == undefined && resultR == undefined) {
-
                 repeatCount=0;
                 step_End=true;
             }
             else{
                 if (resultL != undefined) {
-                    target[resultL].color = setColor;
+                    target[LIndex].color = this.toCssRGB(horizontalList[LIndex].color);
                 }
                 if (resultR != undefined) {
-                    target[resultR].color = setColor
+                    target[RIndex].color = this.toCssRGB(horizontalList[RIndex].color);
                 };
                 repeatCount+=1;
             }
-        },500)
+        },50)
         // this.repeaterTimeout=if(Brightness>0){
         //     Brightness-=0.01;
         // }
