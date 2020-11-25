@@ -812,6 +812,67 @@ export class M_Light_CS {
         // }
         //clearInterval(this.repeater);
     }
+    rainbow7Color(){
 
+       return [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
+
+    }
+    mode_Diffusion(colors=[]){
+        colors =[[255,0,0,1]];
+        colors =this.rainbow7Color();
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=32;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList={
+        };
+        var target = this.AllBlockColor;
+        var randomValue=this.getRandom(0,colors.length-1);
+        //console.log('setColor', setColor)
+        this.mode_reset();
+        // horizontalList[this.currentBlockIndex]={
+        //        color:this.toCssRGB(colors[this.getRandom(0,colors.length-1)])
+        // }
+        // console.log('horizontalList', horizontalList)
+
+        var T2=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+        console.log('horizontalList',Object.keys(horizontalList))
+        this.repeater=setInterval(()=>{
+            T2=this.toCssRGB(colors[this.getRandom(0,colors.length-1)]);
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                if (dis<repeatCount*StartPoint.clientWidth) {
+                    element.color=T2;
+                }
+                else{
+                    //element.color=this.toCssRGB([0,0,255,0.4]);
+                }
+            }
+            //var A=this.imageMaxWidth%StartPoint.clientWidth;
+        console.log('       repeatCount*StartPoint.clientWidth',        repeatCount*StartPoint.clientWidth)
+
+     
+            if(repeatCount*StartPoint.clientWidth<this.imageMaxWidth-StartPoint.clientWidth){
+                repeatCount+=1;
+            }
+            else{
+                repeatCount=0;
+                this.mode_reset();
+            }
+        },250)
+        // this.repeaterTimeout=if(Brightness>0){
+        //     Brightness-=0.01;
+        // }
+        //clearInterval(this.repeater);
+    }
     setDefault() { }
 }
