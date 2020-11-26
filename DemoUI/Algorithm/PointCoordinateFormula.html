@@ -30,16 +30,28 @@
     var temp_a=0;
     var temp_b=0;
     function LinearEquation(point1=[0,0],point2=[400,400]){
-        //直線方程式 y=ax+b;
-        // point1[0]=point1[1]*a+b;
-        // point2[0]=point2[1]*a+b;
-        // b=point1[0]-point1[1]*a;
-        // b=point2[0]-point2[1]*a;
-        // (point1[0]-point1[1]*a)=(point2[0]-point2[1]*a)
+        //直線方程式 y=ax+b; (a=Slope);
+        //a= point1[1]-point2[1]/point2[0]+point1[0];斜率
+
+        
+        // point1[1]=point1[0]*a+b;
+        // point2[1]=point2[0]*a+b;
+
+
+        // b=point1[1]-point1[0]*a;
+        // b=point2[1]-point2[0]*a;
+        // (point1[1]-point1[0]*a)=(point2[1]-point2[0]*a)
+
+        point1[1]-point2[1]=point2[0]*a+point1[0]*a
+
+
+        //(point2[0]+point1[0])*a
+
+
         var temp_a=0;
         var temp_b=0;
-        temp_a=point1[0]-point2[0]/(-point2[1]+point1[1]);
-        temp_b=point1[0]-point1[1]*temp_a;
+        temp_a=point1[1]-point2[1]/(-point2[0]+point1[0]);
+        temp_b=point1[1]-point1[1]*temp_a;
         //y=temp_a*x+temp_b;
         console.log('LinearEquation=','y='+temp_a+'x+'+temp_b);
 

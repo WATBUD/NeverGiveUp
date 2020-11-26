@@ -357,36 +357,65 @@ export class M_Light_CS {
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        var startX=-StartPoint.clientWidth*5;
+
         this.repeater=setInterval(()=>{
-            var StartPoint = this.getNowBlock().coordinateData;
+            var SlopeEquation=this.SlopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
+            //console.log('SlopeEquation', SlopeEquation);
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                console.log('this.M_Light_PRESETS.addBlockIndex();', element);
-                var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                
-                //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                //+(repeatCount*50)
-                //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
-                //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
-                var compareResult =repeatCount*50;
-                repeatMax=compareResult+200;
-                //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
+                //console.log('_mode_Pingpong;', element);
+                for (let i2 = 0; i2 < SlopeEquation.length; i2++) {
+                    var T = SlopeEquation[i2];
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
 
-                if (dis>compareResult) {
-                    element.color = '#FFFF00';
-                }
-                else {
-                    element.color = '#00FF00';
+                    if (T[0] > element.coordinateData.top_Left[0] &&
+                        T[0] < element.coordinateData.top_Right[0] &&
+                        T[1] > element.coordinateData.top_Left[1] &&
+                        T[1] < element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color = 'blue';
+                        continue;
+                    }
                 }
             }
-            if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
-                repeatCount+=1;
+            if(startX<this.imageMaxWidth){
+                startX+=22;
             }
             else{
-                repeatCount=0;
+                startX=-StartPoint.clientWidth*5;
+                this.mode_reset();
             }
-        },500)
+            //clearInterval(this.repeater);
+
+            //     var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                
+            //     //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+            //     //+(repeatCount*50)
+            //     //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
+            //     //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
+            //     var compareResult =repeatCount*50;
+            //     repeatMax=compareResult+200;
+            //     //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
+
+            //     if (dis>compareResult) {
+            //         element.color = '#FFFF00';
+            //     }
+            //     else {
+            //         element.color = '#00FF00';
+            //     }
+            // }
+            // if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+            //     repeatCount+=1;
+            // }
+            // else{
+            //     repeatCount=0;
+            // }
+        },25)
     }
 
 
@@ -516,7 +545,6 @@ export class M_Light_CS {
     }
     mode_T1(colors=[]){
         colors =[[255,0,0,0],[0,255,0,0],[0,0,255,0]];
-        //thisxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.addBlockIndex();
         var Brightness=1;
         // var mode=0;
         // if(colors.length>1){
@@ -817,6 +845,19 @@ export class M_Light_CS {
 
        return [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
 
+    }
+    SlopeEquation(point1=[25,0],point2=[320,400]){
+        //斜率y2-y1/x2-x1;
+        var Slope =(point2[1]-point1[1])/(point2[0]-point1[0]);//x*1 y*1*Slope
+        var LinearList=[];
+        var temp_x=[point1[0],point1[1]];
+        while (temp_x[0]<point2[0]&&temp_x[1]<point2[1]) {
+            temp_x[0]+=1;
+            temp_x[1]+=1*Slope;
+            //console.log('temp_x=',temp_x);
+            LinearList.push([temp_x[0],temp_x[1]]);
+        }
+        return LinearList;
     }
     mode_Diffusion(colors=[]){
         colors =[[255,0,0,1]];
