@@ -36,28 +36,7 @@ class ModeParameter {
     color_quantity: number = 9
     time: any = 0.5 //0.5~3
     check: any = true
-    color: any = [
-        'rgb(255,0,0,1)',
-        '#ff8000',
-        '#80ff00',
-        '#00ff00',
-        '#00ffff',
-        '#0000ff',
-        '#8000ff',
-        '#ff00ff',
-        '#ff0080',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-        '#ffffff',
-    ] //RGB
+
     constructor(inputmax) {
         for (let index = 0; index < inputmax; index++) {
             this.frame_selection_range.push(true)
