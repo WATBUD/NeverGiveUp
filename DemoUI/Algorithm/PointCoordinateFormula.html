@@ -48,54 +48,7 @@
 
     }
 
-    function SlopeEquation(point1=[25,0],point2=[320,400]){
-        //斜率y2-y1/x2-x1;
-        var Slope =(point2[1]-point1[1])/(point2[0]-point1[0]);//x*1 y*1*Slope
-        var LinearList=[];
-        var temp_x=[point1[0],point1[1]];
-        while (temp_x[0]<point2[0]&&temp_x[1]<point2[1]) {
-            temp_x[0]+=1;
-            temp_x[1]+=1*Slope;
-            console.log('temp_x=',temp_x);
-            var A='left:'+temp_x[0]+'px;'
-            var B='top:'+temp_x[1]+'px;'
-            var createBtn = document.createElement('div');
-            createBtn.style.cssText = 'position: absolute;width: 0.2px;height: 0.2px;background: red;'+A+B;
-            document.body.appendChild(createBtn);
-            LinearList.push([temp_x[0],temp_x[1]]);
-        }
-        console.log('Slope=',Slope);
 
-        console.log('LinearList=',LinearList);
-
-        //createBtn.dataset.status = 2;
-        //createBtn.className = "ListButtonItem";
-        //createBtn.value = element.value;
-        //createBtn.style.marginLeft = Time_Axis.style.left;
-        //createBtn.setAttribute("type", "button");
-        //createBtn.setAttribute("onkeydown",logAddinnerText(element[switchShowType]));
-        // createBtn.addEventListener("click", function () {
-        //     console.log('switchShowType', _this.switchShowType);
-        //     totalKeydownArr.push(String(element[_this.switchShowType]));
-        //     show_LogUIText();
-        // });
-        //document.getElementById('ListButton').appendChild(createBtn);
-
-        //document.body.appendChild(createBtn);
-        
-
-
-        // point1[0]=point1[1]*a+b;
-        // point2[0]=point2[1]*a+b;
-        // // b=point1[0]-point1[1]*a;
-        // // b=point2[0]-point2[1]*a;
-        // // (point1[0]-point1[1]*a)=(point2[0]-point2[1]*a)
-        // var temp_a=0;
-        // var temp_b=0;
-        // temp_a=point1[0]-point2[0]/(-point2[1]+point1[1]);
-        // temp_b=point1[0]-point1[1]*temp_a;
-        // y=temp_a*x+temp_b;
-    }
 
 
 
