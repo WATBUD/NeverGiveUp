@@ -37,7 +37,7 @@ class ModeParameter {
     time: any = 0.5 //0.5~3
     check: any = true
     color: any = [
-        '#ff0000',
+        'rgb(255,0,0,1)',
         '#ff8000',
         '#80ff00',
         '#00ff00',
@@ -116,7 +116,7 @@ export class M_Light_CS {
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
         for (var i = 0; i < this.maxkaycapNumber; i++) {
-            this.AllBlockColor.push({ color: '#FF0000', border: true,coordinateData:[]})
+            this.AllBlockColor.push({ color: 'rgb(255,0,0,1)', border: true,coordinateData:[]})
         }
         this.resetDefault();
     }
@@ -135,7 +135,7 @@ export class M_Light_CS {
     resetDefault() {
         this.lightData = this.defaultSetlightData();
         for (var i = 0; i < this.maxkaycapNumber; i++) {
-            this.AllBlockColor[i].color='#FF0000';
+            this.AllBlockColor[i].color='rgb(255,0,0,1)';
         }
     }
     defaultSetlightData(type = '') {
@@ -143,7 +143,7 @@ export class M_Light_CS {
             rate:50,
             brightness:50,
             colorHex:'#0000',
-            colorPickerValue:[255,0,0],
+            colorPickerValue:[255,0,0,0],
             sideLightSync:true,
             lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' }
         }
@@ -179,6 +179,7 @@ export class M_Light_CS {
        target[0]=RGB_Arr[0];
        target[1]=RGB_Arr[1];
        target[2]=RGB_Arr[2];
+       target[3]=1;
        this.lightData.colorHex=this.rgbToHex(target[0],target[1],target[2]);
        
     }
@@ -241,28 +242,7 @@ export class M_Light_CS {
         }
     }
 
-    setModeFrameRange() {
-        let isAllTrue = this.BSApage1.checkArrayisAllTrue(this.AllBlockColor) //原本是否框著  TRUE=是
-        var selectedEls = this.BSApage1.selectedEls
-        if (isAllTrue) {
-            for (var i = 0; i < this.BSApage1.selectedEls.length; i++) {
-                this.AllBlockColor[selectedEls[i]].color = '#0000'
-                this.AllBlockColor[selectedEls[i]].border = false
-            }
-        } else {
-            for (var i = 0; i < this.BSApage1.selectedEls.length; i++) {
-                this.AllBlockColor[selectedEls[i]].color = '#FFFFFF'
-                this.AllBlockColor[selectedEls[i]].border = true
-            }
-        }
-        console.log('Result_isAllTrue', isAllTrue)
-        console.log('Result_selectedEls', selectedEls)
 
-        this.updateframe_selection_range()
-        this.BSApage1.mouseOn = false
-        return 'Finish'
-    }
-    
     stringFormat() {
         if (arguments.length == 0)
             return null;
@@ -390,7 +370,49 @@ export class M_Light_CS {
     }
 
 
-    mode_SpreadLeftAndRight(setColor='#FF0000'){
+    mode_Pingpong(){
+        //this.addBlockIndex();
+        clearInterval(this.repeater);
+        this.currentBlockIndex=30;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        this.repeater=setInterval(()=>{
+            var StartPoint = this.getNowBlock().coordinateData;
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                console.log('this.M_Light_PRESETS.addBlockIndex();', element);
+                var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                
+                //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                //+(repeatCount*50)
+                //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
+                //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
+                var compareResult =repeatCount*50;
+                repeatMax=compareResult+200;
+                //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
+
+                if (dis>compareResult) {
+                    element.color = '#FFFF00';
+                }
+                else {
+                    element.color = '#00FF00';
+                }
+            }
+            if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+                repeatCount+=1;
+            }
+            else{
+                repeatCount=0;
+            }
+        },500)
+    }
+
+
+
+    mode_SpreadLeftAndRight(setColor='rgb(255,0,0,1)'){
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=77;
@@ -697,10 +719,10 @@ export class M_Light_CS {
                 var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
                 if (Ysdis < 5) {
                     if (compareValueR > element.coordinateData.top_Left[0] && compareValueR < element.coordinateData.top_Right[0]) {
-                        element.color = '#FF0000';
+                        element.color = 'rgb(255,0,0,1)';
                     }
                     else if (compareValueL > element.coordinateData.top_Left[0] && compareValueL < element.coordinateData.top_Right[0]) {
-                        element.color = '#FF0000';
+                        element.color = 'rgb(255,0,0,1)';
                     }
                     //else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
                     else{

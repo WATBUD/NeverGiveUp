@@ -199,7 +199,7 @@ export class AppComponent implements OnInit {
     }
 
     DeveloperControl() {
-        this.M_Light_CS.mode_Diffusion();
+        this.M_Light_CS.mode_Pingpong();
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+
