@@ -4,7 +4,6 @@
 
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-import { endTimeRange } from '@angular/core/src/profile/wtf_impl'
 @Injectable()
 class ModeParameter {
     frame_selection_range: any = []
@@ -95,9 +94,8 @@ export class M_Light_CS {
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
         for (var i = 0; i < this.maxkaycapNumber; i++) {
-            this.AllBlockColor.push({ color: 'rgb(255,0,0,1)', border: true,coordinateData:[]})
+            this.AllBlockColor.push({ color: 'rgb(255,0,0,1)',breathing:false,border: true,coordinateData:[]})
         }
-        this.resetDefault();
     }
 
     findLightData(findValue) {
@@ -111,23 +109,13 @@ export class M_Light_CS {
       
      this.lightData= JSON.parse(JSON.stringify(obj));
     }
-    resetDefault() {
-        this.lightData = this.defaultSetlightData();
+    resetDefault(resetData) {
+        this.lightData =resetData;
         for (var i = 0; i < this.maxkaycapNumber; i++) {
             this.AllBlockColor[i].color='rgb(255,0,0,1)';
         }
     }
-    defaultSetlightData(type = '') {
-        var T = {
-            rate:50,
-            brightness:50,
-            colorHex:'#0000',
-            colorPickerValue:[255,0,0,0],
-            sideLightSync:true,
-            lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode' }
-        }
-        return T
-    }
+
 
     getNameSortposition(name) {
         console.log('getNameSortposition_indexOf=', this.mode_name.indexOf(name))
@@ -347,7 +335,74 @@ export class M_Light_CS {
             }
         },500)
     }
+    mode_SlopeMoveR(){
+        //this.addBlockIndex();
+        clearInterval(this.repeater);
+        this.currentBlockIndex=30;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
 
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        var startX=-StartPoint.clientWidth*5;
+
+        this.repeater=setInterval(()=>{
+            var SlopeEquation=this.SlopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
+            //console.log('SlopeEquation', SlopeEquation);
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                //console.log('_mode_Pingpong;', element);
+                for (let i2 = 0; i2 < SlopeEquation.length; i2++) {
+                    var T = SlopeEquation[i2];
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+
+                    if (T[0] > element.coordinateData.top_Left[0] &&
+                        T[0] < element.coordinateData.top_Right[0] &&
+                        T[1] > element.coordinateData.top_Left[1] &&
+                        T[1] < element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color = 'blue';
+                        continue;
+                    }
+                }
+            }
+            if(startX<this.imageMaxWidth){
+                startX+=22;
+            }
+            else{
+                startX=-StartPoint.clientWidth*5;
+                this.mode_reset();
+            }
+            //clearInterval(this.repeater);
+
+            //     var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                
+            //     //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+            //     //+(repeatCount*50)
+            //     //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
+            //     //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
+            //     var compareResult =repeatCount*50;
+            //     repeatMax=compareResult+200;
+            //     //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
+
+            //     if (dis>compareResult) {
+            //         element.color = '#FFFF00';
+            //     }
+            //     else {
+            //         element.color = '#00FF00';
+            //     }
+            // }
+            // if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
+            //     repeatCount+=1;
+            // }
+            // else{
+            //     repeatCount=0;
+            // }
+        },25)
+    }
 
     mode_Pingpong(){
         //this.addBlockIndex();
@@ -365,6 +420,8 @@ export class M_Light_CS {
         this.repeater=setInterval(()=>{
             var SlopeEquation=this.SlopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
             //console.log('SlopeEquation', SlopeEquation);
+            this.mode_reset();
+
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
@@ -752,13 +809,22 @@ export class M_Light_CS {
         },500)
         //clearInterval(this.repeater);
     }
+    mode_AssingAll(r,g,b,a) {
+        var target = this.AllBlockColor;
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            element.color = this.toCssRGB([r,g,b,a]);
+        }
+    }
     mode_reset() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            element.color = '#000000';
+            element.color = 'rgb(0,0,0,0)';
         }
     }
+
+
     mode_FastRunWithoutTrace(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         var Brightness=1;
