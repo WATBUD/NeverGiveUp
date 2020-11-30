@@ -198,7 +198,17 @@ export class AppComponent implements OnInit {
 
     }
 
+
+    PERKEY_BrightnessSlider_Background(){
+        //return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' +50 +'%,#313131 ' +50 +'%, #313131 100%)';
+
+        return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B 50%,#313131 50%, #313131 100%)';
+    }
+   
+
+
     DeveloperControl() {
+        //this.M_Light_CS.mode_gloriousMode();
         this.M_Light_CS.mode_Pingpong();
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
