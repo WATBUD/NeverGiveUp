@@ -42,7 +42,10 @@
         //console.log('atan2Value',typeof atan20,typeof atan21);
         if(isNaN(elementValue)) return;
         for (let index = 0; index < 360; index++) {
-            var result = Math.sin(elementValue+index);
+            //var radian = 
+            //var result = Math.sin(elementValue+index);
+            var result = Math.sin((elementValue+index) * Math.PI / 180);
+
             document.getElementById('ShowMessage').innerHTML += "Math.sin("+(elementValue+index)+")="+result+"<BR>";
         }
     };

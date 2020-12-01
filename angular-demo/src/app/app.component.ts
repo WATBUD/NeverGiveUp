@@ -194,8 +194,25 @@ export class AppComponent implements OnInit {
 
         }
         this.M_Light_CS.imageMaxWidth=834;
+        this.M_Light_CS.imageMaxHeight=299;
+    
 
 
+    }
+    GMMK_imgFlag=false;
+    GMMK_imgVisible(){       
+        let GMMK_img = document.getElementById('GMMK_img')
+        //let RateContent = document.getElementById('RateContent')
+        //let ColorContent = document.getElementById('ColorContent')
+        this.GMMK_imgFlag=!this.GMMK_imgFlag;
+        if(this.GMMK_imgFlag){
+            GMMK_img.style.display = 'flex'
+        }
+        else{
+            GMMK_img.style.display = 'none'
+        }
+        //RateContent.style.display = 'flex'
+        //ColorContent.style.display = 'flex'
     }
 
 
@@ -209,7 +226,11 @@ export class AppComponent implements OnInit {
 
     DeveloperControl() {
         //this.M_Light_CS.mode_gloriousMode();
-        this.M_Light_CS.mode_Pingpong();
+        //this.M_Light_CS.mode_Pingpong();
+        //this.M_Light_CS.mode_SinGraphics();
+        this.M_Light_CS.mode_Rain_Back_And_forth();
+
+        
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+

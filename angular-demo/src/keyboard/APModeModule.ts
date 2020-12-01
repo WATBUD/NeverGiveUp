@@ -4,6 +4,7 @@
 
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
+import { P } from '@angular/core/src/render3'
 @Injectable()
 class ModeParameter {
     frame_selection_range: any = []
@@ -89,6 +90,7 @@ export class M_Light_CS {
     nowSettingColorkeyName=''
     //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
     imageMaxWidth=0;
+    imageMaxHeight=0;
     recordModeArr: any = []
     currentModeIndex: any = 0
     BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
@@ -161,8 +163,13 @@ export class M_Light_CS {
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
     }
-    getNowBlock() {
-        return this.AllBlockColor[this.currentBlockIndex];
+    getNowBlock(index=-1) {
+        if(index!=-1){
+            return this.AllBlockColor[index];
+        }
+        else{
+            return this.AllBlockColor[this.currentBlockIndex];
+        }
     }
     ImportLedClassData(InputData) {
         console.log('ImportLedClassData', InputData)
@@ -616,6 +623,191 @@ export class M_Light_CS {
         },50)
         //clearInterval(this.repeater);
     }
+    mode_SinGraphics(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        var horizontalList=[];
+        var record=0;
+        //var radian = 75 * Math.PI / 180;    //計算出弧度
+
+        var maxH=268;
+        this.repeater=setInterval(()=>{
+            this.setAllBlockColor([0,0,0,1]);
+            //console.log('SlopeEquation', SlopeEquation);
+            var spacing=-5;
+            horizontalList=[];
+            // for (let x = 0; x < 834; x++) { 
+            //     const y = Math.sin(x * 2) * 100 ;
+            //     horizontalList.push([x, y]);
+
+            // }
+            // for (let x = 0; x < this.imageMaxWidth; x++) { 
+            //     const radians = x / this.imageMaxWidth * Math.PI * 2;
+            //     const scale = (Math.sin(radians - Math.PI * 0.5) + 1) * 0.5*maxH; 
+            //     const y = Math.sin(x * 0.02 + 6) * 5 * scale; 
+            //     horizontalList.push([x, y]);
+
+            // }
+            
+            for (let i_xpos = 0; i_xpos < 834; i_xpos++) {
+                var ratio  =Math.sin(i_xpos/2 * Math.PI / 180);
+                var xpos=120+i_xpos;
+                //const scale = (Math.sin(radian - Math.PI * 0.5) + 1) * 0.5*maxH; 
+                //var ypos=22+((ratio+1)/2*372);
+
+                var h =22+((ratio+1)/2*268);
+
+                horizontalList.push([xpos, h]);
+            }
+            for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                var T = horizontalList[i2];
+                //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+                if (T[1]%372) {
+
+                }
+            }
+
+            console.log('horizontalList', horizontalList);    
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                //console.log('_mode_Pingpong;', element);
+                for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                    var T = horizontalList[i2];
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+                    if (T[0] > element.coordinateData.top_Left[0] &&
+                        T[0] < element.coordinateData.top_Right[0] &&
+                        T[1] > element.coordinateData.top_Left[1] &&
+                        T[1] < element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color = [0,0,255,1];
+                        continue;
+                    }
+                }
+            }
+            
+            // if(startX<this.imageMaxWidth){
+            //     startX+=22;
+            // }
+            // else{
+            //     startX=-StartPoint.clientWidth*5;
+            //     this.mode_reset();
+            // }
+            //clearInterval(this.repeater);
+            //     var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+            //repeatCount+=1;
+            //if(spacing*22+repeatCount*43<this.imageMaxWidth){
+                // if(maxH==0||maxH==225){
+                //     repeatCount+=1;
+                // }
+                // if(repeatCount%2==0){
+                //     maxH-=5;
+                // }
+                // else{
+                //     maxH+=5;
+                // }
+                //repeatCount+=1;
+                //record+=0.15;
+                if(record<=0||record>=1){
+                    repeatCount+=1;
+                }
+                if(repeatCount%2==0){
+                    record-=0.15;
+                }
+                else{
+                    record+=0.15;
+                }
+            //}
+            //else{
+                //repeatCount=0;
+                //this.setAllBlockColor([255,255,255,1]);
+            //}
+        },150)
+    }
+    mode_Rain_Back_And_forth(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        // var mode=0;
+        // if(colors.length>1){
+        //     mode=1;
+        // }
+        
+
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //this.getNowBlock().color = 'blue';
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var horizontalList=[]
+        ;
+        for (let index = 0; index < this.imageMaxWidth; index+=40) {
+            var ratio  =Math.sin((index * Math.PI / 180))
+                //var xpos=120+index;
+                //const scale = (Math.sin(radian - Math.PI * 0.5) + 1) * 0.5*maxH; 
+            var ypos=(ratio+1)/2*268;
+            horizontalList.push(
+                {
+                    repeatCount:0,
+                    coordinate:[index,StartPoint.top_Left[0]+ypos],
+                }    
+               );
+            console.log('horizontalList', horizontalList);    
+        }
+
+        var record=0;
+        //var radian = 75 * Math.PI / 180;    //計算出弧度
+        var maxH=268;
+        this.repeater=setInterval(()=>{
+            this.setAllBlockColor([0,0,0,1]);
+            var spacing=-5;
+            for (let index = 0; index < horizontalList.length; index++) {
+                var h_Item=horizontalList[index];
+                if(h_Item['coordinate'][1]<=0||h_Item['coordinate'][1]>=this.imageMaxHeight){
+                    h_Item['repeatCount']+=1;
+                }
+                if(h_Item['repeatCount']%2==0){
+                    h_Item['coordinate'][1]-=40;
+                }
+                else{
+                    h_Item['coordinate'][1]+=40;
+                }   
+                //console.log('horizontalList', horizontalList);    
+            }
+    
+            console.log('horizontalList', horizontalList);    
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                //console.log('_mode_Pingpong;', element);
+                for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                    var T = horizontalList[i2].coordinate;
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+                    if (T[0] >= element.coordinateData.top_Left[0] &&
+                        T[0] <= element.coordinateData.top_Right[0] &&
+                        T[1] >= element.coordinateData.top_Left[1] &&
+                        T[1] <= element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color = [0,0,255,1];
+                        continue;
+                    }
+                }
+            }
+
+        },60)
+    }
     mode_T0(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         //this.addBlockIndex();
@@ -1033,7 +1225,7 @@ export class M_Light_CS {
         //console.log('setColor', setColor)
         this.mode_reset();
         horizontalList[this.currentBlockIndex]={
-               color:colors[this.getRandom(0,colors.length-1)])
+               color:colors[this.getRandom(0,colors.length-1)]
         }
         //horizontalList.push(this.currentBlockIndex); 
         for (let index = 0; index < target.length; index++) {

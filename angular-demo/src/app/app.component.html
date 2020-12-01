@@ -18,6 +18,8 @@
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Pingpong()" onkeydown=""
       value="mode_Pingpong" class="ButtonStyle">
       
+      <input  type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown=""
+      value="GMMK_imgVisible" class="ButtonStyle">
       <!-- [style.background-color]="'blue'" -->
       <!-- [ngStyle]="{'background-image': PERKEY_BrightnessSlider_Background()} -->
     <div style="
@@ -41,10 +43,10 @@
       <div id="EventCanBoxSelectRange" class="Keyboard-content">
           <div id="GMMK_0x320F0x5044" class="Content1">
               <div style="position: absolute; display: flex">
-                  <!-- <img
+                  <img id="GMMK_img" 
                       src="assets/image/GMMK3.png"
-                      style="width: 834px; height: 372px; z-index: 3"
-                  <!-- /> -->
+                      style="width: 834px; height: 372px; z-index: 3;display: none;"
+                  />
                   <div id="keyAssignPrompt"
                       style="
                           position: absolute;
