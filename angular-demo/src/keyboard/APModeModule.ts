@@ -5,6 +5,7 @@
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
 import { P } from '@angular/core/src/render3'
+import { identifierModuleUrl } from '@angular/compiler'
 @Injectable()
 class ModeParameter {
     frame_selection_range: any = []
@@ -576,6 +577,73 @@ export class M_Light_CS {
         },100)
     }
 
+    mode_DigitTimes(){
+        //this.addBlockIndex();
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        //this.getNowBlock().color = [0,0,255,1];
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        this.setAllBlockColor([0,0,0,1]);
+        //this.mode_reset();
+        //this.setAllBlockAlpha
+        var startX=-StartPoint.clientWidth*5;
+        var movewidth=4;
+        var current_time=50;
+        var target=this.AllBlockColor;
+        //var horizontalList=[];
+        //Math.trunc(3.7); // 3
+         //var y = (k & 1) ? r : this.imageMaxHeight - r;    // 來回
+        var horizontalList=[];
+        var H_range=Math.trunc(372/40);
+        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
+        console.log('w_range', w_range);
+        var repeatCountList=[];
+        for (let x=23; x<this.imageMaxWidth; x+=this.minKeyWidth) {
+            //var xpos=[];
+            //var ypos=x+(372/6);
+            var i_list=[];
+            var ypos=0;
+            for (let index2 = 0;index2 < this.imageMaxHeight; index2+=(this.imageMaxHeight/40)) {
+                i_list.push([x,index2]);
+            }
+            repeatCountList.push({
+                color:[0,0,255,1],
+                i_list:i_list,
+                pos:0,
+                repeatCount:0,
+                repeatTime:this.getRandom(150,800),
+            });
+            //var k = (movement + x) / this.imageMaxHeight;    // 回合數
+            //var r = (movement + x) % this.imageMaxHeight;    // 餘數
+            //console.log(x, y);
+        }
+        //console.log('horizontalList', horizontalList);
+        console.log('repeatCountList;', repeatCountList); 
+
+        this.repeater=setInterval(()=>{
+            this.setAllBlockColor([0,0,0,1]);
+            current_time+=5;
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                //console.log('_mode_Pingpong;', element);
+                for (let i2 = 0; i2 < repeatCountList.length; i2++) {
+                    var T = repeatCountList[i2];
+                    var now=T.i_list[repeatCount];
+                    if (now[0] > element.coordinateData.top_Left[0] &&
+                        now[0] < element.coordinateData.top_Right[0] &&
+                        now[1] > element.coordinateData.top_Left[1] &&
+                        now[1] < element.coordinateData.bottom_Left[1]
+                    )
+                    
+                }
+            }
+
+        },100)
+    }
+
+    
 
     mode_SpreadLeftAndRight(setColor=[255,0,0,1]){
         //this.addBlockIndex();
@@ -808,6 +876,314 @@ export class M_Light_CS {
 
         },60)
     }
+    mode_Matrix3_Raindow(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var horizontalList=[];
+        var target = this.AllBlockColor;
+        var repeatCountList=[];
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            //console.log('_mode_Pingpong;', element);
+            // for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                element.color=this.getRgbRandom();
+                if(element.color[0]==255){
+                    repeatCountList.push(0);
+                }
+                else if(element.color[1]==255){
+                    repeatCountList.push(1);
+                }
+                else if(element.color[2]==255){
+                    repeatCountList.push(2);
+                }
+        }
+        var record=0;
+        var maxH=268;
+        this.repeater=setInterval(()=>{
+            var randomList=[];
+            for (let i = 0; i < 30; i++) {
+                randomList.push(this.getRandom(0, target.length-1));   //亂數產生，亂數產生的範圍是1~9
+                for (let j = 0; j < i; j++) {
+                    while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+                    {
+                        j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+                        randomList[i] = this.getRandom(0, target.length-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+                    }
+                }
+            }
+            for (let index = 0; index < randomList.length; index++) {
+                const element = target[randomList[index]];
+                let subPos = repeatCountList[randomList[index]];
+                if(element.color[subPos]>0)
+                {
+                    element.color[subPos] -= 5;
+                }
+                if(subPos<2){
+                    element.color[subPos+1] += 5;
+                }
+                else{
+                    element.color[0] += 5;
+                }
+                if(element.color[subPos]==0){
+                    if(subPos+1<3){
+                        repeatCountList[randomList[index]]+=1;
+                    }
+                    else{
+                        repeatCountList[randomList[index]]=0;
+                    }                  
+                }
+               
+
+            }
+            var spacing=-5;
+        },10)
+    }
+    mode_Matrix3_SingleColor(colors=[]){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        var repeatMin=5;
+        var repeatMax=200;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var horizontalList=[];
+        this.setAllBlockColor([0,0,0,1]);
+        var target = this.AllBlockColor;
+        var repeatCountList=[];
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            //console.log('_mode_Pingpong;', element);
+            // for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                //element.color=this.getRgbRandom();
+                element.color=[0,0,this.getRandom(0,255),1];
+                repeatCountList.push({
+                    color:element.color,
+                    pos:2,
+                    repeatCount:1,
+                    repeatTime:this.getRandom(5,99),
+                });
+                if(element.color[0]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:0,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+                else if(element.color[1]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:1,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+                else if(element.color[2]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:2,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+            console.log('repeatCountList;', repeatCountList); 
+        }
+        var record=0;
+        var maxH=268;
+        var decreasing=1;
+        this.repeater=setInterval(()=>{
+            // var randomList=[];
+            // for (let i = 0; i < 30; i++) {
+            //     randomList.push(this.getRandom(0, target.length-1));   //亂數產生，亂數產生的範圍是1~9
+            //     for (let j = 0; j < i; j++) {
+            //         while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+            //         {
+            //             j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+            //             randomList[i] = this.getRandom(0, target.length-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+            //         }
+            //     }
+            // }
+            for (let index = 0; index < repeatCountList.length; index++) {
+                let list = repeatCountList[index];
+                if(list.repeatTime>0){
+                    list.repeatTime-=1;
+                }
+                if(list.repeatTime==0){
+                    if(list.repeatCount%2==0)    
+                    {
+                        list.color[list.pos]-=decreasing;
+                    }
+                    else{
+                        list.color[list.pos]+=decreasing;
+                    }
+                    this.AllBlockColor[index].color=list.color;
+                    if(list.color[list.pos]==0||list.color[list.pos]==255) {
+                        list.repeatCount+=1;
+                        var newRand=this.getRandom(5,25);
+                        list.repeatTime=newRand;
+                        console.log('repeatCount+=1;', newRand);
+
+                        
+                    }
+                }
+               
+               
+                // if(element.color[subPos]>0)
+                // {
+                //     element.color[subPos] -= 5;
+                // }
+                // // if(subPos<2){
+                // //     element.color[subPos+1] += 5;
+                // // }
+                // // else{
+                // //     element.color[0] += 5;
+                // // }
+                // if(element.color[subPos]==0){
+                //     if(subPos+1<3){
+                //         repeatCountList[randomList[index]]+=1;
+                //     }
+                //     else{
+                //         repeatCountList[randomList[index]]=0;
+                //     }                  
+                // }        
+            }
+        },1)
+    }
+    mode_Matrix2(colors=[],rainbow=false){
+        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        var Brightness=1;
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var horizontalList=[];
+        this.setAllBlockColor([0,0,0,1]);
+        var target = this.AllBlockColor;
+        var repeatCountList=[];
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            //console.log('_mode_Pingpong;', element);
+            // for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                //element.color=this.getRgbRandom();
+                element.color=[0,0,0,1];
+                var temp_pos;
+                if(!rainbow){
+                    temp_pos=this.getRandom(0,2)
+                }
+                else{
+                    temp_pos=2
+                }       
+                repeatCountList.push({
+                    color:element.color,
+                    pos:temp_pos,
+                    repeatCount:1,
+                    repeatTime:this.getRandom(150,800),
+                });
+                if(element.color[0]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:0,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+                else if(element.color[1]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:1,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+                else if(element.color[2]==255){
+                    repeatCountList.push({
+                        color:element.color,
+                        pos:2,
+                        repeatCount:1,
+                        repeatTime:this.getRandom(5,25),
+                    });
+                }
+            console.log('repeatCountList;', repeatCountList); 
+        }
+        var decreasing=1;
+        this.repeater=setInterval(()=>{
+            // var randomList=[];
+            // for (let i = 0; i < 30; i++) {
+            //     randomList.push(this.getRandom(0, target.length-1));   //亂數產生，亂數產生的範圍是1~9
+            //     for (let j = 0; j < i; j++) {
+            //         while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+            //         {
+            //             j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+            //             randomList[i] = this.getRandom(0, target.length-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+            //         }
+            //     }
+            // }
+            for (let index = 0; index < repeatCountList.length; index++) {
+                let list = repeatCountList[index];
+                if(list.repeatTime>0){
+                    list.repeatTime-=1;
+                }
+                if(list.repeatTime==0){
+                    if(list.repeatCount%2==0)    
+                    {
+                        list.color[list.pos]-=decreasing;
+                    }
+                    else{
+                        list.color[list.pos]+=decreasing;
+                    }
+                    this.AllBlockColor[index].color=list.color;
+                    if(list.color[list.pos]==0||list.color[list.pos]==255) {
+                        list.repeatCount+=1;
+                        var newRand=this.getRandom(150,800);
+                        list.repeatTime=newRand;
+                        console.log('repeatCount+=1;', newRand);
+                        if(list.color[list.pos]==0){
+                            if(!rainbow){
+                                list.pos=this.getRandom(0,2)
+                            }
+                            else{
+                                list.pos=2;
+                            }
+                        }
+                                       
+                    }
+                }
+               
+               
+                // if(element.color[subPos]>0)
+                // {
+                //     element.color[subPos] -= 5;
+                // }
+                // // if(subPos<2){
+                // //     element.color[subPos+1] += 5;
+                // // }
+                // // else{
+                // //     element.color[0] += 5;
+                // // }
+                // if(element.color[subPos]==0){
+                //     if(subPos+1<3){
+                //         repeatCountList[randomList[index]]+=1;
+                //     }
+                //     else{
+                //         repeatCountList[randomList[index]]=0;
+                //     }                  
+                // }        
+            }
+        },1)
+    }
+    
+
+    
+
+    
+
+
     mode_T0(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         //this.addBlockIndex();
@@ -1012,13 +1388,12 @@ export class M_Light_CS {
                 else {
                     Brightness = 1;
                     step_End = false;
-                    clearInterval(this.repeater);
+                    //clearInterval(this.repeater);
                 }
                 return;
             }
             else
             if (resultL == undefined && resultR == undefined) {
-
                 repeatCount=0;
                 step_End=true;
             }
@@ -1368,6 +1743,15 @@ export class M_Light_CS {
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     };
+    
+
+
+    
+    getRgbRandom(){
+        var RGBcolors =[[255,0,0,0.9],[0,255,0,0.9],[0,0,255,0.9]];
+        return RGBcolors[this.getRandom(0,2)];
+    }; 
+    
     toCssRGB(RGBA=[255,0,0,1]){
           return 'rgb('+RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ',' + RGBA[3] + ')';
     }
