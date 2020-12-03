@@ -95,13 +95,89 @@ export class M_Light_CS {
     recordModeArr: any = []
     currentModeIndex: any = 0
     BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
+    twoDimensionalArray=new Array(26);//8*26;
+    breakGradation=[[0,14],[15,29],[30,44],[45,58],[59,72],[73,82]];
+    break_DimensionalArray=[];
+    max_H_Number=6;
+    // x_Array=new Array(120);//8*26;
+    // y_Array=new Array(120);//8*26;
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
-        for (var i = 0; i < this.maxkaycapNumber; i++) {
+        for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
             this.AllBlockColor.push({ color: [255,0,0,1],breathing:false,border: true,coordinateData:[]})
+        }
+        for (let index = 0; index < this.twoDimensionalArray.length; index++) {
+                this.twoDimensionalArray[index]=[];
+        }
+        //coordinate:
+        for (let index = 0; index < this.twoDimensionalArray.length; index++) {
+            //var temp_=new Array(26);
+            for (let index2 = 0; index2 < 8; index2++) {
+                //const element = array[index];
+                this.twoDimensionalArray[index].push(this.defaultModule());
+            }
+        }
+        //for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
+        for (let index = 0; index < this.breakGradation.length; index++) {
+            var min = this.breakGradation[index][0];//14
+            var max = this.breakGradation[index][1];//29
+            var total = max - min;
+            // if (i_block >= min && i_block <= max) {
+            //     this.twoDimensionalArray[index].index=i_block;
+            // }
+            for (let i3 = 0; i3 <= total; i3++) {
+                this.twoDimensionalArray[i3][index].blockIndex = i3 + min;
+                //console.log('twoDimensionalArray', this.twoDimensionalArray[index][i3]=i3+min);
+
+            }
+        }
+        // this.AllBlockColor.push({ color: [255, 0, 0, 1], breathing: false, border: true, coordinateData: [] })
+
+        // var temp_=new Array(26);
+        // this.twoDimensionalArray.push(temp_);
+        //this.AllBlockColor[]
+        console.log('twoDimensionalArray', this.twoDimensionalArray);
+    }
+
+    
+
+   defaultModule(type = '') {
+        var T = 
+            {
+                blockIndex:9999,
+                color: [255,0,0,1],
+            }
+        
+        return T
+    }
+
+    showTwoDimensionalArray(){      
+        for (let index = 0; index < this.twoDimensionalArray.length; index++) {
+            //var temp_=new Array(26);
+            for (let index2 = 0; index2 < 8; index2++) {
+                //const element = array[index];
+                let target=this.twoDimensionalArray[index][index2];
+                if(target.blockIndex!=9999){
+                    this.AllBlockColor[target.blockIndex].color=target.color;
+                }
+            }
         }
     }
 
+    resetTwoDimensionalArray(){
+        for (let index = 0; index < this.twoDimensionalArray.length; index++) {
+            //var temp_=new Array(26);
+            for (let index2 = 0; index2 < this.twoDimensionalArray[index].length; index2++) {
+                //const element = array[index];
+                let target=this.twoDimensionalArray[index][index2];
+                target.color=[0,0,0,1];           
+            }
+        }
+    }
+
+
+
+    
     findLightData(findValue) {
         let obj = this.LightingEffectData.find((x) => x.value == findValue)
         if (obj != undefined) {
@@ -357,7 +433,6 @@ export class M_Light_CS {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < SlopeEquation.length; i2++) {
                     var T = SlopeEquation[i2];
                     //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
@@ -379,31 +454,6 @@ export class M_Light_CS {
                 startX=-StartPoint.clientWidth*5;
                 this.mode_reset();
             }
-            //clearInterval(this.repeater);
-
-            //     var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                
-            //     //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-            //     //+(repeatCount*50)
-            //     //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
-            //     //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
-            //     var compareResult =repeatCount*50;
-            //     repeatMax=compareResult+200;
-            //     //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
-
-            //     if (dis>compareResult) {
-            //         element.color = [255,255,0,1];
-            //     }
-            //     else {
-            //         element.color = [0,255,0,1];
-            //     }
-            // }
-            // if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
-            //     repeatCount+=1;
-            // }
-            // else{
-            //     repeatCount=0;
-            // }
         },25)
     }
 
@@ -428,7 +478,6 @@ export class M_Light_CS {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < SlopeEquation.length; i2++) {
                     var T = SlopeEquation[i2];
                     //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
@@ -479,10 +528,56 @@ export class M_Light_CS {
     }
 
     mode_Pingpong(){
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        this.setAllBlockColor([0,0,0,1]);
+        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
+        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
+        var repeatCountList=[];
+        var times=0;
+       //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
+        //     //this.getRandom(0,4),
+        //     //this.getRandom(1,50)
+        //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
+        //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
+        //     //console.log(x, y);
+       var target = this.twoDimensionalArray;
+      // var a2=[0,3,5,8,11,13];
+        for (let index = 0; index < this.max_H_Number; index++) {
+            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
 
+            repeatCountList.push({
+                color: [0, 0, 255, 1],
+                pos: [0,index],
+                backupPos:[0,index],
+                repeatTime: this.getRandom(0,3),
+            });
+        }
 
-
-        //this.addBlockIndex();
+        this.repeater=setInterval(()=>{
+            this.resetTwoDimensionalArray();
+            for (let i2 = 0; i2 < repeatCountList.length; i2++) {
+                var T = repeatCountList[i2];
+                if (T.repeatTime > 0) {
+                    T.repeatTime -= 1;
+                }
+                if (T.repeatTime == 0) {
+                    if (T.pos[0] + 1 < 10) {
+                            T.pos[0] += 1;              
+                    }
+                    else {
+                        T.pos[0]=T.backupPos[0];
+                        T.repeatTime = 0;
+                    }
+                    //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
+                }
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
+            }
+            this.showTwoDimensionalArray();
+        },50);
+    }
+    mode_P2(){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         //this.getNowBlock().color = [0,0,255,1];
@@ -494,28 +589,7 @@ export class M_Light_CS {
         //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
         var startX=-StartPoint.clientWidth*5;
         var movewidth=4;
-        // var max= (this.imageMaxWidth/this.minKeyWidth)/2;
-        // //Math.trunc(3.7); // 3
-        // for (let index2 = 0; index2 < max; index2++) {
-        //     var xpos=index2*this.minKeyWidth;
-        //     var ypos=index2*5;
-        //     horizontalList.push([xpos,ypos]);  
-        // }
 
-
-        // for (let index = 22; index < this.imageMaxWidth; index += this.minKeyWidth / 2) {
-        //     var xpos = index;
-        //     //var ypos = 25;
-        //     for (let index2 = 0; index2 < 80; index2++) {
-        //         zzzzzz += 1;
-        //         //var xpos = index;
-        //         var ypos = zzzzzz * 5;
-        //         horizontalList.push([xpos, ypos]);
-        //     }
-        //     // var xpos = index;
-        //     // horizontalList.push([xpos, ypos]);
-        //     //+(repeatCount*this.minKeyWidth)
-        // }
         var horizontalList=[];
         //Math.trunc(3.7); // 3
         var H_range=Math.trunc(372/40);
@@ -577,74 +651,148 @@ export class M_Light_CS {
         },100)
     }
 
-    mode_DigitTimes(){
-        //this.addBlockIndex();
+    mode_Snowing(){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
-        //this.getNowBlock().color = [0,0,255,1];
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
+        var StartPoint = this.getNowBlock(0).coordinateData;
         this.setAllBlockColor([0,0,0,1]);
-        //this.mode_reset();
-        //this.setAllBlockAlpha
-        var startX=-StartPoint.clientWidth*5;
-        var movewidth=4;
-        var current_time=50;
-        var target=this.AllBlockColor;
-        //var horizontalList=[];
-        //Math.trunc(3.7); // 3
-         //var y = (k & 1) ? r : this.imageMaxHeight - r;    // 來回
-        var horizontalList=[];
-        var H_range=Math.trunc(372/40);
+        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
         var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
-        console.log('w_range', w_range);
         var repeatCountList=[];
-        for (let x=23; x<this.imageMaxWidth; x+=this.minKeyWidth) {
+        for (let x=StartPoint.top_Left[0]; x<this.imageMaxWidth; x+=this.minKeyWidth) {
             //var xpos=[];
-            //var ypos=x+(372/6);
-            var i_list=[];
-            var ypos=0;
-            for (let index2 = 0;index2 < this.imageMaxHeight; index2+=(this.imageMaxHeight/40)) {
-                i_list.push([x,index2]);
+            //StartPoint.top_Left[1]
+            var temp_list=[];
+            //console.log('StartPoint.top_Left[1]',  StartPoint.top_Left[1],this.imageMaxHeight);
+
+            for (let index2 = StartPoint.top_Left[1];index2 < this.imageMaxHeight; index2+=StartPoint.clientHeight) {
+                temp_list.push([x,index2]);
             }
             repeatCountList.push({
-                color:[0,0,255,1],
-                i_list:i_list,
+                color:[0,255,255,1],
+                i_list:temp_list,
                 pos:0,
-                repeatCount:0,
-                repeatTime:this.getRandom(150,800),
+                repeatCount:6,
+                repeatTime:this.getRandom(1,25),
             });
+            //this.getRandom(1,50)
             //var k = (movement + x) / this.imageMaxHeight;    // 回合數
             //var r = (movement + x) % this.imageMaxHeight;    // 餘數
             //console.log(x, y);
         }
-        //console.log('horizontalList', horizontalList);
         console.log('repeatCountList;', repeatCountList); 
-
         this.repeater=setInterval(()=>{
             this.setAllBlockColor([0,0,0,1]);
-            current_time+=5;
+            //current_time+=5;
+            for (let i2 = 0; i2 < repeatCountList.length; i2++) {
+                var T = repeatCountList[i2];
+                if(T.repeatTime>0){
+                    repeatCountList[i2].repeatTime-=1;
+                }
+                else if(T.repeatTime==0&& T.repeatCount<T.i_list.length){
+                    repeatCountList[i2].repeatCount+=1;
+                   //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
+                }              
+                if(T.repeatCount>=T.i_list.length){
+                    repeatCountList[i2].repeatCount=0;
+                    repeatCountList[i2].repeatTime=this.getRandom(1,25);
+                }      
+            }
             var target = this.AllBlockColor;
+            
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < repeatCountList.length; i2++) {
                     var T = repeatCountList[i2];
-                    var now=T.i_list[repeatCount];
-                    if (now[0] > element.coordinateData.top_Left[0] &&
-                        now[0] < element.coordinateData.top_Right[0] &&
-                        now[1] > element.coordinateData.top_Left[1] &&
-                        now[1] < element.coordinateData.bottom_Left[1]
+                    //console.log('T_now;', T);
+                    var now=T.i_list[T.repeatCount];
+                    //console.log('now;', now);
+                    if (now[0] >= element.coordinateData.top_Left[0] &&
+                        now[0] <= element.coordinateData.top_Right[0] &&
+                        now[1] >= element.coordinateData.top_Left[1] &&
+                        now[1] <= element.coordinateData.bottom_Left[1]
                     )
-                    
+                    {
+                        target[index].color=repeatCountList[i2].color;
+                    }                
                 }
             }
 
         },100)
     }
+    mode_DigitTimes(){
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        this.setAllBlockColor([0,0,0,1]);
+        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
+        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
+        var repeatCountList=[];
+        var times=0;
+       //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
+        //     //this.getRandom(0,4),
+        //     //this.getRandom(1,50)
+        //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
+        //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
+        //     //console.log(x, y);
+       var target = this.twoDimensionalArray;
+       var a=[0,3,5];
+      // var a2=[0,3,5,8,11,13];
+       var randomList=[];
+       for (let i = 0; i < this.breakGradation[0][1]-1
+        ; i++) {
+           randomList.push(this.getRandom(0, this.breakGradation[0][1]-1));   //亂數產生，亂數產生的範圍是1~9
+           for (let j = 0; j < i; j++) {
+               while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+               {
+                   j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+                   randomList[i] = this.getRandom(0, this.breakGradation[0][1]-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+               }
+           }
+       }
+        for (let index = 0; index <= this.breakGradation[0][1]; index++) {
+            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
 
-    
+            repeatCountList.push({
+                color: [0, 0, 255, 1],
+                pos: [index,index%(this.max_H_Number/2)],
+                backupPos:[index,index%(this.max_H_Number/2)],
+                repeatTime: this.getRandom(0,3),
+            });
+        }
 
+        this.repeater=setInterval(()=>{
+            this.resetTwoDimensionalArray();
+            for (let i2 = 0; i2 < repeatCountList.length; i2++) {
+                var T = repeatCountList[i2];
+                if (T.repeatTime > 0) {
+                    T.repeatTime -= 1;
+                }
+                if (T.repeatTime == 0) {
+                    if (T.pos[1] + 1 < this.max_H_Number) {
+                        if(T.pos[0]<1){
+                            T.pos[1] += 1;
+                        }
+                        else{
+                            T.pos[1] += 1;
+                            T.pos[0] += 1;
+                        }
+
+                    }
+                    else {
+                        T.pos[0]=T.backupPos[0];
+                        T.pos[1]=0;
+                        T.repeatTime = 1;
+                    }
+                    //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
+                }
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
+            }
+            this.showTwoDimensionalArray();
+        },500);
+
+
+    }
     mode_SpreadLeftAndRight(setColor=[255,0,0,1]){
         //this.addBlockIndex();
         clearInterval(this.repeater);
@@ -750,7 +898,6 @@ export class M_Light_CS {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < horizontalList.length; i2++) {
                     var T = horizontalList[i2];
                     //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
@@ -859,7 +1006,6 @@ export class M_Light_CS {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < horizontalList.length; i2++) {
                     var T = horizontalList[i2].coordinate;
                     //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
@@ -890,7 +1036,6 @@ export class M_Light_CS {
         var repeatCountList=[];
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            //console.log('_mode_Pingpong;', element);
             // for (let i2 = 0; i2 < horizontalList.length; i2++) {
                 element.color=this.getRgbRandom();
                 if(element.color[0]==255){
@@ -959,7 +1104,6 @@ export class M_Light_CS {
         var repeatCountList=[];
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            //console.log('_mode_Pingpong;', element);
             // for (let i2 = 0; i2 < horizontalList.length; i2++) {
                 //element.color=this.getRgbRandom();
                 element.color=[0,0,this.getRandom(0,255),1];
@@ -1068,7 +1212,6 @@ export class M_Light_CS {
         var repeatCountList=[];
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            //console.log('_mode_Pingpong;', element);
             // for (let i2 = 0; i2 < horizontalList.length; i2++) {
                 //element.color=this.getRgbRandom();
                 element.color=[0,0,0,1];
@@ -1177,13 +1320,6 @@ export class M_Light_CS {
             }
         },1)
     }
-    
-
-    
-
-    
-
-
     mode_T0(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         //this.addBlockIndex();
@@ -1567,8 +1703,6 @@ export class M_Light_CS {
             }
         }
     }
-
-
     mode_reset() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -1576,8 +1710,6 @@ export class M_Light_CS {
             element.color = [0,0,0,0];
         }
     }
-
-
     mode_FastRunWithoutTrace(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         var Brightness=1;
@@ -1737,8 +1869,11 @@ export class M_Light_CS {
         //clearInterval(this.repeater);
     }
     getIndexRGBCss(i){
-        var target = this.AllBlockColor;
-        return this.toCssRGB(target[i].color);
+            var target = this.AllBlockColor;
+        if(target[i].color!=undefined){
+            return this.toCssRGB(target[i].color);
+        }
+
     }
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;

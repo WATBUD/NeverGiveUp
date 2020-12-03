@@ -107,13 +107,17 @@
                           {{ switchChangAllkey() }}
                       </div>
                   </div>
+                  <!-- [style.background-color]="this.M_Light_CS.getIndexRGBCss(i)" -->
                   <div id="KeyLightUI_section" style="position: absolute;
                   display: flex;
                   WIDTH:  834px;
                   HEIGHT: 372px;">
                       <div [style.display]="lightingflag ? 'flex' : 'none'"
                           *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
-                          [style.background-color]="M_Light_CS.getIndexRGBCss(i)" [attr.data-index]="i"></div>
+                             
+                          [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}"
+                          [attr.data-index]="i">
+                        </div>
                   </div>
                   <!-- -->
                   <!-- <div id="KeyAssignBlock_section" style="position: absolute;

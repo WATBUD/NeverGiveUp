@@ -233,9 +233,8 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Matrix3_Raindow();
         //this.M_Light_CS.mode_Matrix3_SingleColor();
         //this.M_Light_CS.mode_Matrix2();
-        this.M_Light_CS.mode_DigitTimes();
-        
-        
+        //this.M_Light_CS.mode_DigitTimes();
+        this.M_Light_CS.mode_Pingpong();
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+
