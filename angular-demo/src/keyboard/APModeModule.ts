@@ -365,7 +365,7 @@ export class M_Light_CS {
 //     break;
 // case 'PassWithoutTrace'://單點
 //     break;
-// case 'FastRunWithoutTrace'://一排
+
     mode_LEDOFF() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -950,7 +950,7 @@ export class M_Light_CS {
             //}
         },150)
     }
-    mode_Rain_Back_And_forth(colors=[]){
+    mode_HeartbeatSensor(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         var Brightness=1;
         // var mode=0;
@@ -1216,7 +1216,7 @@ export class M_Light_CS {
                 //element.color=this.getRgbRandom();
                 element.color=[0,0,0,1];
                 var temp_pos;
-                if(!rainbow){
+                if(rainbow){
                     temp_pos=this.getRandom(0,2)
                 }
                 else{
@@ -1287,7 +1287,7 @@ export class M_Light_CS {
                         list.repeatTime=newRand;
                         console.log('repeatCount+=1;', newRand);
                         if(list.color[list.pos]==0){
-                            if(!rainbow){
+                            if(rainbow){
                                 list.pos=this.getRandom(0,2)
                             }
                             else{
@@ -1792,7 +1792,29 @@ export class M_Light_CS {
         // }
         //clearInterval(this.repeater);
     }
-
+    mode_PassWithoutTrace(colors=[],index=20) {
+        colors =[[0,0,255,1]];
+        clearInterval(this.repeater);
+        //this.currentBlockIndex=index;
+        var randomColor=colors[this.getRandom(0,colors.length-1)];
+        this.setAllBlockColor([0,0,0,1]);
+        this.repeater = setInterval(() => {
+            if(randomColor[3]<=0){
+                clearInterval(this.repeater);
+            }
+            var target = this.AllBlockColor;
+            target[index].color = randomColor
+            if (randomColor[0] > 0) {
+                randomColor[0] -= 1;
+            }
+            if (randomColor[2] > 0) {
+                randomColor[2] -= 1;
+            }
+            if (randomColor[2] > 0) {
+                randomColor[2] -= 1;
+            }                               
+        }, 10)
+    }
     rainbow7Color(){
 
        return [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
