@@ -676,7 +676,6 @@ export class M_Light_CS {
       // var a2=[0,3,5,8,11,13];
         for (let index = 0; index < this.max_H_Number; index++) {
             //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-
             repeatCountList.push({
                 color: [0, 0, 255, 1],
                 pos: [0,index],
@@ -707,7 +706,7 @@ export class M_Light_CS {
             this.showTwoDimensionalArray();
         },50);
     }
-    mode_P2(){
+    mode_Parallelogram(){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         //this.getNowBlock().color = [0,0,255,1];
@@ -780,6 +779,102 @@ export class M_Light_CS {
             }
         },100)
     }
+    mode_Pingpong2(){
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        //this.getNowBlock().color = [0,0,255,1];
+        var intervalCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        this.setAllBlockColor([0,0,0,1]);
+        //this.mode_reset();
+        this.setAllBlockAlpha
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        //Math.trunc(3.7); // 3
+        var H_range=Math.trunc(372/40);
+        var repeatCount=0;
+        this.repeater = setInterval(() => {
+            this.setAllBlockColor([0, 0, 0, 1]);
+            var horizontalList = [];
+            //console.log('repeatCount', repeatCount);
+            var spacing=-5;
+            if (repeatCount%2==0) {
+                for (let index = 0; index < this.imageMaxHeight; index += StartPoint.clientHeight) {
+                    var ypos = index;
+                    //var templist = [];
+                    spacing += 1;
+                    //var ypos = 25;
+                   var min=intervalCount * StartPoint.clientWidth+spacing*22;
+                   var max=intervalCount * StartPoint.clientWidth+StartPoint.clientWidth*4+spacing*22;
+                    for (let index2 = min; index2 < max; index2 += 1) {
+                        var xpos = index2;
+                        horizontalList.push([xpos, ypos]);
+                        //templist.push([index2, ypos]);
+                    }
+                    //horizontalList.push(templist);
+                }
+            }
+            else {
+                var spacing=-5;
+
+                console.log('repeatCount', repeatCount);
+                for (let index = 0; index < this.imageMaxHeight; index += StartPoint.clientHeight) {
+                    spacing += 1;
+                    var ypos = index;
+                    var min=this.imageMaxWidth-intervalCount * StartPoint.clientWidth-spacing*22-StartPoint.clientWidth*4;
+                    var max=this.imageMaxWidth-intervalCount * StartPoint.clientWidth-spacing*22;
+                    //var spacing2 = this.minKeyWidth * intervalCount;
+                    for (let index2 = max; index2 > min; index2 -= 1) {
+                        var xpos = index2;
+                        horizontalList.push([xpos, ypos]);
+                    }
+                }
+            }
+   
+
+
+
+
+            //console.log('horizontalList', horizontalList); 
+            var target = this.AllBlockColor;
+
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                    var T = horizontalList[i2];
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+                    if (T[0] > element.coordinateData.top_Left[0] &&
+                        T[0] < element.coordinateData.top_Right[0] &&
+                        T[1] > element.coordinateData.top_Left[1] &&
+                        T[1] < element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color = [0, 0, 255, 1];
+                        continue;
+                    }
+                    // else{
+                    //     element.color = [0,0,0,1];
+                    // }
+
+                }
+
+            }
+
+
+
+
+
+            if (intervalCount * StartPoint.clientWidth*2 < this.imageMaxWidth) {
+                intervalCount += 1;
+            }
+            else {
+                intervalCount = 0;
+                repeatCount += 1;
+                //this.setAllBlockColor([255,255,255,1]);
+            }
+        }, 100)
+    }
+
+
+
     mode_Rainbow(){
         clearInterval(this.repeater);
        this.currentBlockIndex=0;
