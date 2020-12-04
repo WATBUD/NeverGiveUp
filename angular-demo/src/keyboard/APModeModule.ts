@@ -361,72 +361,75 @@ export class M_Light_CS {
                 break;
         }
     }
-//     case 'RippleGraff'://彩色擴散
-//     break;
-// case 'PassWithoutTrace'://單點
-//     break;
+    //     case 'RippleGraff'://彩色擴散
+    //     break;
+    // case 'PassWithoutTrace'://單點
+    //     break;
 
-mode_RippleGraff(){
-    clearInterval(this.repeater);
-    this.currentBlockIndex=48;
-    var repeatCount=0;
-    var StartPoint = this.getNowBlock().coordinateData;
-    var setRGB=[255,0,0,1];
-    var mode_step=true;
-    this.setAllBlockColor([0,0,0,1]);
-    this.repeater=setInterval(()=>{
-        //this.mode_reset();
-        var target = this.AllBlockColor;
-        this.getNowBlock().color = setRGB;
-        for (let index = 0; index < target.length; index++) {
-            const element = target[index];
-            console.log('this.M_Light_PRESETS.addBlockIndex();', element);
-            var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-            //+(repeatCount*50)
-            //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
-            var compareResult =this.minKeyWidth*repeatCount;
-            var compareResultMax =this.minKeyWidth*repeatCount-this.minKeyWidth;
-            //repeatMax=compareResult+200;
-            //var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            //if (Ysdis < 5) {
-                if (dis<compareResult&& dis>compareResultMax) {
-                    element.color =setRGB;
-                    
-                    // if (element.color[3] > 0) {
-                    //     element.color[3]-=0.01;
-                    // }
-                    // else {
-                    //     Brightness = 1;
-                    //     //step_End = false;
-                    //     //clearInterval(this.repeater);
-                    // }
-                    // if(tempRGB[0]>0){
-                    //     tempRGB[0]-=5;
-                    //     tempRGB[1]+=5;
-                    // }
-                    // else if(tempRGB[1]>0){
-                    //     tempRGB[1]-=5;
-                    //     tempRGB[2]+=5;
-                    // }
-                    // else if(tempRGB[2]>0){
-                    //     tempRGB[2]-=5;
-                    //     tempRGB[3]+=5;
-                    // }
-                    // var temp=[tempRGB[0],tempRGB[1],tempRGB[2],tempRGB[3]];
-                    // element.color = temp;
+    mode_RippleGraff(colors = [], isRainbow = true) {
+        clearInterval(this.repeater);
+        colors = this.rainbow7Color();
+        //this.rainbow7Color();
+        this.currentBlockIndex = 48;
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        //var setRGB=[255,0,0,1];
+        var mode_step = 0;
+        var step = 30;
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        this.repeater = setInterval(() => {
+            //this.mode_reset();
+            var target = this.AllBlockColor;
+            var setRGB;
+            if (isRainbow) {
+                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+            }
+            else {
+                setRGB = [255, 0, 0, 1];
+            }
+            var compareResult = this.minKeyWidth * repeatCount;
+            var compareResultMax = this.minKeyWidth * repeatCount - this.minKeyWidth;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                console.log('mode_step', mode_step)
+                if (mode_step == 0) {
+                    if (dis < compareResult && dis > compareResultMax) {
+                        element.color = setRGB;
+                    }
                 }
-        }
-        if(compareResult<this.imageMaxWidth){
-            repeatCount+=1;
-        }
-        else{
-            repeatCount=0;
-            mode_step=true;
-            this.setAllBlockColor([0,0,0,1]);
-        }
-    },50)
-    //clearInterval(this.repeater);
-}
+                else {
+                    var T = JSON.parse(JSON.stringify(element.color));
+                    T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
+                    T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
+                    T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
+                    element.color = T;
+                    console.log('element.color', T, step, nowStep)
+                }
+
+            }
+            if (nowStep + 1 < step) {
+                nowStep += 1;
+            }
+            else {
+                nowStep = 0;
+                mode_step = 0;
+                repeatCount = 0;
+                console.log('nowStep_end', mode_step, repeatCount, nowStep)
+                this.setAllBlockColor([0, 0, 0, 1]);
+            }
+            if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
+                repeatCount += 1;
+                //console.log('repeatCount', repeatCount)
+            }
+            else {
+                mode_step = 1;
+                //this.setAllBlockColor([0,0,0,1]);
+            }
+        }, 50)
+        //clearInterval(this.repeater);
+    }
 
 
     mode_LEDOFF() {
@@ -1896,10 +1899,6 @@ mode_RippleGraff(){
     mode_FastRunWithoutTrace(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         var Brightness=1;
-        // var mode=0;
-        // if(colors.length>1){
-        //     mode=1;
-        // }
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
         //this.getNowBlock().color = [0,0,255,1];
@@ -1912,12 +1911,10 @@ mode_RippleGraff(){
         var target = this.AllBlockColor;
         var randomValue=this.getRandom(0,colors.length-1);
         var step_End=false;
-        //console.log('setColor', setColor)
         this.mode_reset();
         horizontalList[this.currentBlockIndex]={
                color:colors[this.getRandom(0,colors.length-1)]
         }
-        //horizontalList.push(this.currentBlockIndex); 
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
@@ -1925,7 +1922,6 @@ mode_RippleGraff(){
                 horizontalList[index]={
                     color:colors[this.getRandom(0,colors.length-1)]
                 }
-                //horizontalList.push(index);               
             }
         }
         // console.log('horizontalList', horizontalList)
@@ -1970,10 +1966,6 @@ mode_RippleGraff(){
                 repeatCount+=1;
             }
         },50)
-        // this.repeaterTimeout=if(Brightness>0){
-        //     Brightness-=0.01;
-        // }
-        //clearInterval(this.repeater);
     }
     mode_PassWithoutTrace(colors=[],index=20) {
         colors =[[0,0,255,1]];
