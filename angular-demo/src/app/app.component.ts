@@ -240,7 +240,12 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_RippleGraff();
         //this.M_Light_CS.mode_Breathing();
         //this.M_Light_CS.mode_Parallelogram();
-        this.M_Light_CS.mode_Pingpong2();
+        //this.M_Light_CS.mode_Pingpong2();
+        //this.M_Light_CS.mode_AcidMode();
+        //this.M_Light_CS.mode_Kamehemeha();
+
+        
+        this.M_Light_CS.mode_Wave1();
 
         
 

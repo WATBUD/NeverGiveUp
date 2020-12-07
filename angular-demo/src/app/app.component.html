@@ -1,5 +1,5 @@
 
-      <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_FastRunWithoutTrace()" onkeydown=""
+      <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_FastRunWithoutTrace([[0,0,255,1]])" onkeydown=""
       value="mode_FastRunWithoutTrace" class="ButtonStyle">
       <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T0()" onkeydown=""
       value="mode_T0" class="ButtonStyle">
@@ -50,7 +50,7 @@
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_RippleGraff()" onkeydown=""
       value="mode_RippleGraff" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_RippleGraff([],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_RippleGraff([[0,0,255,1]],false)" onkeydown=""
       value="mode_RippleGraff_Single" class="ButtonStyle">
       
 
@@ -59,6 +59,24 @@
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([],true)" onkeydown=""
       value="mode_Breathing_rainbow" class="ButtonStyle">
       
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([],true)" onkeydown=""
+      value="mode_NormallyOn" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_AcidMode([])" onkeydown=""
+      value="mode_AcidMode" class="ButtonStyle">
+
+      
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Kamehemeha([],true)" onkeydown=""
+      value="mode_Kamehemeha_rainbow" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Kamehemeha([[255,255,0,1]],false)" onkeydown=""
+      value="mode_Kamehemeha_Single" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Kamehemeha([[255,255,0,1]],false)" onkeydown=""
+      value="mode_Kamehemeha_Single" class="ButtonStyle">
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave1([[0,0,255,1]],false)" onkeydown=""
+      value="mode_Wave1" class="ButtonStyle">
+
       <!-- [style.background-color]="'blue'" -->
       <!-- [ngStyle]="{'background-image': PERKEY_BrightnessSlider_Background()} -->
     <div style="
