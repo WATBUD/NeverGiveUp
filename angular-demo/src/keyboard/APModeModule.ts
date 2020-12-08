@@ -1026,7 +1026,6 @@ export class M_Light_CS {
             }
             else{
                 repeatCount=0;
-                //this.setAllBlockColor([255,255,255,1]);
             }
         },100)
     }
@@ -1106,7 +1105,6 @@ export class M_Light_CS {
             else {
                 intervalCount = 0;
                 repeatCount += 1;
-                //this.setAllBlockColor([255,255,255,1]);
             }
         }, 100)
     }
@@ -1277,7 +1275,6 @@ export class M_Light_CS {
                 intervalCount = 0;
                 exist=[];
                 repeatCount += 1;
-                //this.setAllBlockColor([255,255,255,1]);
             }
             // if(repeatCount>2){
             //     clearInterval(this.repeater);
@@ -1925,7 +1922,6 @@ export class M_Light_CS {
                 intervalCount = 0;
                 exist=[];
                 repeatCount += 1;
-                //this.setAllBlockColor([255,255,255,1]);
             }
             // if(repeatCount>2){
             //     clearInterval(this.repeater);
@@ -2070,7 +2066,6 @@ export class M_Light_CS {
                 intervalCount = 0;
                 exist=[];
                 repeatCount += 1;
-                //this.setAllBlockColor([255,255,255,1]);
             }
             // if(repeatCount>2){
             //     clearInterval(this.repeater);
