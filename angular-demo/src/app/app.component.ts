@@ -215,7 +215,18 @@ export class AppComponent implements OnInit {
         //ColorContent.style.display = 'flex'
     }
 
-
+    defaultSetlightData(type = '') {
+        var T = {
+            rate:50,
+            brightness:50,
+            colorHex:'#0000',
+            colorPickerValue:[255,0,0,0],
+            breathing:false,
+            sideLightSync:true,
+            lightSelected:{ name: 'GloriousMode', value: 16, translate: 'GloriousMode' }
+        }
+        return T;
+    }
     PERKEY_BrightnessSlider_Background(){
         //return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' +50 +'%,#313131 ' +50 +'%, #313131 100%)';
 
@@ -225,6 +236,8 @@ export class AppComponent implements OnInit {
 
 
     DeveloperControl() {
+        this.M_Light_CS.lightData=this.defaultSetlightData();
+
         //this.M_Light_CS.mode_gloriousMode();
         //this.M_Light_CS.mode_Pingpong();
         //this.M_Light_CS.mode_SinGraphics();

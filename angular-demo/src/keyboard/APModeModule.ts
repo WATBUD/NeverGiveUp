@@ -330,7 +330,7 @@ export class M_Light_CS {
                 this.mode_AcidMode([this.lightData.colorPickerValue]);
                 break;
             case 'Breathing':
-                this.mode_Breathing([this.lightData.colorPickerValue]);
+                this.mode_Breathing([this.lightData.colorPickerValue],false);
                 break;
             case 'NormallyOn':
                 this.mode_NormallyOn([this.lightData.colorPickerValue]);
@@ -560,11 +560,9 @@ export class M_Light_CS {
         for (let i_compare = 0; i_compare < this.imageMaxHeight/2; i_compare+=this.minKeyHeight) {
            
         }
-        console.log('repeatCountList', repeatCountList)
+        //console.log('repeatCountList', repeatCountList)
         this.repeater = setInterval(() => {
-            //this.mode_reset();  
             this.setAllBlockColor([0, 0, 0, 1]);
-            //stepIndex+=1;
             var target = this.AllBlockColor;    
             for (let index = 0; index < qigongRangeIndex.length; index++) {        
             target[this.qigongRange[qigongRangeIndex[index]]].color=colors[this.getRandom(0,colors.length-1)]; 
@@ -633,7 +631,7 @@ export class M_Light_CS {
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                console.log('mode_step', mode_step)
+                //console.log('mode_step', mode_step)
                 if (mode_step == 0) {
                     if (dis <= compareResult && dis >= compareResultMax) {
                         element.color = setRGB;
@@ -645,7 +643,7 @@ export class M_Light_CS {
                     T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
                     T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
                     element.color = T;
-                    console.log('element.color', T, step, nowStep)
+                    //console.log('element.color', T, step, nowStep)
                 }
 
             }
@@ -2350,6 +2348,11 @@ export class M_Light_CS {
         if (isRainbow) {
             colors =this.rainbow7Color();
         }
+        else{
+            colors.push([0,0,0,1])
+        }
+
+        
         clearInterval(this.repeater);
         this.currentBlockIndex=blockIndex;
         //this.getNowBlock().color = [0,0,255,1];
@@ -2364,15 +2367,16 @@ export class M_Light_CS {
         var randomValue=this.getRandom(0,colors.length-1);
         var step_End=false;
         //this.mode_reset();
+        //var c_temp=colors[this.getRandom(0,colors.length-1)];
         horizontalList[this.currentBlockIndex]={
-               color:colors[this.getRandom(0,colors.length-1)]
+               color:colors[0]
         }
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
             if (Ysdis <= 10) {
                 horizontalList[index]={
-                    color:colors[this.getRandom(0,colors.length-1)],
+                    color:colors[0],
                     nowPos:0,
                     nowstep:0,
                     repeatCount:1,
@@ -2402,14 +2406,14 @@ export class M_Light_CS {
                         temp_block.nowStep = 0;
                         // var newRand = this.getRandom(15, 15);
                         // temp_block.repeatTime = newRand;
-                        if (temp_block.nowPos + 1 < tempColors.length) {
-                            temp_block.nowPos += 1;
-                        }
-                        else {
-                            temp_block.nowPos = 0;
-                        }
-                        //step_End = false;
-                        //clearInterval(this.repeater);
+                        // if (temp_block.nowPos + 1 < tempColors.length) {
+                        //     temp_block.nowPos += 1;
+                        // }
+                        // else {
+                        //     temp_block.nowPos = 0;
+                        // }
+                        step_End = false;
+                        clearInterval(this.repeater);
                         
                     }
                     var temp_C = tempColors[temp_block.nowPos];
@@ -2443,7 +2447,7 @@ export class M_Light_CS {
                 };
                 repeatCount+=1;
             }
-        },50)
+        },500)
     }
     mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
