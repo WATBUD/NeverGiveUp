@@ -320,49 +320,50 @@ export class M_Light_CS {
             case 'GloriousMode':
                 break;
             case 'Wave#1':
+                //this.mode_Wave1([this.lightData.colorPickerValue]);
                 break;
             case 'Wave#2':
                 break;
             case 'SpiralingWave':
                 break;
             case 'AcidMode':
-                this.mode_AcidMode();
+                this.mode_AcidMode([this.lightData.colorPickerValue]);
                 break;
             case 'Breathing':
-                this.mode_Breathing();
+                this.mode_Breathing([this.lightData.colorPickerValue]);
                 break;
             case 'NormallyOn':
-                this.mode_NormallyOn();
+                this.mode_NormallyOn([this.lightData.colorPickerValue]);
                 break;
             case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff();
+                this.mode_RippleGraff([this.lightData.colorPickerValue]);
                 break;
             case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace();
+                this.mode_PassWithoutTrace([this.lightData.colorPickerValue]);
                 break;
             case 'FastRunWithoutTrace'://一排
-                this.mode_FastRunWithoutTrace();
+                this.mode_FastRunWithoutTrace([this.lightData.colorPickerValue]);
                 break;
             case 'Matrix2':
-                this.mode_Matrix2();
+                this.mode_Matrix2([this.lightData.colorPickerValue]);
                 break;
             case 'Matrix3':
-                this.mode_Matrix3_SingleColor();
+                this.mode_Matrix3_SingleColor([this.lightData.colorPickerValue]);
                 break;
             case 'Rainbow':
                 this.mode_Rainbow();
                 break;
             case 'HeartbeatSensor':
-                this.mode_HeartbeatSensor();
+                this.mode_HeartbeatSensor([this.lightData.colorPickerValue]);
                 break;
             case 'DigitTimes':
-                this.mode_DigitTimes();
+                this.mode_DigitTimes([this.lightData.colorPickerValue]);
                 break;
             case 'Kamehemeha':
-                this.mode_Kamehemeha()
+                this.mode_Kamehemeha([this.lightData.colorPickerValue],false)
                 break;
             case 'Pingpong':
-                this.mode_Pingpong();
+                this.mode_Pingpong([this.lightData.colorPickerValue],false);
                 break;
             case 'Surmount':
                 break;
@@ -659,6 +660,9 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
+                if(this.lightData.lightSelected.value==16){
+                    this.mode_Kamehemeha([this.lightData.colorPickerValue],isRainbow);
+                }
             }
             if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
                 repeatCount += 1;
@@ -666,6 +670,7 @@ export class M_Light_CS {
             }
             else {
                 mode_step = 1;
+
                 //this.setAllBlockColor([0,0,0,1]);
             }
         }, 50)
@@ -745,11 +750,8 @@ export class M_Light_CS {
         //clearInterval(this.repeater);
     }
     mode_LEDOFF() {
-        var target = this.AllBlockColor;
-        for (let index = 0; index < target.length; index++) {
-            let element = target[index];
-            element.color = 'black';
-        }
+        clearInterval(this.repeater);
+        this.setAllBlockColor([0,0,0,1]);
     }
     mode_Wave(){
         //this.addBlockIndex();
@@ -796,7 +798,7 @@ export class M_Light_CS {
         //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
         var startX=-StartPoint.clientWidth*5;
         this.repeater=setInterval(()=>{
-            var SlopeEquation=this.SlopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
+            var SlopeEquation=this.slopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
             //console.log('SlopeEquation', SlopeEquation);
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
@@ -838,7 +840,7 @@ export class M_Light_CS {
         var startX=-StartPoint.clientWidth*5;
 
         this.repeater=setInterval(()=>{
-            var SlopeEquation=this.SlopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
+            var SlopeEquation=this.slopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
             //console.log('SlopeEquation', SlopeEquation);
             this.mode_reset();
 
@@ -1105,19 +1107,15 @@ export class M_Light_CS {
         //     RGBcolors.push([255-index,0+index,0,1]);
         //     RGBcolors.push([0,255-index,0+index,1]);
         //     RGBcolors.push([0+index,0,255-index,1]);
-
         // }
         // console.log('RGBcolors', RGBcolors);
-
         RGBcolors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         //RGBcolors =[[255,0,0,1],[255,0,0,0.8],[0,255,0,1],[0,255,0,0.8],[0,0,255,1],[0,0,255,0.8]];
-
         if(isRainbow){
             //colors=this.rainbow7Color();
             colors=RGBcolors;
 
-        }
-        
+        }   
         else{
             colors=[colors[0],[colors[0][0],colors[0][1],colors[0][2],0.4]];
         }
@@ -1145,8 +1143,8 @@ export class M_Light_CS {
             // setRGB=colors[ran];
             // }
 
-            //temp_target[index].nowStep=modStep*totalStep;
-            temp_target[index].nowStep=0;
+            temp_target[index].nowStep=modStep*totalStep;
+            //temp_target[index].nowStep=0;
             temp_target[index].nowPos=0;
             var temp_block=temp_target[index];
             //if(target[index].center_Point[0])
@@ -1330,21 +1328,8 @@ export class M_Light_CS {
                T.color[0]= (temp_C[0]*(T.step-T.nowStep)+nextColor[0]*T.nowStep)/T.step;
                T.color[1]= (temp_C[1]*(T.step-T.nowStep)+nextColor[1]*T.nowStep)/T.step;
                T.color[2]= (temp_C[2]*(T.step-T.nowStep)+nextColor[2]*T.nowStep)/T.step;
-               console.log('T.step;',T.step,T.nowStep,temp_C,nextColor);
+               //console.log('T.step;',T.step,T.nowStep,temp_C,nextColor);
 
-            //    if (T.repeatTime > 0) {
-            //        T.repeatTime -= 1;
-            //    }
-            //    if (T.repeatTime == 0) {
-            //        if (T.pos[1] - 1 > 0) {
-            //            T.pos[1] -=1;              
-            //        }
-            //        else {
-            //            T.pos[1]=T.backupPos[1];
-            //            T.repeatTime = 0;
-            //        }
-            //        //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
-            //    }
                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
            }
            this.showTwoDimensionalArray();
@@ -1468,7 +1453,8 @@ export class M_Light_CS {
 
         },100)
     }
-    mode_DigitTimes(){
+
+    mode_DigitTimes(colors = [[0,0,255,1]]){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
@@ -1502,7 +1488,7 @@ export class M_Light_CS {
             //this.twoDimensionalArray[index][0].color=[0,0,255,1];
 
             repeatCountList.push({
-                color: [0, 0, 255, 1],
+                color: colors[0],
                 pos: [index,index%(this.max_H_Number/2)],
                 backupPos:[index,index%(this.max_H_Number/2)],
                 repeatTime: this.getRandom(0,3),
@@ -1657,8 +1643,7 @@ export class M_Light_CS {
                 }
         },150)
     }
-    mode_HeartbeatSensor(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+    mode_HeartbeatSensor(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
@@ -1721,8 +1706,7 @@ export class M_Light_CS {
 
         },60)
     }
-    mode_Matrix3_Raindow(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+    mode_Matrix3_Raindow(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
@@ -1788,8 +1772,7 @@ export class M_Light_CS {
             var spacing=-5;
         },10)
     }
-    mode_Matrix3_SingleColor(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+    mode_Matrix3_SingleColor(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
@@ -1871,7 +1854,6 @@ export class M_Light_CS {
                         list.repeatCount+=1;
                         var newRand=this.getRandom(5,25);
                         list.repeatTime=newRand;
-                        console.log('repeatCount+=1;', newRand);
 
                         
                     }
@@ -1879,128 +1861,155 @@ export class M_Light_CS {
             }
         },1)
     }
-    mode_Matrix2(colors=[],rainbow=false){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        var Brightness=1;
+
+    mode_Matrix2(colors = [[255,255,0,1]], isRainbow = false){
         clearInterval(this.repeater);
-        this.currentBlockIndex=43;
+        this.currentBlockIndex=0;
+        var RGBcolors=[];
+        // for (let index = 0; index < 5; index++) {
+        //     //const element = array[index];
+        //     RGBcolors.push([255-index,0+index,0,1]);
+        //     RGBcolors.push([0,255-index,0+index,1]);
+        //     RGBcolors.push([0+index,0,255-index,1]);
+        // }
+        // console.log('RGBcolors', RGBcolors);
+        RGBcolors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        //RGBcolors =[[255,0,0,1],[255,0,0,0.8],[0,255,0,1],[0,255,0,0.8],[0,0,255,1],[0,0,255,0.8]];
+        if(isRainbow){
+            //colors=this.rainbow7Color();
+            colors=RGBcolors;
+
+        }   
+        else{
+            colors=[colors[0],[0,0,0,1]];
+        }
+        var totalStep=10;
+
+        //this.getNowBlock().color = [0,0,255,1];
+        var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
-        var horizontalList=[];
-        this.setAllBlockColor([0,0,0,1]);
         var target = this.AllBlockColor;
-        var repeatCountList=[];
-        for (let index = 0; index < target.length; index++) {
-            const element = target[index];
-            // for (let i2 = 0; i2 < horizontalList.length; i2++) {
-                //element.color=this.getRgbRandom();
-                element.color=[0,0,0,1];
-                var temp_pos;
-                if(rainbow){
-                    temp_pos=this.getRandom(0,2)
+        this.setAllBlockColor([0,0,0,1]);
+       var repeatCountList=[];
+       var RanRange=[50,250];
+        //var temp_target=JSON.parse(JSON.stringify(this.AllBlockColor));
+
+        for (let index = 0; index < target.length; index ++) {
+            //console.log(' target[index].center_Point[0]', target[index].coordinateData.center_Point[0]);
+           // var alpha=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
+            var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
+            //var ran=this.getRandom(0, colors.length - 1);
+            var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
+            //console.log('alpha',alpha);
+            //console.log('modStep',modStep);
+
+            //nowstep:modStep*totalStep
+            repeatCountList.push({
+                                color:0,
+                                nowPos:0,
+                                nowstep:0,
+                                repeatCount:1,
+                                repeatTime:this.getRandom(RanRange[0],RanRange[1]),
+                            });
+            
+
+            var temp_block=repeatCountList[index];
+            var temp_C=colors[0];
+            var nextColor=colors[1];
+            if(isRainbow){
+                repeatCountList[index].nowPos=ran;
+                if(ran<colors.length - 1){
+                    temp_C=colors[ran];
+                    nextColor=colors[ran+1];
                 }
                 else{
-                    temp_pos=2
-                }       
-                repeatCountList.push({
-                    color:element.color,
-                    pos:temp_pos,
-                    repeatCount:1,
-                    repeatTime:this.getRandom(150,800),
-                });
-                if(element.color[0]==255){
-                    repeatCountList.push({
-                        color:element.color,
-                        pos:0,
-                        repeatCount:1,
-                        repeatTime:this.getRandom(5,25),
-                    });
+                    temp_C=colors[0];
+                    nextColor=colors[0];
                 }
-                else if(element.color[1]==255){
-                    repeatCountList.push({
-                        color:element.color,
-                        pos:1,
-                        repeatCount:1,
-                        repeatTime:this.getRandom(5,25),
-                    });
-                }
-                else if(element.color[2]==255){
-                    repeatCountList.push({
-                        color:element.color,
-                        pos:2,
-                        repeatCount:1,
-                        repeatTime:this.getRandom(5,25),
-                    });
-                }
-            console.log('repeatCountList;', repeatCountList); 
-        }
-        var decreasing=1;
-        this.repeater=setInterval(()=>{
-            // var randomList=[];
-            // for (let i = 0; i < 30; i++) {
-            //     randomList.push(this.getRandom(0, target.length-1));   //亂數產生，亂數產生的範圍是1~9
-            //     for (let j = 0; j < i; j++) {
-            //         while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
-            //         {
-            //             j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
-            //             randomList[i] = this.getRandom(0, target.length-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
-            //         }
-            //     }
-            // }
-            for (let index = 0; index < repeatCountList.length; index++) {
-                let list = repeatCountList[index];
-                if(list.repeatTime>0){
-                    list.repeatTime-=1;
-                }
-                if(list.repeatTime==0){
-                    if(list.repeatCount%2==0)    
-                    {
-                        list.color[list.pos]-=decreasing;
-                    }
-                    else{
-                        list.color[list.pos]+=decreasing;
-                    }
-                    this.AllBlockColor[index].color=list.color;
-                    if(list.color[list.pos]==0||list.color[list.pos]==255) {
-                        list.repeatCount+=1;
-                        var newRand=this.getRandom(150,800);
-                        list.repeatTime=newRand;
-                        console.log('repeatCount+=1;', newRand);
-                        if(list.color[list.pos]==0){
-                            if(rainbow){
-                                list.pos=this.getRandom(0,2)
-                            }
-                            else{
-                                list.pos=2;
-                            }
-                        }
-                                       
-                    }
-                }
-               
-               
-                // if(element.color[subPos]>0)
-                // {
-                //     element.color[subPos] -= 5;
-                // }
-                // // if(subPos<2){
-                // //     element.color[subPos+1] += 5;
-                // // }
-                // // else{
-                // //     element.color[0] += 5;
-                // // }
-                // if(element.color[subPos]==0){
-                //     if(subPos+1<3){
-                //         repeatCountList[randomList[index]]+=1;
-                //     }
-                //     else{
-                //         repeatCountList[randomList[index]]=0;
-                //     }                  
-                // }        
+
             }
-        },1)
+            var temp_colorData=[0,0,0,1];
+            temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
+            temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
+            temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
+            temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
+            // temp_target[index].color=[[colors[0][0],colors[0][1],colors[0][2],1-alpha*1],[colors[0][0],colors[0][1],colors[0][2],alpha*1]];
+            // target[index].color=[colors[0][0],colors[0][1],colors[0][2],alpha*1];
+            //temp_target[index].color=colors;
+            //target[index].color=temp_colorData;
+        }
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        var repeatCount=0;
+        
+        var exist=[];
+        this.repeater = setInterval(() => {
+            //this.setAllBlockColor([0, 0, 0, 1]);
+            var horizontalList = [];
+            //console.log('horizontalList;',horizontalList);
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                // var resultL = exist.find((x) => x == index)
+                // if (resultL != undefined) {
+                //     break;
+                // }
+                exist.push(index);
+                var temp_block = repeatCountList[index];
+                //console.log('temp_block.color',temp_block.color);
+                var tempColors = colors;
+                //var tempColors =temp_block.color;
+                var nextColor;
+                if (temp_block.repeatTime > 0) {
+                    temp_block.repeatTime -= 1;
+                }
+                if (temp_block.repeatTime == 0) { 
+                    if (temp_block.nowStep + 1 < totalStep) {
+                        temp_block.nowStep += 1;
+                    }
+                    else {
+                        temp_block.nowStep = 0;
+                        var newRand=this.getRandom(RanRange[0],RanRange[1]),
+                        temp_block.repeatTime=newRand;
+                        if (temp_block.nowPos + 1 < tempColors.length) {
+                            temp_block.nowPos += 1;
+                        }
+                        else {
+                            temp_block.nowPos = 0;
+                        }
+                    }
+                    var temp_C = tempColors[temp_block.nowPos];
+                    if (temp_block.nowPos + 1 < tempColors.length) {
+                        nextColor = tempColors[temp_block.nowPos + 1];
+                    }
+                    else {
+                        nextColor = tempColors[0]
+                    }
+                    var temp_colorData = [0, 0, 0, 1];
+                    temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
+                    temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
+                    temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
+                    temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
+                    element.color = temp_colorData;
+                } 
+                //continue;
+                //break;
+            }
+            if (intervalCount * StartPoint.clientWidth < this.imageMaxWidth) {
+                intervalCount += 1;
+            }
+            else {
+                intervalCount = 0;
+                exist=[];
+                repeatCount += 1;
+                //this.setAllBlockColor([255,255,255,1]);
+            }
+            // if(repeatCount>2){
+            //     clearInterval(this.repeater);
+            // }
+        }, 100)
+
     }
-    mode_T0(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+    mode_T0( colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
+       
         //this.addBlockIndex();
         var Brightness=1;
         // var mode=0;
@@ -2076,8 +2085,8 @@ export class M_Light_CS {
         // }
         //clearInterval(this.repeater);
     }
-    mode_T1(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+    mode_T1(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
+        
         var Brightness=1;
         // var mode=0;
         // if(colors.length>1){
@@ -2152,81 +2161,7 @@ export class M_Light_CS {
         // }
         //clearInterval(this.repeater);
     }
-    mode_T2(colors=[]){
-        colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        var Brightness=1;
-        // var mode=0;
-        // if(colors.length>1){
-        //     mode=1;
-        // }
-        clearInterval(this.repeater);
-        this.currentBlockIndex=43;
-        //this.getNowBlock().color = [0,0,255,1];
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
-        var horizontalList=[];
-        var target = this.AllBlockColor;
-        var randomValue=this.getRandom(0,colors.length-1);
-        var setColor=colors[randomValue];
 
-
-        var step_End=false;
-        console.log('setColor', setColor)
-        this.mode_reset();
-        if(repeatCount==0){
-            this.getNowBlock().color=setColor;
-        } 
-        for (let index = 0; index < target.length; index++) {
-            const element = target[index];
-            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            //if (Ysdis < 10) {
-                horizontalList.push(index);               
-            //}
-        }
-        
-        this.repeater=setInterval(()=>{
-            setColor=colors[this.getRandom(0,colors.length-1)];
-            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
-            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
-            if (step_End) {
-                if (Brightness > 0) {
-                    Brightness -= 0.05;
-                    for (let index = 0; index < horizontalList.length; index++) {
-                        const element = target[horizontalList[index]];
-                        var temp=colors[this.getRandom(0,colors.length-1)];
-                        temp[3]=Brightness;
-                        element.color =temp;
-                    }
-                }
-                else {
-                    Brightness = 1;
-                    step_End = false;
-                    //clearInterval(this.repeater);
-                }
-                return;
-            }
-            else
-            if (resultL == undefined && resultR == undefined) {
-                repeatCount=0;
-                step_End=true;
-            }
-            else{
-                if (resultL != undefined) {
-                    target[resultL].color = setColor;
-                }
-                if (resultR != undefined) {
-                    target[resultR].color = setColor
-                };
-                repeatCount+=1;
-            }
-        },50)
-        // this.repeaterTimeout=if(Brightness>0){
-        //     Brightness-=0.01;
-        // }
-        //clearInterval(this.repeater);
-    }
     mode_gloriousMode(){
         //this.addBlockIndex();
         clearInterval(this.repeater);
@@ -2454,7 +2389,7 @@ export class M_Light_CS {
        return [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
 
     }
-    SlopeEquation(point1=[25,0],point2=[320,400]){
+    slopeEquation(point1=[25,0],point2=[320,400]){
         //斜率y2-y1/x2-x1;
         var Slope =(point2[1]-point1[1])/(point2[0]-point1[0]);//x*1 y*1*Slope
         var LinearList=[];
