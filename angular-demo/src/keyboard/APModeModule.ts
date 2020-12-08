@@ -110,7 +110,7 @@ export class M_Light_CS {
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
         for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
-            this.AllBlockColor.push({ color: [255,0,0,1],breathing:false,border: true,coordinateData:[],keyCode:''})
+            this.AllBlockColor.push({ color: [0,0,0,0],breathing:false,border: true,coordinateData:[],keyCode:''})
         }
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
                 this.twoDimensionalArray[index]=[];
@@ -193,7 +193,7 @@ export class M_Light_CS {
     resetDefault(resetData) {
         this.lightData =resetData;
         for (var i = 0; i < this.maxkaycapNumber; i++) {
-            this.AllBlockColor[i].color=[255,0,0,1];
+            this.AllBlockColor[i].color=[0,0,0,0];
         }
     }
 
@@ -216,13 +216,13 @@ export class M_Light_CS {
         }
         var target=this.AllBlockColor;
         //console.log('setGroupArrayColor_assignColor', assignColor)
-        for (let index = 0; index < target.length; index++) {
-            target[index].color = assignColor
+        // for (let index = 0; index < target.length; index++) {
+        //     target[index].color = assignColor
             
-        }
-        // groupArray.forEach(function(value, index, array){//array=GroupArray
-        //     target[value].color = assignColor ;
-        // });
+        // }
+        groupArray.forEach(function(value, index, array){//array=GroupArray
+            target[value].color = assignColor ;
+        });
     }
     subBlockIndex(){
         if(this.currentBlockIndex>0){
@@ -325,7 +325,13 @@ export class M_Light_CS {
     }
     
     setNowLightMode() {
+        
         var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('repeatCountList', this.lightData);
+            return;
+        }
         switch (this.lightData.lightSelected.translate) {
             case 'GloriousMode':
                 break;
@@ -668,7 +674,7 @@ export class M_Light_CS {
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
                 if(this.lightData.lightSelected.value==16){
-                    this.mode_Kamehemeha(inputColor,isRainbow);
+                    this.mode_Kamehemeha(colors,isRainbow);
                 }
             }
             if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
@@ -2568,7 +2574,7 @@ export class M_Light_CS {
         return RGBcolors[this.getRandom(0,2)];
     }; 
     
-    toCssRGB(RGBA=[255,0,0,1]){
+    toCssRGB(RGBA=[0,0,0,0]){
           return 'rgb('+RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ',' + RGBA[3] + ')';
     }
     setDefault() { }
