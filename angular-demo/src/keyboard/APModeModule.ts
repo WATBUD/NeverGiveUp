@@ -209,11 +209,20 @@ export class M_Light_CS {
         else{
         }
     }
-    setGroupArrayColor(groupArray,assignColor){  
+    setGroupArrayColor(groupArray,assignColor=[]){  
+        if(assignColor.length<1){
+            //console.log('setGroupArrayColor_assignColor', assignColor)
+            assignColor=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
+        }
         var target=this.AllBlockColor;
-        groupArray.forEach(function(value, index, array){//array=GroupArray
-            target[value].color = assignColor ;
-        });
+        //console.log('setGroupArrayColor_assignColor', assignColor)
+        for (let index = 0; index < target.length; index++) {
+            target[index].color = assignColor
+            
+        }
+        // groupArray.forEach(function(value, index, array){//array=GroupArray
+        //     target[value].color = assignColor ;
+        // });
     }
     subBlockIndex(){
         if(this.currentBlockIndex>0){
@@ -316,54 +325,55 @@ export class M_Light_CS {
     }
     
     setNowLightMode() {
+        var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
         switch (this.lightData.lightSelected.translate) {
             case 'GloriousMode':
                 break;
             case 'Wave#1':
-                //this.mode_Wave1([this.lightData.colorPickerValue]);
+                //this.mode_Wave1(inputColor);
                 break;
             case 'Wave#2':
                 break;
             case 'SpiralingWave':
                 break;
             case 'AcidMode':
-                this.mode_AcidMode([this.lightData.colorPickerValue]);
+                this.mode_AcidMode(inputColor);
                 break;
             case 'Breathing':
-                this.mode_Breathing([this.lightData.colorPickerValue],false);
+                this.mode_Breathing(inputColor,false);
                 break;
             case 'NormallyOn':
-                this.mode_NormallyOn([this.lightData.colorPickerValue]);
+                this.mode_NormallyOn(inputColor);
                 break;
             case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff([this.lightData.colorPickerValue]);
+                this.mode_RippleGraff(inputColor);
                 break;
             case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace([this.lightData.colorPickerValue]);
+                this.mode_PassWithoutTrace(inputColor);
                 break;
             case 'FastRunWithoutTrace'://一排
-                this.mode_FastRunWithoutTrace([this.lightData.colorPickerValue]);
+                this.mode_FastRunWithoutTrace(inputColor);
                 break;
             case 'Matrix2':
-                this.mode_Matrix2([this.lightData.colorPickerValue]);
+                this.mode_Matrix2(inputColor);
                 break;
             case 'Matrix3':
-                this.mode_Matrix3([this.lightData.colorPickerValue],false);
+                this.mode_Matrix3(inputColor,false);
                 break;
             case 'Rainbow':
                 this.mode_Rainbow();
                 break;
             case 'HeartbeatSensor':
-                this.mode_HeartbeatSensor([this.lightData.colorPickerValue]);
+                this.mode_HeartbeatSensor(inputColor);
                 break;
             case 'DigitTimes':
-                this.mode_DigitTimes([this.lightData.colorPickerValue]);
+                this.mode_DigitTimes(inputColor);
                 break;
             case 'Kamehemeha':
-                this.mode_Kamehemeha([this.lightData.colorPickerValue],false)
+                this.mode_Kamehemeha(inputColor,false)
                 break;
             case 'Pingpong':
-                this.mode_Pingpong([this.lightData.colorPickerValue],false);
+                this.mode_Pingpong(inputColor,false);
                 break;
             case 'Surmount':
                 break;
@@ -658,7 +668,7 @@ export class M_Light_CS {
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
                 if(this.lightData.lightSelected.value==16){
-                    this.mode_Kamehemeha([this.lightData.colorPickerValue],isRainbow);
+                    this.mode_Kamehemeha(inputColor,isRainbow);
                 }
             }
             if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
@@ -1695,7 +1705,7 @@ export class M_Light_CS {
                         T[1] >= element.coordinateData.top_Left[1] &&
                         T[1] <= element.coordinateData.bottom_Left[1]
                     ) {
-                        element.color = [0,0,255,1];
+                        element.color =colors[0];
                         continue;
                     }
                 }
@@ -2321,7 +2331,7 @@ export class M_Light_CS {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            element.color = rgba;
+            element.color =JSON.parse(JSON.stringify(rgba));
         }
     }
     setAllBlockAlpha(alpha=0) {
