@@ -229,7 +229,6 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Pingpong();
         //this.M_Light_CS.mode_SinGraphics();
         //this.M_Light_CS.mode_Rain_Back_And_forth();
-        //this.M_Light_CS.mode_Matrix2();
         //this.M_Light_CS.mode_Matrix3_Raindow();
         //this.M_Light_CS.mode_Matrix3_SingleColor();
         //this.M_Light_CS.mode_Matrix2();
@@ -243,9 +242,9 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Pingpong2();
         //this.M_Light_CS.mode_AcidMode();
         //this.M_Light_CS.mode_Kamehemeha();
-
+        this.M_Light_CS.mode_FastRunWithoutTrace();
         
-        this.M_Light_CS.mode_Wave1();
+        //this.M_Light_CS.mode_Wave1();
 
         
 
