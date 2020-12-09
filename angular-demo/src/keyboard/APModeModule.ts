@@ -771,12 +771,11 @@ export class M_Light_CS {
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
         this.repeater=setInterval(()=>{
-            var StartPoint = this.getNowBlock().coordinateData;
+            //var StartPoint = this.getNowBlock().coordinateData;
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
@@ -804,7 +803,6 @@ export class M_Light_CS {
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -844,7 +842,6 @@ export class M_Light_CS {
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -961,7 +958,6 @@ export class M_Light_CS {
     mode_Parallelogram(){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatCount=0;
         var StartPoint = this.getNowBlock().coordinateData;
         this.setAllBlockColor([0,0,0,1]);
@@ -1030,16 +1026,15 @@ export class M_Light_CS {
         },100)
     }
     mode_Pingpong(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors);
+        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
-        //this.getNowBlock().color = [0,0,255,1];
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
-        this.setAllBlockColor([0,0,0,1]);
         if (isRainbow) {
             colors =this.rainbow7Color();
         }
+        //console.log('StartPoint','color:green',JSON.stringify(StartPoint),this.AllBlockColor); 
         //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
         //Math.trunc(3.7); // 3
         var repeatCount=0;
@@ -1082,7 +1077,6 @@ export class M_Light_CS {
                 const element = target[index];
                 for (let i2 = 0; i2 < horizontalList.length; i2++) {
                     var T = horizontalList[i2];
-                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
                     if (T[0] > element.coordinateData.top_Left[0] &&
                         T[0] < element.coordinateData.top_Right[0] &&
                         T[1] > element.coordinateData.top_Left[1] &&
@@ -1090,7 +1084,6 @@ export class M_Light_CS {
                     ) {
                         element.color = colors[this.getRandom(0, colors.length - 1)];
                         //element.color = setRGB;
-
                         continue;
                     }
 
@@ -1130,7 +1123,6 @@ export class M_Light_CS {
         }
         var totalStep=3;
 
-        //this.getNowBlock().color = [0,0,255,1];
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var target = this.AllBlockColor;
@@ -1539,7 +1531,6 @@ export class M_Light_CS {
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=77;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -1586,7 +1577,6 @@ export class M_Light_CS {
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
-        //this.getNowBlock().color = 'blue';
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -1805,7 +1795,6 @@ export class M_Light_CS {
         }
         var totalStep=30;
 
-        //this.getNowBlock().color = [0,0,255,1];
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var target = this.AllBlockColor;
@@ -1950,7 +1939,6 @@ export class M_Light_CS {
         }
         var totalStep=30;
 
-        //this.getNowBlock().color = [0,0,255,1];
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var target = this.AllBlockColor;
@@ -2081,7 +2069,6 @@ export class M_Light_CS {
         // }
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -2157,7 +2144,6 @@ export class M_Light_CS {
         // }
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -2273,7 +2259,6 @@ export class M_Light_CS {
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=36;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
@@ -2364,7 +2349,6 @@ export class M_Light_CS {
         
         clearInterval(this.repeater);
         this.currentBlockIndex=blockIndex;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatCount=0;
         var StartPoint = this.getNowBlock().coordinateData;
         this.setAllBlockColor([0,0,0,1]);
@@ -2508,7 +2492,6 @@ export class M_Light_CS {
         // }
         clearInterval(this.repeater);
         this.currentBlockIndex=32;
-        //this.getNowBlock().color = [0,0,255,1];
         var repeatMin=5;
         var repeatMax=200;
         var repeatCount=0;
