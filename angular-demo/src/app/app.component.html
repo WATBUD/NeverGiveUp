@@ -1,5 +1,5 @@
 
-      <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_FastRunWithoutTrace([[0,0,255,1]])" onkeydown=""
+      <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],false)" onkeydown=""
       value="mode_FastRunWithoutTrace" class="ButtonStyle">
       <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T0()" onkeydown=""
       value="mode_T0" class="ButtonStyle">
@@ -13,7 +13,7 @@
       value="mode_Wave" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SpreadLeftAndRight()" onkeydown=""
       value="mode_SpreadLeftAndRight" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_gloriousMode()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('AcidMode')" onkeydown=""
       value="mode_gloriousMode" class="ButtonStyle">
 
       <input  type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown=""
@@ -28,12 +28,12 @@
       value="mode_Matrix2" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Matrix2([],true)" onkeydown=""
       value="mode_Matrix2_rainbow" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_DigitTimes()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],false)" onkeydown=""
       value="mode_DigitTimes" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_PassWithoutTrace()" onkeydown=""
       value="mode_PassWithoutTrace" class="ButtonStyle">
       
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_HeartbeatSensor()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],false)" onkeydown=""
       value="mode_HeartbeatSensor" class="ButtonStyle">
       
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Rainbow()" onkeydown=""
@@ -45,29 +45,29 @@
       value="mode_SlopeMoveR" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Cooking()" onkeydown=""
       value="mode_Cooking" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_RippleGraff()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('RippleGraff',[0,0,255,1],true)" onkeydown=""
       value="mode_RippleGraff" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_RippleGraff([[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('RippleGraff',[255,255,0,1],false)" onkeydown=""
       value="mode_RippleGraff_Single" class="ButtonStyle">
       
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],false)" onkeydown=""
       value="mode_Breathing" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],true)" onkeydown=""
       value="mode_Breathing_rainbow" class="ButtonStyle">
       
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([[0,0,255,1]],true)" onkeydown=""
       value="mode_NormallyOn" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_AcidMode([])" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_AcidMode([[0,0,255,1]])" onkeydown=""
       value="mode_AcidMode" class="ButtonStyle">
 
       
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Kamehemeha([],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],true)" onkeydown=""
       value="mode_Kamehemeha_rainbow" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Kamehemeha([[255,255,0,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],false)" onkeydown=""
       value="mode_Kamehemeha_Single" class="ButtonStyle">
 
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave1([[0,0,255,1]],true)" onkeydown=""
@@ -79,14 +79,23 @@
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([[0,0,255,1]],true)" onkeydown=""
       value="mode_NormallyOn" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Pingpong([[0,0,255,1]],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],true)" onkeydown=""
       value="mode_Pingpong_rainbow" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Pingpong([[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],false)" onkeydown=""
       value="mode_Pingpong" class="ButtonStyle">
 
 
 
+      <!--  -->
+      <!-- <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" [(ngModel)]="zzzz"> -->
 
+        <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" 
+        [(ngModel)]="this.M_Light_CS.lightData.rate"
+        (mouseup)="sliderChange()"
+        (ngModelChange)="lightSliderMove('PRESETS_RateSlider')"
+        onkeydown="event.preventDefault()">
+
+        <!-- <div>{{ this.M_Light_CS.lightData.rate }}%</div> -->
       
       <!-- [style.background-color]="'blue'" -->
       <!-- [ngStyle]="{'background-image': PERKEY_BrightnessSlider_Background()} -->

@@ -73,6 +73,7 @@ export class M_Light_CS {
         { name: 'LEDOFF', value: 8, translate: 'LEDOFF' },
     ]
     lightData;
+    animationSpeed=1;
     currentBlockIndex=0;
     mode_name: any = [
         'Wave',
@@ -333,7 +334,9 @@ export class M_Light_CS {
             console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
             return;
         }
-        switch (this.lightData.lightSelected.translate) {
+        this.setAnimationSpeed();
+        var target=this.lightData;
+        switch (target.lightSelected.translate) {
             case 'GloriousMode':
                 break;
             case 'Wave#1':
@@ -347,13 +350,13 @@ export class M_Light_CS {
                 this.mode_AcidMode(inputColor);
                 break;
             case 'Breathing':
-                this.mode_Breathing(inputColor,false);
+                this.mode_Breathing(inputColor,target.isRainbow);
                 break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
                 break;
             case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor);
+                this.mode_RippleGraff(inputColor,target.isRainbow);
                 break;
             case 'PassWithoutTrace'://單點
                 this.mode_PassWithoutTrace(inputColor);
@@ -362,10 +365,10 @@ export class M_Light_CS {
                 this.mode_FastRunWithoutTrace(inputColor);
                 break;
             case 'Matrix2':
-                this.mode_Matrix2(inputColor);
+                this.mode_Matrix2(inputColor,target.isRainbow);
                 break;
             case 'Matrix3':
-                this.mode_Matrix3(inputColor,false);
+                this.mode_Matrix3(inputColor,target.isRainbow);
                 break;
             case 'Rainbow':
                 this.mode_Rainbow();
@@ -377,10 +380,10 @@ export class M_Light_CS {
                 this.mode_DigitTimes(inputColor);
                 break;
             case 'Kamehemeha':
-                this.mode_Kamehemeha(inputColor,false)
+                this.mode_Kamehemeha(inputColor,target.isRainbow)
                 break;
             case 'Pingpong':
-                this.mode_Pingpong(inputColor,false);
+                this.mode_Pingpong(inputColor,target.isRainbow);
                 break;
             case 'Surmount':
                 break;
@@ -391,6 +394,12 @@ export class M_Light_CS {
                 break;
         }
     }
+
+
+    
+
+
+
     mode_NormallyOn(colors =[[0,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
         var StartPoint = this.getNowBlock(50).coordinateData;
@@ -502,9 +511,12 @@ export class M_Light_CS {
                 repeatCount += 1;
                 //repeatCount=0;            
             }              
-        }, 50)
+        }, 50*this.animationSpeed)
     }
-
+    setAnimationSpeed(){
+        //this.acceleration
+        this.animationSpeed =1*(1-this.lightData.rate/400);
+    }
     mode_Kamehemeha(colors=[[255,0,0,1]], isRainbow = true){
         clearInterval(this.repeater);
         if(isRainbow){
@@ -545,8 +557,8 @@ export class M_Light_CS {
              //this.mode_RippleGraff([],false,37);              
             }
 
-        }, 55*this.lightData.rate/100)
-        this.acceleration
+        }, 55*this.animationSpeed)
+   
     }
     mode_Kamehemeha2(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]], isRainbow = true){
         clearInterval(this.repeater);
@@ -603,7 +615,7 @@ export class M_Light_CS {
                 }
             }
             
-        }, 50*this.lightData.rate/100)
+        }, 50*this.animationSpeed)
 
     }
 
@@ -687,10 +699,10 @@ export class M_Light_CS {
 
                 //this.setAllBlockColor([0,0,0,1]);
             }
-        }, 50*this.lightData.rate/100)
+        }, 50**this.animationSpeed)
         //clearInterval(this.repeater);
     }
-    mode_Breathing(colors = [], isRainbow = true) {
+    mode_Breathing(colors = [[255,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(50).coordinateData;
@@ -760,7 +772,7 @@ export class M_Light_CS {
                 repeatCount += 1;
                 //repeatCount=0;            
             }              
-        }, 50)
+        }, 50*this.animationSpeed)
         //clearInterval(this.repeater);
     }
     mode_LEDOFF() {
@@ -797,7 +809,7 @@ export class M_Light_CS {
             else{
                 repeatCount=0;
             }
-        },500)
+        },500*this.animationSpeed)
     }
     mode_SlopeMoveR(){
         //this.addBlockIndex();
@@ -836,7 +848,7 @@ export class M_Light_CS {
                 startX=-StartPoint.clientWidth*5;
                 this.mode_reset();
             }
-        },25)
+        },25*this.animationSpeed)
     }
     mode_SlopeRight(){
         //this.addBlockIndex();
@@ -904,7 +916,7 @@ export class M_Light_CS {
             // else{
             //     repeatCount=0;
             // }
-        },25)
+        },25*this.animationSpeed)
     }
     mode_Pingpong2(){
         clearInterval(this.repeater);
@@ -953,7 +965,7 @@ export class M_Light_CS {
                 this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
             }
             this.showTwoDimensionalArray();
-        },50);
+        },50*this.animationSpeed);
     }
     mode_Parallelogram(){
         clearInterval(this.repeater);
@@ -1023,7 +1035,7 @@ export class M_Light_CS {
             else{
                 repeatCount=0;
             }
-        },100)
+        },100*this.animationSpeed)
     }
     mode_Pingpong(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
@@ -1333,7 +1345,7 @@ export class M_Light_CS {
                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
            }
            this.showTwoDimensionalArray();
-       },50);
+       },50*this.animationSpeed);
    }
     mode_Cooking(){
          clearInterval(this.repeater);
@@ -1382,7 +1394,7 @@ export class M_Light_CS {
                 this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=[0,0,0,1];              
             }
             this.showTwoDimensionalArray();
-        },50);
+        },50*this.animationSpeed);
     }
     mode_Snowing(){
         clearInterval(this.repeater);
@@ -1451,7 +1463,7 @@ export class M_Light_CS {
                 }
             }
 
-        },100)
+        },100*this.animationSpeed)
     }
 
     mode_DigitTimes(colors = [[0,0,255,1]]){
@@ -1523,7 +1535,7 @@ export class M_Light_CS {
                 this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
             }
             this.showTwoDimensionalArray();
-        },500);
+        },500*this.animationSpeed);
 
 
     }
@@ -1569,7 +1581,7 @@ export class M_Light_CS {
 
             }
            
-        },50)
+        },50*this.animationSpeed)
         //clearInterval(this.repeater);
     }
     mode_SinGraphics(colors=[]){
@@ -1639,7 +1651,7 @@ export class M_Light_CS {
                 else{
                     record+=0.15;
                 }
-        },150)
+        },150*this.animationSpeed)
     }
     mode_HeartbeatSensor(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
@@ -1702,7 +1714,7 @@ export class M_Light_CS {
                 }
             }
 
-        },60)
+        },60*this.animationSpeed)
     }
     mode_Matrix3_Raindow(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
@@ -1768,7 +1780,7 @@ export class M_Light_CS {
 
             }
             var spacing=-5;
-        },10)
+        },10*this.animationSpeed)
     }
 
     mode_Matrix3(colors = [[255,255,0,1]], isRainbow = false){
@@ -2129,7 +2141,7 @@ export class M_Light_CS {
                 };
                 repeatCount+=1;
             }
-        },50)
+        },50*this.animationSpeed)
         // this.repeaterTimeout=if(Brightness>0){
         //     Brightness-=0.01;
         // }
@@ -2204,7 +2216,7 @@ export class M_Light_CS {
                 };
                 repeatCount+=1;
             }
-        },50)
+        },50*this.animationSpeed)
         // this.repeaterTimeout=if(Brightness>0){
         //     Brightness-=0.01;
         // }
@@ -2252,7 +2264,7 @@ export class M_Light_CS {
             else{
                 repeatCount=0;
             }
-        },500)
+        },500*this.animationSpeed)
         //clearInterval(this.repeater);
     }
     mode_T3(){
@@ -2308,8 +2320,7 @@ export class M_Light_CS {
             else{
                 repeatCount=0;
             }
-        },500)
-        //clearInterval(this.repeater);
+        },500*this.animationSpeed)
     }
     setAllBlockColor(rgba=[0,0,0,1]) {
         var target = this.AllBlockColor;
@@ -2353,6 +2364,7 @@ export class M_Light_CS {
         var StartPoint = this.getNowBlock().coordinateData;
         this.setAllBlockColor([0,0,0,1]);
         var totalStep=10;
+        var totalRepeatCount=0;
 
         var horizontalList={
         };
@@ -2372,7 +2384,7 @@ export class M_Light_CS {
                     color:colors[0],
                     nowPos:0,
                     nowstep:0,
-                    repeatCount:1,
+                    repeatCount:0,
                     repeatTime:this.getRandom(15,20),
                 }
             }
@@ -2392,11 +2404,12 @@ export class M_Light_CS {
                 for (let index = 0; index < arr.length; index++) {
                     var index_num = parseInt(arr[index])
                     var temp_block = horizontalList[index_num]
-                    if (temp_block.nowStep + 1 < totalStep) {
+                    if (temp_block.nowStep + 1 <= totalStep) {
                         temp_block.nowStep += 1;
                     }
                     else {
                         temp_block.nowStep = 0;
+                        temp_block.repeatCount += 1;
                         // var newRand = this.getRandom(15, 15);
                         // temp_block.repeatTime = newRand;
                         // if (temp_block.nowPos + 1 < tempColors.length) {
@@ -2405,9 +2418,13 @@ export class M_Light_CS {
                         // else {
                         //     temp_block.nowPos = 0;
                         // }
-                        step_End = false;
-                        clearInterval(this.repeater);
-                        
+                        //step_End = false;
+                        // if(temp_block.repeatCount==2){
+                        //     clearInterval(this.repeater);
+                        //     return;
+                        // }
+
+                        //clearInterval(this.repeater);
                     }
                     var temp_C = tempColors[temp_block.nowPos];
                     if (temp_block.nowPos + 1 < tempColors.length) {
@@ -2416,17 +2433,25 @@ export class M_Light_CS {
                     else {
                         nextColor = tempColors[0]
                     }
+                    // if(temp_block.repeatCount==2){
+                    //     return;
+                    // }
                     var temp_colorData = [0, 0, 0, 1];
                     temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
                     temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
                     temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
                     temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
-                    target[index_num].color = temp_colorData;
-
+                    if(temp_block.repeatCount!=2){
+                        target[index_num].color = temp_colorData;
+                    }
+                }
+                //totalRepeatCount+=1
+                if(horizontalList[arr[0]].repeatCount==2){
+                    step_End = false;
+                    clearInterval(this.repeater);
                 }
                 return;
-            }
-            
+            }  
             if (resultL == undefined && resultR == undefined) {
                 repeatCount=0;
                 step_End=true;
@@ -2440,7 +2465,7 @@ export class M_Light_CS {
                 };
                 repeatCount+=1;
             }
-        },500)
+        },35*this.animationSpeed)
     }
     mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
@@ -2528,7 +2553,7 @@ export class M_Light_CS {
                 repeatCount=0;
                 this.mode_reset();
             }
-        },250)
+        },250*this.animationSpeed)
         // this.repeaterTimeout=if(Brightness>0){
         //     Brightness-=0.01;
         // }

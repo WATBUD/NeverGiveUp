@@ -110,6 +110,7 @@ export class AppComponent implements OnInit {
     buttonNum: number = 0
     currentDevice: any
 
+    zzzz=0;
     constructor(
         //private macroService: MacroService,
         private cdr: ChangeDetectorRef,
@@ -121,6 +122,7 @@ export class AppComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.M_Light_CS.lightData=this.default_LightData();
 
     }
 
@@ -215,15 +217,19 @@ export class AppComponent implements OnInit {
         //ColorContent.style.display = 'flex'
     }
 
-    defaultSetlightData(type = '') {
+    default_LightData(defaultcolor = [255,0,0,1]) {
         var T = {
             rate:50,
             brightness:50,
             colorHex:'#0000',
-            colorPickerValue:[255,0,0,0],
+            colorPickerValue:defaultcolor,
             breathing:false,
-            sideLightSync:true,
-            lightSelected:{ name: 'GloriousMode', value: 16, translate: 'GloriousMode' }
+            sideLightSync:false,
+            brightness_Enable:false,
+            rate_Enable :false,
+            color_Enable:false,
+            isRanbow:false,
+            lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode', }
         }
         return T;
     }
@@ -232,32 +238,48 @@ export class AppComponent implements OnInit {
 
         return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B 50%,#313131 50%, #313131 100%)';
     }
-   
+    
+    /**
+     * Wired Brightness slider move event
+     */
+    lightSliderMove(TargetName) {
+        var showValue;
+        if(TargetName=='PRESETS_BrightnessSlider'){
+            showValue=this.M_Light_CS.lightData.brightness;           
+        }
+        if(TargetName=='PRESETS_RateSlider'){
+            showValue=this.M_Light_CS.lightData.rate;
+        }
+        console.log('lightSliderMove',TargetName,showValue);
 
+        if (document.getElementById(TargetName)) {
+            document.getElementById(TargetName).style.backgroundImage =
+                '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' +
+                showValue +
+                '%,#313131 ' +
+                showValue +
+                '%, #313131 100%)'
+        }
 
-    DeveloperControl() {
-        this.M_Light_CS.lightData=this.defaultSetlightData();
-
-        //this.M_Light_CS.mode_gloriousMode();
-        //this.M_Light_CS.mode_Pingpong();
-        //this.M_Light_CS.mode_SinGraphics();
-        //this.M_Light_CS.mode_Rain_Back_And_forth();
-        //this.M_Light_CS.mode_Matrix3_Raindow();
-        //this.M_Light_CS.mode_Matrix3_SingleColor();
-        //this.M_Light_CS.mode_Matrix2();
-        //this.M_Light_CS.mode_DigitTimes();
-        //this.M_Light_CS.mode_Pingpong();
-        //this.M_Light_CS.mode_PassWithoutTrace();
-        //this.M_Light_CS.mode_Rainbow();
-        //this.M_Light_CS.mode_RippleGraff();
-        //this.M_Light_CS.mode_Breathing();
-        //this.M_Light_CS.mode_Parallelogram();
-        //this.M_Light_CS.mode_Pingpong2();
-        //this.M_Light_CS.mode_AcidMode();
-        //this.M_Light_CS.mode_Kamehemeha();
-        this.M_Light_CS.mode_FastRunWithoutTrace();
+      
+    }
+    sliderChange(){
+        this.M_Light_CS.setAnimationSpeed();
+        this.M_Light_CS.setNowLightMode();
+        //this.M_Light_CS.mode_Kamehemeha([[0,0,255,1]],false);
+    }
+    setMode(modeName,color=[0,0,0,1], isRainbow = true){
+        this.M_Light_CS.lightData.colorPickerValue=color;
+        this.M_Light_CS.lightData.isRainbow=isRainbow;
+        this.M_Light_CS.lightData.lightSelected.translate=modeName;
+        this.M_Light_CS.setAnimationSpeed();
+        this.M_Light_CS.setNowLightMode();
         
-        //this.M_Light_CS.mode_Wave1();
+    }
+    DeveloperControl() {
+        this.setMode('AcidMode');
+
+   
 
         
 
