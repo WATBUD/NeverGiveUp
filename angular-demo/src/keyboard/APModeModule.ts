@@ -105,6 +105,7 @@ export class M_Light_CS {
     max_X_Number=26;
     max_Y_Number=8;
     max_H_Number=6;
+    acceleration=5;
     // x_Array=new Array(120);//8*26;
     // y_Array=new Array(120);//8*26;
     constructor(inputMax) {
@@ -329,7 +330,7 @@ export class M_Light_CS {
         var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
         if(inputColor==undefined){
             //this.lightData;
-            console.log('repeatCountList', this.lightData);
+            console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
             return;
         }
         switch (this.lightData.lightSelected.translate) {
@@ -544,8 +545,8 @@ export class M_Light_CS {
              //this.mode_RippleGraff([],false,37);              
             }
 
-        }, 55)
-
+        }, 55*this.lightData.rate/100)
+        this.acceleration
     }
     mode_Kamehemeha2(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]], isRainbow = true){
         clearInterval(this.repeater);
@@ -602,7 +603,7 @@ export class M_Light_CS {
                 }
             }
             
-        }, 50)
+        }, 50*this.lightData.rate/100)
 
     }
 
@@ -686,7 +687,7 @@ export class M_Light_CS {
 
                 //this.setAllBlockColor([0,0,0,1]);
             }
-        }, 50)
+        }, 50*this.lightData.rate/100)
         //clearInterval(this.repeater);
     }
     mode_Breathing(colors = [], isRainbow = true) {
@@ -707,7 +708,7 @@ export class M_Light_CS {
                 setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
             }
             else {
-                setRGB = [0, 0, 255, 1];
+                setRGB = colors[0];
             }
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
@@ -997,7 +998,6 @@ export class M_Light_CS {
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
-                //console.log('_mode_Pingpong;', element);
                 for (let i2 = 0; i2 < horizontalList.length; i2++) {
                     var T = horizontalList[i2];
                     //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
@@ -1030,6 +1030,7 @@ export class M_Light_CS {
         },100)
     }
     mode_Pingpong(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         //this.getNowBlock().color = [0,0,255,1];
@@ -1041,7 +1042,6 @@ export class M_Light_CS {
         }
         //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
         //Math.trunc(3.7); // 3
-        var H_range=Math.trunc(372/40);
         var repeatCount=0;
         this.repeater = setInterval(() => {
             this.setAllBlockColor([0, 0, 0, 1]);
@@ -1063,8 +1063,6 @@ export class M_Light_CS {
             }
             else {
                 var spacing=-5;
-
-                console.log('repeatCount', repeatCount);
                 for (let index = 0; index < this.imageMaxHeight; index += StartPoint.clientHeight) {
                     spacing += 1;
                     var ypos = index;
