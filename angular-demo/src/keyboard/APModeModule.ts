@@ -59,7 +59,7 @@ export class M_Light_CS {
         { name: 'AcidMode', value: 5, translate: 'AcidMode' },
         { name: 'Breathing', value: 2, translate: 'Breathing' },
         { name: 'NormallyOn', value: 6, translate: 'NormallyOn' },
-        { name: 'RippleGraff', value: 7, translate: 'Ripple Graff' },
+        { name: 'RippleGraff', value: 7, translate: 'RippleGraff' },
         { name: 'PassWithoutTrace', value: 9, translate: 'PassWithoutTrace' },
         { name: 'FastRunWithoutTrace', value: 10, translate: 'FastRunWithoutTrace' },
         { name: 'Matrix2', value: 11, translate: 'Matrix2' },
@@ -179,6 +179,19 @@ export class M_Light_CS {
     }
 
 
+    
+    setPerkey(index,type){
+        if(!type){
+            this.AllBlockColor[index].color=[0,0,0,0];
+            this.AllBlockColor[index].breathing=false;
+        }
+        else{
+            this.AllBlockColor[index].color=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
+            this.AllBlockColor[index].breathing=this.lightData.breathing;
+        }
+    }
+
+    
 
     
     findLightData(findValue) {
@@ -335,6 +348,8 @@ export class M_Light_CS {
             return;
         }
         this.setAnimationSpeed();
+        clearInterval(this.repeater);
+        this.setAllBlockColor([0, 0, 0, 1]);
         var target=this.lightData;
         switch (target.lightSelected.translate) {
             case 'GloriousMode':
@@ -354,15 +369,6 @@ export class M_Light_CS {
                 break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
-                break;
-            case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor,target.isRainbow);
-                break;
-            case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor);
-                break;
-            case 'FastRunWithoutTrace'://一排
-                this.mode_FastRunWithoutTrace(inputColor);
                 break;
             case 'Matrix2':
                 this.mode_Matrix2(inputColor,target.isRainbow);
@@ -390,6 +396,31 @@ export class M_Light_CS {
                 break;
             case 'LEDOFF':
                 this.mode_LEDOFF();
+                break;
+            default:
+                break;
+        }
+    }
+
+    setPassiveEffects(){
+        var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
+            return;
+        }
+        var target=this.lightData;
+        var index=this.currentBlockIndex;
+        console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', index);
+        switch (target.lightSelected.translate) {
+            case 'RippleGraff'://彩色擴散
+                this.mode_RippleGraff(inputColor,target.isRainbow,index);
+                break;
+            case 'PassWithoutTrace'://單點
+                this.mode_PassWithoutTrace(inputColor,index);
+                break;
+            case 'FastRunWithoutTrace'://一排
+                this.mode_FastRunWithoutTrace(inputColor,false,index);
                 break;
             default:
                 break;
@@ -633,6 +664,8 @@ export class M_Light_CS {
         });
 	}
     mode_Surmount(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
+        console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         //this.rainbow7Color();
@@ -706,6 +739,8 @@ export class M_Light_CS {
     }
 
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
+        console.log('%cmode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         //this.rainbow7Color();
@@ -1184,7 +1219,64 @@ export class M_Light_CS {
             }
         }, 100)
     }
+    mode_BreatheSeparately(){
+            clearInterval(this.repeater);
+            var opacity=1;
+            var opacityCount=0;
+            //RGBcolors =[[255,0,0,1],[255,0,0,0.8],[0,255,0,1],[0,255,0,0.8],[0,0,255,1],[0,0,255,0.8]];
+            var totalStep=30;
+            var intervalCount=0;
+            var StartPoint = this.getNowBlock(0).coordinateData;
+            var target = this.AllBlockColor;
+            //this.setAllBlockColor([0,0,0,1]);
+           var repeatCountList=[];
+           var RanRange=[10,100];
+            //var temp_target=JSON.parse(JSON.stringify(this.AllBlockColor));   
+            for (let index = 0; index < target.length; index ++) {
+               // var alpha=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
+                var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
+                //var ran=this.getRandom(0, colors.length - 1);
+                //var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
+                //console.log('alpha',alpha);
+                //console.log('modStep',modStep);
+                //nowstep:modStep*totalStep
+                repeatCountList.push({
+                    color: 0,
+                    nowPos: 0,
+                    nowstep: 0,
+                    repeatCount: 1,
+                    repeatTime: this.getRandom(RanRange[0], RanRange[1]),
+                });
+            }
+            //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+            var repeatCount=0;
+            var exist=[];
+            this.repeater = setInterval(() => {
+                if(opacityCount%2==0){
+                    opacity-=0.01;
+                }
+                else{
+                    opacity+=0.01;
+                }
+                if(opacity>=100||opacity<=0){
+                    opacityCount+=1;
+                }
+                var horizontalList = [];
+                for (let index = 0; index < target.length; index++) {
+                    const element = target[index];
+                    // var resultL = exist.find((x) => x == index)
+                    // if (resultL != undefined) {
+                    //     break;
+                    // }
+                    element.color[3]=opacity;
+                    //continue;
+                    //break;
+                }
+            }, 100)
+    
+        
 
+    }
     mode_Wave1(colors = [[0,0,255,1]], isRainbow = true){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
