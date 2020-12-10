@@ -188,6 +188,7 @@ export class M_Light_CS {
         else{
             this.AllBlockColor[index].color=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
             this.AllBlockColor[index].breathing=this.lightData.breathing;
+            console.log('%c setPerkey','color:rgb(255,77,255)',  this.AllBlockColor[index].breathing);
         }
     }
 
@@ -1228,18 +1229,12 @@ export class M_Light_CS {
             var intervalCount=0;
             var StartPoint = this.getNowBlock(0).coordinateData;
             var target = this.AllBlockColor;
-            //this.setAllBlockColor([0,0,0,1]);
+            this.setAllBlockColor([0,0,255,1]);
            var repeatCountList=[];
            var RanRange=[10,100];
             //var temp_target=JSON.parse(JSON.stringify(this.AllBlockColor));   
             for (let index = 0; index < target.length; index ++) {
-               // var alpha=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
-                var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
-                //var ran=this.getRandom(0, colors.length - 1);
-                //var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
-                //console.log('alpha',alpha);
-                //console.log('modStep',modStep);
-                //nowstep:modStep*totalStep
+                //var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
                 repeatCountList.push({
                     color: 0,
                     nowPos: 0,
@@ -1253,22 +1248,28 @@ export class M_Light_CS {
             var exist=[];
             this.repeater = setInterval(() => {
                 if(opacityCount%2==0){
-                    opacity-=0.01;
+                    opacity-=0.05;
                 }
                 else{
-                    opacity+=0.01;
+                    opacity+=0.05;
                 }
-                if(opacity>=100||opacity<=0){
+                if(opacity>=1||opacity<=0){
                     opacityCount+=1;
                 }
-                var horizontalList = [];
+                //var horizontalList = [];
                 for (let index = 0; index < target.length; index++) {
                     const element = target[index];
                     // var resultL = exist.find((x) => x == index)
                     // if (resultL != undefined) {
                     //     break;
                     // }
-                    element.color[3]=opacity;
+                    if (!element.breathing) {
+                        console.log('%c mode_BreatheSeparately_element','color:rgb(255,77,255)',  element);
+                        element.color[3]=opacity;
+                    }
+                    else{
+
+                    }
                     //continue;
                     //break;
                 }
@@ -1315,23 +1316,15 @@ export class M_Light_CS {
             var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
             //console.log('alpha',alpha);
             console.log('modStep',modStep);
-
             //var setRGB
             // if(isRainbow){
             // setRGB=colors[ran];
             // }
-
             temp_target[index].nowStep=modStep*totalStep;
             //temp_target[index].nowStep=0;
             temp_target[index].nowPos=0;
             var temp_block=temp_target[index];
-            //if(target[index].center_Point[0])
-            //console.log('temp_block.nowStep',temp_block.nowStep);
-            //var T_color=[[colors[0][0],colors[0][1],colors[0][2],1],[colors[0][0],colors[0][1],colors[0][2],0.2]];
             var temp_colorData=[0,0,0,1];
-            // var temp_C=[colors[0][0],colors[0][1],colors[0][2],1];
-            // var nextColor=[colors[0][0],colors[0][1],colors[0][2],0.2];
-
             var temp_C=colors[0];
             var nextColor=colors[1];
             if(isRainbow){
