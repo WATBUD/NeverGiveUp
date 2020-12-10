@@ -236,8 +236,11 @@ export class M_Light_CS {
         //     target[index].color = assignColor
             
         // }
+        var temp_Status=this.lightData.breathing;
+
         groupArray.forEach(function(value, index, array){//array=GroupArray
             target[value].color = assignColor ;
+            target[value].breathing=temp_Status;
         });
     }
     subBlockIndex(){
@@ -1263,7 +1266,7 @@ export class M_Light_CS {
                     // if (resultL != undefined) {
                     //     break;
                     // }
-                    if (!element.breathing) {
+                    if (element.breathing) {
                         console.log('%c mode_BreatheSeparately_element','color:rgb(255,77,255)',  element);
                         element.color[3]=opacity;
                     }
