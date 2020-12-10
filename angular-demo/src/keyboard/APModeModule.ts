@@ -386,6 +386,7 @@ export class M_Light_CS {
                 this.mode_Pingpong(inputColor,target.isRainbow);
                 break;
             case 'Surmount':
+                this.mode_Surmount(inputColor,target.isRainbow,this.centerBlockPoint);
                 break;
             case 'LEDOFF':
                 this.mode_LEDOFF();
@@ -631,6 +632,78 @@ export class M_Light_CS {
             return x - y;
         });
 	}
+    mode_Surmount(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
+        clearInterval(this.repeater);
+        //colors = this.rainbow7Color();
+        //this.rainbow7Color();
+        //this.currentBlockIndex = 48;
+        
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock(blockIndex).coordinateData;
+        //var setRGB=[255,0,0,1];
+        var mode_step = 0;
+        var step = 30;
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        this.repeater = setInterval(() => {
+            //this.mode_reset();
+            var target = this.AllBlockColor;
+            var setRGB;
+            if (isRainbow) {
+                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+            }
+            else {
+                setRGB = colors[this.getRandom(0, colors.length - 1)];
+            }
+            var compareResult = this.minKeyWidth * repeatCount;
+            var compareResultMax = this.minKeyWidth * repeatCount - this.minKeyWidth;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                //console.log('mode_step', mode_step)
+                if (mode_step == 0) {
+                    if (dis <= compareResult && dis >= compareResultMax) {
+                        element.color = setRGB;
+                    }
+                }
+                else {
+                    clearInterval(this.repeater);
+                     
+                    // var T = JSON.parse(JSON.stringify(element.color));
+                    // T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
+                    // T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
+                    // T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
+                    // element.color = T;
+                    //console.log('element.color', T, step, nowStep)
+                }
+
+            }
+            if (nowStep + 1 < step) {
+                nowStep += 1;
+            }
+            else {
+                nowStep = 0;
+                mode_step = 0;
+                repeatCount = 0;
+                clearInterval(this.repeater);
+                //console.log('nowStep_end', mode_step, repeatCount, nowStep)
+                this.setAllBlockColor([0, 0, 0, 1]);
+                if(this.lightData.lightSelected.value==16){
+                    this.mode_Kamehemeha(colors,isRainbow);
+                }
+            }
+            if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
+                repeatCount += 1;
+                //console.log('repeatCount', repeatCount)
+            }
+            else {
+                mode_step = 1;
+
+                //this.setAllBlockColor([0,0,0,1]);
+            }
+        }, 50**this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
 
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
         clearInterval(this.repeater);
