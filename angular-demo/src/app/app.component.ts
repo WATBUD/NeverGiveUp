@@ -70,34 +70,6 @@ export class AppComponent implements OnInit {
     //Profile
     ProfileData: any = []
     profileSelect: any
-    //Lighting Effect
-    LightingEffectData: any = [
-        { name: 'GloriousMode', value: 0, translate: 'GloriousMode' },
-        { name: 'Wave#1', value: 1, translate: 'Wave#1' },
-        { name: 'Wave#2', value: 3, translate: 'Wave#2' },
-        { name: 'SpiralingWave', value: 4, translate: 'SpiralingWave' },
-        { name: 'AcidMode', value: 5, translate: 'AcidMode' },
-        { name: 'Breathing', value: 2, translate: 'Breathing' },
-        { name: 'NormallyOn', value: 6, translate: 'NormallyOn' },
-        { name: 'RippleGraff', value: 7, translate: 'Ripple Graff' },
-        { name: 'PassWithoutTrace', value: 9, translate: 'PassWithoutTrace' },
-        { name: 'FastRunWithoutTrace', value: 10, translate: 'FastRunWithoutTrace' },
-        { name: 'Matrix2', value: 11, translate: 'Matrix2' },
-        { name: 'Matrix3', value: 12, translate: 'Matrix3' },
-        { name: 'Rainbow', value: 13, translate: 'Rainbow' },
-        { name: 'HeartbeatSensor', value: 14, translate: 'HeartbeatSensor' },
-        { name: 'DigitTimes', value: 15, translate: 'DigitTimes' },
-        { name: 'Kamehemeha', value: 16, translate: 'Kamehemeha' },
-        { name: 'Pingpong', value: 17, translate: 'Pingpong' },
-        { name: 'Surmount', value: 18, translate: 'Surmount' },
-        { name: 'LEDOFF', value: 8, translate: 'LEDOFF' },
-    ]
-    lightingeffectSelect: any
-
-    lighting_PREKEY_Effect: any = [
-        { name: 'Color Layout Editor', value: 0, translate: 'Color Layout Editor' },
-    ]
-    lighting_PREKEY_SelectEffect: any
     //polling rate
     pollingrateSelect: any
     PollingRateData: any = [
@@ -228,7 +200,7 @@ export class AppComponent implements OnInit {
             brightness_Enable:false,
             rate_Enable :false,
             color_Enable:false,
-            isRanbow:false,
+            isRainbow:false,
             lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode', }
         }
         return T;
