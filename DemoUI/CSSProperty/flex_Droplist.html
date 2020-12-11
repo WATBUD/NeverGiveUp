@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .NowSelected{
+        width: 100%;
+        height: auto;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        box-shadow: rgb(22, 22, 22) 3px 3px 10px;
+        flex-direction: column;
+        background: #E0DFD6;
+        align-items: center;
+    }
+    .Selected_item{
+        width: 80%;display: flex;height: 24px;text-align: center;box-sizing: border-box;background: red;align-items: center;justify-content: center;
+    }
+
+    .ItemList{
+
+        width: 100%;
+        height: auto;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        box-shadow: rgb(22, 22, 22) 3px 3px 10px;
+        flex-direction: column;
+        background: #E0DFD6;
+        align-items: center;
+    }
+</style>
+
+<head>
+    <title>Example</title>
+</head>
+
+<body>
+    <div id="swicthPage_DropList" style="display: block;width: 200px;height: auto;background: red;">
+        <div class="NowSelected">
+            <div class="Selected_item">
+                NowSelected
+            </div>
+        </div>
+        <div class="ItemList">
+            <div class="Selected_item">
+                ItemList
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
