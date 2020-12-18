@@ -1,19 +1,22 @@
 座標測試reflection寫法範例
 <meta charset="UTF-8">
 <body>
-    x: <span id="x">
-    </span>, y: <span id="y"></span>
+    <!-- x: <span id="x">
+    </span>, y: <span id="y"></span> -->
 
-
+    <!-- ointer-events: none; -->
+    
+    <!-- pointer-events: none; 影響offset layer值-->
     <div id="layerRange" class="layerRange">
         <div style="    background-color: black;
         width: 50px;
         height: 50px;
         margin-left: 63px;;">
-            <div style="    background-color: yellow;
+            <div style="    background-color: rgb(54, 45, 53);
             width: 15px;
             height: 15px;
-            pointer-events: none;">
+            margin-left: 20%;
+            margin-Top: 20%;">
             </div>
         </div>
         <div id="RGBcircle" class="circle">
@@ -75,18 +78,17 @@ user-select:none;
         mouseOn = true;
         console.log("mousedown", mouseOn, e);
         
-        // RGBcircle.style.left = e.layerX + "px";
-        // RGBcircle.style.top = e.layerY + "px";
+    //     // RGBcircle.style.left = e.layerX + "px";
+    //     // RGBcircle.style.top = e.layerY + "px";
         
-        var RGBcircle = document.getElementById("layerRange");
-        console.dir(RGBcircle);
+    //     var RGBcircle = document.getElementById("layerRange");
+    //    // console.dir(RGBcircle);
+    //     targetDisX=e.layerX;
+    //     targetDisY=e.layerY;
 
-        targetDisX=e.layerX;
-        targetDisY=e.layerY;
-
-        RGBcircle.style.display = "block"
-        RGBcircle.style.marginLeft = targetDisX + "px";
-        RGBcircle.style.marginTop = targetDisY + "px";
+    //     RGBcircle.style.display = "block"
+    //     RGBcircle.style.marginLeft = targetDisX + "px";
+    //     RGBcircle.style.marginTop = targetDisY + "px";
 
     }
     
