@@ -37,6 +37,10 @@
       class="ButtonStyle">
     <input type="button" id="Btn_hid" onclick="switchTotalKeydownArrType('hid')" onkeydown="" value="hid"
       class="ButtonStyle">
+    <input type="button" id="Btn_code" onclick="switchTotalKeydownArrType('code')" onkeydown="" value="code"
+      class="ButtonStyle">  
+
+
     <!-- <input type="button" id="Btn_functionType" onclick="switchTotalKeydownArrType('functionType')" onkeydown="" value="functionType"class="ButtonStyle"> -->
     <!-- <input type="button" id="Btn3" onkeydown="switchShowType='hid'" value="hid"> -->
   </div>
@@ -121,9 +125,18 @@
       //event.stopPropagation();
     }
     //console.log(e);
-    var targetValue = AllFunctionMapping.find((x) => x.keyCode == String(e.keyCode))
-    //totalKeydownArr.push(String(e.keyCode));
-    console.log('keydown', targetValue);
+    var targetValue = AllFunctionMapping.find((x) => x.keyCode == String(e.keyCode));
+    //targetValue.code=e.code;
+    //totalKeydownArr.push(String(e.code));
+    console.log('keydown', e.keyCode,e.code);
+
+    // for (let index = 0; index < AllFunctionMapping.length; index++) {
+    //   var element = AllFunctionMapping[index];
+    //   if(element.functionType!='Singlekey'){
+    //     element.code=element.keyCode;
+    //   }
+    // }
+    console.log('keydown', JSON.stringify(AllFunctionMapping));
     totalKeydownArr.push(String(targetValue[switchShowType]));
     show_LogUIText();
   });
