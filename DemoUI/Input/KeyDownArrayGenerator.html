@@ -117,7 +117,28 @@
     window.getSelection().selectAllChildren(str);
     document.execCommand("Copy");
   }
+  //AllFunctionMapping[0].hid=0x4;
+  //console.log('AllFunctionMapping', AllFunctionMapping[0]);
 
+//   var number = 255;
+// var padded = "0" + number;
+var hexString = (175).toString(16);
+//console.log(padded.slice(-2));
+
+  console.log('AFM2' ,'0x'+hexString);
+
+  // for (let index = 0; index < AFM2.length; index++) {
+  //   //const element = AllFunctionMapping[index];
+  //   var targetValue = AllFunctionMapping.find((x) =>x.keyCode == String(AFM2[index].keyCode));
+  //   console.log('AFM2[index]', AFM2[index]);
+  //   if(targetValue!=undefined){
+  //     targetValue.hid=AFM2[index].hid;
+  //   }
+  // }
+  // console.log('AllFunctionMapping', JSON.stringify(AllFunctionMapping));
+  // console.log('AllFunctionMapping', AllFunctionMapping);
+
+  
   document.addEventListener('keydown', function logKey(e) {
     //event.preventDefault();
     if (e.code != "F12") {
@@ -125,20 +146,36 @@
       //event.stopPropagation();
     }
     //console.log(e);
-    var targetValue = AllFunctionMapping.find((x) => x.keyCode == String(e.keyCode));
     //targetValue.code=e.code;
     //totalKeydownArr.push(String(e.code));
-    console.log('keydown', e.keyCode,e.code);
+    //console.log('keydown', JSON.stringify(AllFunctionMapping));
 
+    console.log('keydown', e.keyCode,e.code);
     // for (let index = 0; index < AllFunctionMapping.length; index++) {
     //   var element = AllFunctionMapping[index];
     //   if(element.functionType!='Singlekey'){
     //     element.code=element.keyCode;
     //   }
     // }
-    console.log('keydown', JSON.stringify(AllFunctionMapping));
+
+  });
+  // document.addEventListener('keypress', function logKey222(e) {
+  //   console.log('keypress', e);
+
+
+  // });
+    document.addEventListener('mouseup', function logKey222(e) {
+    console.log('mouseup', e);
+
+
+  });
+    document.addEventListener('keyup', function logKey222(e) {
+      var targetValue = AllFunctionMapping.find((x) => x.code == String(e.code));
     totalKeydownArr.push(String(targetValue[switchShowType]));
     show_LogUIText();
+    console.log('keyup', e);
+
+
   });
 
   function removeQuotes(a) {
