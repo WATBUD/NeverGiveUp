@@ -339,6 +339,9 @@ export class M_Light_CS {
             case 'Breathing':
                 this.mode_Breathing(inputColor,target.isRainbow);
                 break;
+            case 'Breath ':
+                    this.mode_Breath(inputColor,target.isRainbow);
+                    break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
                 break;
@@ -717,9 +720,6 @@ export class M_Light_CS {
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
         //console.log('%c mode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.AllBlockColor);
         clearInterval(this.repeater);
-        //colors = this.rainbow7Color();
-        //this.rainbow7Color();
-        //this.currentBlockIndex = 48;
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(blockIndex).coordinateData;
         //var setRGB=[255,0,0,1];
@@ -817,7 +817,7 @@ export class M_Light_CS {
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
                 if (mode_step == 0) {
                     //console.log('mode_step', mode_step)
-                    console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
+                    console.log('%c mode_Blossom','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
 
                     if (dis <= compareResult && dis >= compareResultMax) {
                         element.color = setRGB;
@@ -1016,6 +1016,76 @@ export class M_Light_CS {
             else{
                 nowStep=0;
                 repeatCount += 1;
+                //repeatCount=0;            
+            }              
+        }, 50*this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
+    mode_Breath(colors = [[255,0,0,1]], isRainbow = true) {
+        clearInterval(this.repeater);
+        var repeatCount = 0;
+        var mode_step = 0;
+        var step = 60;
+        var nowStep = 0;
+        var colors=this.rainbow7Color();
+        var nowC_index=0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var repeatCountList=[];
+        var target = this.AllBlockColor;
+        var setRGB;
+        var repeatCircleCount=0;
+        //colors=this.rainbow7Color();
+
+        console.log('%c mode_Breathing','color:rgb(255,75,255,1)',this.imageMaxWidth);
+        //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
+        for (let index = 0; index < target.length; index++) {
+            //var element = target[index];
+            repeatCountList.push({
+                color: setRGB,
+                recordIndex: index,
+                repeatTime: this.getRandom(5, 25),
+            });
+        }
+
+        console.log('repeatCountList', repeatCountList)
+
+        this.repeater = setInterval(() => {
+            //this.mode_reset();
+            var t_Count=repeatCount%2;
+            var t_Count2=0;
+            if(t_Count==0){
+                t_Count2=1;
+            }
+            else{
+                t_Count2=0;
+            }
+ 
+            for (let index = 0; index < repeatCountList.length; index++) {     
+                var nowColor=[JSON.parse(JSON.stringify(colors[nowC_index])),[0,0,0,1]];
+
+
+                var t_data = [0,0,0,1];
+                t_data[0] = (nowColor[t_Count][0] * (step - nowStep) + nowColor[t_Count2][0] * nowStep) / step;
+                t_data[1] = (nowColor[t_Count][1] * (step - nowStep) + nowColor[t_Count2][1] * nowStep) / step;
+                t_data[2] = (nowColor[t_Count][2] * (step - nowStep) + nowColor[t_Count2][2] * nowStep) / step;
+                var target = this.AllBlockColor;
+                target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
+                //console.log('element.color', t_data, step, nowStep)
+            }
+
+            if(nowStep<step-1){
+                nowStep+=1;
+                
+            }
+            else{
+                nowStep=0;
+                repeatCount += 1;
+                if(nowC_index<colors.length-1){
+                    nowC_index+=1;
+                }
+                else{
+                    nowC_index=0;
+                }
                 //repeatCount=0;            
             }              
         }, 50*this.animationSpeed)
