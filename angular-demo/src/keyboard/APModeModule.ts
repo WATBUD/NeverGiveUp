@@ -1,11 +1,8 @@
 // HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
 // HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB其中B即英語：Brightness。
 //Louis Architecture => Hex=>SET RGB=>SET HSV
-
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-import { P } from '@angular/core/src/render3'
-import { identifierModuleUrl } from '@angular/compiler'
 @Injectable()
 class ModeParameter {
     frame_selection_range: any = []
@@ -51,47 +48,12 @@ export class M_Light_CS {
     repeater;
     ledcoordinates: any = []
     AllBlockColor: any = [] //TOTAL NUMBER
-    LightingEffectData: any = [
-        { name: 'GloriousMode', value: 0, translate: 'GloriousMode' },
-        { name: 'Wave#1', value: 1, translate: 'Wave#1' },
-        { name: 'Wave#2', value: 3, translate: 'Wave#2' },
-        { name: 'SpiralingWave', value: 4, translate: 'SpiralingWave' },
-        { name: 'AcidMode', value: 5, translate: 'AcidMode' },
-        { name: 'Breathing', value: 2, translate: 'Breathing' },
-        { name: 'NormallyOn', value: 6, translate: 'NormallyOn' },
-        { name: 'RippleGraff', value: 7, translate: 'RippleGraff' },
-        { name: 'PassWithoutTrace', value: 9, translate: 'PassWithoutTrace' },
-        { name: 'FastRunWithoutTrace', value: 10, translate: 'FastRunWithoutTrace' },
-        { name: 'Matrix2', value: 11, translate: 'Matrix2' },
-        { name: 'Matrix3', value: 12, translate: 'Matrix3' },
-        { name: 'Rainbow', value: 13, translate: 'Rainbow' },
-        { name: 'HeartbeatSensor', value: 14, translate: 'HeartbeatSensor' },
-        { name: 'DigitTimes', value: 15, translate: 'DigitTimes' },
-        { name: 'Kamehemeha', value: 16, translate: 'Kamehemeha' },
-        { name: 'Pingpong', value: 17, translate: 'Pingpong' },
-        { name: 'Surmount', value: 18, translate: 'Surmount' },
-        { name: 'LEDOFF', value: 8, translate: 'LEDOFF' },
-    ]
     lightData;
     animationSpeed=1;
     currentBlockIndex=0;
-    mode_name: any = [
-        'Wave',
-        'ConicBand',
-        'Spiral',
-        'Cycle',
-        'LinearWave',
-        'Ripple',
-        'Breathing',
-        'Rain',
-        'Fire',
-        'Trigger',
-        'AudioCap',
-    ]
     minKeyWidth=43;
     minKeyHeight=41;
-
-    nowSettingColorkeyName=''
+    settingPerkeyName=''
     //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
     imageMaxWidth=0;
     imageMaxHeight=0;
@@ -112,7 +74,7 @@ export class M_Light_CS {
     constructor(inputMax) {
         this.maxkaycapNumber = inputMax
         for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
-            this.AllBlockColor.push({ color: [0,0,0,0],breathing:false,border: true,coordinateData:[],keyCode:''})
+            this.AllBlockColor.push({ clearStatus:false,color: [0,0,0,0],breathing:false,border: true,coordinateData:[],keyCode:''})
         }
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
                 this.twoDimensionalArray[index]=[];
@@ -141,10 +103,7 @@ export class M_Light_CS {
         }
         console.log('twoDimensionalArray', this.twoDimensionalArray);
     }
-
-    
-
-   defaultModule(type = '') {
+    defaultModule(type = '') {
         var T = 
             {
                 blockIndex:9999,
@@ -178,10 +137,31 @@ export class M_Light_CS {
         }
     }
 
+    serCoordinateData(RGBList){
+        for (let index = 0; index < RGBList.length; index++) {
+            let element = RGBList[index];
+            //element.setAttribute('data-index', String(index));
+            //element.setAttribute('coordinate', String(element));     
+            var obj = {
+                "clientHeight": element.clientHeight,
+                "clientWidth": element.clientWidth,
+                "offsetLeft": element.offsetLeft,
+                "offsetTop": element.offsetTop,
+                "scroll": element.scroll,
+                "top_Left": [element.offsetLeft, element.offsetTop],
+                "top_Right": [element.offsetLeft + element.clientWidth, element.offsetTop],
+                "bottom_Left": [element.offsetLeft, element.offsetTop + element.clientHeight],
+                "bottom_Right": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
+                "center_Point": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
+            }
+            this.AllBlockColor[index].coordinateData = obj;
+        }
+        console.log('serCoordinateData()', this.AllBlockColor);  
 
+    }
     
-    setPerkey(index,type){
-        if(!type){
+    setPerkey(index,Clear){
+        if(!Clear){
             this.AllBlockColor[index].color=[0,0,0,0];
             this.AllBlockColor[index].breathing=false;
         }
@@ -192,16 +172,6 @@ export class M_Light_CS {
         }
     }
 
-    
-
-    
-    findLightData(findValue) {
-        let obj = this.LightingEffectData.find((x) => x.value == findValue)
-        if (obj != undefined) {
-            alert('Lighting Select fail');
-        }
-        return obj;
-    } 
     setlightData(obj){
       
      this.lightData= JSON.parse(JSON.stringify(obj));
@@ -213,11 +183,6 @@ export class M_Light_CS {
         }
     }
 
-
-    getNameSortposition(name) {
-        console.log('getNameSortposition_indexOf=', this.mode_name.indexOf(name))
-        return this.mode_name.indexOf(name)
-    }
     addBlockIndex(){
         if(this.currentBlockIndex<this.AllBlockColor.length-1){
             this.currentBlockIndex+=1;
@@ -225,22 +190,24 @@ export class M_Light_CS {
         else{
         }
     }
-    setGroupArrayColor(groupArray,assignColor=[]){  
+    setGroupArrayColor(groupArray,assignColor=[],isAll=false,clearStatus=false){  
+        if(isAll){
+            groupArray=[];
+            for (let i = 0; i < this.AllBlockColor.length; i++) {
+                groupArray.push(i);
+            }
+        }
         if(assignColor.length<1){
             //console.log('setGroupArrayColor_assignColor', assignColor)
             assignColor=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
         }
         var target=this.AllBlockColor;
-        //console.log('setGroupArrayColor_assignColor', assignColor)
-        // for (let index = 0; index < target.length; index++) {
-        //     target[index].color = assignColor
-            
-        // }
         var temp_Status=this.lightData.breathing;
 
         groupArray.forEach(function(value, index, array){//array=GroupArray
             target[value].color = assignColor ;
             target[value].breathing=temp_Status;
+            target[value].clearStatus=clearStatus;
         });
     }
     subBlockIndex(){
@@ -257,8 +224,9 @@ export class M_Light_CS {
        target[2]=RGB_Arr[2];
        target[3]=1;
        this.lightData.colorHex=this.rgbToHex(target[0],target[1],target[2]);
-       
     }
+
+    
     rgbToHex(r, g, b) {
         r = Number(r);
         g = Number(g);
@@ -348,7 +316,7 @@ export class M_Light_CS {
         var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
         if(inputColor==undefined){
             //this.lightData;
-            console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
+            console.log('%c setNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
             return;
         }
         this.setAnimationSpeed();
@@ -410,12 +378,12 @@ export class M_Light_CS {
         var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
         if(inputColor==undefined){
             //this.lightData;
-            console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
+            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', this.lightData);
             return;
         }
         var target=this.lightData;
         var index=this.currentBlockIndex;
-        console.log('%csetNowLightMode_undefined','color:rgb(255,77,255)', index);
+        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
         switch (target.lightSelected.translate) {
             case 'RippleGraff'://彩色擴散
                 this.mode_RippleGraff(inputColor,target.isRainbow,index);
@@ -425,6 +393,9 @@ export class M_Light_CS {
                 break;
             case 'FastRunWithoutTrace'://一排
                 this.mode_FastRunWithoutTrace(inputColor,false,index);
+                break;
+            case 'Cross'://十字
+                this.mode_Cross(inputColor,false,index);
                 break;
             default:
                 break;
@@ -669,12 +640,10 @@ export class M_Light_CS {
 	}
     mode_Surmount(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
         console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
-
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         //this.rainbow7Color();
         //this.currentBlockIndex = 48;
-        
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(blockIndex).coordinateData;
         //var setRGB=[255,0,0,1];
@@ -743,13 +712,11 @@ export class M_Light_CS {
     }
 
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
-        console.log('%cmode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.repeater);
-
+        //console.log('%c mode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.AllBlockColor);
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         //this.rainbow7Color();
         //this.currentBlockIndex = 48;
-        
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(blockIndex).coordinateData;
         //var setRGB=[255,0,0,1];
@@ -772,11 +739,97 @@ export class M_Light_CS {
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                //console.log('mode_step', mode_step)
                 if (mode_step == 0) {
+                    //console.log('mode_step', mode_step)
+                    console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
+
                     if (dis <= compareResult && dis >= compareResultMax) {
                         element.color = setRGB;
                     }
+                }
+                else {
+                    var T = JSON.parse(JSON.stringify(element.color));
+                    T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
+                    T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
+                    T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
+                    element.color = T;
+                    //console.log('element.color', T, step, nowStep)
+                }
+
+            }
+            if (nowStep + 1 < step) {
+                nowStep += 1;
+            }
+            else {
+                nowStep = 0;
+                mode_step = 0;
+                repeatCount = 0;
+                clearInterval(this.repeater);
+                //console.log('nowStep_end', mode_step, repeatCount, nowStep)
+                this.setAllBlockColor([0, 0, 0, 1]);
+                if(this.lightData.lightSelected.value==16){
+                    this.mode_Kamehemeha(colors,isRainbow);
+                }
+            }
+            if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
+                repeatCount += 1;
+                //console.log('repeatCount', repeatCount)
+            }
+            else {
+                mode_step = 1;
+
+                //this.setAllBlockColor([0,0,0,1]);
+            }
+        }, 50**this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
+    mode_Cross(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
+        //console.log('%c mode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.AllBlockColor);
+        clearInterval(this.repeater);
+        //colors = this.rainbow7Color();
+        //this.rainbow7Color();
+        //this.currentBlockIndex = 48;
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock(blockIndex).coordinateData;
+        //var setRGB=[255,0,0,1];
+        var mode_step = 0;
+        var step = 30;
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        this.repeater = setInterval(() => {
+            //this.mode_reset();
+            var target = this.AllBlockColor;
+            var setRGB;
+            if (isRainbow) {
+                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+            }
+            else {
+                setRGB = colors[this.getRandom(0, colors.length - 1)];
+            }
+            var compareResult = this.minKeyWidth * repeatCount;
+            var compareResultMax = this.minKeyWidth * repeatCount - this.minKeyWidth;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                if (mode_step == 0) {
+                    //console.log('mode_step', mode_step)
+                    console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
+
+                    if (dis <= compareResult && dis >= compareResultMax) {
+                       var xDis=Math.abs(StartPoint.center_Point[0]-element.coordinateData.center_Point[0]);
+                       var yDis=Math.abs(StartPoint.center_Point[1]-element.coordinateData.center_Point[1]);
+                        if(xDis<this.minKeyWidth){
+                            element.color = setRGB;
+                        }
+                        if(yDis<this.minKeyHeight){
+                            element.color = setRGB;
+                        }
+                        //console.log('element.color',xDis)
+                    }
+                    // if (T[0] > element.coordinateData.center_Point[0] &&
+                    //     T[0] < element.coordinateData.top_Right[0] &&
+                    //     T[1] > element.coordinateData.top_Left[1] &&
+                    //     T[1] < element.coordinateData.bottom_Left[1]
                 }
                 else {
                     var T = JSON.parse(JSON.stringify(element.color));
@@ -826,6 +879,8 @@ export class M_Light_CS {
         var target = this.AllBlockColor;
         var setRGB;
         var repeatCircleCount=0;
+        console.log('%c mode_Breathing','color:rgb(255,75,255,1)',this.imageMaxWidth);
+
         for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.minKeyWidth) {
             //const element = array[index];
             if (isRainbow) {
@@ -1003,31 +1058,6 @@ export class M_Light_CS {
                 startX=-StartPoint.clientWidth*5;
                 this.mode_reset();
             }
-            //clearInterval(this.repeater);
-
-            //     var dis = this.distanceCalculation(0, 0, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                
-            //     //var compareResult = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-            //     //+(repeatCount*50)
-            //     //console.log('setCoordinate', StartPoint.center_Point[0],element.coordinateData.center_Point[0])
-            //     //var compareResult =Math.abs(0-element.coordinateData.center_Point[0]);
-            //     var compareResult =repeatCount*50;
-            //     repeatMax=compareResult+200;
-            //     //if (compareResult>dis &&repeatMax<element.coordinateData.top_Right[0]) {
-
-            //     if (dis>compareResult) {
-            //         element.color = [255,255,0,1];
-            //     }
-            //     else {
-            //         element.color = [0,255,0,1];
-            //     }
-            // }
-            // if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
-            //     repeatCount+=1;
-            // }
-            // else{
-            //     repeatCount=0;
-            // }
         },25*this.animationSpeed)
     }
     mode_Pingpong2(){
@@ -1266,8 +1296,8 @@ export class M_Light_CS {
                     // if (resultL != undefined) {
                     //     break;
                     // }
-                    if (element.breathing) {
-                        console.log('%c mode_BreatheSeparately_element','color:rgb(255,77,255)',  element);
+                    if (element.breathing&&element.clearStatus) {
+                        //console.log('%c mode_BreatheSeparately_element','color:rgb(255,77,255)',  element);
                         element.color[3]=opacity;
                     }
                     else{
@@ -2490,6 +2520,16 @@ export class M_Light_CS {
             element.color =JSON.parse(JSON.stringify(rgba));
         }
     }
+
+    replaceAllBlockColor(AllBlock){
+        for (let index = 0; index < AllBlock.length; index++) {
+            this.AllBlockColor[index].color=AllBlock[index].color;
+            this.AllBlockColor[index].breathing=AllBlock[index].breathing;
+            this.AllBlockColor[index].clearStatus=AllBlock[index].clearStatus;
+        }
+    }
+
+
     setAllBlockAlpha(alpha=0) {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {

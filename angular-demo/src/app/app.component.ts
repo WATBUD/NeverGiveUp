@@ -241,22 +241,16 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Kamehemeha([[0,0,255,1]],false);
     }
     setMode(modeName,color=[0,0,0,1], isRainbow = true){
+        console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
         this.M_Light_CS.lightData.colorPickerValue=color;
         this.M_Light_CS.lightData.isRainbow=isRainbow;
         this.M_Light_CS.lightData.lightSelected.translate=modeName;
         this.M_Light_CS.setAnimationSpeed();
         this.M_Light_CS.setNowLightMode();
-        
+        this.M_Light_CS.setPassiveEffects();
     }
     DeveloperControl() {
         this.setMode('AcidMode');
-
-   
-
-        
-
-
-        
         document.addEventListener('keydown', (event) => {
             console.log("KeyShortcut_event.keyCode", event.keyCode);
             if (event.keyCode == 107) {//+
