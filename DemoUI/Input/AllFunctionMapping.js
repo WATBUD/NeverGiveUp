@@ -116,6 +116,7 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"103","functionType":"Singlekey","value":"Numpad7","hid":1,"translate":"Numpad7","code":"Numpad7"},
 {"keyCode":"104","functionType":"Singlekey","value":"Numpad8","hid":1,"translate":"Numpad8","code":"Numpad8"},
 {"keyCode":"105","functionType":"Singlekey","value":"Numpad9","hid":1,"translate":"Numpad9","code":"Numpad9"},
+{"keyCode":"13","functionType":"Singlekey","value":"NumpadEnter","hid":1,"translate":"NumpadEnter","code":"NumpadEnter"},
 {"keyCode":"106","functionType":"Singlekey","value":"*","hid":85,"translate":"*","code":"NumpadMultiply"},
 {"keyCode":"107","functionType":"Singlekey","value":"+","hid":87,"translate":"+","code":"NumpadAdd"},
 {"keyCode":"109","functionType":"Singlekey","value":"-","hid":86,"translate":"-","code":"NumpadSubtract"},
@@ -144,5 +145,3 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"220","functionType":"Singlekey","value":"|","hid":49,"translate":"|","code":"Backslash"},
 {"keyCode":"221","functionType":"Singlekey","value":"]","hid":48,"translate":"]","code":"BracketRight"},
 {"keyCode":"222","functionType":"Singlekey","value":"'","hid":52,"translate":"'","code":"Quote"}]
-
-

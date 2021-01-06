@@ -102,10 +102,26 @@ console.log("XL_row_object=",dgdgdf);
                                 //     console.log("element.EN",element.EN.toString());
                                 //     element.EN=JSON.parse(element.EN.toString());
                                 // }
-                                var T = {
-                                    EN:element.EN,
-                                    CN:element.CN,
-                                };
+                                var field=Object.keys(element);
+                                delete field.splice(0,1);field[0];
+                                delete field.splice(field.length-1,1);
+                                // console.log('key', key,'value', value);
+                                console.log('splice_field',field);
+
+                                //console.log('element',element);
+                                var T={};
+                                for (let index = 0; index < field.length; index++) {
+                                    var type=field[index];
+                                    try{
+                                        T[type]=element[type];
+
+                                    }
+                                    catch{
+                                      console.log('field_lose',T,element,type);
+
+                                    }
+                                }
+                                
                                 //delete T.參數名稱;
                                 processArr[element['參數名稱']] = T;
                                 //console.log("processArr=>processArr[element['參數名稱']] ", JSON.stringify(processArr[element['參數名稱']]));
@@ -120,7 +136,7 @@ console.log("XL_row_object=",dgdgdf);
                             console.log("processArr=>", JSON.stringify(processArr));
                             //document.getElementById("jsonObject").innerHTML = JSON.stringify(XL_row_object);
                             
-                            document.getElementById("jsonObject").innerHTML = JSON.stringify(processArr);
+                            document.getElementById("jsonObject").innerText = JSON.stringify(processArr);
 
                         }
                     })
@@ -139,6 +155,17 @@ console.log("XL_row_object=",dgdgdf);
 
 <body>
     <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx" />
+    <button type="button" onclick="copyEvent('jsonObject')" class="ButtonStyle">Copy</button>
+
     </br></br>
-    JSON : <label id="jsonObject"> </label>
+    <label id="jsonObject"> </label>
+
 </body>
+<script>
+      function copyEvent(id) {
+    var str = document.getElementById(id);
+    window.getSelection().selectAllChildren(str);
+    document.execCommand("Copy");
+  }
+
+</script>
