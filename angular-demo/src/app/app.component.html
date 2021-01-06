@@ -30,8 +30,8 @@
       value="mode_Matrix2_rainbow" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],false)" onkeydown=""
       value="mode_DigitTimes" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_PassWithoutTrace()" onkeydown=""
-      value="mode_PassWithoutTrace" class="ButtonStyle">
+      <input  type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],false)" onkeydown=""
+      value="PassWithoutTrace" class="ButtonStyle">
       
       <input  type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],false)" onkeydown=""
       value="mode_HeartbeatSensor" class="ButtonStyle">
@@ -53,6 +53,10 @@
       
       <input  type="button" id="AddSpace" (click)="setMode('RippleGraff',[255,255,0,1],false)" onkeydown=""
       value="mode_RippleGraff_Single" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="setMode('Blossom',[255,255,0,1],false)" onkeydown=""
+      value="mode_Blossom" class="ButtonStyle">
+
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],false)" onkeydown=""
       value="mode_Breathing" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],true)" onkeydown=""

@@ -1,14 +1,17 @@
 
 
 declare var System
-// let AllFunctionMapping =  System._nodeRequire('./backend/others/SupportData').AllFunctionMapping
+//let AllFunctionMapping =  System._nodeRequire('./backend/others/SupportData').AllFunctionMapping
+
 // let Shortcuts_WindowsMapping =  System._nodeRequire('./backend/others/SupportData').Shortcuts_WindowsMapping
 // let KeyMapping = System._nodeRequire('./backend/others/SupportData').KeyMapping
 import { KeyAssignManager } from '../keyboard/KeyAssignManager'
-import { KeyBoardManager, KeyBoardStyle } from '../keyboard/KeyBoardManager'
+import { KeyBoardManager } from '../keyboard/KeyBoardManager'
+import { KeyBoardStyle } from '../keyboard/KeyBoardStyle'
+
 import { M_Light_CS } from '../keyboard/APModeModule'
 import { MatDialogRef } from '@angular/material'
-
+import { AllFunctionMapping } from '../backend/others/SupportData'
 import {
     Component,
     OnInit,
@@ -87,8 +90,9 @@ export class AppComponent implements OnInit {
         //private macroService: MacroService,
         private cdr: ChangeDetectorRef,
     ) {
+        console.log('KeyboardComponent__ciphertext', AllFunctionMapping)
 
-        console.log('KeyboardComponent__ciphertext', KeyBoardManager)
+        console.log('KeyboardComponent__ciphertext', System)
     }
     setkeyUIColor() {
 
@@ -252,10 +256,14 @@ export class AppComponent implements OnInit {
     DeveloperControl() {
         this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
-            console.log("KeyShortcut_event.keyCode", event.keyCode);
-            if (event.keyCode == 107) {//+
+            //console.log("KeyShortcut_event.keyCode", event.keyCode);
+            var recordValue =AllFunctionMapping.find((x) => x.code == event.code)
+            var index2=this.KeyBoardStyle.findKeyMappingIndex(recordValue.code);
+            console.log("recordValue", recordValue);
+            console.log("index2", index2);
+            this.M_Light_CS.currentBlockIndex=index2;
+            this.M_Light_CS.setPassiveEffects();
 
-            }
             if (event.keyCode == 109) {//-
              
             }

@@ -4,6 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+// // app routes
+// import { routes } from './app.routes';
+// let routerModule = RouterModule.forRoot(routes);
+// routerModule = RouterModule.forRoot(routes, {useHash: true});
 
 @NgModule({
   declarations: [
@@ -12,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
