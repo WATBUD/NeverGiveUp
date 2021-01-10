@@ -74,7 +74,11 @@
 <script type="text/javascript" src="MessageManager.js"></script>
 <script>
 
-
+  document.getElementById('ClearMessage').addEventListener('click', (event) => {
+    console.log('ClearMessage', event);
+    log.innerText = '';
+    totalKeydownArr = [];
+  });
 
   //document.addEventListener('keydown', logKey(e));
   // window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
