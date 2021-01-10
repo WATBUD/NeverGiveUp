@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+
+#MacroSetting #fileT{
+    position: absolute;
+    background-color: transparent;color: rgb(0,0,255,1);border: 1.4px solid rgb(0,0,255,1);
+    top: 14%;left: 4%;width: 80%;
+
+}
     </style>
 </head>
 <body>
     <!-- multiple="multiple" -->
-    <input type="file" id="file-uploader" data-target="file-uploader" accept=".exe" />
+    <div id="MacroSetting">
+        <input type="file" id="file-uploader" data-target="file-uploader" accept=".exe" />
+        <input type="text" id="fileT" data-target="file-uploader" accept=".exe" />
+
+    </div>
 
         <BR>
 </body>
