@@ -4,43 +4,6 @@
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
 @Injectable()
-class ModeParameter {
-    frame_selection_range: any = []
-    coordinateX: any = 0
-    coordinateY: any = 0
-    color_ShowLimit: number = 9
-    red: number = 0
-    green: number = 0
-    blue: number = 0
-    opacity: number = 50 //不透明度0~1
-    direction: any = false
-    separate: any = false
-    amplitude: number = 200 //振幅200~8000
-    fire: any = 0 //0~1
-    number: any = 0 //1~10
-    gap: number = 0 //0~500
-    randomspeed: any = 0 //0~360
-    bidirectional: any = false //true,false
-    bump: any = 0 ///0~5;
-    bandwidth: any = 50 //帶寬50~500
-    soft: any = false //true,false
-    radius: any = 0 //0~300
-    fixed: any = false //true,false
-    saturation: number = 0 //飽和度 0~1
-    value: number = 0 //明度 0~1
-    angle: any = 0 //0~360
-    canEffectCenter: any = false
-    gradient: any = false
-    color_quantity: number = 9
-    time: any = 0.5 //0.5~3
-    check: any = true
-
-    constructor(inputmax) {
-        for (let index = 0; index < inputmax; index++) {
-            this.frame_selection_range.push(true)
-        }
-    }
-}
 
 export class M_Light_CS {
     //左上,右上,左下,右下
@@ -339,7 +302,7 @@ export class M_Light_CS {
             case 'Breathing':
                 this.mode_Breathing(inputColor,target.isRainbow);
                 break;
-            case 'Breath ':
+            case 'Breath':
                     this.mode_Breath(inputColor,target.isRainbow);
                     break;
             case 'NormallyOn':
