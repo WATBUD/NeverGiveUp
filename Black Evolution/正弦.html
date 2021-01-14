@@ -7,32 +7,32 @@
 </head>
 
 <body>
-   <canvas style="margin-left: 150px;margin-top:300px;border: 2px solid blue;" id="myCanvas" width="1200" height="1200"></canvas>
+   <canvas style="margin-left: 150px;margin-top:300px;border: 2px solid blue;" id="myCanvas" width="1200"
+      height="1200"></canvas>
 </body>
 
 <script>
-   
-   var oldcoordinate=[0,0];
-   oli
-window.onload = function () {
-   var canvas = document.getElementById("myCanvas");
-   console.log(canvas)
-   // if (canvas == null)
-   //    return false;
-   var ctx = canvas.getContext('2d');
-   ctx.beginPath();//產生一個新路徑，產生後再使用繪圖指令來設定路徑。
-   //ctx.rect(40, 40, 5, 5);//正方 rect(startx, startY, Height, width);
-   ctx.arc(40,40,5,0,360,false);//建一個弧/曲線 arc（x，y，r，sAngle，eAngle，逆時針）;
-   ctx.fillStyle="red";//填充顏色,預設是黑色
-   ctx.fill();//填滿產生
-}
-function getRandom(min,max){
-        return Math.floor(Math.random()*(max-min+1))+min;
-};
-  
-setInterval(function () {
 
-}, 500);
+   var oldcoordinate = [0, 0];
+   window.onload = function () {
+      var canvas = document.getElementById("myCanvas");
+      console.log(canvas)
+      // if (canvas == null)
+      //    return false;
+      var ctx = canvas.getContext('2d');
+      ctx.beginPath();//產生一個新路徑，產生後再使用繪圖指令來設定路徑。
+      //ctx.rect(40, 40, 5, 5);//正方 rect(startx, startY, Height, width);
+      ctx.arc(40, 40, 5, 0, 360, false);//建一個弧/曲線 arc（x，y，r，sAngle，eAngle，逆時針）;
+      ctx.fillStyle = "red";//填充顏色,預設是黑色
+      ctx.fill();//填滿產生
+   }
+   function getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+   };
+
+   setInterval(function () {
+
+   }, 500);
 </script>
 
 </html>

@@ -2,6 +2,7 @@
 <script src="../../jquery.js?ver=20190122"></script>
 <link rel="stylesheet" href="./RainBackgroundEffect.css">
 <link rel="stylesheet" href="./Loading_Anmation.css">
+<meta charset="utf-8">
 
 <head>
   <meta http-equiv="pragma" content="no-cache">
@@ -44,6 +45,11 @@
     <!-- <input type="button" id="Btn_functionType" onclick="switchTotalKeydownArrType('functionType')" onkeydown="" value="functionType"class="ButtonStyle"> -->
     <!-- <input type="button" id="Btn3" onkeydown="switchShowType='hid'" value="hid"> -->
   </div>
+  <div id="arrayNumber"style="width: 100%;height: 23px;color: red;">  </div>
+
+
+
+  
   <!-- <div id="block"
   style="position: absolute; width: 20%;height:20%;right: 20vw; background: #f32121;"> -->
   </div>
@@ -224,6 +230,7 @@ var hexString = (175).toString(16);
   function show_LogUIText() {
     log.innerText = JSON.stringify(totalKeydownArr);
     //log.innerHTML = JSON.stringify(totalKeydownArr);  }
+    document.getElementById('arrayNumber').innerHTML="目前陣列數量:"+totalKeydownArr.length
   }
 
 
