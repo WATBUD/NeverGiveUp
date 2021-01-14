@@ -25,7 +25,9 @@ export class M_Light_CS {
     BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
     twoDimensionalArray=new Array(26);//8*26;
     breakGradation=[[0,14],[15,29],[30,44],[45,58],[59,72],[73,82]];
-    qigongRange=[22,23, 38,52,51 ,36];
+    qigong_Step2_Range=[22,23, 38,52,51 ,36];
+    qigong_Step1_Range=[0,15,30,58,71,82];
+
     centerBlockPoint=37;
     break_DimensionalArray=[];
     max_X_Number=26;
@@ -504,22 +506,22 @@ export class M_Light_CS {
         var mode_step = 0;
         var step = 60;
         var nowStep = 0;
-        var qigong_Step1_Range=[0,15,30,58,71,82];
         this.setAllBlockColor([0, 0, 0, 1]);
         var target = this.AllBlockColor;
         var setRGB=this.rainbow7Color();
+        var setArray=JSON.parse(JSON.stringify(this.qigong_Step1_Range));
         this.repeater = setInterval(() => {
             //this.mode_reset();  
             //this.setAllBlockColor([0, 0, 0, 1]);
-            for (let index = 0; index < qigong_Step1_Range.length; index++) {
-            target[qigong_Step1_Range[index]].color=colors[this.getRandom(0,colors.length-1)]; 
+            for (let index = 0; index < setArray.length; index++) {
+            target[setArray[index]].color=colors[this.getRandom(0,colors.length-1)]; 
             }
-            for (let index = 0; index < qigong_Step1_Range.length; index++) {
-                if (qigong_Step1_Range[index] < centerBlockIndex) {
-                    qigong_Step1_Range[index]+=1;
+            for (let index = 0; index < setArray.length; index++) {
+                if (setArray[index] < centerBlockIndex) {
+                    setArray[index]+=1;
                 }
                 else{
-                    qigong_Step1_Range[index]-=1;
+                    setArray[index]-=1;
                 }
             }       
             repeatCount += 1;
@@ -570,11 +572,11 @@ export class M_Light_CS {
             this.setAllBlockColor([0, 0, 0, 1]);
             var target = this.AllBlockColor;    
             for (let index = 0; index < qigongRangeIndex.length; index++) {        
-            target[this.qigongRange[qigongRangeIndex[index]]].color=colors[this.getRandom(0,colors.length-1)]; 
+            target[this.qigong_Step2_Range[qigongRangeIndex[index]]].color=colors[this.getRandom(0,colors.length-1)]; 
 
             }
             for (let index = 0; index < qigongRangeIndex.length; index++) {        
-                if(qigongRangeIndex[index]<this.qigongRange.length-1){
+                if(qigongRangeIndex[index]<this.qigong_Step2_Range.length-1){
                     qigongRangeIndex[index]+=1;
                 }
                 else{
