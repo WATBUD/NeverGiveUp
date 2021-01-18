@@ -709,7 +709,7 @@ export class M_Light_CS {
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
                 if (mode_step == 0) {
                     //console.log('mode_step', mode_step)
-                    console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
+                    //console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
 
                     if (dis <= compareResult && dis >= compareResultMax) {
                         element.color = setRGB;
@@ -870,7 +870,7 @@ export class M_Light_CS {
                 var element = target[index];
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
                 if (mode_step == 0) {
-                    console.log('%c mode_Cross','color:rgb(255,75,255,1)',dis);
+                    //console.log('%c mode_Cross','color:rgb(255,75,255,1)',dis);
                     for (let i2 = 0; i2 < RangeList.length; i2++) {
                         var T=RangeList[i2];
                         if (T[0] > element.coordinateData.top_Left[0] &&
