@@ -338,8 +338,11 @@ export class M_Light_CS {
                 this.mode_LEDOFF();
                 break;
             case 'Starlight':
-                    this.mode_Starlight();
-                    break;    
+                this.mode_Starlight();
+                break;    
+            case 'Snowing':
+                this.mode_Snowing(inputColor,target.isRainbow);
+                break;        
             default:
                 break;
         }
@@ -1704,7 +1707,7 @@ export class M_Light_CS {
             this.showTwoDimensionalArray();
         },50*this.animationSpeed);
     }
-    mode_Snowing(){
+    mode_Snowing(colors = [[255,0,0,1]], isRainbow = true){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
