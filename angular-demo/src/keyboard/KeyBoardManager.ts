@@ -1,4 +1,3 @@
-import {  } from '@angular/material'
 declare var System
 import { ElementRef,Injectable } from '@angular/core'
 import { KB61Prohibit } from './KeyBoardData'
@@ -6,7 +5,6 @@ import { AllFunctionMapping } from '../backend/others/SupportData'
 
 // let AllFunctionMapping = System._nodeRequire('./backend/others/SupportData').AllFunctionMapping
 
-@Injectable()
 export class KeyBoardManager {
     defaultName = '未配置'
     profileindex = 0;
@@ -378,15 +376,10 @@ export class KeyBoard {
         switch (Type) {
             case 'LongTimePressValue':
                 return this.getNowModeTargetMatrixKey().LongTimePressValue
-
-                break
-
             case 'InstantPressValue':
                 return this.getNowModeTargetMatrixKey().InstantPressValue
-                break
             case 'NormalKeyPress':
                 return this.getNowModeTargetMatrixKey().value
-                break
         }
     }
     //"燈光設置:"

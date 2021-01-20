@@ -3,7 +3,6 @@
 //Louis Architecture => Hex=>SET RGB=>SET HSV
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-@Injectable()
 
 export class M_Light_CS {
     //左上,右上,左下,右下
