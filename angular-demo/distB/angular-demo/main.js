@@ -1058,10 +1058,11 @@ var environment = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M_Light_CS", function() { return M_Light_CS; });
+/* harmony import */ var _BoxSelectionArea__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BoxSelectionArea */ "./src/keyboard/BoxSelectionArea.ts");
 // HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
 // HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB其中B即英語：Brightness。
 //Louis Architecture => Hex=>SET RGB=>SET HSV
-//import { BoxSelectionArea } from './BoxSelectionArea'
+
 var M_Light_CS = /** @class */ (function () {
     // x_Array=new Array(120);//8*26;
     // y_Array=new Array(120);//8*26;
@@ -1080,6 +1081,7 @@ var M_Light_CS = /** @class */ (function () {
         this.imageMaxHeight = 0;
         this.recordModeArr = [];
         this.currentModeIndex = 0;
+        this.BSApage1 = new _BoxSelectionArea__WEBPACK_IMPORTED_MODULE_0__["BoxSelectionArea"]('RGBColorBlockStyle');
         this.twoDimensionalArray = new Array(26); //8*26;
         this.breakGradation = [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]];
         this.qigong_Step2_Range = [22, 23, 38, 52, 51, 36];
@@ -3903,6 +3905,161 @@ var M_Light_CS = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/keyboard/BoxSelectionArea.ts":
+/*!******************************************!*\
+  !*** ./src/keyboard/BoxSelectionArea.ts ***!
+  \******************************************/
+/*! exports provided: BoxSelectionArea */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BoxSelectionArea", function() { return BoxSelectionArea; });
+var BoxSelectionArea = /** @class */ (function () {
+    function BoxSelectionArea(targetName) {
+        if (targetName === void 0) { targetName = ''; }
+        this.EventCanBoxSelect = false;
+        this.mouseOn = false;
+        this.startX = 0;
+        this.startY = 0;
+        this.searchTargetName = ''; //RGBColorBlockStyle
+        this.offsetValue = [80, 80];
+        this.selectedEls = [];
+        this.searchTargetName = targetName;
+        //var T2 = document.getElementById(parent).getBoundingClientRect();
+    }
+    BoxSelectionArea.prototype.mousedown = function (e) {
+        //console.log("註冊.e1", this.EventCanBoxSelect,e.which,e.buttons);
+        if (e.buttons !== 1 || e.which !== 1 || !this.EventCanBoxSelect)
+            return;
+        this.mouseOn = true;
+        console.log('BoxSelectionArea成功註冊_dir.mousedown', e, this.searchTargetName);
+        //console.dir(this.selectContainer,);
+        this.startX = e.clientX - this.selectContainer.offsetLeft - this.offsetValue[0];
+        //-this.selectContainer.scrollLeft;
+        this.startY = e.clientY - this.selectContainer.offsetTop;
+        //-this.selectContainer.scrollTop;
+        //this.showCustomTestDataWindows(obj);
+        if (!document.getElementById('selectDiv')) {
+            var selDiv = document.createElement('div');
+            selDiv.style.cssText =
+                'position:absolute;width:0;height:0;\
+                   margin:0;padding:0;border:1px dashed #blue;\
+                   background-color:#aaa;z-index:1000;opacity:0.6;display:none;    pointer-events: none;';
+            selDiv.id = 'selectDiv';
+            selDiv.style.left = this.startX + 'px';
+            selDiv.style.top = this.startY + 'px';
+            this.selectContainer.appendChild(selDiv);
+        }
+        this.mousemove(e);
+    };
+    BoxSelectionArea.prototype.mousemove = function (e) {
+        //var MainFrame = document.getElementById("MainFrame");
+        if (!this.mouseOn)
+            return;
+        console.log('BoxSelectionArea.mousemove', this.searchTargetName);
+        var _x = e.clientX - this.selectContainer.offsetLeft - this.offsetValue[0];
+        //+this.selectContainer.scrollLeft;
+        var _y = e.clientY - this.selectContainer.offsetTop;
+        //+ this.selectContainer.scroll;
+        // 获取非行间样式
+        function getStyle(element, attr) {
+            if (element.currentStyle) {
+                return element.currentStyle[attr];
+            }
+            else {
+                return getComputedStyle(element, null)[attr];
+            }
+        }
+        // var target = getStyle(this.selectContainer, "transform");    //matrix(0.7, 0, 0, 0.7, 0, 0)
+        // var oneposition = target.indexOf("(");
+        // var twoposition = target.indexOf(",");
+        // var Text = target.substring(oneposition + 1, twoposition);
+        // console.log("内联 非行间样式", this.selectContainer.style.transform, Text);  //translate(500px)
+        // console.log("BoxSelectionArea.mousemove", _x, _y, this.startX, this.startY);
+        var selDiv = document.getElementById('selectDiv');
+        selDiv.style.display = 'block';
+        selDiv.style.left = Math.min(_x, this.startX) + 'px';
+        /// parseFloat(Text)) + 'px';
+        selDiv.style.top = Math.min(_y, this.startY) + 'px';
+        /// parseFloat(Text)) + 'px';
+        selDiv.style.width = Math.abs(_x - this.startX) + 'px';
+        selDiv.style.height = Math.abs(_y - this.startY) + 'px';
+    };
+    BoxSelectionArea.prototype.mouseup = function (e) {
+        //console.log('BoxSelectionArea.mouseup', this.mouseOn)
+        var selDiv = document.getElementById('selectDiv'); //Custom Create Dom Id
+        if (!this.mouseOn) {
+            if (selDiv) {
+                selDiv.style.display = 'none';
+            }
+            return 'Fail';
+        }
+        if (parseFloat(selDiv.style.width) <= 0) {
+        }
+        //console.log("selDiv_selDiv_mouseup", selDiv ,selDiv.offsetLeft,selDiv.offsetTop,selDiv.offsetWidth,selDiv.offsetHeight);
+        //console.dir(selDiv) ;
+        //var fileDivs = document.getElementsByClassName(this.searchTargetName)//Assign Search  Target
+        var fileDivs = [];
+        fileDivs = document.getElementsByClassName(this.searchTargetName);
+        this.selectedEls = new Array(); //refresh
+        var fLeft = selDiv.offsetLeft;
+        //-this.selectContainer.offsetLeft;-(fileDivs[0].parentElement.offsetLeft
+        var fTop = selDiv.offsetTop;
+        //-this.selectContainer.offsetTop;
+        var fWidth = selDiv.offsetWidth;
+        var fHeight = selDiv.offsetHeight;
+        for (var i = 0; i < fileDivs.length; i++) {
+            //console.log("selectedEls.fileDivs_parentElement",fileDivs[i].parentElement.offsetLeft,this.selectContainer.offsetLeft);
+            var targetRightX = fileDivs[i].offsetWidth + fileDivs[i].offsetLeft + fileDivs[0].parentElement.parentElement.offsetLeft;
+            var targetDownY = fileDivs[i].offsetHeight + fileDivs[i].offsetTop + fileDivs[0].parentElement.parentElement.offsetTop;
+            var targetLeftX = fileDivs[i].offsetLeft + fileDivs[0].parentElement.parentElement.offsetLeft;
+            var targetUpY = fileDivs[i].offsetTop + fileDivs[0].parentElement.parentElement.offsetTop;
+            var frameRangeRightX = fLeft + fWidth;
+            var frameRangeDownY = fTop + fHeight;
+            if (targetRightX > fLeft && targetDownY > fTop && targetLeftX < frameRangeRightX && targetUpY < frameRangeDownY) {
+                //selectedEls.push(fileDivs[i]);
+                this.selectedEls.push(i);
+            }
+        }
+        //console.log("selectedEls.push_result",this.selectedEls);
+        selDiv.style.display = 'none';
+        this.mouseOn = false;
+        return 'Finish';
+    };
+    BoxSelectionArea.prototype.setSelectContainer = function (Domname) {
+        this.selectContainer = document.getElementById(Domname);
+        console.log('BoxSelectionArea', this.selectContainer);
+    };
+    BoxSelectionArea.prototype.checkArrayisAllTrue = function (AllBlockColor) {
+        console.log('checkArrayisAllTrue_inputdata', AllBlockColor);
+        console.dir(AllBlockColor);
+        for (var i = 0; i < this.selectedEls.length; i++) {
+            //selectedEls.push(fileDivs[i]);
+            if (AllBlockColor[this.selectedEls[i]].border == false) {
+                console.log('checkArrayisAllTruefalse', 'index', this.selectedEls[i]);
+                return false;
+            }
+        }
+        //console.log("checkArrayisAllTruefalse","true");
+        return true; // 當全部 checked才能回傳 true
+    };
+    BoxSelectionArea.prototype.checkArrayisAllTrueP7 = function (AllBlockColor) {
+        console.log('checkArrayisAllTrueCustom_inputdata', AllBlockColor);
+        for (var i = 0; i < this.selectedEls.length; i++) {
+            if (AllBlockColor[this.selectedEls[i]] == false) {
+                return false;
+            }
+        }
+        return true; // 當全部 checked才能回傳 true
+    };
+    return BoxSelectionArea;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/keyboard/KeyAssignManager.ts":
 /*!******************************************!*\
   !*** ./src/keyboard/KeyAssignManager.ts ***!
@@ -4985,7 +5142,7 @@ var KeyBoardStyle = /** @class */ (function () {
         var target = document.getElementById(name);
         var targetArray = target.getElementsByClassName('SyncRGBColorBlockStyle');
         var targetUI = target.getElementsByClassName('RGBKeyBoardUITransparent');
-        targetUI[0].style.backgroundImage = this.keyBoardList[name].BGImageKeyerEffects;
+        //targetUI[0].style.backgroundImage = this.keyBoardList[name].BGImageKeyerEffects
         for (var _i = 0, _a = Object.entries(this.getAssignTarget(name).ItemCss); _i < _a.length; _i++) {
             var _b = _a[_i], key = _b[0], value = _b[1];
             targetArray[key].style.cssText += value;

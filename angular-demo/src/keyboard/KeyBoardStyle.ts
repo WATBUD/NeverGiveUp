@@ -239,7 +239,7 @@ export class KeyBoardStyle {
         var target = document.getElementById(name)
         var targetArray = target.getElementsByClassName('SyncRGBColorBlockStyle');
         var targetUI = target.getElementsByClassName('RGBKeyBoardUITransparent');
-        targetUI[0].style.backgroundImage = this.keyBoardList[name].BGImageKeyerEffects
+        //targetUI[0].style.backgroundImage = this.keyBoardList[name].BGImageKeyerEffects
         for (const [key, value] of Object.entries(this.getAssignTarget(name).ItemCss)) {
             targetArray[key].style.cssText += value
             //console.log(key, value);

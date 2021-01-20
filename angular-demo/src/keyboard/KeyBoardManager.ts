@@ -285,7 +285,7 @@ export class KeyBoard {
         for (let index = 0; index < KeyAssignUIStyleList.length; index++) {
             var Result = this.HasSet(index)
             let element = KeyAssignUIStyleList[index];
-            Result ? (element.style.border = '2px solid #ffc757') : (element.style.border = '');
+            //Result ? (element.style.border = '2px solid #ffc757') : (element.style.border = '');
         }
     }
     getKeyTargetOptionFrequency() {

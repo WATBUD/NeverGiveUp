@@ -85,7 +85,10 @@ export class BoxSelectionArea {
         }
         //console.log("selDiv_selDiv_mouseup", selDiv ,selDiv.offsetLeft,selDiv.offsetTop,selDiv.offsetWidth,selDiv.offsetHeight);
         //console.dir(selDiv) ;
-        var fileDivs = document.getElementsByClassName(this.searchTargetName)//Assign Search  Target
+        
+        //var fileDivs = document.getElementsByClassName(this.searchTargetName)//Assign Search  Target
+        var fileDivs:any =[];
+        fileDivs=document.getElementsByClassName(this.searchTargetName) as HTMLCollectionOf<Element>;
         this.selectedEls = new Array() //refresh
         var fLeft = selDiv.offsetLeft
         //-this.selectContainer.offsetLeft;-(fileDivs[0].parentElement.offsetLeft
