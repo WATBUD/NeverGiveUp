@@ -304,7 +304,7 @@ export class M_Light_CS {
                 this.mode_Breathing(inputColor,target.isRainbow);
                 break;
             case 'Breath':
-                    this.mode_Breath(inputColor,target.isRainbow);
+                this.mode_Breath(inputColor,target.isRainbow);
                     break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
@@ -995,9 +995,9 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         var repeatCount = 0;
         var mode_step = 0;
-        var step = 60;
+        var totalstep = 60;
         var nowStep = 0;
-        var colors=this.rainbow7Color();
+        //var colors=this.rainbow7Color();
         var nowC_index=0;
         this.setAllBlockColor([0, 0, 0, 1]);
         var repeatCountList=[];
@@ -1005,7 +1005,6 @@ export class M_Light_CS {
         var setRGB;
         var repeatCircleCount=0;
         //colors=this.rainbow7Color();
-
         console.log('%c mode_Breathing','color:rgb(255,75,255,1)',this.imageMaxWidth);
         //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
         for (let index = 0; index < target.length; index++) {
@@ -1016,9 +1015,7 @@ export class M_Light_CS {
                 repeatTime: this.getRandom(5, 25),
             });
         }
-
         console.log('repeatCountList', repeatCountList)
-
         this.repeater = setInterval(() => {
             //this.mode_reset();
             var t_Count=repeatCount%2;
@@ -1029,23 +1026,19 @@ export class M_Light_CS {
             else{
                 t_Count2=0;
             }
- 
             for (let index = 0; index < repeatCountList.length; index++) {     
                 var nowColor=[JSON.parse(JSON.stringify(colors[nowC_index])),[0,0,0,1]];
-
-
                 var t_data = [0,0,0,1];
-                t_data[0] = (nowColor[t_Count][0] * (step - nowStep) + nowColor[t_Count2][0] * nowStep) / step;
-                t_data[1] = (nowColor[t_Count][1] * (step - nowStep) + nowColor[t_Count2][1] * nowStep) / step;
-                t_data[2] = (nowColor[t_Count][2] * (step - nowStep) + nowColor[t_Count2][2] * nowStep) / step;
+                t_data[0] = (nowColor[t_Count][0] * (totalstep - nowStep) + nowColor[t_Count2][0] * nowStep) / totalstep;
+                t_data[1] = (nowColor[t_Count][1] * (totalstep - nowStep) + nowColor[t_Count2][1] * nowStep) / totalstep;
+                t_data[2] = (nowColor[t_Count][2] * (totalstep - nowStep) + nowColor[t_Count2][2] * nowStep) / totalstep;
                 var target = this.AllBlockColor;
                 target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
                 //console.log('element.color', t_data, step, nowStep)
             }
 
-            if(nowStep<step-1){
+            if(nowStep<totalstep-1){
                 nowStep+=1;
-                
             }
             else{
                 nowStep=0;
@@ -1149,8 +1142,8 @@ export class M_Light_CS {
         var startX=-StartPoint.clientWidth*5;
 
         this.repeater=setInterval(()=>{
-            var SlopeEquation=this.slopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
-            //console.log('SlopeEquation', SlopeEquation);
+            var SlopeEquation=this.slopeEquation([0+startX,this.imageMaxWidth/this.minKeyWidth],[startX+StartPoint.clientWidth*5,this.imageMaxHeight]);
+            console.log('SlopeEquation', SlopeEquation);
             this.mode_reset();
 
             var target = this.AllBlockColor;
@@ -1179,54 +1172,185 @@ export class M_Light_CS {
             }
         },25*this.animationSpeed)
     }
-    mode_Pingpong2(){
+    mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
+        var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
-        this.setAllBlockColor([0,0,0,1]);
-        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
-        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
-        var repeatCountList=[];
-        var times=0;
-       //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
-        //     //this.getRandom(0,4),
-        //     //this.getRandom(1,50)
-        //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
-        //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
-        //     //console.log(x, y);
-       var target = this.twoDimensionalArray;
-      // var a2=[0,3,5,8,11,13];
-        for (let index = 0; index < this.max_H_Number; index++) {
-            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-            repeatCountList.push({
-                color: [0, 0, 255, 1],
-                pos: [0,index],
-                backupPos:[0,index],
-                repeatTime: this.getRandom(0,3),
-            });
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
         }
-
-        this.repeater=setInterval(()=>{
-            this.resetTwoDimensionalArray();
-            for (let i2 = 0; i2 < repeatCountList.length; i2++) {
-                var T = repeatCountList[i2];
-                if (T.repeatTime > 0) {
-                    T.repeatTime -= 1;
-                }
-                if (T.repeatTime == 0) {
-                    if (T.pos[0] + 1 < 10) {
-                            T.pos[0] += 1;              
-                    }
-                    else {
-                        T.pos[0]=T.backupPos[0];
-                        T.repeatTime = 0;
-                    }
-                    //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
-                }
-                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
+        var setRGB=colors[this.getRandom(0, colors.length - 1)];
+        //console.log('StartPoint','color:green',JSON.stringify(StartPoint),this.AllBlockColor); 
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        //Math.trunc(3.7); // 3
+        var spacing=-5;
+        var nowColor=0;        
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var horizontalList = [];
+        var coordinateAllList=[];
+        for (let xpos = -this.minKeyWidth; xpos < this.imageMaxWidth; xpos += this.minKeyWidth) {
+            var space = 0;
+            var ItemList = [];
+            for (let ypos = 0; ypos < this.imageMaxHeight; ypos += StartPoint.clientHeight / 2) {
+                space += this.minKeyWidth/10;
+                ItemList.push(
+                    {
+                        coordinate: [xpos + space, ypos],
+                        isCheck: false,
+                    });
             }
-            this.showTwoDimensionalArray();
-        },50*this.animationSpeed);
+            coordinateAllList.push(ItemList);
+        }
+    
+            console.log('coordinateAllList', coordinateAllList);  
+
+        console.log('horizontalList', horizontalList);  
+
+        var handleAllList=[];
+        var AllItemList=[];
+        var target = this.AllBlockColor;       
+
+
+        for (let i33 = 0; i33 < coordinateAllList.length; i33++) {
+            var coordinateData = coordinateAllList[i33];
+            if (nowColor < colors.length-1) {
+                nowColor += 1;
+            }
+            else {
+                nowColor = 0;
+            }
+            var ItemList = [];
+
+            for (let index = 0; index < target.length; index++) {
+                var isCheck = false;
+                const element = target[index];
+                for (let i2 = 0; i2 < coordinateData.length; i2++) {
+                    var T = coordinateData[i2];
+                    
+                    if (T.coordinate[0] > element.coordinateData.top_Left[0] &&
+                        T.coordinate[0] < element.coordinateData.top_Right[0] &&
+                        T.coordinate[1] > element.coordinateData.top_Left[1] &&
+                        T.coordinate[1] < element.coordinateData.bottom_Left[1] 
+                        && (handleAllList.find((x) => x == index) == undefined)
+                    ) {
+                        handleAllList.push(index);
+                        //isCheck=true;
+                        ItemList.push(index);
+                        //element.color = colors[this.getRandom(0, colors.length - 1)];
+                        //console.log('                        colors[nowColor]',                         colors[nowColor],nowColor);       
+                        element.color = JSON.parse(JSON.stringify(colors[nowColor]));
+                        continue;
+                    }
+
+                }
+            }
+            AllItemList.push(ItemList);
+
+        }
+       console.log('handleAllList', handleAllList);       
+       console.log('AllItemList', AllItemList);       
+
+       
+
+
+
+        var repeatCount=0;
+        this.repeater = setInterval(() => {
+\        }, 100)
+    }
+    mode_WaveSyncBack(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var intervalCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
+        }
+        var setRGB=colors[this.getRandom(0, colors.length - 1)];
+        //console.log('StartPoint','color:green',JSON.stringify(StartPoint),this.AllBlockColor); 
+        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
+        //Math.trunc(3.7); // 3
+        var spacing=-5;
+        var nowColor=0;        
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var horizontalList = [];
+        var coordinateAllList=[];
+
+
+        for (let xpos = -this.minKeyWidth; xpos < this.imageMaxWidth; xpos += this.minKeyWidth) {
+            var space = 0;
+            var ItemList = [];
+            for (let ypos = 0; ypos < this.imageMaxHeight; ypos += StartPoint.clientHeight / 2) {
+                space += this.minKeyWidth/10;
+                ItemList.push(
+                    {
+                        coordinate: [xpos + space, ypos],
+                        isCheck: false,
+                    });
+            }
+            coordinateAllList.push(ItemList);
+        }
+    
+            console.log('coordinateAllList', coordinateAllList);  
+
+        console.log('horizontalList', horizontalList);  
+
+        var handleAllList=[];
+        var AllItemList=[];
+        var target = this.AllBlockColor;       
+
+
+        for (let i33 = 0; i33 < coordinateAllList.length; i33++) {
+            var coordinateData = coordinateAllList[i33];
+            if (nowColor < colors.length-1) {
+                nowColor += 1;
+            }
+            else {
+                nowColor = 0;
+            }
+            var ItemList = [];
+
+            for (let index = 0; index < target.length; index++) {
+                var isCheck = false;
+                const element = target[index];
+                for (let i2 = 0; i2 < coordinateData.length; i2++) {
+                    var T = coordinateData[i2];
+                    
+                    if (T.coordinate[0] > element.coordinateData.top_Left[0] &&
+                        T.coordinate[0] < element.coordinateData.top_Right[0] &&
+                        T.coordinate[1] > element.coordinateData.top_Left[1] &&
+                        T.coordinate[1] < element.coordinateData.bottom_Left[1] 
+                        && (handleAllList.find((x) => x == index) == undefined)
+                    ) {
+                        handleAllList.push(index);
+                        //isCheck=true;
+                        ItemList.push(index);
+                        //element.color = colors[this.getRandom(0, colors.length - 1)];
+                        //console.log('                        colors[nowColor]',                         colors[nowColor],nowColor);       
+                        element.color = JSON.parse(JSON.stringify(colors[nowColor]));
+                        continue;
+                    }
+
+                }
+            }
+            AllItemList.push(ItemList);
+
+        }
+       console.log('handleAllList', handleAllList);       
+       console.log('AllItemList', AllItemList);       
+
+       
+
+
+
+        var repeatCount=0;
+        this.repeater = setInterval(() => {
+\        }, 100)
     }
     mode_Parallelogram(){
         clearInterval(this.repeater);
