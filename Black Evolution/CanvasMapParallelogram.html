@@ -37,10 +37,12 @@
   var ctx = canvas.getContext('2d');
 
   ctx.beginPath();//產生一個新路徑，產生後再使用繪圖指令來設定路徑。
-  ctx.moveTo(0, 0);
-  ctx.lineTo(25, 25);
-  ctx.lineTo(150, 25);
-  ctx.lineTo(125, 0);
+  var nowAddDis=50;
+  ctx.moveTo(0+nowAddDis, 0);
+  ctx.lineTo(25+nowAddDis, 0);
+  ctx.lineTo(35+nowAddDis, 10);
+  ctx.lineTo(10+nowAddDis, 10);
+  ctx.lineTo(0+nowAddDis, 0);
   ctx.stroke();  // ctx.rect(50, 0, 5, 5);//正方 rect(startx, startY, Height, width);
   // ctx.rect(25, 50, 5, 5);//正方 rect(startx, startY, Height, width);
   // ctx.rect(50, 50, 5, 5);//正方 rect(startx, startY, Height, width);
