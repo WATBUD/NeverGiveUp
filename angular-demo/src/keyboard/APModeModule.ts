@@ -1173,7 +1173,7 @@ export class M_Light_CS {
         },25*this.animationSpeed)
     }
     mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1206,14 +1206,14 @@ export class M_Light_CS {
         // ctx.lineTo(0, 0);
         var nowAddDis=0;
 
-        while(nowAddDis<200){
-            nowAddDis+=35;
+        while(nowAddDis<500){
+            nowAddDis+=this.minKeyWidth;
             Parallelogram_point.push(
                 {
-                "top_Left": [-45+nowAddDis, 0],
-                "top_Right": [0+nowAddDis, 0],
-                "bottom_Left": [-25+nowAddDis ,PartH],
-                "bottom_Right": [20+nowAddDis,PartH],
+                "top_Left": [-this.minKeyWidth*3+nowAddDis, 0],
+                "top_Right": [-this.minKeyWidth*3+25+nowAddDis, 0],
+                "bottom_Left": [this.minKeyWidth+nowAddDis ,PartH],
+                "bottom_Right": [this.minKeyWidth+25+nowAddDis,PartH],
                 })
         }
         console.log('Parallelogram_point', Parallelogram_point);       
@@ -1222,9 +1222,10 @@ export class M_Light_CS {
         // }
         var target = this.AllBlockColor;       
         var handleAllList=[];
-
+   
         for (let i2 = 0; i2 < Parallelogram_point.length; i2++) {
             var P_Target = Parallelogram_point[i2];
+            //var P_Target = Parallelogram_point[0];
             var angleLeft=this.PointRotation(P_Target.top_Left,P_Target.bottom_Left);
             var angleRight=this.PointRotation(P_Target.top_Right,P_Target.bottom_Right);
             console.log('angleLeft', angleLeft);       
@@ -1237,13 +1238,13 @@ export class M_Light_CS {
             }
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];                          
-                var t_angleLeft=this.PointRotation(P_Target.top_Left,element.coordinateData.top_Right);
-                var t_angleRight=this.PointRotation(P_Target.top_Right,element.coordinateData.top_Right);
-                console.log('t_angleLeft', t_angleLeft);       
-                console.log('t_angleRight', t_angleRight);       
+                var t_angleLeft=this.PointRotation(P_Target.top_Left,element.coordinateData.top_Left);
+                var t_angleRight=this.PointRotation(P_Target.top_Right,element.coordinateData.top_Left); 
                 if (t_angleRight>angleRight&& t_angleLeft<angleLeft 
                     &&(handleAllList.find((x) => x == index) == undefined)
                     ){
+                        console.log('t_angleLeft', t_angleLeft,index);       
+                        console.log('t_angleRight', t_angleRight,index);      
                     handleAllList.push(index);
 
                     element.color = JSON.parse(JSON.stringify(colors[nowColor]));
@@ -1333,7 +1334,7 @@ export class M_Light_CS {
 
 
     mode_WaveSyncbackup(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_Pingpong_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%ccmode_WaveSyncbackup_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1418,8 +1419,7 @@ export class M_Light_CS {
 
 
         var repeatCount=0;
-        this.repeater = setInterval(() => {
-\        }, 100)
+        this.repeater = setInterval(() => {}, 100)
     }
     mode_Parallelogram(){
         clearInterval(this.repeater);
@@ -3011,8 +3011,8 @@ export class M_Light_CS {
 
     }
     PointRotation(PointA, PointB) {
-        var Dx = PointB[0] - PointA[0];
-        var Dy = PointB[1] - PointA[1];
+        var Dx = Math.abs(PointB[0] - PointA[0]);
+        var Dy = Math.abs(PointB[1] - PointA[1]);
         var DRoation = Math.atan2(Dy, Dx);
         //console.log('PointRotation,Math.atan2', DRoation);
         var WRotation = DRoation / Math.PI * 180;
