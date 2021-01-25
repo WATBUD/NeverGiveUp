@@ -378,7 +378,7 @@ class LinearBand extends Effect {
 		for (let i=0; i<lights.length; ++i) {
 			if (!selects[i]) continue;
 			var light = lights[i];
-			var d = light.x * dx + light.y * dy;//x*cos+y*sin
+			var d = light.x * dx + light.y * dy;
 			var scale = (d - this.position) / this.bandwidth / this.color_number;
 			var output = [0,0,0];
 			this.getColor(output, scale, true);

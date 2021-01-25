@@ -1172,7 +1172,114 @@ export class M_Light_CS {
             }
         },25*this.animationSpeed)
     }
+
     mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var intervalCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
+            colors= colors.concat(colors);
+        }
+        //console.log('%c colors','color:rgb(255,75,255,1)',colors);
+        var setRGB=colors[this.getRandom(0, colors.length - 1)];
+        var spacing=-5;
+        var nowColor=0;        
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var angle=30;
+        var theta = Math.PI * 30 / 180;//弧度
+
+
+
+
+		var dx =  Math.cos(theta);
+        var dy = -Math.sin(theta);
+        if (Math.abs(dx) < 1e-5) dx = 0;
+		if (Math.abs(dy) < 1e-5) dy = 0;
+        var position=0;
+        var color_number=colors.length;
+        var bandwidth=20;
+        var target = this.AllBlockColor;       
+        var handleAllList=[];
+        position+=5;
+
+
+            //console.log('%c getColor','color:rgb(255,75,255,1)',result,this.use_scales,loop,this.colors,scales);
+              
+
+       //console.log('handleAllList', handleAllList);       
+       //console.log('AllItemList', AllItemList);       
+
+       
+        this.repeater = setInterval(() => {
+            //position+=5;
+            position += 50;
+            position %= bandwidth * color_number;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                //var y=sinx + cosx;
+                //var y=sinx + cosx;
+                var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;    //x*cos+y*sin
+                var scale = (OffsetValue - position) / bandwidth / color_number;      
+                var defaultscales = [
+                    0, 0.2, 0.4, 0.6, 0.8
+                ];
+                //console.log('%c dy','color:rgb(255,75,255,1)',dx,dy);
+     
+        
+                // console.log('%c OffsetValue','color:rgb(255,75,255,1)',OffsetValue);
+                // console.log('%c scale','color:rgb(255,75,255,1)',String(scale));
+                // console.log('%c position','color:rgb(255,75,255,1)',position);
+                // console.log('%c bandwidth','color:rgb(255,75,255,1)',bandwidth);
+
+                var scales = defaultscales.slice(0);
+                scale -= Math.floor(scale);	// [0, 1)                
+                // var min_index = 0;
+                // var min_scale = 1.1;
+                // var max_index = 0;
+                // var max_scale = 0;
+                // //console.log('%c scale','color:rgb(255,75,255,1)',String(scale));
+
+                // for (let i=0; i<color_number; ++i) {
+                //     if (scales[i] >= max_scale)
+                //         max_scale = scales[max_index = i];
+                //     if (scales[i] < min_scale)
+                //         min_scale = scales[min_index = i];
+                // }
+                var lower_index = -1;
+                var lower_scale = 0;
+                var upper_index = colors.length;
+                var upper_scale = 1;
+                for (let i=0; i<color_number; ++i){
+                    if (scales[i] <= scale) {
+                        if (scales[i] >= lower_scale)
+                        //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
+                            lower_scale = scales[lower_index = i];
+                            //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
+
+                    } else {
+                        if (scales[i] < upper_scale)
+                            upper_scale = scales[upper_index = i];
+                    }
+                }
+                //console.log('%c lower_scale','color:rgb(255,75,255,1)',upper_scale);
+
+                //console.log('%c upper_scale','color:rgb(255,75,255,1)',upper_scale);
+                    // colors[lower_index];
+                //element.color = JSON.parse(JSON.stringify(colors[nowColor]));
+
+                element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
+            }
+
+        }, 100)
+    }
+
+	
+
+    mode_WaveSyncBack2(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
