@@ -254,7 +254,10 @@ export class AppComponent implements OnInit {
         this.M_Light_CS.setPassiveEffects();
     }
     DeveloperControl() {
-        this.M_Light_CS.mode_WaveSync();
+        //this.M_Light_CS.mode_WaveSync();
+        this.M_Light_CS.mode_Spiral();
+        //this.M_Light_CS.mode_Peacock();
+
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
             //console.log("KeyShortcut_event.keyCode", event.keyCode);

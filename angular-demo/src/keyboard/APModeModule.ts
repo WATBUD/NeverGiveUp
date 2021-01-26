@@ -1240,18 +1240,6 @@ export class M_Light_CS {
 
                 var scales = defaultscales.slice(0);
                 scale -= Math.floor(scale);	// [0, 1)                
-                // var min_index = 0;
-                // var min_scale = 1.1;
-                // var max_index = 0;
-                // var max_scale = 0;
-                // //console.log('%c scale','color:rgb(255,75,255,1)',String(scale));
-
-                // for (let i=0; i<color_number; ++i) {
-                //     if (scales[i] >= max_scale)
-                //         max_scale = scales[max_index = i];
-                //     if (scales[i] < min_scale)
-                //         min_scale = scales[min_index = i];
-                // }
                 var lower_index = -1;
                 var lower_scale = 0;
                 var upper_index = colors.length;
@@ -1277,10 +1265,167 @@ export class M_Light_CS {
                 element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
             }
 
+        }, 1000)
+    }
+
+    mode_Spiral(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var intervalCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
+            //colors= colors.concat(colors);
+        }
+        //console.log('%c colors','color:rgb(255,75,255,1)',colors);
+
+        var setRGB=colors[this.getRandom(0, colors.length - 1)];
+        var spacing=-5;
+        var nowColor=0;        
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var angle=0;
+        var theta = Math.PI * 30 / 180;//弧度
+		var dx =  Math.cos(theta);
+        var dy = -Math.sin(theta);
+        if (Math.abs(dx) < 1e-5) dx = 0;
+		if (Math.abs(dy) < 1e-5) dy = 0;
+        var position=0;
+        var color_number=colors.length;
+        var bandwidth=20;
+        var target = this.AllBlockColor;       
+        position+=5;    
+        this.repeater = setInterval(() => {
+            angle+=10*1;//-1 反向
+            var bandangle=360/(colors.length);
+            var dis_angle=angle%360;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                //var y=sinx + cosx;
+                //var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;  //x*cos+y*sin=P(x,y)theta
+
+                var center_Point=[this.imageMaxWidth/2,this.imageMaxHeight/2];
+                var PointRotation=this.PointRotation(center_Point,element.coordinateData.center_Point);
+                if(PointRotation<0){
+                    PointRotation+=360;
+                }
+                var remainder;
+                var scale = (PointRotation - angle) / bandangle / colors.length;// / colors.length
+                // var defaultscales = [
+                //     0, 0.5,0.1, 0.3, 0.5, 0.7, 0.9
+                // ];
+                var defaultscales = [
+                ];
+                var addvalue=0;
+                for (let index = 0; index < colors.length; index++) {
+                    addvalue+=1/colors.length;
+                    defaultscales.push(addvalue);    
+                }
+                ///(360/colors.length);
+                remainder=Math.floor(remainder);
+                scale -= Math.floor(scale);	// [0, 1)
+                var data={
+                    PointRotation:PointRotation,
+                    remainder:scale,
+                    dis_angle:dis_angle,
+                    part:bandangle,
+                }
+                console.log('%c data','color:rgb(255,75,255,1)',data);
+
+                var scales = defaultscales.slice(0);
+                
+                var lower_index = -1;
+                var lower_scale = 0;
+                var upper_index = colors.length;
+                var upper_scale = 1;
+                for (let i=0; i<color_number; ++i){
+                    if (scales[i] <= scale) {
+                        if (scales[i] >= lower_scale)
+                        //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
+                            lower_scale = scales[lower_index = i];
+                            //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
+
+                    } else {
+                        if (scales[i] < upper_scale)
+                            upper_scale = scales[upper_index = i];
+                    }
+                }
+                //console.log('%c lower_scale','color:rgb(255,75,255,1)',lower_scale,upper_scale,lower_index,upper_index);
+                //console.log('%c data','color:rgb(255,75,255,1)',data);
+                //console.log('%c remai nder','color:rgb(255,75,255,1)',PointRotation,remainder,dis_angle,part);
+                // if(colors[remainder]===undefined){
+                //     console.log('%c data','color:rgb(255,75,255,1)',data,lower_index);
+                //     return;
+                // }
+                element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
+            }
+
+        }, 100)
+    }
+    mode_Peacock(colors = [[255,0,0,1]], isRainbow = true){
+        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        clearInterval(this.repeater);
+        this.currentBlockIndex=0;
+        var intervalCount=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
+            //colors= colors.concat(colors);
+        }    
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var angle=0;
+        var theta = Math.PI * 30 / 180;//弧度
+		var dx =  Math.cos(theta);
+        var dy = -Math.sin(theta);
+        if (Math.abs(dx) < 1e-5) dx = 0;
+		if (Math.abs(dy) < 1e-5) dy = 0;
+        var target = this.AllBlockColor;        
+        this.repeater = setInterval(() => {
+            //position+=5;
+            angle+=10;
+
+            var part=360/colors.length;
+            var dis_angle=angle%360;
+            // position += 50;
+            // position %= bandwidth * color_number;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                //var y=sinx + cosx;
+                //var y=sinx + cosx;
+                var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;  //x*cos+y*sin=P(x,y)theta
+
+                var center_Point=[this.imageMaxWidth/2,this.imageMaxHeight/2];
+                var PointRotation=this.PointRotation(center_Point,element.coordinateData.center_Point);
+                var remainder;
+                dis_angle<0?dis_angle+=360:'';
+                remainder=Math.abs(dis_angle-PointRotation)/part;
+         
+                remainder=Math.floor(remainder);
+                remainder>6?remainder=6:'';
+
+                var data={
+                    PointRotation:PointRotation,
+                    remainder:remainder,
+                    dis_angle:dis_angle,
+                    part:part,
+                }
+                console.log('%c data','color:rgb(255,75,255,1)',data);
+                //console.log('%c remainder','color:rgb(255,75,255,1)',PointRotation,remainder,dis_angle,part);
+
+
+                //console.log('%c upper_scale','color:rgb(255,75,255,1)',upper_scale);
+                    // colors[lower_index];
+                //element.color = JSON.parse(JSON.stringify(colors[nowColor]));
+
+                element.color = JSON.parse(JSON.stringify(colors[remainder]));   
+            }
+
         }, 100)
     }
 
-	
+
 
     mode_WaveSyncBack2(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
@@ -3121,8 +3266,10 @@ export class M_Light_CS {
 
     }
     PointRotation(PointA, PointB) {
-        var Dx = Math.abs(PointB[0] - PointA[0]);
-        var Dy = Math.abs(PointB[1] - PointA[1]);
+        // var Dx = Math.abs(PointB[0] - PointA[0]);
+        // var Dy = Math.abs(PointB[1] - PointA[1]);
+        var Dx =(PointB[0] - PointA[0]);
+        var Dy =(PointB[1] - PointA[1]);
         var DRoation = Math.atan2(Dy, Dx);
         //console.log('PointRotation,Math.atan2', DRoation);
         var WRotation = DRoation / Math.PI * 180;
