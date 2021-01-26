@@ -341,7 +341,10 @@ export class M_Light_CS {
                 break;    
             case 'Snowing':
                 this.mode_Snowing(inputColor,target.isRainbow);
-                break;        
+                break;   
+            case 'WaveSync':
+                    this.mode_WaveSync(inputColor,true);
+                    break;              
             default:
                 break;
         }
@@ -1222,7 +1225,7 @@ export class M_Light_CS {
                 var element = target[index];
                 //var y=sinx + cosx;
                 //var y=sinx + cosx;
-                var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;    //x*cos+y*sin
+                var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;  //x*cos+y*sin=P(x,y)theta
                 var scale = (OffsetValue - position) / bandwidth / color_number;      
                 var defaultscales = [
                     0, 0.2, 0.4, 0.6, 0.8
