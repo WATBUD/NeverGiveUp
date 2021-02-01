@@ -1310,16 +1310,16 @@ export class M_Light_CS {
                 }
                 var remainder;
                 var scale = (PointRotation - angle) / bandangle / colors.length;// / colors.length
-                // var defaultscales = [
-                //     0, 0.5,0.1, 0.3, 0.5, 0.7, 0.9
-                // ];
                 var defaultscales = [
+                    0, 0.5,0.1, 0.3, 0.5, 0.7, 0.9
                 ];
-                var addvalue=0;
-                for (let index = 0; index < colors.length; index++) {
-                    addvalue+=1/colors.length;
-                    defaultscales.push(addvalue);    
-                }
+                // var defaultscales = [
+                // ];
+                // var addvalue=0;
+                // for (let index = 0; index < colors.length; index++) {
+                //     addvalue+=1/colors.length;
+                //     defaultscales.push(addvalue);    
+                // }
                 ///(360/colors.length);
                 remainder=Math.floor(remainder);
                 scale -= Math.floor(scale);	// [0, 1)
