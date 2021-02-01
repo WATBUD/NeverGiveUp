@@ -276,7 +276,7 @@ export class M_Light_CS {
     }
     
     setNowLightMode() {
-        
+        console.log('%c setNowLightMode','color:rgb(255,77,255)', this.lightData);
         var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
         if(inputColor==undefined){
             //this.lightData;
@@ -287,7 +287,7 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         this.setAllBlockColor([0, 0, 0, 1]);
         var target=this.lightData;
-        switch (target.lightSelected.translate) {
+        switch (target.PointEffectName) {
             case 'GloriousMode':
                 break;
             case 'SpiralingWave':
@@ -296,19 +296,19 @@ export class M_Light_CS {
                 this.mode_AcidMode(inputColor);
                 break;
             case 'Breathing':
-                this.mode_Breathing(inputColor,target.isRainbow);
+                this.mode_Breathing(inputColor,target.Multicolor);
                 break;
             case 'Breath':
-                this.mode_Breath(inputColor,target.isRainbow);
+                this.mode_Breath(inputColor,target.Multicolor);
                     break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
                 break;
             case 'Matrix2':
-                this.mode_Matrix2(inputColor,target.isRainbow);
+                this.mode_Matrix2(inputColor,target.Multicolor);
                 break;
             case 'Matrix3':
-                this.mode_Matrix3(inputColor,target.isRainbow);
+                this.mode_Matrix3(inputColor,target.Multicolor);
                 break;
             case 'Rainbow':
                 this.mode_Rainbow();
@@ -320,13 +320,13 @@ export class M_Light_CS {
                 this.mode_DigitTimes(inputColor);
                 break;
             case 'Kamehemeha':
-                this.mode_Kamehemeha(inputColor,target.isRainbow)
+                this.mode_Kamehemeha(inputColor,target.Multicolor)
                 break;
             case 'Pingpong':
-                this.mode_Pingpong(inputColor,target.isRainbow);
+                this.mode_Pingpong(inputColor,target.Multicolor);
                 break;
             case 'Surmount':
-                this.mode_Surmount(inputColor,target.isRainbow,this.centerBlockPoint);
+                this.mode_Surmount(inputColor,target.Multicolor,this.centerBlockPoint);
                 break;
             case 'LEDOFF':
                 this.mode_LEDOFF();
@@ -335,7 +335,7 @@ export class M_Light_CS {
                 this.mode_Starlight();
                 break;    
             case 'Snowing':
-                this.mode_Snowing(inputColor,target.isRainbow);
+                this.mode_Snowing(inputColor,target.Multicolor);
                 break;   
             case 'WaveSync':
                 this.mode_WaveSync(inputColor, true, 20);
@@ -361,9 +361,9 @@ export class M_Light_CS {
         var target=this.lightData;
         var index=this.currentBlockIndex;
         console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
-        switch (target.lightSelected.translate) {
+        switch (target.PointEffectName) {
             case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor,target.isRainbow,index);
+                this.mode_RippleGraff(inputColor,target.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
                 this.mode_PassWithoutTrace(inputColor,index);
@@ -502,7 +502,7 @@ export class M_Light_CS {
     }
     setAnimationSpeed(){
         //this.acceleration
-        this.animationSpeed =1*(1-this.lightData.rate/400);
+        this.animationSpeed =1*(1-this.lightData.speed/400);
     }
     mode_Kamehemeha(colors=[[255,0,0,1]], isRainbow = true){
         clearInterval(this.repeater);
@@ -676,7 +676,7 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
-                if(this.lightData.lightSelected.value==16){
+                if(this.lightData.PointEffectName=="Kamehemeha"){
                     this.mode_Kamehemeha(colors,isRainbow);
                 }
             }
@@ -746,7 +746,7 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
-                if(this.lightData.lightSelected.value==16){
+                if(this.lightData.PointEffectName=="Kamehemeha"){
                     this.mode_Kamehemeha(colors,isRainbow);
                 }
             }
@@ -819,7 +819,7 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
-                if(this.lightData.lightSelected.value==16){
+                if(this.lightData.PointEffectName=="Kamehemeha"){
                     this.mode_Kamehemeha(colors,isRainbow);
                 }
             }

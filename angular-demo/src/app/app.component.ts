@@ -195,7 +195,7 @@ export class AppComponent implements OnInit {
 
     default_LightData(defaultcolor = [255,0,0,1]) {
         var T = {
-            rate:50,
+            speed:50,
             brightness:50,
             colorHex:'#0000',
             colorPickerValue:defaultcolor,
@@ -224,7 +224,7 @@ export class AppComponent implements OnInit {
             showValue=this.M_Light_CS.lightData.brightness;           
         }
         if(TargetName=='PRESETS_RateSlider'){
-            showValue=this.M_Light_CS.lightData.rate;
+            showValue=this.M_Light_CS.lightData.speed;
         }
         console.log('lightSliderMove',TargetName,showValue);
 
@@ -248,8 +248,8 @@ export class AppComponent implements OnInit {
     setMode(modeName,color=[0,0,0,1], isRainbow = true){
         console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
         this.M_Light_CS.lightData.colorPickerValue=color;
-        this.M_Light_CS.lightData.isRainbow=isRainbow;
-        this.M_Light_CS.lightData.lightSelected.translate=modeName;
+        this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        this.M_Light_CS.lightData.translate=modeName;
         this.M_Light_CS.setAnimationSpeed();
         this.M_Light_CS.setNowLightMode();
         this.M_Light_CS.setPassiveEffects();
