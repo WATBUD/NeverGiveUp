@@ -236,7 +236,8 @@ export class AppComponent implements OnInit {
                 showValue +
                 '%, #313131 100%)'
         }
-
+        this.M_Light_CS.setAnimationSpeed();
+        this.M_Light_CS.setNowLightMode();
       
     }
     sliderChange(){
@@ -254,8 +255,10 @@ export class AppComponent implements OnInit {
         this.M_Light_CS.setPassiveEffects();
     }
     DeveloperControl() {
-        //this.M_Light_CS.mode_WaveSync();
-        this.M_Light_CS.mode_Spiral();
+        this.setMode('Wave1',[255,255,0,1],false);
+
+
+        //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
 
         //this.setMode('AcidMode');

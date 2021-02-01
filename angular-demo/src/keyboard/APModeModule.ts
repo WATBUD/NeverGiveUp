@@ -290,11 +290,6 @@ export class M_Light_CS {
         switch (target.lightSelected.translate) {
             case 'GloriousMode':
                 break;
-            case 'Wave#1':
-                //this.mode_Wave1(inputColor);
-                break;
-            case 'Wave#2':
-                break;
             case 'SpiralingWave':
                 break;
             case 'AcidMode':
@@ -343,8 +338,14 @@ export class M_Light_CS {
                 this.mode_Snowing(inputColor,target.isRainbow);
                 break;   
             case 'WaveSync':
-                    this.mode_WaveSync(inputColor,true);
-                    break;              
+                this.mode_WaveSync(inputColor, true, 20);
+                break;
+            case 'Wave1':
+                this.mode_WaveSync(inputColor, true, 100);
+                break;
+            case 'Wave2':
+                this.mode_WaveSync(inputColor, true, 250,100);
+                break;                                      
             default:
                 break;
         }
@@ -511,25 +512,27 @@ export class M_Light_CS {
         var centerBlockIndex=this.centerBlockPoint;
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(this.centerBlockPoint).coordinateData;
-        var mode_step = 0;
-        var step = 60;
-        var nowStep = 0;
         this.setAllBlockColor([0, 0, 0, 1]);
         var target = this.AllBlockColor;
         var setRGB=this.rainbow7Color();
         var setArray=JSON.parse(JSON.stringify(this.qigong_Step1_Range));
+        console.log('enter mode_Kamehemeha')
+
         this.repeater = setInterval(() => {
             //this.mode_reset();  
             //this.setAllBlockColor([0, 0, 0, 1]);
             for (let index = 0; index < setArray.length; index++) {
             target[setArray[index]].color=colors[this.getRandom(0,colors.length-1)]; 
             }
+
             for (let index = 0; index < setArray.length; index++) {
                 if (setArray[index] < centerBlockIndex) {
                     setArray[index]+=1;
                 }
                 else{
-                    setArray[index]-=1;
+                    if( target[setArray[index]].coordinateData.center_Point[0]>StartPoint.center_Point[0]){
+                        setArray[index]-=1;
+                    }
                 }
             }       
             repeatCount += 1;
@@ -1176,7 +1179,7 @@ export class M_Light_CS {
         },25*this.animationSpeed)
     }
 
-    mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true){
+    mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true,bandwidth=20,BaseSpeed=140){
         console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
@@ -1185,26 +1188,21 @@ export class M_Light_CS {
         if (isRainbow) {
             //colors =this.rainbow7Color();
             colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
-            colors= colors.concat(colors);
+            //colors= colors.concat(colors);
         }
         //console.log('%c colors','color:rgb(255,75,255,1)',colors);
         var setRGB=colors[this.getRandom(0, colors.length - 1)];
         var spacing=-5;
         var nowColor=0;        
         this.setAllBlockColor([0, 0, 0, 1]);
-        var angle=30;
-        var theta = Math.PI * 30 / 180;//弧度
-
-
-
-
+        var angle=40;
+        var theta = Math.PI * angle / 180;//弧度
 		var dx =  Math.cos(theta);
         var dy = -Math.sin(theta);
         if (Math.abs(dx) < 1e-5) dx = 0;
 		if (Math.abs(dy) < 1e-5) dy = 0;
         var position=0;
         var color_number=colors.length;
-        var bandwidth=20;
         var target = this.AllBlockColor;       
         var handleAllList=[];
         position+=5;
@@ -1265,7 +1263,7 @@ export class M_Light_CS {
                 element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
             }
 
-        }, 1000)
+        }, BaseSpeed*this.animationSpeed)
     }
 
     mode_Spiral(colors = [[255,0,0,1]], isRainbow = true){
@@ -2061,7 +2059,6 @@ export class M_Light_CS {
        //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
        //     //console.log(x, y);
       var target = this.twoDimensionalArray;
-     // var a2=[0,3,5,8,11,13];
        for (let index = 0; index < this.max_X_Number; index++) {
            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
            for (let index2 = 0; index2 < rainbowColors.length; index2++) {
@@ -2474,7 +2471,7 @@ export class M_Light_CS {
 
         },60*this.animationSpeed)
     }
-    mode_Matrix3_Raindow(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
+    mode_Matrix3_Rainbow(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
