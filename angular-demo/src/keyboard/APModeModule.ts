@@ -128,11 +128,13 @@ export class M_Light_CS {
         if(!Clear){
             this.AllBlockColor[index].color=[0,0,0,0];
             this.AllBlockColor[index].breathing=false;
+            this.AllBlockColor[index].clearStatus=false;
         }
         else{
             this.AllBlockColor[index].color=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
             this.AllBlockColor[index].breathing=this.lightData.breathing;
-            console.log('%c setPerkey','color:rgb(255,77,255)',  this.AllBlockColor[index].breathing);
+            this.AllBlockColor[index].clearStatus=true;
+            console.log('%c setPerkey,breathing,Clear','color:rgb(255,77,255)',  this.AllBlockColor[index].breathing,Clear);
         }
     }
 
@@ -2428,12 +2430,7 @@ export class M_Light_CS {
                     coordinate:[index,StartPoint.top_Left[0]+ypos],
                 }    
                );
-            console.log('horizontalList', horizontalList);    
         }
-
-        var record=0;
-        //var radian = 75 * Math.PI / 180;    //計算出弧度
-        var maxH=268;
         this.repeater=setInterval(()=>{
             this.setAllBlockColor([0,0,0,1]);
             var spacing=-5;
@@ -2448,7 +2445,6 @@ export class M_Light_CS {
                 else{
                     h_Item['coordinate'][1]+=40;
                 }   
-                //console.log('horizontalList', horizontalList);    
             }
     
             console.log('horizontalList', horizontalList);    

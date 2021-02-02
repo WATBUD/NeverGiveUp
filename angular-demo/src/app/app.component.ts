@@ -11,6 +11,8 @@ import { KeyBoardStyle } from '../keyboard/KeyBoardStyle'
 
 import { M_Light_CS } from '../keyboard/APModeModule'
 import { MatDialogRef } from '@angular/material'
+import { Built_ineffect,GloriousMode } from './Built_ineffect'
+
 import { AllFunctionMapping } from '../backend/others/SupportData'
 import {
     Component,
@@ -69,7 +71,7 @@ export class AppComponent implements OnInit {
     M_Light_CS = new M_Light_CS(83)
     KeyBoardManager = new KeyBoardManager(83)
     KeyAssignManager = new KeyAssignManager();
-
+    Built_ineffect=new Built_ineffect();
     //Profile
     ProfileData: any = []
     profileSelect: any
@@ -81,11 +83,8 @@ export class AppComponent implements OnInit {
         { name: '500Hz', value: 500, translate: '500Hz' },
         { name: '1000Hz', value: 1000, translate: '1000Hz' },
     ]
-
     buttonNum: number = 0
     currentDevice: any
-
-    zzzz=0;
     constructor(
         //private macroService: MacroService,
         private cdr: ChangeDetectorRef,
@@ -98,8 +97,10 @@ export class AppComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.M_Light_CS.lightData=this.default_LightData();
+        //this.M_Light_CS.lightData=this.default_LightData();
+        this.M_Light_CS.lightData=this.Built_ineffect.getTarget();
 
+        
     }
 
     ngOnDestroy() {
@@ -207,6 +208,7 @@ export class AppComponent implements OnInit {
             isRainbow:false,
             lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode', }
         }
+        
         return T;
     }
     PERKEY_BrightnessSlider_Background(){
@@ -249,6 +251,7 @@ export class AppComponent implements OnInit {
         console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
         this.M_Light_CS.lightData.colorPickerValue=color;
         this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        this.M_Light_CS.lightData.PointEffectName=modeName;
         this.M_Light_CS.lightData.translate=modeName;
         this.M_Light_CS.setAnimationSpeed();
         this.M_Light_CS.setNowLightMode();
