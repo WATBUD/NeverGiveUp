@@ -144,7 +144,13 @@ export class M_Light_CS {
     }
     resetDefault(resetData) {
         this.lightData =resetData;
-        for (var i = 0; i < this.maxkaycapNumber; i++) {
+        var arr = Object.keys(resetData);
+        for (var i = 0; i < this.AllBlockColor.length; i++) {
+            for (let index = 0; index < arr.length; index++) {
+                if (this.AllBlockColor[i][arr[index]] != undefined) {
+                    this.AllBlockColor[i][arr[index]] = resetData[arr[index]]
+                }
+            }
             this.AllBlockColor[i].color=[0,0,0,0];
         }
     }
@@ -1444,7 +1450,6 @@ export class M_Light_CS {
         this.setAllBlockColor([0, 0, 0, 1]);
         var horizontalList = [];
         var coordinateAllList=[];   
-        
         var AverageArea=10;
         var PartW=this.imageMaxWidth;
         var PartH=this.imageMaxHeight;
