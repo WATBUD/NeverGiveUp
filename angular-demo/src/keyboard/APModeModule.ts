@@ -390,13 +390,15 @@ export class M_Light_CS {
         }
     }
     setPassiveEffect(PointEffectName,colorPickerArr,Multicolor,BlockIndex){
+
         var inputColor=[JSON.parse(JSON.stringify(colorPickerArr))];
-        if(inputColor==undefined){
+        if(inputColor==undefined || BlockIndex>=this.maxkaycapNumber){
             //this.lightData;
-            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', this.lightData);
+            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)',inputColor,BlockIndex);
             return;
         }
-        var index=this.currentBlockIndex;
+        
+        var index=this.currentBlockIndex=BlockIndex;
         console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
         switch (PointEffectName) {
             case 'RippleGraff'://彩色擴散
