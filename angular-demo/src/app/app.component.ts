@@ -260,8 +260,8 @@ export class AppComponent implements OnInit {
     DeveloperControl() {
         //this.setMode('Wave1',[255,255,0,1],false);
 
-
-        this.M_Light_CS.mode_Spiral();
+        this.M_Light_CS.mode_Breath();
+        //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
 
         //this.setMode('AcidMode');

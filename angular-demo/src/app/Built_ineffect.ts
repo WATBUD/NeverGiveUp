@@ -35,8 +35,8 @@ export class ModeParameter {
             field:'separate',
         },
     ] 
-    constructor (...theArgs:any){
-        this.translate=theArgs.translate;
+    constructor (){
+        //this.translate=theArgs.translate;
     }
 }
 export class GloriousMode extends ModeParameter{

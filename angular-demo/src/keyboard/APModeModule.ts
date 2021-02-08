@@ -390,6 +390,80 @@ export class M_Light_CS {
         }
     }
 
+    setMultiColorMode(PointEffectName,colorPickerArr,Multicolor) {
+        console.log('%c setMultiColorMode','color:rgb(255,77,255)', colorPickerArr);
+        var inputColor=JSON.parse(JSON.stringify(colorPickerArr));
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('%c setMultiColorMode_undefined','color:rgb(255,77,255)', colorPickerArr);
+            return;
+        }
+        this.setAnimationSpeed();
+        clearInterval(this.repeater);
+        this.setAllBlockColor([0, 0, 0, 1]);
+        switch (PointEffectName) {
+            case 'GloriousMode':
+                break;
+            case 'SpiralingWave':
+                break;
+            case 'AcidMode':
+                this.mode_AcidMode(inputColor);
+                break;
+            case 'Breathing':
+                this.mode_Breathing(inputColor,Multicolor);
+                break;
+            case 'Breath':
+                this.mode_Breath(inputColor,Multicolor);
+                    break;
+            case 'NormallyOn':
+                this.mode_NormallyOn(inputColor);
+                break;
+            case 'Matrix2':
+                this.mode_Matrix2(inputColor,Multicolor);
+                break;
+            case 'Matrix3':
+                this.mode_Matrix3(inputColor,Multicolor);
+                break;
+            case 'Rainbow':
+                this.mode_Rainbow();
+                break;
+            case 'HeartbeatSensor':
+                this.mode_HeartbeatSensor(inputColor);
+                break;
+            case 'DigitTimes':
+                this.mode_DigitTimes(inputColor);
+                break;
+            case 'Kamehemeha':
+                this.mode_Kamehemeha(inputColor,Multicolor)
+                break;
+            case 'Pingpong':
+                this.mode_Pingpong(inputColor,Multicolor);
+                break;
+            case 'Surmount':
+                this.mode_Surmount(inputColor,Multicolor,this.centerBlockPoint);
+                break;
+            case 'LEDOFF':
+                this.mode_LEDOFF();
+                break;
+            case 'Starlight':
+                this.mode_Starlight();
+                break;    
+            case 'Snowing':
+                this.mode_Snowing(inputColor,Multicolor);
+                break;   
+            case 'WaveSync':
+                this.mode_WaveSync(inputColor, true, 20);
+                break;
+            case 'Wave1':
+                this.mode_WaveSync(inputColor, true, 100);
+                break;
+            case 'Wave2':
+                this.mode_WaveSync(inputColor, true, 250,100);
+                break;                                      
+            default:
+                break;
+        }
+    }
 
     
 
@@ -684,9 +758,6 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
-                if(this.lightData.PointEffectName=="Kamehemeha"){
-                    this.mode_Kamehemeha(colors,isRainbow);
-                }
             }
             if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
                 repeatCount += 1;
@@ -827,9 +898,6 @@ export class M_Light_CS {
                 clearInterval(this.repeater);
                 //console.log('nowStep_end', mode_step, repeatCount, nowStep)
                 this.setAllBlockColor([0, 0, 0, 1]);
-                if(this.lightData.PointEffectName=="Kamehemeha"){
-                    this.mode_Kamehemeha(colors,isRainbow);
-                }
             }
             if (this.minKeyWidth * repeatCount < 100) {
                 repeatCount += 1;
@@ -1011,20 +1079,24 @@ export class M_Light_CS {
         var mode_step = 0;
         var totalstep = 60;
         var nowStep = 0;
-        //var colors=this.rainbow7Color();
+        if(isRainbow){
+        colors=this.rainbow7Color();
+        }
+        else{
+        //colors=[[0, 0, 255, 1],[255, 0, 0, 1]];
+        }
         var nowC_index=0;
         this.setAllBlockColor([0, 0, 0, 1]);
         var repeatCountList=[];
         var target = this.AllBlockColor;
         var setRGB;
         var repeatCircleCount=0;
-        //colors=this.rainbow7Color();
-        console.log('%c mode_Breathing','color:rgb(255,75,255,1)',this.imageMaxWidth);
+        console.log('%c mode_Breathing','color:rgb(255,75,255,1)',colors,isRainbow);
         //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
         for (let index = 0; index < target.length; index++) {
             //var element = target[index];
             repeatCountList.push({
-                color: setRGB,
+                color: [0, 0, 0, 1],
                 recordIndex: index,
                 repeatTime: this.getRandom(5, 25),
             });
@@ -1040,15 +1112,17 @@ export class M_Light_CS {
             else{
                 t_Count2=0;
             }
+            var T_colors=JSON.parse(JSON.stringify(colors[nowC_index]));
+            //console.log('T_colors', T_colors)
             for (let index = 0; index < repeatCountList.length; index++) {     
-                var nowColor=[JSON.parse(JSON.stringify(colors[nowC_index])),[0,0,0,1]];
+                var nowColor=[[0,0,0,1],T_colors];
                 var t_data = [0,0,0,1];
                 t_data[0] = (nowColor[t_Count][0] * (totalstep - nowStep) + nowColor[t_Count2][0] * nowStep) / totalstep;
                 t_data[1] = (nowColor[t_Count][1] * (totalstep - nowStep) + nowColor[t_Count2][1] * nowStep) / totalstep;
                 t_data[2] = (nowColor[t_Count][2] * (totalstep - nowStep) + nowColor[t_Count2][2] * nowStep) / totalstep;
                 var target = this.AllBlockColor;
                 target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
-                //console.log('element.color', t_data, step, nowStep)
+                //console.log('element.color', t_data, nowStep, totalstep)
             }
 
             if(nowStep<totalstep-1){
@@ -1057,12 +1131,17 @@ export class M_Light_CS {
             else{
                 nowStep=0;
                 repeatCount += 1;
-                if(nowC_index<colors.length-1){
-                    nowC_index+=1;
+                var t_Count3=repeatCount%2;
+                console.log('t_Count', t_Count3)
+                if(t_Count3==0){
+                    if(nowC_index<colors.length-1){
+                        nowC_index+=1;
+                    }
+                    else{
+                        nowC_index=0;
+                    }
                 }
-                else{
-                    nowC_index=0;
-                }
+                
                 //repeatCount=0;            
             }              
         }, 50*this.animationSpeed)
@@ -1214,15 +1293,7 @@ export class M_Light_CS {
         var target = this.AllBlockColor;       
         var handleAllList=[];
         position+=5;
-
-
-            //console.log('%c getColor','color:rgb(255,75,255,1)',result,this.use_scales,loop,this.colors,scales);
-              
-
-       //console.log('handleAllList', handleAllList);       
-       //console.log('AllItemList', AllItemList);       
-
-       
+        //console.log('%c getColor','color:rgb(255,75,255,1)',result,this.use_scales,loop,this.colors,scales);
         this.repeater = setInterval(() => {
             //position+=5;
             position += 50;
@@ -1237,13 +1308,10 @@ export class M_Light_CS {
                     0, 0.2, 0.4, 0.6, 0.8
                 ];
                 //console.log('%c dy','color:rgb(255,75,255,1)',dx,dy);
-     
-        
                 // console.log('%c OffsetValue','color:rgb(255,75,255,1)',OffsetValue);
                 // console.log('%c scale','color:rgb(255,75,255,1)',String(scale));
                 // console.log('%c position','color:rgb(255,75,255,1)',position);
                 // console.log('%c bandwidth','color:rgb(255,75,255,1)',bandwidth);
-
                 var scales = defaultscales.slice(0);
                 scale -= Math.floor(scale);	// [0, 1)                
                 var lower_index = -1;
