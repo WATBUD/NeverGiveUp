@@ -2876,7 +2876,15 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         //colors=[[255,0,0,1]];
-        var translatecolors=this.rainbow7Color();
+        var translatecolors=[];
+        if(isRainbow){
+            translatecolors=this.rainbow7Color();
+        }
+        else{
+            translatecolors=colors;
+        }
+            
+        
         //colors=[[255,0,0,1],[0,0,0,1],[0,0,255,1],[0,0,0,1]];
         // colors=this.rainbow7Color()
         // for (let index = 0; index < colors.length; index ++) {
