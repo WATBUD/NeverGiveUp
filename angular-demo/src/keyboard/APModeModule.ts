@@ -340,7 +340,7 @@ export class M_Light_CS {
                 this.mode_LEDOFF();
                 break;
             case 'Starlight':
-                this.mode_Starlight();
+                this.mode_Starlight(inputColor);
                 break;    
             case 'Snowing':
                 this.mode_Snowing(inputColor,target.Multicolor);
@@ -389,7 +389,35 @@ export class M_Light_CS {
                 break;
         }
     }
-
+    setPassiveEffect(PointEffectName,colorPickerArr,Multicolor,BlockIndex){
+        var inputColor=[JSON.parse(JSON.stringify(colorPickerArr))];
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', this.lightData);
+            return;
+        }
+        var index=this.currentBlockIndex;
+        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
+        switch (PointEffectName) {
+            case 'RippleGraff'://彩色擴散
+                this.mode_RippleGraff(inputColor,Multicolor,index);
+                break;
+            case 'PassWithoutTrace'://單點
+                this.mode_PassWithoutTrace(inputColor,index);
+                break;
+            case 'FastRunWithoutTrace'://一排
+                this.mode_FastRunWithoutTrace(inputColor,false,index);
+                break;
+            case 'Cross'://十字
+                this.mode_Cross(inputColor,false,index);
+                break;
+            case 'Blossom'://綻放
+                this.mode_Blossom(inputColor,false,index);
+                break;    
+            default:
+                break;
+        }
+    }
     setMultiColorMode(PointEffectName,colorPickerArr,Multicolor) {
         console.log('%c setMultiColorMode','color:rgb(255,77,255)', colorPickerArr);
         var inputColor=JSON.parse(JSON.stringify(colorPickerArr));
@@ -446,7 +474,7 @@ export class M_Light_CS {
                 this.mode_LEDOFF();
                 break;
             case 'Starlight':
-                this.mode_Starlight();
+                this.mode_Starlight(inputColor);
                 break;    
             case 'Snowing':
                 this.mode_Snowing(inputColor,Multicolor);
@@ -2875,6 +2903,8 @@ export class M_Light_CS {
     mode_Starlight(colors = [[255,255,0,1]], isRainbow = false){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
+        console.log('%c mode_Starlight','color:rgb(255,75,255,1)',colors);
+
         //colors=[[255,0,0,1]];
         var translatecolors=[];
         if(isRainbow){
@@ -2883,14 +2913,6 @@ export class M_Light_CS {
         else{
             translatecolors=colors;
         }
-            
-        
-        //colors=[[255,0,0,1],[0,0,0,1],[0,0,255,1],[0,0,0,1]];
-        // colors=this.rainbow7Color()
-        // for (let index = 0; index < colors.length; index ++) {
-        //     translatecolors.push([0,0,0,1]);
-        //     translatecolors.push(colors[index]);
-        // }
         var totalStep=5;
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
@@ -2945,7 +2967,7 @@ export class M_Light_CS {
                         }
 
                     }
-                    console.log('temp_block',temp_block);
+                    //console.log('temp_block',temp_block);
 
                     var temp_colorData = [0, 0, 0, 1];
                     for (let index2 = 0; index2 < temp_colorData.length-1; index2++) {
