@@ -11,6 +11,8 @@ import { KeyBoardStyle } from '../keyboard/KeyBoardStyle'
 
 import { M_Light_CS } from '../keyboard/APModeModule'
 import { MatDialogRef } from '@angular/material'
+import { Built_ineffect,GloriousMode } from './Built_ineffect'
+
 import { AllFunctionMapping } from '../backend/others/SupportData'
 import {
     Component,
@@ -69,7 +71,7 @@ export class AppComponent implements OnInit {
     M_Light_CS = new M_Light_CS(83)
     KeyBoardManager = new KeyBoardManager(83)
     KeyAssignManager = new KeyAssignManager();
-
+    Built_ineffect=new Built_ineffect();
     //Profile
     ProfileData: any = []
     profileSelect: any
@@ -81,11 +83,8 @@ export class AppComponent implements OnInit {
         { name: '500Hz', value: 500, translate: '500Hz' },
         { name: '1000Hz', value: 1000, translate: '1000Hz' },
     ]
-
     buttonNum: number = 0
     currentDevice: any
-
-    zzzz=0;
     constructor(
         //private macroService: MacroService,
         private cdr: ChangeDetectorRef,
@@ -98,8 +97,10 @@ export class AppComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.M_Light_CS.lightData=this.default_LightData();
+        //this.M_Light_CS.lightData=this.default_LightData();
+        this.M_Light_CS.lightData=this.Built_ineffect.getTarget();
 
+        
     }
 
     ngOnDestroy() {
@@ -195,7 +196,7 @@ export class AppComponent implements OnInit {
 
     default_LightData(defaultcolor = [255,0,0,1]) {
         var T = {
-            rate:50,
+            speed:50,
             brightness:50,
             colorHex:'#0000',
             colorPickerValue:defaultcolor,
@@ -207,6 +208,7 @@ export class AppComponent implements OnInit {
             isRainbow:false,
             lightSelected:{ name: 'GloriousMode', value: 0, translate: 'GloriousMode', }
         }
+        
         return T;
     }
     PERKEY_BrightnessSlider_Background(){
@@ -224,7 +226,7 @@ export class AppComponent implements OnInit {
             showValue=this.M_Light_CS.lightData.brightness;           
         }
         if(TargetName=='PRESETS_RateSlider'){
-            showValue=this.M_Light_CS.lightData.rate;
+            showValue=this.M_Light_CS.lightData.speed;
         }
         console.log('lightSliderMove',TargetName,showValue);
 
@@ -236,7 +238,8 @@ export class AppComponent implements OnInit {
                 showValue +
                 '%, #313131 100%)'
         }
-
+        this.M_Light_CS.setAnimationSpeed();
+        this.M_Light_CS.setNowLightMode();
       
     }
     sliderChange(){
@@ -247,14 +250,20 @@ export class AppComponent implements OnInit {
     setMode(modeName,color=[0,0,0,1], isRainbow = true){
         console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
         this.M_Light_CS.lightData.colorPickerValue=color;
-        this.M_Light_CS.lightData.isRainbow=isRainbow;
-        this.M_Light_CS.lightData.lightSelected.translate=modeName;
+        this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        this.M_Light_CS.lightData.PointEffectName=modeName;
+        this.M_Light_CS.lightData.translate=modeName;
         this.M_Light_CS.setAnimationSpeed();
         this.M_Light_CS.setNowLightMode();
         this.M_Light_CS.setPassiveEffects();
     }
     DeveloperControl() {
-        this.M_Light_CS.mode_WaveSync();
+        //this.setMode('Wave1',[255,255,0,1],false);
+        this.M_Light_CS.mode_Rain();
+        //this.M_Light_CS.mode_Breath();
+        //this.M_Light_CS.mode_Spiral();
+        //this.M_Light_CS.mode_Peacock();
+
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
             //console.log("KeyShortcut_event.keyCode", event.keyCode);

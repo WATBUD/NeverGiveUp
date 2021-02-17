@@ -45,8 +45,21 @@
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SlopeRight()" onkeydown=""
       value="mode_SlopeRight" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_WaveSync()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('WaveSync',[255,255,0,1],false)" onkeydown=""
       value="mode_WaveSync" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="setMode('Wave1',[255,255,0,1],false)" onkeydown=""
+      value="mode_Wave1" class="ButtonStyle">
+
+      <input  type="button" id="AddSpace" (click)="setMode('Wave2',[255,255,0,1],false)" onkeydown=""
+      value="mode_Wave2" class="ButtonStyle">
+
+
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Spiral()" onkeydown=""
+      value="mode_Spiral" class="ButtonStyle">
+      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Peacock()" onkeydown=""
+      value="mode_Peacock" class="ButtonStyle">
+
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_WaveSyncbackup()" onkeydown=""
       value="mode_WaveSyncbackup" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_WaveTwoArray()" onkeydown=""

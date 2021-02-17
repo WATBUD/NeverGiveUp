@@ -62,16 +62,26 @@
   ctx.fill();//填滿產生
   ctx.closePath();
 
-  console.log('PointRotation', PointRotation([0, 0], [10, 25]));
+  // console.log('PointRotation', PointRotation([0, 0], [10, 25]));
 
 
-  console.log('PointRotation', PointRotation([0, 0], [20, 0]));
-  console.log('PointRotation', PointRotation([50, 0], [50, 50]));
+  // console.log('PointRotation', PointRotation([0, 0], [20, 0]));
+  // console.log('PointRotation', PointRotation([50, 0], [50, 50]));
 
-  console.log('PointRotation', PointRotation([50, 0], [49, 50]));
+  // console.log('PointRotation', PointRotation([50, 0], [49, 50]));
+
+
+
+  console.log('PointRotation', PointRotation([25, 25], [-45, -45]));
+
+  console.log('PointRotation', PointRotation([45, 45], [45, 80]));
+
+
   function PointRotation(PointA, PointB) {
     var Dx = PointB[0] - PointA[0];
     var Dy = PointB[1] - PointA[1];
+    // var Dx = Math.abs(PointB[0] - PointA[0]);
+    //     var Dy = Math.abs(PointB[1] - PointA[1]);
     var DRoation = Math.atan2(Dy, Dx);
     console.log('PointRotation', DRoation);
     var WRotation = DRoation / Math.PI * 180;
