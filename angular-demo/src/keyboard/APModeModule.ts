@@ -3,7 +3,6 @@
 //Louis Architecture => Hex=>SET RGB=>SET HSV
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-import { Console } from 'console';
 
 export class M_Light_CS {
     //左上,右上,左下,右下
@@ -375,7 +374,7 @@ export class M_Light_CS {
                 this.mode_RippleGraff(inputColor,target.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor,index);
+                this.mode_PassWithoutTrace(inputColor,index,target.Multicolor);
                 break;
             case 'FastRunWithoutTrace'://一排
                 this.mode_FastRunWithoutTrace(inputColor,false,index);
@@ -406,7 +405,7 @@ export class M_Light_CS {
                 this.mode_RippleGraff(inputColor,Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor,index);
+                this.mode_PassWithoutTrace(inputColor,index,Multicolor);
                 break;
             case 'FastRunWithoutTrace'://一排
                 this.mode_FastRunWithoutTrace(inputColor,false,index);
@@ -495,10 +494,6 @@ export class M_Light_CS {
                 break;
         }
     }
-
-    
-
-
 
     mode_NormallyOn(colors =[[0,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
@@ -3612,26 +3607,24 @@ export class M_Light_CS {
             }
         },35*this.animationSpeed)
     }
-    mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20) {
+    mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20,fixMulticolor=false) {
         clearInterval(this.repeater);
         //this.currentBlockIndex=index;
-        var randomColor=colors[this.getRandom(0,colors.length-1)];
+        if(fixMulticolor){
+            colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        }
         this.setAllBlockColor([0,0,0,1]);
+        var randomColor=colors[this.getRandom(0,colors.length-1)];
         this.repeater = setInterval(() => {
             if(randomColor[3]<=0){
                 clearInterval(this.repeater);
             }
+            if (randomColor[3] > 0) {
+                randomColor[3] -= 1;
+            } 
             var target = this.AllBlockColor;
             target[index].color = randomColor
-            if (randomColor[0] > 0) {
-                randomColor[0] -= 1;
-            }
-            if (randomColor[2] > 0) {
-                randomColor[2] -= 1;
-            }
-            if (randomColor[2] > 0) {
-                randomColor[2] -= 1;
-            }                               
+                              
         }, 10)
     }
     rainbow7Color(){
