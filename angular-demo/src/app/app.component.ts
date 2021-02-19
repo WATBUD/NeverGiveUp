@@ -294,10 +294,22 @@ export class AppComponent implements OnInit {
                 T_CS.mode_Rainbow();
                 break;
             case 'HeartbeatSensor':
-                T_CS.mode_HeartbeatSensor(inputColor);
+                if(target.Multicolor){
+                    T_CS.mode_HeartbeatSensor([[255,0,0,1],[0,255,0,1],[0,0,255,1]]);    
+                }
+                else
+                {
+                    T_CS.mode_HeartbeatSensor(inputColor);    
+                }
                 break;
             case 'DigitTimes':
-                T_CS.mode_DigitTimes(inputColor);
+                if(target.Multicolor){
+                    T_CS.mode_DigitTimes([[255,0,0,1],[0,255,0,1],[0,0,255,1]]);    
+                }
+                else
+                {
+                    T_CS.mode_DigitTimes(inputColor);    
+                }
                 break;
             case 'Kamehemeha':
                 T_CS.mode_Kamehemeha(inputColor,target.Multicolor)

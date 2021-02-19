@@ -2646,48 +2646,39 @@ export class M_Light_CS {
         },100*this.animationSpeed)
     }
 
-    mode_DigitTimes(colors = [[0,0,255,1]]){
+    mode_DigitTimes(colors = [[0, 0, 255, 1]], isRainbow = true) {
         clearInterval(this.repeater);
-        this.currentBlockIndex=0;
+        this.currentBlockIndex = 0;
         var StartPoint = this.getNowBlock(0).coordinateData;
-        this.setAllBlockColor([0,0,0,1]);
-        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
-        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
-        var repeatCountList=[];
-        var times=0;
-       //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
-        //     //this.getRandom(0,4),
-        //     //this.getRandom(1,50)
-        //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
-        //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
-        //     //console.log(x, y);
-       var target = this.twoDimensionalArray;
-       var a=[0,3,5];
-      // var a2=[0,3,5,8,11,13];
-       var randomList=[];
-       for (let i = 0; i < this.breakGradation[0][1]-1
-        ; i++) {
-           randomList.push(this.getRandom(0, this.breakGradation[0][1]-1));   //亂數產生，亂數產生的範圍是1~9
-           for (let j = 0; j < i; j++) {
-               while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
-               {
-                   j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
-                   randomList[i] = this.getRandom(0, this.breakGradation[0][1]-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
-               }
-           }
-       }
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var H_spacing = Math.trunc(this.imageMaxHeight / StartPoint.clientHeight);
+        var w_range = Math.trunc(this.imageMaxWidth / this.minKeyWidth);
+        var repeatCountList = [];
+        var setRGB;
+        var target = this.twoDimensionalArray;
+        // var a2=[0,3,5,8,11,13];
+        //    var randomList=[];
+        //    for (let i = 0; i < this.breakGradation[0][1]-1; i++) {
+        //        randomList.push(this.getRandom(0, this.breakGradation[0][1]-1));   //亂數產生，亂數產生的範圍是1~9
+        //        for (let j = 0; j < i; j++) {
+        //            while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
+        //            {
+        //                j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
+        //                randomList[i] = this.getRandom(0, this.breakGradation[0][1]-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+        //            }
+        //        }
+        //    }
         for (let index = 0; index <= this.breakGradation[0][1]; index++) {
             //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-
             repeatCountList.push({
-                color: colors[0],
-                pos: [index,index%(this.max_H_Number/2)],
-                backupPos:[index,index%(this.max_H_Number/2)],
-                repeatTime: this.getRandom(0,3),
+                color: colors[this.getRandom(0, colors.length - 1)],
+                pos: [index, index % (this.max_H_Number / 2)],
+                backupPos: [index, index % (this.max_H_Number / 2)],
+                repeatTime: this.getRandom(0, 3),
             });
         }
 
-        this.repeater=setInterval(()=>{
+        this.repeater = setInterval(() => {
             this.resetTwoDimensionalArray();
             for (let i2 = 0; i2 < repeatCountList.length; i2++) {
                 var T = repeatCountList[i2];
@@ -2696,26 +2687,26 @@ export class M_Light_CS {
                 }
                 if (T.repeatTime == 0) {
                     if (T.pos[1] + 1 < this.max_H_Number) {
-                        if(T.pos[0]<1){
+                        if (T.pos[0] < 1) {
                             T.pos[1] += 1;
                         }
-                        else{
+                        else {
                             T.pos[1] += 1;
                             T.pos[0] += 1;
                         }
 
                     }
                     else {
-                        T.pos[0]=T.backupPos[0];
-                        T.pos[1]=0;
+                        T.pos[0] = T.backupPos[0];
+                        T.pos[1] = 0;
                         T.repeatTime = 1;
                     }
                     //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
                 }
-                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color = T.color;
             }
             this.showTwoDimensionalArray();
-        },500*this.animationSpeed);
+        }, 500 * this.animationSpeed);
 
 
     }
@@ -2837,9 +2828,6 @@ export class M_Light_CS {
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var horizontalList=[];
         for (let index = 0; index < this.imageMaxWidth; index+=40) {
@@ -2882,7 +2870,7 @@ export class M_Light_CS {
                         T[1] >= element.coordinateData.top_Left[1] &&
                         T[1] <= element.coordinateData.bottom_Left[1]
                     ) {
-                        element.color =colors[0];
+                        element.color =colors[this.getRandom(0, colors.length-1)];
                         continue;
                     }
                 }
