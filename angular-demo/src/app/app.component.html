@@ -1,6 +1,9 @@
 
       <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],false)" onkeydown=""
       value="mode_FastRunWithoutTrace" class="ButtonStyle">
+      
+      <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],true)" onkeydown=""
+      value="mode_FastRunWithoutTraceRaindow" class="ButtonStyle">
       <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T0()" onkeydown=""
       value="mode_T0" class="ButtonStyle">
       <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T1()" onkeydown=""
@@ -80,16 +83,15 @@
 
       <input  type="button" id="AddSpace" (click)="setMode('Blossom',[255,255,0,1],false)" onkeydown=""
       value="mode_Blossom" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_BreathingMulticolor([[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Breath',[[0,0,255,1]],true)" onkeydown=""
       value="mode_BreathingMulticolor" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Breath',[[0,0,255,1]],false)" onkeydown=""
       value="mode_Breathing" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Breathing([[0,0,255,1]],true)" onkeydown=""
-      value="mode_Breathing_rainbow" class="ButtonStyle">
       
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([[0,0,255,1]],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[[0,0,255,1]],false)" onkeydown=""
       value="mode_NormallyOn" class="ButtonStyle">
-
+      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[[0,0,255,1]],true)" onkeydown=""
+      value="mode_NormallyOnMulticolor" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('AcidMode',[[0,0,255,1]],false)" onkeydown=""
       value="mode_AcidMode" class="ButtonStyle">
 

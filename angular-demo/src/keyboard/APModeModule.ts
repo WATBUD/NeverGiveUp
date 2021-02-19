@@ -288,38 +288,7 @@ export class M_Light_CS {
         this.setAllBlockColor([0, 0, 0, 1]);
     }
 
-    setPassiveEffect(obj){
-
-        //var data-
-        var inputColor=[JSON.parse(JSON.stringify(obj.colorPickerArr))];
-        if(inputColor==undefined || obj.BlockIndex>=this.maxkaycapNumber){
-            //this.lightData;
-            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)',inputColor,obj.BlockIndex);
-            return;
-        }
-        
-        var index=this.currentBlockIndex=obj.BlockIndex;
-        console.log('%c setPassiveEffects','color:rgb(255,77,255)', obj);
-        switch (obj.PointEffectName) {
-            case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor,obj.Multicolor,index);
-                break;
-            case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor,index,obj.Multicolor);
-                break;
-            case 'FastRunWithoutTrace'://一排
-                this.mode_FastRunWithoutTrace(inputColor,false,index);
-                break;
-            case 'Cross'://十字
-                this.mode_Cross(inputColor,false,index);
-                break;
-            case 'Blossom'://綻放
-                this.mode_Blossom(inputColor,false,index);
-                break;    
-            default:
-                break;
-        }
-    }
+    
     setMultiColorMode(PointEffectName,colorPickerArr,Multicolor) {
         console.log('%c setMultiColorMode','color:rgb(255,77,255)', colorPickerArr);
         var inputColor=JSON.parse(JSON.stringify(colorPickerArr));
@@ -432,7 +401,80 @@ export class M_Light_CS {
         }, 50)
         //clearInterval(this.repeater);
     }
+    mode_NormallyOnMulticolor(colors = [[255,0,0,1]], isRainbow = true) {
+        clearInterval(this.repeater);
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var totalstep = 60;
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var repeatCountList=[];
+        var target = this.AllBlockColor;
+        var setRGB;
+        var repeatCircleCount=0;
+        //var RGBObj=this.rainbow7Color()
+        var RGBObj =[[255,0,0,1],[255,0,0,1],[0, 255, 0,1],[0,0,255,1],[0, 0, 255,1]];
 
+        //[this.getRandom(0, this.rainbow7Color().length - 1)];
+        var Rainbow_totalstep=60;
+        var Rainbow_step=0;
+        var Rainbow_i=0;
+        console.log('%c mode_NormallyOnMulticolor','color:rgb(255,75,255,1)',this.imageMaxWidth);
+         
+        for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.imageMaxWidth/60/5) {
+
+            //const element = array[index];
+            if(Rainbow_step<Rainbow_totalstep){
+                Rainbow_step+=1; 
+            }
+            else{
+                Rainbow_step=0;
+                if(Rainbow_i<RGBObj.length-2){
+                    Rainbow_i+=1; 
+                }
+                else{
+                    Rainbow_i=0;
+                }    
+            }
+  
+            if (isRainbow) {
+                var t_data = [0,0,0,1];
+                if(RGBObj[Rainbow_i]==undefined){
+                    console.log('%c RGBObjError','color:rgb(255,75,255,1)',RGBObj,Rainbow_i);
+                    return;
+                }
+                else{
+                    console.log('%c RGBObj','color:rgb(255,75,255,1)',Rainbow_i);
+                }
+                t_data[0] = (RGBObj[Rainbow_i][0] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][0] * Rainbow_step) / Rainbow_totalstep;
+                t_data[1] = (RGBObj[Rainbow_i][1] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][1] * Rainbow_step) / Rainbow_totalstep;
+                t_data[2] = (RGBObj[Rainbow_i][2] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][2] * Rainbow_step) / Rainbow_totalstep;
+                //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];
+                console.log('%c RGBObj_t_data','color:rgb(255,75,255,1)',t_data);
+  
+                setRGB=t_data;
+            }
+            else {
+                setRGB = colors[0];
+            }
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                var dis = this.distanceCalculation(0,this.imageMaxHeight/2, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                if (dis <= i_compare && dis >= i_compare-this.minKeyWidth) {
+                    repeatCountList.push({
+                        color: setRGB,
+                        recordIndex:index,
+                        repeatTime: this.getRandom(5, 25),
+                    });
+                }              
+            }
+        }
+        console.log('repeatCountList', repeatCountList)
+
+        // this.repeater = setInterval(() => {
+        // }, 50*this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
     mode_AcidMode(colors=[]){
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
@@ -724,6 +766,9 @@ export class M_Light_CS {
             }
             var compareResult = this.minKeyWidth * repeatCount;
             var compareResultMax = this.minKeyWidth * repeatCount - this.minKeyWidth;
+            if (r_nowStep + 1 < r_totalstep) {
+                r_nowStep += 1;
+            }
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
                 var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
@@ -733,14 +778,11 @@ export class M_Light_CS {
 
                     if (dis <= compareResult && dis >= compareResultMax) {
                         //element.color = setRGB;oooooooooooxxxx333oo
-                        if (r_nowStep + 1 < r_totalstep) {
-                            r_nowStep += 1;
-                        }
                         var T = JSON.parse(JSON.stringify(setRGB));
                         T[0] = (T[0] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
                         T[1] = (T[1] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
                         T[2] = (T[2] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
-                        element.color = T;
+                        element.color = setRGB;
                         // if(dis>this.imageMaxWidth/3){
                         //     element.color=[0,0,255,1];
                         // }
@@ -1025,28 +1067,61 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(0).coordinateData;
-        var mode_step = 0;
-        var step = 60;
+        var totalstep = 60;
         var nowStep = 0;
         this.setAllBlockColor([0, 0, 0, 1]);
         var repeatCountList=[];
         var target = this.AllBlockColor;
         var setRGB;
         var repeatCircleCount=0;
-        console.log('%c mode_BreathingMulticolor','color:rgb(255,75,255,1)',this.imageMaxWidth);
+        //var RGBObj=this.rainbow7Color()
+        var RGBObj =[[255,0,0,1],[255,0,0,1],[0, 255, 0,1],[0,0,255,1],[0, 0, 255,1]];
 
-        for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.minKeyWidth) {
+        //[this.getRandom(0, this.rainbow7Color().length - 1)];
+        var Rainbow_totalstep=60;
+        var Rainbow_step=0;
+        var Rainbow_i=0;
+        console.log('%c mode_BreathingMulticolor','color:rgb(255,75,255,1)',this.imageMaxWidth);
+         
+        for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.imageMaxWidth/60/5) {
+
             //const element = array[index];
+            if(Rainbow_step<Rainbow_totalstep){
+                Rainbow_step+=1; 
+            }
+            else{
+                Rainbow_step=0;
+                if(Rainbow_i<RGBObj.length-2){
+                    Rainbow_i+=1; 
+                }
+                else{
+                    Rainbow_i=0;
+                }    
+            }
+  
             if (isRainbow) {
-                setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
+                var t_data = [0,0,0,1];
+                if(RGBObj[Rainbow_i]==undefined){
+                    console.log('%c RGBObjError','color:rgb(255,75,255,1)',RGBObj,Rainbow_i);
+                    return;
+                }
+                else{
+                    console.log('%c RGBObj','color:rgb(255,75,255,1)',Rainbow_i);
+                }
+                t_data[0] = (RGBObj[Rainbow_i][0] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][0] * Rainbow_step) / Rainbow_totalstep;
+                t_data[1] = (RGBObj[Rainbow_i][1] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][1] * Rainbow_step) / Rainbow_totalstep;
+                t_data[2] = (RGBObj[Rainbow_i][2] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][2] * Rainbow_step) / Rainbow_totalstep;
+                //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];
+                console.log('%c RGBObj_t_data','color:rgb(255,75,255,1)',t_data);
+  
+                setRGB=t_data;
             }
             else {
                 setRGB = colors[0];
             }
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
-               
-                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                var dis = this.distanceCalculation(0,this.imageMaxHeight/2, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
                 if (dis <= i_compare && dis >= i_compare-this.minKeyWidth) {
                     //element.color = setRGB;
                     repeatCountList.push({
@@ -1054,9 +1129,7 @@ export class M_Light_CS {
                         recordIndex:index,
                         repeatTime: this.getRandom(5, 25),
                     });
-                }     
-                
-    
+                }              
             }
         }
         console.log('repeatCountList', repeatCountList)
@@ -1072,19 +1145,17 @@ export class M_Light_CS {
                 t_Count2=0;
             }
             for (let index = 0; index < repeatCountList.length; index++) {     
-                var nowColor=[JSON.parse(JSON.stringify(repeatCountList[index].color)),[0,0,0,1]];
-
-                
+                var nowColor=[JSON.parse(JSON.stringify(repeatCountList[index].color)),[0,0,0,1]];    
                 var t_data = [0,0,0,1];
-                t_data[0] = (nowColor[t_Count][0] * (step - nowStep) + nowColor[t_Count2][0] * nowStep) / step;
-                t_data[1] = (nowColor[t_Count][1] * (step - nowStep) + nowColor[t_Count2][1] * nowStep) / step;
-                t_data[2] = (nowColor[t_Count][2] * (step - nowStep) + nowColor[t_Count2][2] * nowStep) / step;
+                t_data[0] = (nowColor[t_Count][0] * (totalstep - nowStep) + nowColor[t_Count2][0] * nowStep) / totalstep;
+                t_data[1] = (nowColor[t_Count][1] * (totalstep - nowStep) + nowColor[t_Count2][1] * nowStep) / totalstep;
+                t_data[2] = (nowColor[t_Count][2] * (totalstep - nowStep) + nowColor[t_Count2][2] * nowStep) / totalstep;
                 var target = this.AllBlockColor;
                 target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
                 //console.log('element.color', t_data, step, nowStep)
             }
 
-            if(nowStep<step-1){
+            if(nowStep<totalstep-1){
                 nowStep+=1;
                 
             }
@@ -3487,22 +3558,16 @@ export class M_Light_CS {
     }
     mode_FastRunWithoutTrace(colors = [[255,0,0,1]], isRainbow = false,blockIndex=37){
         //colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',colors, isRainbow);
         if (isRainbow) {
             colors =this.rainbow7Color();
         }
-        else{
-            colors.push([0,0,0,1])
-        }
-
-        
         clearInterval(this.repeater);
         this.currentBlockIndex=blockIndex;
         var repeatCount=0;
         var StartPoint = this.getNowBlock().coordinateData;
         this.setAllBlockColor([0,0,0,1]);
         var totalStep=10;
-        var totalRepeatCount=0;
-
         var horizontalList={
         };
         var target = this.AllBlockColor;
@@ -3511,14 +3576,14 @@ export class M_Light_CS {
         //this.mode_reset();
         //var c_temp=colors[this.getRandom(0,colors.length-1)];
         horizontalList[this.currentBlockIndex]={
-               color:colors[0]
+               color:colors[this.getRandom(0,colors.length-1)]
         }
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
             if (Ysdis <= 10) {
                 horizontalList[index]={
-                    color:colors[0],
+                    color:colors[this.getRandom(0,colors.length-1)],
                     nowPos:0,
                     nowstep:0,
                     repeatCount:0,
@@ -3536,7 +3601,7 @@ export class M_Light_CS {
             //horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
             if (step_End) {
                 var tempColors = colors;
-                var nextColor;
+                var nextColor=[0,0,0,1];
                 var arr = Object.keys(horizontalList);
                 for (let index = 0; index < arr.length; index++) {
                     var index_num = parseInt(arr[index])
@@ -3548,21 +3613,11 @@ export class M_Light_CS {
                         temp_block.nowStep = 0;
                         temp_block.repeatCount += 1;
                     }
-                    var temp_C = tempColors[temp_block.nowPos];
-                    if (temp_block.nowPos + 1 < tempColors.length) {
-                        nextColor = tempColors[temp_block.nowPos + 1];
-                    }
-                    else {
-                        nextColor = tempColors[0]
-                    }
-                    // if(temp_block.repeatCount==2){
-                    //     return;
-                    // }
+                    var temp_C = temp_block.color;
                     var temp_colorData = [0, 0, 0, 1];
-                    temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
-                    temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
-                    temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
-                    temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index]= (temp_C[index] * (totalStep - temp_block.nowStep) + nextColor[index] * temp_block.nowStep) / totalStep;
+                    }
                     if(temp_block.repeatCount!=2){
                         target[index_num].color = temp_colorData;
                     }

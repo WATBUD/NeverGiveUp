@@ -267,10 +267,22 @@ export class AppComponent implements OnInit {
                 T_CS.mode_Breathing(inputColor,target.Multicolor);
                 break;
             case 'Breath':
-                T_CS.mode_Breath(inputColor,target.Multicolor);
+                if(target.Multicolor){
+                    T_CS.mode_BreathingMulticolor(inputColor, true);    
+                }
+                else
+                {
+                    T_CS.mode_Breath(inputColor);
+                }
                     break;
             case 'NormallyOn':
-                T_CS.mode_NormallyOn(inputColor);
+                if(target.Multicolor){
+                    T_CS.mode_NormallyOnMulticolor(inputColor);    
+                }
+                else
+                {
+                    T_CS.mode_NormallyOn(inputColor);    
+                }
                 break;
             case 'Matrix2':
                 T_CS.mode_Matrix2(inputColor,target.Multicolor);
@@ -313,13 +325,13 @@ export class AppComponent implements OnInit {
                 break;
             case 'Wave2':
                 T_CS.mode_WaveSync(inputColor, true, 250,100);
-                break;                          
+                break;                           
             default:
                 break;
         }
     }
     setMode(modeName,color=[0,0,0,1], isRainbow = true){
-        console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
+        console.log('%c setMode','color:rgb(255,77,255)', modeName,color,isRainbow);
         var obj={
             PointEffectName:this.M_Light_CS.lightData.PointEffectName,
             colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
@@ -328,20 +340,54 @@ export class AppComponent implements OnInit {
         }
 
         this.M_Light_CS.lightData.colorPickerValue=color;
-        this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        //this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        this.M_Light_CS.lightData.Multicolor=isRainbow;
         this.M_Light_CS.lightData.PointEffectName=modeName;
         this.M_Light_CS.lightData.translate=modeName;
         this.setNowLightMode();//by setMode
 
         //this.M_Light_CS.setPassiveEffect(obj);
     }
+    setPassiveEffect(obj){
+        var target_cs=this.M_Light_CS;
+        var inputColor=[JSON.parse(JSON.stringify(target_cs.lightData.colorPickerValue))];
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', target_cs.lightData);
+            return;
+        }
+        var target=this.M_Light_CS.lightData;
+        var index=this.M_Light_CS.currentBlockIndex=obj.BlockIndex;
+        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
+        switch (target.PointEffectName) {
+            case 'RippleGraff'://彩色擴散
+                target_cs.mode_RippleGraff(inputColor,target.Multicolor,index);
+                break;
+            case 'PassWithoutTrace'://單點
+                
+                target_cs.mode_PassWithoutTrace(inputColor,index,target.Multicolor);
+                break;
+            case 'FastRunWithoutTrace'://一排
+                target_cs.mode_FastRunWithoutTrace(inputColor,target.Multicolor,index);
+                break;
+            case 'Cross'://十字
+                target_cs.mode_Cross(inputColor,target.Multicolor,index);
+                break;
+            case 'Blossom'://綻放
+                target_cs.mode_Blossom(inputColor,target.Multicolor,index);
+                break;    
+            default:
+                break;
+        }
+    }
     DeveloperControl() {
         //this.setMode('Wave1',[255,255,0,1],false);
-        this.M_Light_CS.mode_Rain();
+        //this.M_Light_CS.mode_Rain();
         //this.M_Light_CS.mode_Breath();
         //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
 
+        this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
             //console.log("KeyShortcut_event.keyCode", event.keyCode);
@@ -358,7 +404,7 @@ export class AppComponent implements OnInit {
                 Multicolor:true,
                 BlockIndex:index2,
             }
-            this.M_Light_CS.setPassiveEffect(obj);
+            this.setPassiveEffect(obj);
 
             if (event.keyCode == 109) {//-
              
