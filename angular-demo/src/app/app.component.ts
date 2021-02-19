@@ -255,7 +255,14 @@ export class AppComponent implements OnInit {
         this.M_Light_CS.lightData.translate=modeName;
         this.M_Light_CS.setAnimationSpeed();
         this.M_Light_CS.setNowLightMode();
-        this.M_Light_CS.setPassiveEffects();
+
+        var obj={
+            PointEffectName:this.M_Light_CS.lightData.PointEffectName,
+            colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
+            Multicolor:false,
+            BlockIndex:37,
+        }
+        //this.M_Light_CS.setPassiveEffect(obj);
     }
     DeveloperControl() {
         //this.setMode('Wave1',[255,255,0,1],false);
@@ -272,7 +279,15 @@ export class AppComponent implements OnInit {
             console.log("recordValue", recordValue);
             console.log("index2", index2);
             this.M_Light_CS.currentBlockIndex=index2;
-            this.M_Light_CS.setPassiveEffects();
+            //this.M_Light_CS.setPassiveEffects();
+
+            var obj={
+                PointEffectName:this.M_Light_CS.lightData.PointEffectName,
+                colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
+                Multicolor:true,
+                BlockIndex:index2,
+            }
+            this.M_Light_CS.setPassiveEffect(obj);
 
             if (event.keyCode == 109) {//-
              

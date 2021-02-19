@@ -389,23 +389,24 @@ export class M_Light_CS {
                 break;
         }
     }
-    setPassiveEffect(PointEffectName,colorPickerArr,Multicolor,BlockIndex){
+    setPassiveEffect(obj){
 
-        var inputColor=[JSON.parse(JSON.stringify(colorPickerArr))];
-        if(inputColor==undefined || BlockIndex>=this.maxkaycapNumber){
+        //var data-
+        var inputColor=[JSON.parse(JSON.stringify(obj.colorPickerArr))];
+        if(inputColor==undefined || obj.BlockIndex>=this.maxkaycapNumber){
             //this.lightData;
-            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)',inputColor,BlockIndex);
+            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)',inputColor,obj.BlockIndex);
             return;
         }
         
-        var index=this.currentBlockIndex=BlockIndex;
-        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
-        switch (PointEffectName) {
+        var index=this.currentBlockIndex=obj.BlockIndex;
+        console.log('%c setPassiveEffects','color:rgb(255,77,255)', obj);
+        switch (obj.PointEffectName) {
             case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor,Multicolor,index);
+                this.mode_RippleGraff(inputColor,obj.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor,index,Multicolor);
+                this.mode_PassWithoutTrace(inputColor,index,obj.Multicolor);
                 break;
             case 'FastRunWithoutTrace'://一排
                 this.mode_FastRunWithoutTrace(inputColor,false,index);
@@ -724,7 +725,7 @@ export class M_Light_CS {
     ArraySort(array, key) {
         return array.sort(function(a, b) {
             var x = a[key];
-            var y = b[key];
+            var y = b[key];x
             return x - y;
         });
 	}
@@ -799,21 +800,25 @@ export class M_Light_CS {
     }
 
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
-        //console.log('%c mode_RippleGraff_enter','color:rgb(255,75,255,1)',colors,this.AllBlockColor);
+        console.log('%c mode_RippleGraff_isRainbow','color:rgb(255,75,255,1)',colors,isRainbow);
         clearInterval(this.repeater);
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(blockIndex).coordinateData;
         //var setRGB=[255,0,0,1];
         var mode_step = 0;
-        var step = 30;
+        var totalstep = 30;
         var nowStep = 0;
         this.setAllBlockColor([0, 0, 0, 1]);
+
+        var r_totalstep = 30;
+        var r_nowStep = 0;
+
         this.repeater = setInterval(() => {
             //this.mode_reset();
             var target = this.AllBlockColor;
             var setRGB;
             if (isRainbow) {
-                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+                setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];
             }
             else {
                 setRGB = colors[this.getRandom(0, colors.length - 1)];
@@ -828,20 +833,38 @@ export class M_Light_CS {
                     //console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
 
                     if (dis <= compareResult && dis >= compareResultMax) {
-                        element.color = setRGB;
+                        //element.color = setRGB;oooooooooooxxxx333oo
+                        if (r_nowStep + 1 < r_totalstep) {
+                            r_nowStep += 1;
+                        }
+                        var T = JSON.parse(JSON.stringify(setRGB));
+                        T[0] = (T[0] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
+                        T[1] = (T[1] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
+                        T[2] = (T[2] * (r_totalstep - r_nowStep) + 0 * r_nowStep) / r_totalstep;
+                        element.color = T;
+                        // if(dis>this.imageMaxWidth/3){
+                        //     element.color=[0,0,255,1];
+                        // }
+                        // else if(dis>this.imageMaxWidth/4){
+                        //     element.color=[0,255,0,1];
+                        // }
+                        // else if(dis>=0){
+                        //     element.color=[255,0,0,1];
+                        // }
                     }
+
                 }
                 else {
                     var T = JSON.parse(JSON.stringify(element.color));
-                    T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
-                    T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
-                    T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
+                    T[0] = (T[0] * (totalstep - nowStep) + 0 * nowStep) / totalstep;
+                    T[1] = (T[1] * (totalstep - nowStep) + 0 * nowStep) / totalstep;
+                    T[2] = (T[2] * (totalstep - nowStep) + 0 * nowStep) / totalstep;
                     element.color = T;
                     //console.log('element.color', T, step, nowStep)
                 }
 
             }
-            if (nowStep + 1 < step) {
+            if (nowStep + 1 < totalstep) {
                 nowStep += 1;
             }
             else {
@@ -3550,21 +3573,6 @@ export class M_Light_CS {
                     else {
                         temp_block.nowStep = 0;
                         temp_block.repeatCount += 1;
-                        // var newRand = this.getRandom(15, 15);
-                        // temp_block.repeatTime = newRand;
-                        // if (temp_block.nowPos + 1 < tempColors.length) {
-                        //     temp_block.nowPos += 1;
-                        // }
-                        // else {
-                        //     temp_block.nowPos = 0;
-                        // }
-                        //step_End = false;
-                        // if(temp_block.repeatCount==2){
-                        //     clearInterval(this.repeater);
-                        //     return;
-                        // }
-
-                        //clearInterval(this.repeater);
                     }
                     var temp_C = tempColors[temp_block.nowPos];
                     if (temp_block.nowPos + 1 < tempColors.length) {
@@ -3607,25 +3615,38 @@ export class M_Light_CS {
             }
         },35*this.animationSpeed)
     }
+    //repeaterPass;
     mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20,fixMulticolor=false) {
         clearInterval(this.repeater);
         //this.currentBlockIndex=index;
         if(fixMulticolor){
             colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         }
-        this.setAllBlockColor([0,0,0,1]);
+        //this.setAllBlockColor([0,0,0,1]);
         var randomColor=colors[this.getRandom(0,colors.length-1)];
+        console.log('%c mode_PassWithoutTrace_randomColor','color:rgb(255,77,255)', randomColor);
+        var nowStep=0;
+        var totalStep=30;
+        var nextColor=[0,0,0,1];
         this.repeater = setInterval(() => {
-            if(randomColor[3]<=0){
-                clearInterval(this.repeater);
+            this.setAllBlockColor([0,0,0,1]);
+            if (nowStep<totalStep) {
+                nowStep+=1;
             }
-            if (randomColor[3] > 0) {
-                randomColor[3] -= 1;
+            else{
+                clearInterval(this.repeater);
             } 
+            var temp_colorData = [0, 0, 0, 1];
+            for (let index = 0; index < 3; index++) {
+                temp_colorData[index] = (randomColor[index] * (totalStep - nowStep) + nextColor[index] * nowStep) / totalStep;=
+            }
             var target = this.AllBlockColor;
-            target[index].color = randomColor
+            target[index].color = temp_colorData;
+
+
+
                               
-        }, 10)
+        }, 50*this.animationSpeed)
     }
     rainbow7Color(){
 
