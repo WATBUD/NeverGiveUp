@@ -387,7 +387,7 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
 
-        this.M_Light_CS.mode_BreathingMulticolor();
+        //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
             //console.log("KeyShortcut_event.keyCode", event.keyCode);

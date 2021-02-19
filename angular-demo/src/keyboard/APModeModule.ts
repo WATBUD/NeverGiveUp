@@ -366,52 +366,47 @@ export class M_Light_CS {
 
     mode_NormallyOn(colors =[[0,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
-        var StartPoint = this.getNowBlock(50).coordinateData;
         //this.setAllBlockColor([0, 0, 255, 1]);
-        this.setAllBlockColor(colors[this.getRandom(0, colors.length - 1)]);
-        var repeatCountList=[];
-        var target = this.AllBlockColor;
-        var setRGB;
-        var repeatCircleCount=0;
-        for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.minKeyWidth) {
-            //const element = array[index];
-            if (isRainbow) {
-                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];  
-            }
-            else {
-                setRGB = [0, 0, 255, 1];
-            }
-            for (let index = 0; index < target.length; index++) {
-                var element = target[index];              
-                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
-                if (dis <= i_compare && dis >= i_compare-this.minKeyWidth) {
-                    //element.color = setRGB;
-                    repeatCountList.push({
-                        color: setRGB,
-                        recordIndex:index,
-                        repeatTime: this.getRandom(5, 25),
-                    });
-                }     
+        console.log('%c mode_NormallyOn','color:rgb(255,75,255,1)',colors,colors[this.getRandom(0, colors.length - 1)]);
+
+        // var repeatCountList=[];
+        // var target = this.AllBlockColor;
+        // var setRGB;
+        // var repeatCircleCount=0;
+        // for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.minKeyWidth) {
+        //     if (isRainbow) {
+        //         setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];  
+        //     }
+        //     else {
+        //         setRGB = [0, 0, 255, 1];
+        //     }
+        //     for (let index = 0; index < target.length; index++) {
+        //         var element = target[index];              
+        //         var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+        //         if (dis <= i_compare && dis >= i_compare-this.minKeyWidth) {
+        //             repeatCountList.push({
+        //                 color: setRGB,
+        //                 recordIndex:index,
+        //                 repeatTime: this.getRandom(5, 25),
+        //             });
+        //         }     
                 
     
-            }
-        }
+        //     }
+        // }
         
-        this.repeater = setInterval(() => {         
+        this.repeater = setInterval(() => {  
+            this.setAllBlockColor(colors[this.getRandom(0, colors.length - 1)]);
+
         }, 50)
         //clearInterval(this.repeater);
     }
     mode_NormallyOnMulticolor(colors = [[255,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
-        var repeatCount = 0;
-        var StartPoint = this.getNowBlock(0).coordinateData;
-        var totalstep = 60;
-        var nowStep = 0;
         this.setAllBlockColor([0, 0, 0, 1]);
         var repeatCountList=[];
         var target = this.AllBlockColor;
         var setRGB;
-        var repeatCircleCount=0;
         //var RGBObj=this.rainbow7Color()
         var RGBObj =[[255,0,0,1],[255,0,0,1],[0, 255, 0,1],[0,0,255,1],[0, 0, 255,1]];
 
@@ -419,7 +414,7 @@ export class M_Light_CS {
         var Rainbow_totalstep=60;
         var Rainbow_step=0;
         var Rainbow_i=0;
-        console.log('%c mode_NormallyOnMulticolor','color:rgb(255,75,255,1)',this.imageMaxWidth);
+        console.log('%c mode_NormallyOnMulticolor','color:rgb(255,75,255,1)',colors);
          
         for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.imageMaxWidth/60/5) {
 
@@ -436,27 +431,12 @@ export class M_Light_CS {
                     Rainbow_i=0;
                 }    
             }
-  
-            if (isRainbow) {
                 var t_data = [0,0,0,1];
-                if(RGBObj[Rainbow_i]==undefined){
-                    console.log('%c RGBObjError','color:rgb(255,75,255,1)',RGBObj,Rainbow_i);
-                    return;
+                for (let index = 0; index < 3; index++) {
+                    t_data[index] = (RGBObj[Rainbow_i][index] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][index] * Rainbow_step) / Rainbow_totalstep;
                 }
-                else{
-                    console.log('%c RGBObj','color:rgb(255,75,255,1)',Rainbow_i);
-                }
-                t_data[0] = (RGBObj[Rainbow_i][0] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][0] * Rainbow_step) / Rainbow_totalstep;
-                t_data[1] = (RGBObj[Rainbow_i][1] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][1] * Rainbow_step) / Rainbow_totalstep;
-                t_data[2] = (RGBObj[Rainbow_i][2] * (Rainbow_totalstep - Rainbow_step) + RGBObj[Rainbow_i+1][2] * Rainbow_step) / Rainbow_totalstep;
-                //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];
-                console.log('%c RGBObj_t_data','color:rgb(255,75,255,1)',t_data);
-  
+                //setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
                 setRGB=t_data;
-            }
-            else {
-                setRGB = colors[0];
-            }
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
                 var dis = this.distanceCalculation(0,this.imageMaxHeight/2, element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
@@ -466,7 +446,8 @@ export class M_Light_CS {
                         recordIndex:index,
                         repeatTime: this.getRandom(5, 25),
                     });
-                }              
+                    element.color=setRGB;
+                }    
             }
         }
         console.log('repeatCountList', repeatCountList)

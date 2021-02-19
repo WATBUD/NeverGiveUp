@@ -35,7 +35,8 @@
       value="mode_DigitTimes" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],false)" onkeydown=""
       value="PassWithoutTrace" class="ButtonStyle">
-
+      <input  type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],true)" onkeydown=""
+      value="PassWithoutTraceMulticolor" class="ButtonStyle">
 
 
 
@@ -88,9 +89,9 @@
       <input  type="button" id="AddSpace" (click)="setMode('Breath',[[0,0,255,1]],false)" onkeydown=""
       value="mode_Breathing" class="ButtonStyle">
       
-      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],false)" onkeydown=""
       value="mode_NormallyOn" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[[0,0,255,1]],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],true)" onkeydown=""
       value="mode_NormallyOnMulticolor" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('AcidMode',[[0,0,255,1]],false)" onkeydown=""
       value="mode_AcidMode" class="ButtonStyle">
@@ -106,11 +107,6 @@
       value="mode_Wave1_rainbow" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave1([[0,0,255,1]],false)" onkeydown=""
       value="mode_Wave1" class="ButtonStyle">
-
-
-
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_NormallyOn([[0,0,255,1]],true)" onkeydown=""
-      value="mode_NormallyOn" class="ButtonStyle">
 
       <input  type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],true)" onkeydown=""
       value="mode_Pingpong_rainbow" class="ButtonStyle">
