@@ -238,30 +238,103 @@ export class AppComponent implements OnInit {
                 showValue +
                 '%, #313131 100%)'
         }
-        this.M_Light_CS.setAnimationSpeed();
-        this.M_Light_CS.setNowLightMode();
+        this.setNowLightMode();
       
     }
     sliderChange(){
-        this.M_Light_CS.setAnimationSpeed();
-        this.M_Light_CS.setNowLightMode();
+        this.setNowLightMode();
         //this.M_Light_CS.mode_Kamehemeha([[0,0,255,1]],false);
+    }
+    setNowLightMode() {
+        var T_CS=this.M_Light_CS;
+        var inputColor=[JSON.parse(JSON.stringify(T_CS.lightData.colorPickerValue))];
+        if(inputColor==undefined){
+            //this.lightData;
+            console.log('%c setNowLightMode_undefined','color:rgb(255,77,255)', T_CS.lightData);
+            return;
+        }
+        T_CS.onSetModeRefresh();
+        var target=T_CS.lightData;
+        switch (target.PointEffectName) {
+            case 'GloriousMode':
+                break;
+            case 'SpiralingWave':
+                break;
+            case 'AcidMode':
+                T_CS.mode_AcidMode(inputColor);
+                break;
+            case 'Breathing':
+                T_CS.mode_Breathing(inputColor,target.Multicolor);
+                break;
+            case 'Breath':
+                T_CS.mode_Breath(inputColor,target.Multicolor);
+                    break;
+            case 'NormallyOn':
+                T_CS.mode_NormallyOn(inputColor);
+                break;
+            case 'Matrix2':
+                T_CS.mode_Matrix2(inputColor,target.Multicolor);
+                break;
+            case 'Matrix3':
+                T_CS.mode_Matrix3(inputColor,target.Multicolor);
+                break;
+            case 'Rainbow':
+                T_CS.mode_Rainbow();
+                break;
+            case 'HeartbeatSensor':
+                T_CS.mode_HeartbeatSensor(inputColor);
+                break;
+            case 'DigitTimes':
+                T_CS.mode_DigitTimes(inputColor);
+                break;
+            case 'Kamehemeha':
+                T_CS.mode_Kamehemeha(inputColor,target.Multicolor)
+                break;
+            case 'Pingpong':
+                T_CS.mode_Pingpong(inputColor,target.Multicolor);
+                break;
+            case 'Surmount':
+                T_CS.mode_Surmount(inputColor,target.Multicolor,T_CS.centerBlockPoint);
+                break;
+            case 'LEDOFF':
+                T_CS.mode_LEDOFF();
+                break;
+            case 'Starlight':
+                T_CS.mode_Starlight(inputColor);
+                break;    
+            case 'Snowing':
+                T_CS.mode_Snowing(inputColor,target.Multicolor);
+                break;   
+            case 'WaveSync':
+                T_CS.mode_WaveSync(inputColor, true, 20);
+                break;
+            case 'Wave1':
+                T_CS.mode_WaveSync(inputColor, true, 100);
+                break;
+            case 'Wave2':
+                T_CS.mode_WaveSync(inputColor, true, 250,100);
+                break;                                      
+            default:
+                break;
+        }
     }
     setMode(modeName,color=[0,0,0,1], isRainbow = true){
         console.log('%c setMode','color:rgb(255,77,255)', modeName,color);
-        this.M_Light_CS.lightData.colorPickerValue=color;
-        this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
-        this.M_Light_CS.lightData.PointEffectName=modeName;
-        this.M_Light_CS.lightData.translate=modeName;
-        this.M_Light_CS.setAnimationSpeed();
-        this.M_Light_CS.setNowLightMode();
-
         var obj={
             PointEffectName:this.M_Light_CS.lightData.PointEffectName,
             colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
             Multicolor:false,
             BlockIndex:37,
         }
+
+        this.M_Light_CS.lightData.colorPickerValue=color;
+        this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
+        this.M_Light_CS.lightData.PointEffectName=modeName;
+        this.M_Light_CS.lightData.translate=modeName;
+        this.setNowLightMode();//by setMode
+
+        
+        
         //this.M_Light_CS.setPassiveEffect(obj);
     }
     DeveloperControl() {

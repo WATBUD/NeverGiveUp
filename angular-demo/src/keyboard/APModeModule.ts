@@ -283,83 +283,14 @@ export class M_Light_CS {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));//å…©é»žè·�é›¢
     }
     
-    setNowLightMode() {
-        console.log('%c setNowLightMode','color:rgb(255,77,255)', this.lightData);
-        var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
-        if(inputColor==undefined){
-            //this.lightData;
-            console.log('%c setNowLightMode_undefined','color:rgb(255,77,255)', this.lightData);
-            return;
-        }
+    
+
+    onSetModeRefresh(){
         this.setAnimationSpeed();
         clearInterval(this.repeater);
         this.setAllBlockColor([0, 0, 0, 1]);
-        var target=this.lightData;
-        switch (target.PointEffectName) {
-            case 'GloriousMode':
-                break;
-            case 'SpiralingWave':
-                break;
-            case 'AcidMode':
-                this.mode_AcidMode(inputColor);
-                break;
-            case 'Breathing':
-                this.mode_Breathing(inputColor,target.Multicolor);
-                break;
-            case 'Breath':
-                this.mode_Breath(inputColor,target.Multicolor);
-                    break;
-            case 'NormallyOn':
-                this.mode_NormallyOn(inputColor);
-                break;
-            case 'Matrix2':
-                this.mode_Matrix2(inputColor,target.Multicolor);
-                break;
-            case 'Matrix3':
-                this.mode_Matrix3(inputColor,target.Multicolor);
-                break;
-            case 'Rainbow':
-                this.mode_Rainbow();
-                break;
-            case 'HeartbeatSensor':
-                this.mode_HeartbeatSensor(inputColor);
-                break;
-            case 'DigitTimes':
-                this.mode_DigitTimes(inputColor);
-                break;
-            case 'Kamehemeha':
-                this.mode_Kamehemeha(inputColor,target.Multicolor)
-                break;
-            case 'Pingpong':
-                this.mode_Pingpong(inputColor,target.Multicolor);
-                break;
-            case 'Surmount':
-                this.mode_Surmount(inputColor,target.Multicolor,this.centerBlockPoint);
-                break;
-            case 'LEDOFF':
-                this.mode_LEDOFF();
-                break;
-            case 'Starlight':
-                this.mode_Starlight(inputColor);
-                break;    
-            case 'Snowing':
-                this.mode_Snowing(inputColor,target.Multicolor);
-                break;   
-            case 'WaveSync':
-                this.mode_WaveSync(inputColor, true, 20);
-                break;
-            case 'Wave1':
-                this.mode_WaveSync(inputColor, true, 100);
-                break;
-            case 'Wave2':
-                this.mode_WaveSync(inputColor, true, 250,100);
-                break;                                      
-            default:
-                break;
-        }
     }
 
-    
     setPassiveEffect(obj){
 
         //var data-
@@ -1021,7 +952,7 @@ export class M_Light_CS {
     mode_Breathing(colors = [[255,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
         var repeatCount = 0;
-        var StartPoint = this.getNowBlock(50).coordinateData;
+        var StartPoint = this.getNowBlock(0).coordinateData;
         var mode_step = 0;
         var step = 60;
         var nowStep = 0;
@@ -1071,7 +1002,82 @@ export class M_Light_CS {
             for (let index = 0; index < repeatCountList.length; index++) {     
                 var nowColor=[JSON.parse(JSON.stringify(repeatCountList[index].color)),[0,0,0,1]];
 
+                
+                var t_data = [0,0,0,1];
+                t_data[0] = (nowColor[t_Count][0] * (step - nowStep) + nowColor[t_Count2][0] * nowStep) / step;
+                t_data[1] = (nowColor[t_Count][1] * (step - nowStep) + nowColor[t_Count2][1] * nowStep) / step;
+                t_data[2] = (nowColor[t_Count][2] * (step - nowStep) + nowColor[t_Count2][2] * nowStep) / step;
+                var target = this.AllBlockColor;
+                target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
+                //console.log('element.color', t_data, step, nowStep)
+            }
 
+            if(nowStep<step-1){
+                nowStep+=1;
+                
+            }
+            else{
+                nowStep=0;
+                repeatCount += 1;
+                //repeatCount=0;            
+            }              
+        }, 50*this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
+    mode_BreathingMulticolor(colors = [[255,0,0,1]], isRainbow = true) {
+        clearInterval(this.repeater);
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var mode_step = 0;
+        var step = 60;
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var repeatCountList=[];
+        var target = this.AllBlockColor;
+        var setRGB;
+        var repeatCircleCount=0;
+        console.log('%c mode_BreathingMulticolor','color:rgb(255,75,255,1)',this.imageMaxWidth);
+
+        for (let i_compare = 0; i_compare < this.imageMaxWidth; i_compare+=this.minKeyWidth) {
+            //const element = array[index];
+            if (isRainbow) {
+                setRGB = this.rainbow7Color()[this.getRandom(0, this.rainbow7Color().length - 1)];  
+            }
+            else {
+                setRGB = colors[0];
+            }
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+               
+                var dis = this.distanceCalculation(StartPoint.center_Point[0], StartPoint.center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                if (dis <= i_compare && dis >= i_compare-this.minKeyWidth) {
+                    //element.color = setRGB;
+                    repeatCountList.push({
+                        color: setRGB,
+                        recordIndex:index,
+                        repeatTime: this.getRandom(5, 25),
+                    });
+                }     
+                
+    
+            }
+        }
+        console.log('repeatCountList', repeatCountList)
+
+        this.repeater = setInterval(() => {
+            //this.mode_reset();
+            var t_Count=repeatCount%2;
+            var t_Count2=0;
+            if(t_Count==0){
+                t_Count2=1;
+            }
+            else{
+                t_Count2=0;
+            }
+            for (let index = 0; index < repeatCountList.length; index++) {     
+                var nowColor=[JSON.parse(JSON.stringify(repeatCountList[index].color)),[0,0,0,1]];
+
+                
                 var t_data = [0,0,0,1];
                 t_data[0] = (nowColor[t_Count][0] * (step - nowStep) + nowColor[t_Count2][0] * nowStep) / step;
                 t_data[1] = (nowColor[t_Count][1] * (step - nowStep) + nowColor[t_Count2][1] * nowStep) / step;
