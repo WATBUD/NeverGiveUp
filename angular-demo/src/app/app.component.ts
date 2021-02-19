@@ -264,9 +264,6 @@ export class AppComponent implements OnInit {
                 T_CS.mode_AcidMode(inputColor);
                 break;
             case 'Breathing':
-                T_CS.mode_Breathing(inputColor,target.Multicolor);
-                break;
-            case 'Breath':
                 if(target.Multicolor){
                     T_CS.mode_BreathingMulticolor(inputColor, true);    
                 }
@@ -376,8 +373,11 @@ export class AppComponent implements OnInit {
                 target_cs.mode_RippleGraff(inputColor,target.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-                
-                target_cs.mode_PassWithoutTrace(inputColor,index,target.Multicolor);
+            if(target.Multicolor){
+                var colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+                inputColor=[colors[target_cs.getRandom(0,colors.length-1)]];
+            }
+            target_cs.mode_PassWithoutTrace(inputColor,index);
                 break;
             case 'FastRunWithoutTrace'://一排
                 target_cs.mode_FastRunWithoutTrace(inputColor,target.Multicolor,index);
