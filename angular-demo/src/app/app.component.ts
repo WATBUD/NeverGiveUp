@@ -313,7 +313,7 @@ export class AppComponent implements OnInit {
                 break;
             case 'Wave2':
                 T_CS.mode_WaveSync(inputColor, true, 250,100);
-                break;                                      
+                break;                          
             default:
                 break;
         }
@@ -333,8 +333,6 @@ export class AppComponent implements OnInit {
         this.M_Light_CS.lightData.translate=modeName;
         this.setNowLightMode();//by setMode
 
-        
-        
         //this.M_Light_CS.setPassiveEffect(obj);
     }
     DeveloperControl() {
