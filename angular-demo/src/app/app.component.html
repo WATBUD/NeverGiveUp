@@ -129,12 +129,11 @@
       <!-- <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" [(ngModel)]="zzzz"> -->
 
         <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" 
-        [(ngModel)]="this.M_Light_CS.lightData.rate"
+        [(ngModel)]="this.Built_ineffect.Built_inSelected.speed"
         (mouseup)="sliderChange()"
         (ngModelChange)="lightSliderMove('PRESETS_RateSlider')"
         onkeydown="event.preventDefault()">
 
-        <!-- <div>{{ this.M_Light_CS.lightData.rate }}%</div> -->
       
       <!-- [style.background-color]="'blue'" -->
       <!-- [ngStyle]="{'background-image': PERKEY_BrightnessSlider_Background()} -->

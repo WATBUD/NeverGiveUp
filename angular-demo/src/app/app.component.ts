@@ -226,7 +226,7 @@ export class AppComponent implements OnInit {
             showValue=this.M_Light_CS.lightData.brightness;           
         }
         if(TargetName=='PRESETS_RateSlider'){
-            showValue=this.M_Light_CS.lightData.speed;
+            showValue= this.Built_ineffect.Built_inSelected.speed;
         }
         console.log('lightSliderMove',TargetName,showValue);
 
@@ -243,18 +243,30 @@ export class AppComponent implements OnInit {
     }
     sliderChange(){
         this.setNowLightMode();
-        //this.M_Light_CS.mode_Kamehemeha([[0,0,255,1]],false);
+    }
+
+    setMode(modeName,color=[0,0,0,1], isRainbow = true){
+        console.log('%c setMode','color:rgb(255,77,255)', modeName,color,isRainbow);
+
+        this.Built_ineffect.Built_inSelected.colorPickerValue=color;
+        this.Built_ineffect.Built_inSelected.Multicolor=isRainbow;
+        this.Built_ineffect.Built_inSelected.PointEffectName=modeName;
+        this.Built_ineffect.Built_inSelected.translate=modeName;
+
+        this.setNowLightMode();//by setMode
+
+        //this.M_Light_CS.setPassiveEffect(obj);
     }
     setNowLightMode() {
         var T_CS=this.M_Light_CS;
-        var inputColor=[JSON.parse(JSON.stringify(T_CS.lightData.colorPickerValue))];
+        var target=JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
+        var inputColor=[target.colorPickerValue];
         if(inputColor==undefined){
-            //this.lightData;
             console.log('%c setNowLightMode_undefined','color:rgb(255,77,255)', T_CS.lightData);
             return;
         }
+        T_CS.lightData.speed=target.speed;
         T_CS.onSetModeRefresh();
-        var target=T_CS.lightData;
         switch (target.PointEffectName) {
             case 'GloriousMode':
                 break;
@@ -272,6 +284,7 @@ export class AppComponent implements OnInit {
                     T_CS.mode_Breath(inputColor);
                 }
                     break;
+                break;
             case 'NormallyOn':
                 if(target.Multicolor){
                     T_CS.mode_NormallyOnMulticolor(inputColor);    
@@ -339,54 +352,37 @@ export class AppComponent implements OnInit {
                 break;
         }
     }
-    setMode(modeName,color=[0,0,0,1], isRainbow = true){
-        console.log('%c setMode','color:rgb(255,77,255)', modeName,color,isRainbow);
-        var obj={
-            PointEffectName:this.M_Light_CS.lightData.PointEffectName,
-            colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
-            Multicolor:false,
-            BlockIndex:37,
-        }
-
-        this.M_Light_CS.lightData.colorPickerValue=color;
-        //this.M_Light_CS.lightData.Multicolor_Enable=isRainbow;
-        this.M_Light_CS.lightData.Multicolor=isRainbow;
-        this.M_Light_CS.lightData.PointEffectName=modeName;
-        this.M_Light_CS.lightData.translate=modeName;
-        this.setNowLightMode();//by setMode
-
-        //this.M_Light_CS.setPassiveEffect(obj);
-    }
     setPassiveEffect(obj){
         var target_cs=this.M_Light_CS;
-        var inputColor=[JSON.parse(JSON.stringify(target_cs.lightData.colorPickerValue))];
+        var target=JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
+        var inputColor=[target.colorPickerValue];
         if(inputColor==undefined){
             //this.lightData;
-            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', target_cs.lightData);
+            console.log('%c setPassiveEffect_undefined','color:rgb(255,77,255)', target_cs.lightData);
             return;
         }
-        var target=this.M_Light_CS.lightData;
+        target_cs.lightData.speed=target.speed;
         var index=this.M_Light_CS.currentBlockIndex=obj.BlockIndex;
-        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
+        console.log('%c setPassiveEffect','color:rgb(255,77,255)', index);
         switch (target.PointEffectName) {
             case 'RippleGraff'://彩色擴散
                 target_cs.mode_RippleGraff(inputColor,target.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-            if(target.Multicolor){
-                var colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-                inputColor=[colors[target_cs.getRandom(0,colors.length-1)]];
-            }
-            target_cs.mode_PassWithoutTrace(inputColor,index);
+                if(target.Multicolor){
+                    var colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+                    inputColor=[colors[this.M_Light_CS.getRandom(0,colors.length-1)]];
+                }
+                target_cs.mode_PassWithoutTrace(inputColor,index);
                 break;
             case 'FastRunWithoutTrace'://一排
                 target_cs.mode_FastRunWithoutTrace(inputColor,target.Multicolor,index);
                 break;
             case 'Cross'://十字
-                target_cs.mode_Cross(inputColor,target.Multicolor,index);
+                target_cs.mode_Cross(inputColor,false,index);
                 break;
             case 'Blossom'://綻放
-                target_cs.mode_Blossom(inputColor,target.Multicolor,index);
+                target_cs.mode_Blossom(inputColor,false,index);
                 break;    
             default:
                 break;
@@ -408,14 +404,14 @@ export class AppComponent implements OnInit {
             console.log("recordValue", recordValue);
             console.log("index2", index2);
             this.M_Light_CS.currentBlockIndex=index2;
-            //this.M_Light_CS.setPassiveEffects();
-
             var obj={
                 PointEffectName:this.M_Light_CS.lightData.PointEffectName,
                 colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
                 Multicolor:true,
                 BlockIndex:index2,
             }
+            //this.Built_ineffect.Built_inSelected=obj;
+
             this.setPassiveEffect(obj);
 
             if (event.keyCode == 109) {//-
