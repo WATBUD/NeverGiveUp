@@ -359,36 +359,7 @@ export class M_Light_CS {
         }
     }
 
-    setPassiveEffects(){
-        var inputColor=[JSON.parse(JSON.stringify(this.lightData.colorPickerValue))];
-        if(inputColor==undefined){
-            //this.lightData;
-            console.log('%c setPassiveEffects_undefined','color:rgb(255,77,255)', this.lightData);
-            return;
-        }
-        var target=this.lightData;
-        var index=this.currentBlockIndex;
-        console.log('%c setPassiveEffects','color:rgb(255,77,255)', index);
-        switch (target.PointEffectName) {
-            case 'RippleGraff'://彩色擴散
-                this.mode_RippleGraff(inputColor,target.Multicolor,index);
-                break;
-            case 'PassWithoutTrace'://單點
-                this.mode_PassWithoutTrace(inputColor,index,target.Multicolor);
-                break;
-            case 'FastRunWithoutTrace'://一排
-                this.mode_FastRunWithoutTrace(inputColor,false,index);
-                break;
-            case 'Cross'://十字
-                this.mode_Cross(inputColor,false,index);
-                break;
-            case 'Blossom'://綻放
-                this.mode_Blossom(inputColor,false,index);
-                break;    
-            default:
-                break;
-        }
-    }
+    
     setPassiveEffect(obj){
 
         //var data-
