@@ -101,7 +101,7 @@ export class M_Light_CS {
         }
     }
 
-    serCoordinateData(RGBList){
+    setCoordinateData(RGBList){
         for (let index = 0; index < RGBList.length; index++) {
             let element = RGBList[index];
             //element.setAttribute('data-index', String(index));
@@ -120,7 +120,7 @@ export class M_Light_CS {
             }
             this.AllBlockColor[index].coordinateData = obj;
         }
-        console.log('serCoordinateData()', this.AllBlockColor);  
+        console.log('setCoordinateData()', this.AllBlockColor);  
 
     }
     
@@ -306,13 +306,13 @@ export class M_Light_CS {
             case 'SpiralingWave':
                 break;
             case 'AcidMode':
-                this.mode_AcidMode(inputColor);
+                this.mode_AcidMode();
                 break;
             case 'Breathing':
                 this.mode_Breathing(inputColor,Multicolor);
                 break;
             case 'Breath':
-                this.mode_Breath(inputColor,Multicolor);
+                this.mode_CycleBreath(inputColor,Multicolor);
                     break;
             case 'NormallyOn':
                 this.mode_NormallyOn(inputColor);
@@ -1148,7 +1148,7 @@ export class M_Light_CS {
         }, 50*this.animationSpeed)
         //clearInterval(this.repeater);
     }
-    mode_Breath(colors = [[255,0,0,1]], isRainbow = true) {
+    mode_CycleBreath(colors = [[255,0,0,1]], isRainbow = true) {
         clearInterval(this.repeater);
         var repeatCount = 0;
         var mode_step = 0;
@@ -3636,14 +3636,10 @@ export class M_Light_CS {
             } 
             var temp_colorData = [0, 0, 0, 1];
             for (let index = 0; index < 3; index++) {
-                temp_colorData[index] = (randomColor[index] * (totalStep - nowStep) + nextColor[index] * nowStep) / totalStep;=
+                temp_colorData[index] = (randomColor[index] * (totalStep - nowStep) + nextColor[index] * nowStep) / totalStep;
             }
             var target = this.AllBlockColor;
-            target[index].color = temp_colorData;
-
-
-
-                              
+            target[index].color = temp_colorData;   
         }, 50*this.animationSpeed)
     }
     rainbow7Color(){

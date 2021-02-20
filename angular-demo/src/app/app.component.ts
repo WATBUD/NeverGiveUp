@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
             console.log('%c setNowLightMode_undefined','color:rgb(255,77,255)', T_CS.lightData);
             return;
         }
-        T_CS.lightData.speed=target.speed;
+        this.M_Light_CS.lightData=target;
         T_CS.onSetModeRefresh();
         switch (target.PointEffectName) {
             case 'GloriousMode':
@@ -281,7 +281,7 @@ export class AppComponent implements OnInit {
                 }
                 else
                 {
-                    T_CS.mode_Breath(inputColor);
+                    T_CS.mode_CycleBreath(inputColor,false);
                 }
                     break;
                 break;
@@ -361,7 +361,7 @@ export class AppComponent implements OnInit {
             console.log('%c setPassiveEffect_undefined','color:rgb(255,77,255)', target_cs.lightData);
             return;
         }
-        target_cs.lightData.speed=target.speed;
+        this.M_Light_CS.lightData=target;
         var index=this.M_Light_CS.currentBlockIndex=obj.BlockIndex;
         console.log('%c setPassiveEffect','color:rgb(255,77,255)', index);
         switch (target.PointEffectName) {
