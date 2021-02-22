@@ -3,7 +3,6 @@
 //Louis Architecture => Hex=>SET RGB=>SET HSV
 import { BoxSelectionArea } from './BoxSelectionArea'
 import { Injectable } from '@angular/core'
-
 export class M_Light_CS {
     //左上,右上,左下,右下
     maxkaycapNumber = 0
@@ -26,7 +25,7 @@ export class M_Light_CS {
     breakGradation=[[0,14],[15,29],[30,44],[45,58],[59,72],[73,82]];
     qigong_Step2_Range=[22,23, 38,52,51 ,36];
     qigong_Step1_Range=[0,15,30,58,71,82];
-
+    BreathTempArray=[];
     centerBlockPoint=37;
     break_DimensionalArray=[];
     max_X_Number=26;
@@ -39,6 +38,8 @@ export class M_Light_CS {
         this.maxkaycapNumber = inputMax
         for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
             this.AllBlockColor.push({ clearStatus:false,color: [0,0,0,0],breathing:false,border: true,coordinateData:[],keyCode:''})
+            this.BreathTempArray.push({ clearStatus:false,color: [0,0,0,0],breathing:false,border: true,coordinateData:[],keyCode:''})
+
         }
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
                 this.twoDimensionalArray[index]=[];
@@ -124,15 +125,15 @@ export class M_Light_CS {
 
     }
     
-    setPerkey(index,Clear){
+    setPerkey(index,Clear,colorPickerValue,breathing){
         if(!Clear){
             this.AllBlockColor[index].color=[0,0,0,0];
             this.AllBlockColor[index].breathing=false;
             this.AllBlockColor[index].clearStatus=false;
         }
         else{
-            this.AllBlockColor[index].color=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
-            this.AllBlockColor[index].breathing=this.lightData.breathing;
+            this.AllBlockColor[index].color=JSON.parse(JSON.stringify(colorPickerValue));
+            this.AllBlockColor[index].breathing=breathing;
             this.AllBlockColor[index].clearStatus=true;
             console.log('%c setPerkey,breathing,Clear','color:rgb(255,77,255)',  this.AllBlockColor[index].breathing,Clear);
         }
@@ -162,24 +163,23 @@ export class M_Light_CS {
         else{
         }
     }
-    setGroupArrayColor(groupArray,assignColor=[],isAll=false,clearStatus=false){  
-        if(isAll){
-            groupArray=[];
+    setGroupArrayColor(obj){  
+        //groupArray,assignColor=[],isAll=false,clearStatus=false,colorPickerValue,breathing
+        if(obj.isAll){
+            obj.groupArray=[];
             for (let i = 0; i < this.AllBlockColor.length; i++) {
-                groupArray.push(i);
+                obj.groupArray.push(i);
             }
         }
-        if(assignColor.length<1){
+        if(obj.assignColor.length<1){
             //console.log('setGroupArrayColor_assignColor', assignColor)
-            assignColor=JSON.parse(JSON.stringify(this.lightData.colorPickerValue));
+            obj.assignColor=JSON.parse(JSON.stringify(obj.colorPickerValue));
         }
         var target=this.AllBlockColor;
-        var temp_Status=this.lightData.breathing;
-
-        groupArray.forEach(function(value, index, array){//array=GroupArray
-            target[value].color = assignColor ;
-            target[value].breathing=temp_Status;
-            target[value].clearStatus=clearStatus;
+        obj.groupArray.forEach(function(value, index, array){//array=GroupArray
+            target[value].color = obj.assignColor;
+            target[value].breathing=obj.breathing;
+            target[value].clearStatus=obj.clearStatus;
         });
     }
     subBlockIndex(){
@@ -2301,6 +2301,78 @@ export class M_Light_CS {
         
 
     }
+    clearIntervalEvent(){
+        clearInterval(this.repeater);
+    }
+    mode_BreatheSeparatelyBlack(){
+        console.log('%c Enter_BreatheSeparatelyBlack','color:rgb(255,77,255)');
+        clearInterval(this.repeater);
+        //RGBcolors =[[255,0,0,1],[255,0,0,0.8],[0,255,0,1],[0,255,0,0.8],[0,0,255,1],[0,0,255,0.8]];
+        var totalStep=255;
+        var nowStep=0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        var target = this.AllBlockColor;
+        //this.setAllBlockColor([0,0,255,1]);
+    //    var tempList=[];
+    //    var RanRange=[10,100];
+    //     for (let index = 0; index < target.length; index ++) {
+    //         tempList.push({
+    //             color: JSON.parse(JSON.stringify(target[index].color)),
+    //             recordIndex:index,
+    //             repeatCount: 1,
+    //             repeatTime: this.getRandom(RanRange[0], RanRange[1]),
+    //         });
+    //     }
+    //     var exist=[];
+        var repeatCount=0;
+
+        var nowColor=[];
+        var newColor=[];
+        this.repeater = setInterval(() => {
+            if(nowStep<totalStep){
+                nowStep+=5;
+            }
+            else{
+                nowStep=0;
+                repeatCount+=1;
+            }
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];     
+                var listItem=target[index];
+                if (element.breathing&&element.clearStatus) {
+                    if(repeatCount%2==1){
+                        nowColor=[0,0,0,1];
+                        newColor=JSON.parse(JSON.stringify(listItem.color));
+                    }
+                    else{
+                        nowColor=JSON.parse(JSON.stringify(listItem.color));
+                        newColor=[0,0,0,1];
+                    }
+
+                    var t_data = [0,0,0,1];
+                    for (let i_step = 0; i_step < 3; i_step++) {
+                        t_data[i_step] =Math.floor((nowColor[i_step] * (totalStep - nowStep) + newColor[i_step] * nowStep) / totalStep);
+                    }
+
+                    //var target = this.AllBlockColor;
+                    this.BreathTempArray[index].color=JSON.parse(JSON.stringify(t_data));
+                    //element.color= JSON.parse(JSON.stringify(t_data))      
+                }
+                else{
+                    this.BreathTempArray[index].color=JSON.parse(JSON.stringify(listItem.color));
+                }
+                //continue;
+                //break;
+            }
+            //console.log('%c Enter_BreatheSeparatelyBlack','color:rgb(255,77,255)',t_data,nowColor,newColor,nowStep,totalStep);
+
+        }, 30)
+
+    
+
+    }
+
+
     mode_Wave1(colors = [[0,0,255,1]], isRainbow = true){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
@@ -3732,6 +3804,16 @@ export class M_Light_CS {
         }
 
     }
+    getIndexRGBPerkeyCss(i) {
+        //console.log('getIndexRGBCss', i)
+        var target = this.BreathTempArray;
+        if (target[i].color != undefined) {
+            return this.toCssRGB(target[i].color);
+        }
+    }
+
+
+    
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     };
