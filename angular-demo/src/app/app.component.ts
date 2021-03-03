@@ -284,7 +284,6 @@ export class AppComponent implements OnInit {
                     T_CS.mode_CycleBreath(inputColor,false);
                 }
                     break;
-                break;
             case 'NormallyOn':
                 if(target.Multicolor){
                     T_CS.mode_NormallyOnMulticolor(inputColor);    
@@ -343,10 +342,22 @@ export class AppComponent implements OnInit {
                 T_CS.mode_WaveSync(inputColor, true, 20);
                 break;
             case 'Wave1':
-                T_CS.mode_WaveSync(inputColor, true, 100);
-                break;
+                if(target.Multicolor){
+                    T_CS.mode_WaveSync(inputColor, true, 80,150);
+                }
+                else
+                {
+                    T_CS.mode_WaveSync(inputColor, false, 100,250);
+                }
+                break;  
             case 'Wave2':
-                T_CS.mode_WaveSync(inputColor, true, 250,100);
+                if(target.Multicolor){
+                    T_CS.mode_WaveSync(inputColor, true, 80,150);
+                }
+                else
+                {
+                    T_CS.mode_WaveSync(inputColor, false, 300,100);
+                }
                 break;                           
             default:
                 break;

@@ -1269,7 +1269,7 @@ export class M_Light_CS {
     }
 
     mode_WaveSync(colors = [[255,0,0,1]], isRainbow = true,bandwidth=20,BaseSpeed=140){
-        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1278,6 +1278,25 @@ export class M_Light_CS {
             //colors =this.rainbow7Color();
             colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
             //colors= colors.concat(colors);
+        }
+        else{
+            var maxPercent=55;
+            var currentPercent=55;
+            var tempColorArray=[];
+            var inputColor_T=colors[0];
+            console.log('%c inputColor_T','color:rgb(255,75,255,1)',inputColor_T);
+            while (currentPercent>25) {
+                currentPercent-=5;
+                var tempColor=[0,0,0,1];
+                tempColor[0]=inputColor_T[0]*currentPercent/maxPercent;
+                tempColor[1]=inputColor_T[1]*currentPercent/maxPercent;
+                tempColor[2]=inputColor_T[2]*currentPercent/maxPercent;
+                console.log('%c currentPercent>0','color:rgb(255,75,255,1)',tempColor);
+                tempColorArray.push(tempColor);
+            }
+            colors=tempColorArray;
+            console.log('%c tempColorArray','color:rgb(255,75,255,1)',tempColorArray);
+
         }
         //console.log('%c colors','color:rgb(255,75,255,1)',colors);
         var setRGB=colors[this.getRandom(0, colors.length - 1)];
@@ -1345,7 +1364,7 @@ export class M_Light_CS {
     }
 
     mode_Spiral(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_Spiral','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1440,7 +1459,7 @@ export class M_Light_CS {
         }, 100)
     }
     mode_Peacock(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_Peacock','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1504,7 +1523,7 @@ export class M_Light_CS {
 
 
     mode_WaveSyncBack2(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%cmode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_WaveSyncBack2','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var intervalCount=0;
@@ -1661,7 +1680,7 @@ export class M_Light_CS {
        },50*this.animationSpeed);
     }
     mode_Rain(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
-        console.log('%cmode_WaveSync_enter', 'color:rgb(255,75,255,1)', colors, this.repeater);
+        console.log('%c mode_Rain', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex = 0;
         console.log('%c mode_Starlight', 'color:rgb(255,75,255,1)', colors);
@@ -1799,7 +1818,7 @@ export class M_Light_CS {
     }
 
     mode_RainBackup(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
-        console.log('%cmode_WaveSync_enter', 'color:rgb(255,75,255,1)', colors, this.repeater);
+        console.log('%c mode_RainBackup', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex = 0;
         console.log('%c mode_Starlight', 'color:rgb(255,75,255,1)', colors);
