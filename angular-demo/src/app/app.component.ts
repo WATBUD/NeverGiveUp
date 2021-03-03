@@ -9,7 +9,7 @@ import { KeyAssignManager } from '../keyboard/KeyAssignManager'
 import { KeyBoardManager } from '../keyboard/KeyBoardManager'
 import { KeyBoardStyle } from '../keyboard/KeyBoardStyle'
 
-import { M_Light_CS } from '../keyboard/APModeModule'
+import { M_Light_CS } from '../keyboard/M_Light_CS'
 import { MatDialogRef } from '@angular/material'
 import { Built_ineffect,GloriousMode } from './Built_ineffect'
 
