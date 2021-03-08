@@ -2,6 +2,10 @@
       <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],false)" onkeydown=""
       value="mode_FastRunWithoutTrace" class="ButtonStyle">
       
+      <input type="button" id="AddSpace" (click)="setMode('ConicRipple',[0,0,255,1],false)" onkeydown=""
+      value="mode_ConicRipple" class="ButtonStyle">
+
+
       <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],true)" onkeydown=""
       value="mode_FastRunWithoutTraceRaindow" class="ButtonStyle">
       <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T0()" onkeydown=""
@@ -14,8 +18,6 @@
       value="mode_SpreadLeftAndRight" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('AcidMode')" onkeydown=""
       value="mode_gloriousMode" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown=""
-      value="GMMK_imgVisible" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('Snowing',[255,255,0,1],false)" onkeydown=""
       value="mode_Snowing" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('Matrix3',[255,255,0,1],false)" 
@@ -47,7 +49,7 @@
       <input  type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],false)" onkeydown=""
       value="mode_HeartbeatSensor" class="ButtonStyle">
       <input  type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],true)" onkeydown=""
-      value="mode_HeartbeatSensor" class="ButtonStyle">
+      value="mode_HeartbeatSensor_Rainbow" class="ButtonStyle">
 
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Rainbow()" onkeydown=""
       value="mode_Rainbow" class="ButtonStyle">
@@ -125,22 +127,28 @@
       <input  type="button" id="AddSpace" (click)="setMode('Surmount',[0,0,255,1],false)" onkeydown=""
       value="mode_Surmount" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_BreatheSeparately()" onkeydown=""
-      value="mode_BreatheSeparately" class="ButtonStyle">
-
-      <!--  -->
-      <!-- <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" [(ngModel)]="zzzz"> -->
-
-        <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5" 
-        [(ngModel)]="this.Built_ineffect.Built_inSelected.speed"
-        (mouseup)="sliderChange()"
-        (ngModelChange)="lightSliderMove('PRESETS_RateSlider')"
-        onkeydown="event.preventDefault()">
-
+    <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_BreatheSeparately()" onkeydown=""
+        value="mode_BreatheSeparately" class="ButtonStyle">
+    
+    <BR>
+    <div class="InputObjectBlock">
+        <div class="ClassName">speed </div>
+        <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" step="5"
+            [(ngModel)]="this.Built_ineffect.Built_inSelected.speed" (mouseup)="sliderChange()"
+            (ngModelChange)="lightSliderMove('PRESETS_RateSlider')" onkeydown="event.preventDefault()">
+    </div>
+    <div class="InputObjectBlock">
+        <div class="ClassName">brightness </div>
+        <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+            [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
+            (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')" onkeydown="event.preventDefault()">
+    </div>
+    <BR>
+    <input type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown="" value="GMMK_imgVisible" class="ButtonStyle">
       
       <!-- [style.background-color]="'blue'" -->
       <!-- [ngStyle]="{'background-image': PERKEY_BrightnessSlider_Background()} -->
-    <div style="
+    <!-- <div style="
                 width: 50px;
                 height: 50px;
                 left: 500px;
@@ -153,9 +161,7 @@
     left: 500px;
     background: red;
 ">
-</div>
-
-
+</div> -->
 
       <!-- background: linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,36,61,0.6) 80%), -->
       <div id="EventCanBoxSelectRange" class="Keyboard-content">

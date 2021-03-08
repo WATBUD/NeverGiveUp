@@ -29,7 +29,7 @@ import {
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css', './TTTTTTT.scss', './KeyBoardStyle.css']
+    styleUrls: ['./app.component.css', './Built_ineffect.scss', './KeyBoardStyle.css']
 })
 
 
@@ -239,7 +239,6 @@ export class AppComponent implements OnInit {
                 '%, #313131 100%)'
         }
         this.setNowLightMode();
-      
     }
     sliderChange(){
         this.setNowLightMode();
@@ -358,9 +357,17 @@ export class AppComponent implements OnInit {
                 {
                     T_CS.mode_WaveSync(inputColor, false, 300,100);
                 }
-                break;                           
+                break;  
+                         
+            case 'ConicRipple':
+                //if (target.Multicolor) {
+                    T_CS.mode_ConicRipple(inputColor, true);
+                //}
+                break;                 
             default:
+                //alert('遺失燈效名'+target.PointEffectName)
                 break;
+
         }
     }
     setPassiveEffect(obj){
@@ -405,7 +412,7 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Breath();
         //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
-
+        this.setMode('ConicRipple',[0,0,255,1],false);
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {

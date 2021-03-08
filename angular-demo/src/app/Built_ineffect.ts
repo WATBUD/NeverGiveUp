@@ -6,14 +6,13 @@ export class ModeParameter {
     Multicolor=false;
     Multicolor_Enable=true;
     colorPickerValue=[255,0,0,1]
-    brightness=100;
-    value=0;
+    brightness=100; 
     speed=50;
     brightness_Enable=true;
     color_Enable=true;
     rate_Enable=true;
     PointEffectName;
-
+    value=0;
 
     colors= ["#ff0000","#ff8000","#80ff00","#00ff00","#00ffff","#0000ff","#8000ff","#ff00ff","#ff0080","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"];
     ParameterNumberList=[
