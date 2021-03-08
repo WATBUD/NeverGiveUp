@@ -363,7 +363,12 @@ export class AppComponent implements OnInit {
                 //if (target.Multicolor) {
                     T_CS.mode_ConicRipple(inputColor, true);
                 //}
-                break;                 
+                break;      
+            case 'ConicRippleRaindow':
+                    //if (target.Multicolor) {
+                        T_CS.mode_ConicRippleRaindow(inputColor, true);
+                    //}
+                    break;      
             default:
                 //alert('遺失燈效名'+target.PointEffectName)
                 break;
@@ -412,7 +417,9 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Breath();
         //this.M_Light_CS.mode_Spiral();
         //this.M_Light_CS.mode_Peacock();
-        this.setMode('ConicRipple',[0,0,255,1],false);
+        //this.setMode('ConicRipple',[0,0,255,1],false);
+
+        this.setMode('ConicRippleRaindow',[0,0,255,1],false);
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
