@@ -194,15 +194,6 @@ export class M_Light_CS {
         else{
         }
     }
-    setColorPickerValue(RGB_Arr){
-       var target=this.lightData.colorPickerValue;
-       target[0]=RGB_Arr[0];
-       target[1]=RGB_Arr[1];
-       target[2]=RGB_Arr[2];
-       target[3]=1;
-       this.lightData.colorHex=this.rgbToHex(target[0],target[1],target[2]);
-    }
-
     
     rgbToHex(r, g, b) {
         r = Number(r);
@@ -766,46 +757,46 @@ export class M_Light_CS {
         //     const element = array[index];
             
         // }  
-        // var zzzzzzz=[
-        //     [255,  0,  0,1],
-        //     [255, 65,  0,1],
-        //     [255,125,  0,1],
-        //     [255,255,  0,1],
-        //     [125,255,  0,1],
-        //     [65 ,255,  0,1],
-        //     [0  ,255,  0,1], 
-        //     [0  ,255, 65,1],
-        //     [0  ,255,125,1],
-        //     [0  ,255,255,1],
-        //     [0  ,125,255,1],
-        //     [0  , 65,255,1],
-        //     [0  ,  0,255,1], 
-        //     [65 ,  0,255,1],
-        //     [125,  0,255,1],
-        //     [255,  0,255,1],
-        //     [255,  0,125,1],
-        //     [255 , 0, 65,1],
-        //     [255,  0,  0,1],
-        //     [255, 65,  0,1],
-        //     [255,125,  0,1],
-        //     [255,255,  0,1],
-        //     [125,255,  0,1],
-        //     [65 ,255,  0,1],
-        //     [0  ,255,  0,1], 
-        //     [0  ,255, 65,1],
-        //     [0  ,255,125,1],
-        //     [0  ,255,255,1],
-        //     [0  ,125,255,1],
-        //     [0  , 65,255,1],
-        //     [0  ,  0,255,1], 
-        //     [65 ,  0,255,1],
-        //     [125,  0,255,1],
-        //     [255,  0,255,1],
-        //     [255,  0,125,1],
-        //     [255 , 0, 65,1],
-        //     ];
-        var zzzzz=[]
-        var T=[255, 0,0,1];
+        var zzzzzzz=[
+            [255,  0,  0,1],
+            [255, 65,  0,1],
+            [255,125,  0,1],
+            [255,255,  0,1],
+            [125,255,  0,1],
+            [65 ,255,  0,1],
+            [0  ,255,  0,1], 
+            [0  ,255, 65,1],
+            [0  ,255,125,1],
+            [0  ,255,255,1],
+            [0  ,125,255,1],
+            [0  , 65,255,1],
+            [0  ,  0,255,1], 
+            [65 ,  0,255,1],
+            [125,  0,255,1],
+            [255,  0,255,1],
+            [255,  0,125,1],
+            [255 , 0, 65,1],
+            [255,  0,  0,1],
+            [255, 65,  0,1],
+            [255,125,  0,1],
+            [255,255,  0,1],
+            [125,255,  0,1],
+            [65 ,255,  0,1],
+            [0  ,255,  0,1], 
+            [0  ,255, 65,1],
+            [0  ,255,125,1],
+            [0  ,255,255,1],
+            [0  ,125,255,1],
+            [0  , 65,255,1],
+            [0  ,  0,255,1], 
+            [65 ,  0,255,1],
+            [125,  0,255,1],
+            [255,  0,255,1],
+            [255,  0,125,1],
+            [255 , 0, 65,1],
+            ];
+        //var zzzzz=[]
+        //var T=[[255, 0,0,1]];
         // var sadada=false;
         // while (sadada<=255) {
         //     //return;
@@ -828,7 +819,7 @@ export class M_Light_CS {
         // }
 
         if (isRainbow) {
-            setRGB = zzzzz;//this.rainbow7Color();
+            setRGB = zzzzzzz;//this.rainbow7Color();
         }
         else {
             setRGB = colors[this.getRandom(0, colors.length - 1)];
@@ -3018,27 +3009,41 @@ export class M_Light_CS {
         var Brightness=1;
         clearInterval(this.repeater);
         this.currentBlockIndex=43;
+        //var StartPoint = [this.imageMaxWidth/2,this.imageMaxHeight/2];
         var StartPoint = this.getNowBlock(0).coordinateData;
+        
+
+        var share_RepeatCount=0;
+
         var horizontalList=[];
-        for (let index = 0; index < this.imageMaxWidth; index+=40) {
+        for (let index = 0; index < this.imageMaxWidth; index+=this.minKeyWidth) {
             var ratio  =Math.sin((index * Math.PI / 180))
                 //var xpos=120+index;
                 //const scale = (Math.sin(radian - Math.PI * 0.5) + 1) * 0.5*maxH; 
-            var ypos=(ratio+1)/2*268;
+            var ypos=(ratio+1)/2*this.imageMaxHeight;
             horizontalList.push(
                 {
                     repeatCount:0,
                     coordinate:[index,StartPoint.top_Left[0]+ypos],
+                    //StartPoint.top_Left[0]+ypos
+                    //StartPoint[1]+ypos
                 }    
                );
         }
         this.repeater=setInterval(()=>{
             this.setAllBlockColor([0,0,0,1]);
+            var isEnd=false;
             var spacing=-5;
+            // if(horizontalList[0]['coordinate'][1]<=0||horizontalList[1]['coordinate'][1]>=this.imageMaxHeight){
+            //     //h_Item['repeatCount']+=1;
+            //     share_RepeatCount+=1;
+            // }
             for (let index = 0; index < horizontalList.length; index++) {
                 var h_Item=horizontalList[index];
-                if(h_Item['coordinate'][1]<=0||h_Item['coordinate'][1]>=this.imageMaxHeight){
-                    h_Item['repeatCount']+=1;
+                if(h_Item.coordinate[1]<=0||h_Item.coordinate[1]>=this.imageMaxHeight){
+                    h_Item['repeatCount']+=1;    
+                    //isEnd=true;
+                    //break;
                 }
                 if(h_Item['repeatCount']%2==0){
                     h_Item['coordinate'][1]-=40;
@@ -3047,8 +3052,13 @@ export class M_Light_CS {
                     h_Item['coordinate'][1]+=40;
                 }   
             }
-    
-            //console.log('horizontalList', horizontalList);    
+            // if(isEnd){
+            //     for (let i_2 = 0; i_2 <  horizontalList.length; i_2++) {
+            //         var h_Item2=horizontalList[i_2];
+            //         h_Item2.repeatCount+=1; 
+            //     }
+            // }
+            console.log('horizontalList', horizontalList,share_RepeatCount%2);    
             var target = this.AllBlockColor;
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
@@ -3065,7 +3075,76 @@ export class M_Light_CS {
                     }
                 }
             }
+        //console.log('this.animationSpeed', this.animationSpeed);
+        },60*this.animationSpeed)
+    }
 
+    mode_SinMoving_Up_Down(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
+        console.log('%c Enter_mode_HeartbeatSensor','color:rgb(255,77,255)',colors);
+        var Brightness=1;
+        clearInterval(this.repeater);
+        this.currentBlockIndex=43;
+        //var StartPoint = [this.imageMaxWidth/2,this.imageMaxHeight/2];
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        
+
+        var share_RepeatCount=0;
+
+        var horizontalList=[];
+        for (let index = 0; index < this.imageMaxWidth; index+=this.minKeyWidth) {
+            var ratio  =Math.sin((index * Math.PI / 180))
+                //var xpos=120+index;
+                //const scale = (Math.sin(radian - Math.PI * 0.5) + 1) * 0.5*maxH; 
+            var ypos=(ratio+1)/2*268;
+            horizontalList.push(
+                {
+                    repeatCount:0,
+                    coordinate:[index,StartPoint.top_Left[0]+ypos],
+                    //StartPoint.top_Left[0]+ypos
+                    //StartPoint[1]+ypos
+                }    
+               );
+        }
+        this.repeater=setInterval(()=>{
+            this.setAllBlockColor([0,0,0,1]);
+            var spacing=-5;
+            if(horizontalList[0]['coordinate'][1]<=0||horizontalList[1]['coordinate'][1]>=this.imageMaxHeight){
+                //h_Item['repeatCount']+=1;
+                share_RepeatCount+=1;
+            }
+            for (let index = 0; index < horizontalList.length; index++) {
+                var h_Item=horizontalList[index];
+                if(share_RepeatCount%2==0){
+                    h_Item['coordinate'][1]-=40;
+                }
+                else{
+                    h_Item['coordinate'][1]+=40;
+                }   
+                // if(h_Item['coordinate'][1]<=0||h_Item['coordinate'][1]>=this.imageMaxHeight){
+                //     //h_Item['repeatCount']+=1;
+                //     share_RepeatCount+=1;
+                // }
+                
+            }
+    
+            console.log('horizontalList', horizontalList,share_RepeatCount%2);    
+            var target = this.AllBlockColor;
+            for (let index = 0; index < target.length; index++) {
+                const element = target[index];
+                for (let i2 = 0; i2 < horizontalList.length; i2++) {
+                    var T = horizontalList[i2].coordinate;
+                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
+                    if (T[0] >= element.coordinateData.top_Left[0] &&
+                        T[0] <= element.coordinateData.top_Right[0] &&
+                        T[1] >= element.coordinateData.top_Left[1] &&
+                        T[1] <= element.coordinateData.bottom_Left[1]
+                    ) {
+                        element.color =colors[this.getRandom(0, colors.length-1)];
+                        continue;
+                    }
+                }
+            }
+        console.log('this.animationSpeed', this.animationSpeed);
         },60*this.animationSpeed)
     }
     mode_Matrix3_Rainbow(colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
