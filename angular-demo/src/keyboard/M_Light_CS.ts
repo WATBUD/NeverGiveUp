@@ -1624,8 +1624,11 @@ export class M_Light_CS {
                 //console.log('%c upper_scale','color:rgb(255,75,255,1)',upper_scale);
                     // colors[lower_index];
                 //element.color = JSON.parse(JSON.stringify(colors[nowColor]));
-
-                element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
+                var temp_colorData =JSON.parse(JSON.stringify(colors[lower_index]));
+                for (let index = 0; index < 3; index++) {
+                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                } 
+                element.color = temp_colorData;   
             }
 
         }, BaseSpeed*this.animationSpeed)
@@ -2989,7 +2992,12 @@ export class M_Light_CS {
                     }
                     //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
                 }
-                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color = T.color;
+                var temp_colorData=JSON.parse(JSON.stringify(T.color));
+                for (let index = 0; index < 3; index++) {
+                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                }
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color = temp_colorData;
+
             }
             this.showTwoDimensionalArray();
         }, 500 * this.animationSpeed);
@@ -3176,7 +3184,11 @@ export class M_Light_CS {
                         T[1] >= element.coordinateData.top_Left[1] &&
                         T[1] <= element.coordinateData.bottom_Left[1]
                     ) {
-                        element.color =colors[this.getRandom(0, colors.length-1)];
+                        var temp_colorData =JSON.parse(JSON.stringify(colors[this.getRandom(0, colors.length-1)]));
+                        for (let index = 0; index < 3; index++) {
+                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                        }                        
+                        element.color =temp_colorData;
                         continue;
                     }
                 }
@@ -3560,7 +3572,7 @@ export class M_Light_CS {
                     var temp_colorData = [0, 0, 0, 1];
                     for (let index = 0; index < 3; index++) {
                         temp_colorData[index] = (temp_C[index] * (totalStep - temp_block.nowStep) + nextColor[index] * temp_block.nowStep) / totalStep;
-                        temp_colorData[index] = temp_colorData[index] * this.lightData.brightness / 100;
+                        temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
                     }
                     element.color = temp_colorData;
                 } 
