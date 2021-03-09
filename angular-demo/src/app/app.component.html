@@ -51,7 +51,7 @@
       <input  type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],true)" onkeydown=""
       value="mode_HeartbeatSensor_Rainbow" class="ButtonStyle">
 
-      <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Rainbow()" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Rainbow',[255,255,0,1],true)" onkeydown=""
       value="mode_Rainbow" class="ButtonStyle">
    
       <input  type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SlopeRight()" onkeydown=""
@@ -95,9 +95,9 @@
 
       <input  type="button" id="AddSpace" (click)="setMode('Blossom',[255,255,0,1],false)" onkeydown=""
       value="mode_Blossom" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="setMode('Breathing',[[0,0,255,1]],true)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],true)" onkeydown=""
       value="mode_BreathingMulticolor" class="ButtonStyle">
-      <input  type="button" id="AddSpace" (click)="setMode('Breathing',[[0,0,255,1]],false)" onkeydown=""
+      <input  type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],false)" onkeydown=""
       value="mode_Breathing" class="ButtonStyle">
       
       <input  type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],false)" onkeydown=""

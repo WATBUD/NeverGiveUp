@@ -599,18 +599,15 @@ export class M_Light_CS {
                 //console.log('mode_step', mode_step)
                 if (mode_step == 0) {
                     if (dis <= compareResult && dis >= compareResultMax) {
-                        element.color = setRGB;
+                        var temp_colorData=JSON.parse(JSON.stringify(setRGB));
+                        for (let index2 = 0; index2 < 3; index2++) {
+                            temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
+                        }
+                        element.color = temp_colorData;
                     }
                 }
                 else {
                     clearInterval(this.repeater);
-                     
-                    // var T = JSON.parse(JSON.stringify(element.color));
-                    // T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
-                    // T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
-                    // T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
-                    // element.color = T;
-                    //console.log('element.color', T, step, nowStep)
                 }
 
             }
@@ -1259,7 +1256,7 @@ export class M_Light_CS {
                     Rainbow_i=0;
                 }    
             }
-  
+
             if (isRainbow) {
                 var t_data = [0,0,0,1];
                 if(RGBObj[Rainbow_i]==undefined){
@@ -1373,12 +1370,14 @@ export class M_Light_CS {
             //console.log('T_colors', T_colors)
             for (let index = 0; index < repeatCountList.length; index++) {     
                 var nowColor=[[0,0,0,1],T_colors];
-                var t_data = [0,0,0,1];
-                t_data[0] = (nowColor[t_Count][0] * (totalstep - nowStep) + nowColor[t_Count2][0] * nowStep) / totalstep;
-                t_data[1] = (nowColor[t_Count][1] * (totalstep - nowStep) + nowColor[t_Count2][1] * nowStep) / totalstep;
-                t_data[2] = (nowColor[t_Count][2] * (totalstep - nowStep) + nowColor[t_Count2][2] * nowStep) / totalstep;
+                
+                var temp_colorData = [0, 0, 0, 1];
+                for (let index2 = 0; index2 < 3; index2++) {
+                    temp_colorData[index2] = (nowColor[t_Count][index2] * (totalstep - nowStep) + nowColor[t_Count2][index2] * nowStep) / totalstep;
+                    temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
+                }
                 var target = this.AllBlockColor;
-                target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(t_data))          
+                target[repeatCountList[index].recordIndex].color= JSON.parse(JSON.stringify(temp_colorData))          
                 //console.log('element.color', t_data, nowStep, totalstep)
             }
 
@@ -2797,12 +2796,14 @@ export class M_Light_CS {
                    T.nowPos = 0;1
                    nextColor = this.rainbow7Color()[T.nowPos];
                }
-               T.color[0]= (temp_C[0]*(T.step-T.nowStep)+nextColor[0]*T.nowStep)/T.step;
-               T.color[1]= (temp_C[1]*(T.step-T.nowStep)+nextColor[1]*T.nowStep)/T.step;
-               T.color[2]= (temp_C[2]*(T.step-T.nowStep)+nextColor[2]*T.nowStep)/T.step;
+               var temp_colorData = [0, 0, 0, 1];
+               for (let index2 = 0; index2 < 3; index2++) {
+                   temp_colorData[index2]= (temp_C[index2]*(T.step-T.nowStep)+nextColor[index2]*T.nowStep)/T.step;
+                   temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
+               }
                //console.log('T.step;',T.step,T.nowStep,temp_C,nextColor);
 
-               this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
+               this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=temp_colorData;              
            }
            this.showTwoDimensionalArray();
        },50*this.animationSpeed);

@@ -357,13 +357,13 @@ export class AppComponent implements OnInit {
                 {
                     T_CS.mode_WaveSync(inputColor, false, 300,100);
                 }
-                break;  
-                         
+                break;                
             case 'ConicRipple':
                 //if (target.Multicolor) {
                     T_CS.mode_ConicRipple(inputColor, true);
                 //}
-                break;      
+                break;
+   
             case 'ConicRippleRaindow':
                     //if (target.Multicolor) {
                         T_CS.mode_ConicRippleRaindow(inputColor, true);
