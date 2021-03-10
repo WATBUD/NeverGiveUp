@@ -1631,6 +1631,24 @@ export class M_Light_CS {
             colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
             //colors= colors.concat(colors);
         }
+        else{
+            var maxPercent=55;
+            var currentPercent=55;
+            var tempColorArray=[];
+            var inputColor_T=colors[0];
+            console.log('%c inputColor_T','color:rgb(255,75,255,1)',inputColor_T);
+            while (currentPercent>25) {
+                currentPercent-=5;
+                var tempColor=[0,0,0,1];
+                tempColor[0]=inputColor_T[0]*currentPercent/maxPercent;
+                tempColor[1]=inputColor_T[1]*currentPercent/maxPercent;
+                tempColor[2]=inputColor_T[2]*currentPercent/maxPercent;
+                console.log('%c currentPercent>0','color:rgb(255,75,255,1)',tempColor);
+                tempColorArray.push(tempColor);
+            }
+            colors=tempColorArray;
+            console.log('%c tempColorArray','color:rgb(255,75,255,1)',tempColorArray);
+        }
         //console.log('%c colors','color:rgb(255,75,255,1)',colors);
 
         var setRGB=colors[this.getRandom(0, colors.length - 1)];
@@ -1703,14 +1721,11 @@ export class M_Light_CS {
                             upper_scale = scales[upper_index = i];
                     }
                 }
-                //console.log('%c lower_scale','color:rgb(255,75,255,1)',lower_scale,upper_scale,lower_index,upper_index);
-                //console.log('%c data','color:rgb(255,75,255,1)',data);
-                //console.log('%c remai nder','color:rgb(255,75,255,1)',PointRotation,remainder,dis_angle,part);
-                // if(colors[remainder]===undefined){
-                //     console.log('%c data','color:rgb(255,75,255,1)',data,lower_index);
-                //     return;
-                // }
-                element.color = JSON.parse(JSON.stringify(colors[lower_index]));   
+                var temp_colorData = JSON.parse(JSON.stringify(colors[lower_index]));
+                for (let index = 0; index < 3; index++) {
+                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                }     
+                element.color = temp_colorData;
             }
 
         }, 100)
@@ -1764,14 +1779,11 @@ export class M_Light_CS {
                     part:part,
                 }
                 console.log('%c data','color:rgb(255,75,255,1)',data);
-                //console.log('%c remainder','color:rgb(255,75,255,1)',PointRotation,remainder,dis_angle,part);
-
-
-                //console.log('%c upper_scale','color:rgb(255,75,255,1)',upper_scale);
-                    // colors[lower_index];
-                //element.color = JSON.parse(JSON.stringify(colors[nowColor]));
-
-                element.color = JSON.parse(JSON.stringify(colors[remainder]));   
+                var temp_colorData = JSON.parse(JSON.stringify(colors[remainder]));
+                for (let index = 0; index < 3; index++) {
+                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                }     
+                element.color = temp_colorData;
             }
 
         }, 100)
@@ -2645,9 +2657,6 @@ export class M_Light_CS {
             temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
             temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
             temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
-            // temp_target[index].color=[[colors[0][0],colors[0][1],colors[0][2],1-alpha*1],[colors[0][0],colors[0][1],colors[0][2],alpha*1]];
-            // target[index].color=[colors[0][0],colors[0][1],colors[0][2],alpha*1];
-            //temp_target[index].color=colors;
             target[index].color=temp_colorData;
         }
         console.log('temp_target',temp_target);

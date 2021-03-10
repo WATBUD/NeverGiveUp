@@ -368,7 +368,10 @@ export class AppComponent implements OnInit {
                     //if (target.Multicolor) {
                         T_CS.mode_ConicRippleRaindow(inputColor, true);
                     //}
-                    break;      
+                    break;  
+            case 'mode_Spiral':
+                T_CS.mode_Spiral(inputColor, target.Multicolor);
+                break;   
             default:
                 //alert('遺失燈效名'+target.PointEffectName)
                 break;
