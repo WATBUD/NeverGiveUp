@@ -371,12 +371,36 @@ export class AppComponent implements OnInit {
                     break;  
             case 'mode_Spiral':
                 T_CS.mode_Spiral(inputColor, target.Multicolor);
-                break;   
+                break;
+            case 'mode_TrainMove':
+                    T_CS.mode_TrainMove(inputColor, target.Multicolor,300);
+                    break;
+            case 'mode_SlopeRight':
+                T_CS.mode_SlopeRight(inputColor, target.Multicolor, 300);
+                break; 
+            case 'mode_SlopeMoveR':
+                T_CS.mode_SlopeRight(inputColor, target.Multicolor, 300);
+                break;
+            case 'mode_Cooking':
+                T_CS.mode_Cooking(inputColor, target.Multicolor);
+                break;
+            case 'mode_Wave1':
+                T_CS.mode_Wave1(inputColor, target.Multicolor);
+                break;
             default:
                 //alert('遺失燈效名'+target.PointEffectName)
                 break;
 
         }
+        var obj={
+            PointEffectName:this.M_Light_CS.lightData.PointEffectName,
+            colorPickerArr:this.M_Light_CS.lightData.colorPickerValue,
+            Multicolor:true,
+            BlockIndex:37,
+        }
+        //this.Built_ineffect.Built_inSelected=obj;
+
+        this.setPassiveEffect(obj);
     }
     setPassiveEffect(obj){
         var target_cs=this.M_Light_CS;
@@ -419,7 +443,6 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Rain();
         //this.M_Light_CS.mode_Breath();
         //this.M_Light_CS.mode_Spiral();
-        //this.M_Light_CS.mode_Peacock();
         //this.setMode('ConicRipple',[0,0,255,1],false);
 
         this.setMode('ConicRippleRaindow',[0,0,255,1],false);

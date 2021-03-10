@@ -875,8 +875,11 @@ export class M_Light_CS {
             //    else{
             //     element.color=setRGB[element.colorIndex];
             //    }
-              element.color=JSON.parse(JSON.stringify(setRGB[element.colorIndex]));
-              target[element.recordIndex].color=JSON.parse(JSON.stringify(element.color));
+               var temp_colorData = JSON.parse(JSON.stringify(setRGB[element.colorIndex]));
+               for (let index = 0; index < 3; index++) {
+                   temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+               }
+               target[element.recordIndex].color = temp_colorData;
            }
         }, 700*this.animationSpeed)
         //clearInterval(this.repeater);
@@ -1023,16 +1026,21 @@ export class M_Light_CS {
                     console.log('%c mode_Blossom','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
 
                     if (dis <= compareResult && dis >= compareResultMax) {
-                        element.color = setRGB;
+                        var temp_colorData =JSON.parse(JSON.stringify(setRGB));
+                        for (let index = 0; index < 3; index++) {
+                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                        }                        
+                        element.color =temp_colorData;
                     }
                 }
                 else {
-                    var T = JSON.parse(JSON.stringify(element.color));
-                    T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
-                    T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
-                    T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
-                    element.color = T;
-                    //console.log('element.color', T, step, nowStep)
+                    var temp_colorData =JSON.parse(JSON.stringify(element.color));
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index] = (temp_colorData[index] * (step - nowStep) + index * nowStep) / step;
+                        //temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                    }                        
+                    element.color =temp_colorData;
+                    //console.log('element.color', temp_colorData, step, nowStep)
                 }
 
             }
@@ -1117,11 +1125,12 @@ export class M_Light_CS {
                             break;
                         }
                     }
-                    var T = JSON.parse(JSON.stringify(element.color));
-                    T[0] = (T[0] * (step - nowStep) + 0 * nowStep) / step;
-                    T[1] = (T[1] * (step - nowStep) + 0 * nowStep) / step;
-                    T[2] = (T[2] * (step - nowStep) + 0 * nowStep) / step;
-                    element.color = T;
+                    var temp_colorData =JSON.parse(JSON.stringify(element.color));
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index] = (temp_colorData[index] * (step - nowStep) + index * nowStep) / step;
+                        temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                    }                        
+                    element.color =temp_colorData;
                 }
                 // else {
                 //     var T = JSON.parse(JSON.stringify(element.color));
@@ -1407,7 +1416,7 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         this.setAllBlockColor([0,0,0,1]);
     }
-    mode_Wave(){
+    mode_TrainMove(colors = [[255,0,0,1]], isRainbow = true,bandwidth=200){
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
@@ -1420,15 +1429,23 @@ export class M_Light_CS {
             for (let index = 0; index < target.length; index++) {
                 const element = target[index];
                 var compareResult =(repeatCount*180);
-                repeatMax=compareResult+200;
+                repeatMax=compareResult+bandwidth;
                 if (compareResult>element.coordinateData.top_Left[0] &&repeatMax<element.coordinateData.top_Right[0]) {
-                    element.color = [255,255,0,1];
+                    var temp_colorData =JSON.parse(JSON.stringify(colors[0]));
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                    } 
+                    element.color = temp_colorData;   
                 }
-                else if (compareResult<element.coordinateData.top_Left[0] &&repeatMax>element.coordinateData.top_Left[0]) {
-                    element.color = [255,255,0,1];
+                else if (compareResult < element.coordinateData.top_Left[0] && repeatMax > element.coordinateData.top_Left[0]) {
+                    var temp_colorData = JSON.parse(JSON.stringify(colors[0]));
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                    }
+                    element.color = temp_colorData;
                 }
                 else {
-                    element.color = [0,255,0,1];
+                    element.color = [0,0,0,1];
                 }
             }
             if(repeatCount<15 &&repeatMax<this.imageMaxWidth){
@@ -1439,7 +1456,7 @@ export class M_Light_CS {
             }
         },500*this.animationSpeed)
     }
-    mode_SlopeMoveR(){
+    mode_SlopeMoveR(colors = [[255,0,0,1]], isRainbow = true,bandwidth=200){
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
@@ -1464,7 +1481,11 @@ export class M_Light_CS {
                         T[1] > element.coordinateData.top_Left[1] &&
                         T[1] < element.coordinateData.bottom_Left[1]
                     ) {
-                        element.color = [0,0,255,1];
+                        var temp_colorData = JSON.parse(JSON.stringify(colors[0]));
+                        for (let index = 0; index < 3; index++) {
+                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                        }
+                        element.color = temp_colorData;
                         continue;
                     }
                 }
@@ -1478,7 +1499,7 @@ export class M_Light_CS {
             }
         },25*this.animationSpeed)
     }
-    mode_SlopeRight(){
+    mode_SlopeRight(colors = [[255,0,0,1]], isRainbow = true,bandwidth=200){
         //this.addBlockIndex();
         clearInterval(this.repeater);
         this.currentBlockIndex=30;
@@ -1507,7 +1528,11 @@ export class M_Light_CS {
                         T[1] > element.coordinateData.top_Left[1] &&
                         T[1] < element.coordinateData.bottom_Left[1]
                     ) {
-                        element.color = [0,0,255,1];
+                        var temp_colorData = JSON.parse(JSON.stringify(colors[0]));
+                        for (let index = 0; index < 3; index++) {
+                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                        }
+                        element.color = temp_colorData;
                         continue;
                     }
                 }
@@ -1730,64 +1755,6 @@ export class M_Light_CS {
 
         }, 100)
     }
-    mode_Peacock(colors = [[255,0,0,1]], isRainbow = true){
-        console.log('%c mode_Peacock','color:rgb(255,75,255,1)',colors,this.repeater);
-        clearInterval(this.repeater);
-        this.currentBlockIndex=0;
-        var intervalCount=0;
-        var StartPoint = this.getNowBlock(0).coordinateData;
-        if (isRainbow) {
-            //colors =this.rainbow7Color();
-            colors= [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
-            //colors= colors.concat(colors);
-        }    
-        this.setAllBlockColor([0, 0, 0, 1]);
-        var angle=0;
-        var theta = Math.PI * 30 / 180;//弧度
-		var dx =  Math.cos(theta);
-        var dy = -Math.sin(theta);
-        if (Math.abs(dx) < 1e-5) dx = 0;
-		if (Math.abs(dy) < 1e-5) dy = 0;
-        var target = this.AllBlockColor;        
-        this.repeater = setInterval(() => {
-            //position+=5;
-            angle+=10;
-
-            var part=360/colors.length;
-            var dis_angle=angle%360;
-            // position += 50;
-            // position %= bandwidth * color_number;
-            for (let index = 0; index < target.length; index++) {
-                var element = target[index];
-                //var y=sinx + cosx;
-                //var y=sinx + cosx;
-                var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;  //x*cos+y*sin=P(x,y)theta
-
-                var center_Point=[this.imageMaxWidth/2,this.imageMaxHeight/2];
-                var PointRotation=this.PointRotation(center_Point,element.coordinateData.center_Point);
-                var remainder;
-                dis_angle<0?dis_angle+=360:'';
-                remainder=Math.abs(dis_angle-PointRotation)/part;
-         
-                remainder=Math.floor(remainder);
-                remainder>6?remainder=6:'';
-
-                var data={
-                    PointRotation:PointRotation,
-                    remainder:remainder,
-                    dis_angle:dis_angle,
-                    part:part,
-                }
-                console.log('%c data','color:rgb(255,75,255,1)',data);
-                var temp_colorData = JSON.parse(JSON.stringify(colors[remainder]));
-                for (let index = 0; index < 3; index++) {
-                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
-                }     
-                element.color = temp_colorData;
-            }
-
-        }, 100)
-    }
 
 
 
@@ -1887,67 +1854,6 @@ export class M_Light_CS {
         }, 100)
     }
 
-    mode_WaveTwoArray(){
-        clearInterval(this.repeater);
-       this.currentBlockIndex=0;
-       var rainbowColors=this.rainbow7Color();
-       var StartPoint = this.getNowBlock(0).coordinateData;
-       this.setAllBlockColor([0,0,0,1]);
-       var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
-       var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
-       var repeatCountList=[];
-       var times=0;
-      //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
-       //     //this.getRandom(0,4),
-       //     //this.getRandom(1,50)
-       //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
-       //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
-       //     //console.log(x, y);
-      var target = this.twoDimensionalArray;
-     // var a2=[0,3,5,8,11,13];
-       for (let index = 0; index < this.max_X_Number; index++) {
-           //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-           for (let index2 = 0; index2 < rainbowColors.length; index2++) {
-               repeatCountList.push({
-                   nowPos:index2,
-                   color: rainbowColors[index2],
-                   pos: [index,index2],
-                   backupPos:[index,index2],
-                   step: 5,
-                   nowStep: 0,
-               });
-           }
-       }
-       this.repeater=setInterval(()=>{
-           this.resetTwoDimensionalArray();
-           for (let i2 = 0; i2 < repeatCountList.length; i2++) {
-               var T = repeatCountList[i2];   
-               if (T.nowStep + 1 < T.step) {
-                T.nowStep+=1;
-               }
-               else{
-                T.nowStep=0;
-                T.nowPos+=1;
-               }
-               var temp_C=this.rainbow7Color()[T.nowPos];
-               var nextColor=[];
-               if (T.nowPos + 1 < this.rainbow7Color().length) {
-                   nextColor = this.rainbow7Color()[T.nowPos + 1];
-               }
-               else {
-                   T.nowPos = 0;
-                   nextColor = this.rainbow7Color()[T.nowPos];
-               }
-               T.color[0]= (temp_C[0]*(T.step-T.nowStep)+nextColor[0]*T.nowStep)/T.step;
-               T.color[1]= (temp_C[1]*(T.step-T.nowStep)+nextColor[1]*T.nowStep)/T.step;
-               T.color[2]= (temp_C[2]*(T.step-T.nowStep)+nextColor[2]*T.nowStep)/T.step;
-               //console.log('T.step;',T.step,T.nowStep,temp_C,nextColor);
-
-               this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=T.color;              
-           }
-           this.showTwoDimensionalArray();
-       },50*this.animationSpeed);
-    }
     mode_Rain(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
         console.log('%c mode_Rain', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
@@ -2596,46 +2502,27 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var RGBcolors=[];
-        // for (let index = 0; index < 5; index++) {
-        //     //const element = array[index];
-        //     RGBcolors.push([255-index,0+index,0,1]);
-        //     RGBcolors.push([0,255-index,0+index,1]);
-        //     RGBcolors.push([0+index,0,255-index,1]);
-        // }
-        // console.log('RGBcolors', RGBcolors);
         RGBcolors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        //RGBcolors =[[255,0,0,1],[255,0,0,0.8],[0,255,0,1],[0,255,0,0.8],[0,0,255,1],[0,0,255,0.8]];
         if(isRainbow){
             //colors=this.rainbow7Color();
             colors=RGBcolors;
-
         }   
         else{
             colors=[colors[0],[colors[0][0],colors[0][1],colors[0][2],0.4]];
         }
         var totalStep=3;
-
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var target = this.AllBlockColor;
         this.setAllBlockColor([0,0,0,1]);
-
         var temp_target=JSON.parse(JSON.stringify(this.AllBlockColor));
-
         for (let index = 0; index < temp_target.length; index ++) {
             //console.log(' target[index].center_Point[0]', target[index].coordinateData.center_Point[0]);
            // var alpha=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
             var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
-            //var ran=this.getRandom(0, colors.length - 1);
             var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
-            //console.log('alpha',alpha);
             console.log('modStep',modStep);
-            //var setRGB
-            // if(isRainbow){
-            // setRGB=colors[ran];
-            // }
             temp_target[index].nowStep=modStep*totalStep;
-            //temp_target[index].nowStep=0;
             temp_target[index].nowPos=0;
             var temp_block=temp_target[index];
             var temp_colorData=[0,0,0,1];
@@ -2653,22 +2540,20 @@ export class M_Light_CS {
                 }
 
             }
-            temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
-            temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
-            temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
-            temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
+
+            var temp_colorData = [0, 0, 0, 1];
+            for (let index2 = 0; index2 < 3; index2++) {
+                temp_colorData[index2] = (temp_C[index2] * (totalStep - temp_block.nowStep) + nextColor[index2] * temp_block.nowStep) / totalStep;
+                temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
+            }
             target[index].color=temp_colorData;
         }
         console.log('temp_target',temp_target);
         //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
-        var repeatCount=0;
-        
         var exist=[];
         this.repeater = setInterval(() => {
-            //this.setAllBlockColor([0, 0, 0, 1]);
             var horizontalList = [];
             //var setRGB=colors[this.getRandom(0, colors.length - 1)];
-            //console.log('repeatCount', repeatCount);
             var spacing=-5;
                 for (let index = 0; index < this.imageMaxHeight; index += StartPoint.clientHeight) {
                     var ypos = index;
@@ -2722,16 +2607,12 @@ export class M_Light_CS {
                         }
                         else {
                             nextColor =tempColors[0]
-
                         }
-                        var temp_colorData=[0,0,0,1];
-                        temp_colorData[0] = (temp_C[0] * (totalStep - temp_block.nowStep) + nextColor[0] * temp_block.nowStep) / totalStep;
-                        temp_colorData[1] = (temp_C[1] * (totalStep - temp_block.nowStep) + nextColor[1] * temp_block.nowStep) / totalStep;
-                        temp_colorData[2] = (temp_C[2] * (totalStep - temp_block.nowStep) + nextColor[2] * temp_block.nowStep) / totalStep;
-                        temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
-
-                        //temp_colorData[3] = (temp_C[3] * (totalStep - temp_block.nowStep) + nextColor[3] * temp_block.nowStep) / totalStep;
-                        //console.log('temp_C',temp_C,nextColor,temp_block.nowStep,temp_block.nowPos,temp_colorData,tempColors.length);
+                        var temp_colorData = [0, 0, 0, 1];
+                        for (let index2 = 0; index2 < 3; index2++) {
+                            temp_colorData[index2] = (temp_C[index2] * (totalStep - temp_block.nowStep) + nextColor[index2] * temp_block.nowStep) / totalStep;
+                            temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
+                        }
                         element.color =  temp_colorData;
                         //continue;
                         //break;
@@ -2745,11 +2626,7 @@ export class M_Light_CS {
             else {
                 intervalCount = 0;
                 exist=[];
-                repeatCount += 1;
             }
-            // if(repeatCount>2){
-            //     clearInterval(this.repeater);
-            // }
         }, 100)
 
     }
@@ -2765,12 +2642,6 @@ export class M_Light_CS {
        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
        var repeatCountList=[];
        var times=0;
-      //  this.twoDimensionalArray[0][0].color=[0,0,255,1];
-       //     //this.getRandom(0,4),
-       //     //this.getRandom(1,50)
-       //     //var k = (movement + x) / this.imageMaxHeight;    // 回合數
-       //     //var r = (movement + x) % this.imageMaxHeight;    // 餘數
-       //     //console.log(x, y);
       var target = this.twoDimensionalArray;
        for (let index = 0; index < this.max_X_Number; index++) {
            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
@@ -2817,7 +2688,7 @@ export class M_Light_CS {
            this.showTwoDimensionalArray();
        },50*this.animationSpeed);
    }
-    mode_Cooking(){
+    mode_Cooking(colors = [[255,0,0,1]], isRainbow = true){
          clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var rainbowColors=this.rainbow7Color();
@@ -2845,7 +2716,11 @@ export class M_Light_CS {
         }
 
         this.repeater=setInterval(()=>{
-            this.resetTwoDimensionalArray([255,0,0,1]);//
+            var temp_colorData=JSON.parse(JSON.stringify(colors[0]));
+            for (let index = 0; index < 3; index++) {
+                temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+            }
+            this.resetTwoDimensionalArray(temp_colorData);//
             for (let i2 = 0; i2 < repeatCountList.length; i2++) {
                 var T = repeatCountList[i2];
                 if (T.repeatTime > 0) {
@@ -2861,7 +2736,8 @@ export class M_Light_CS {
                     }
                     //console.log('repeatCountList;', i2,repeatCountList[i2].repeatCount);
                 }
-                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=[0,0,0,1];              
+
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color = [0,0,0,1];            
             }
             this.showTwoDimensionalArray();
         },50*this.animationSpeed);
@@ -2928,7 +2804,11 @@ export class M_Light_CS {
                         now[1] <= element.coordinateData.bottom_Left[1]
                     )
                     {
-                        target[index].color=repeatCountList[i2].color;
+                        var temp_colorData = JSON.parse(JSON.stringify(repeatCountList[i2].color));
+                        for (let index = 0; index < 3; index++) {
+                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+                        }
+                        target[index].color=temp_colorData;
                     }                
                 }
             }
@@ -3004,51 +2884,6 @@ export class M_Light_CS {
         }, 500 * this.animationSpeed);
 
 
-    }
-    mode_SpreadLeftAndRight(setColor=[255,0,0,1]){
-        //this.addBlockIndex();
-        clearInterval(this.repeater);
-        this.currentBlockIndex=77;
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
- 
-        this.repeater=setInterval(()=>{
-            this.mode_reset();
-
-            var target = this.AllBlockColor;
-            // sub_disL-=50;
-            // sub_disR+=50;
-            var horizontalList=[];
-            if(repeatCount==0){
-                this.getNowBlock().color=setColor;
-            }
-            for (let index = 0; index < target.length; index++) {
-                const element = target[index];
-                var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-                if (Ysdis < 10) {
-                    horizontalList.push(index);               
-                }
-            }
-            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
-            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
-            if (resultL == undefined && resultR == undefined) {
-                repeatCount=0;
-            }
-            else{
-                if (resultL != undefined) {
-                    target[resultL].color = setColor;
-                }
-                if (resultR != undefined) {
-                    target[resultR].color = setColor
-                };
-                repeatCount+=1;
-
-            }
-           
-        },50*this.animationSpeed)
-        //clearInterval(this.repeater);
     }
     mode_SinGraphics(colors=[]){
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
@@ -3674,158 +3509,6 @@ export class M_Light_CS {
         }, 100)
 
     }
-    mode_T0( colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
-       
-        //this.addBlockIndex();
-        var Brightness=1;
-        // var mode=0;
-        // if(colors.length>1){
-        //     mode=1;
-        // }
-        clearInterval(this.repeater);
-        this.currentBlockIndex=43;
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
-        var horizontalList=[];
-        var target = this.AllBlockColor;
-        var setColorArr;
-        var randomValue=this.getRandom(0,colors.length-1);
-             
-        var setColor=colors[randomValue];
-        var step_End=false;
-        console.log('setColor', setColor)
-        this.mode_reset();
-        if(repeatCount==0){
-            this.getNowBlock().color=setColor;
-        } 
-        for (let index = 0; index < target.length; index++) {
-            const element = target[index];
-            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            if (Ysdis < 10) {
-                horizontalList.push(index);               
-            }
-        }
-        
-        this.repeater=setInterval(()=>{
-            setColor=colors[this.getRandom(0,colors.length-1)];
-            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
-            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
-            if (step_End) {
-                if (Brightness > 0) {
-                    Brightness -= 0.05;
-                    for (let index = 0; index < horizontalList.length; index++) {
-                        const element = target[horizontalList[index]];
-                        var temp=colors[this.getRandom(0,colors.length-1)];
-                        temp[3]=Brightness;
-                        element.color =temp;
-                    }
-                }
-                else {
-                    Brightness = 1;
-                    //step_End = false;
-                    //clearInterval(this.repeater);
-                }
-                return;
-            }
-            else
-            if (resultL == undefined && resultR == undefined) {
-
-                repeatCount=0;
-                step_End=true;
-            }
-            else{
-                if (resultL != undefined) {
-                    target[resultL].color = setColor;
-                }
-                if (resultR != undefined) {
-                    target[resultR].color = setColor;
-                };
-                repeatCount+=1;
-            }
-        },50*this.animationSpeed)
-        // this.repeaterTimeout=if(Brightness>0){
-        //     Brightness-=0.01;
-        // }
-        //clearInterval(this.repeater);
-    }
-    mode_T1(colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]]){
-        
-        var Brightness=1;
-        // var mode=0;
-        // if(colors.length>1){
-        //     mode=1;
-        // }
-        clearInterval(this.repeater);
-        this.currentBlockIndex=43;
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
-        var horizontalList=[];
-        var target = this.AllBlockColor;
-        var randomValue=this.getRandom(0,colors.length-1);
-        var setColor=colors[randomValue];
-
-
-        var step_End=false;
-        console.log('setColor', setColor)
-        this.mode_reset();
-        if(repeatCount==0){
-            this.getNowBlock().color=setColor;
-        } 
-        for (let index = 0; index < target.length; index++) {
-            const element = target[index];
-            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            //if (Ysdis < 10) {
-                horizontalList.push(index);               
-            //}
-        }
-        
-        this.repeater=setInterval(()=>{
-            setColor=colors[this.getRandom(0,colors.length-1)];
-            var resultL = horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
-            var resultR = horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
-            if (step_End) {
-                if (Brightness > 0) {
-                    Brightness -= 0.05;
-                    for (let index = 0; index < horizontalList.length; index++) {
-                        const element = target[horizontalList[index]];
-                        var temp=colors[this.getRandom(0,colors.length-1)];
-                        temp[3]=Brightness;
-                        element.color =temp;
-                    }
-                }
-                else {
-                    Brightness = 1;
-                    step_End = false;
-                    clearInterval(this.repeater);
-                }
-                return;
-            }
-            else
-            if (resultL == undefined && resultR == undefined) {
-
-                repeatCount=0;
-                step_End=true;
-            }
-            else{
-                if (resultL != undefined) {
-                    target[resultL].color = setColor;
-                }
-                if (resultR != undefined) {
-                    target[resultR].color = setColor
-                };
-                repeatCount+=1;
-            }
-        },50*this.animationSpeed)
-        // this.repeaterTimeout=if(Brightness>0){
-        //     Brightness-=0.01;
-        // }
-        //clearInterval(this.repeater);
-    }
-
     mode_gloriousMode(){
         //this.addBlockIndex();
         clearInterval(this.repeater);

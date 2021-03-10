@@ -1,162 +1,147 @@
-
-    <div id="dropList" style="width: 15%;
+<div id="dropList" style="width: 15%;
     height: 100%;
     display: flex;
     flex-wrap: wrap;">
-        <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],false)" onkeydown=""
-            value="mode_FastRunWithoutTrace" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('ConicRipple',[0,0,255,1],false)" onkeydown=""
-            value="mode_ConicRipple" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],true)" onkeydown=""
-            value="mode_FastRunWithoutTraceRaindow" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T0()" onkeydown="" value="mode_T0"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_T1()" onkeydown="" value="mode_T1"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave()" onkeydown="" value="mode_Wave"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SpreadLeftAndRight()" onkeydown=""
-            value="mode_SpreadLeftAndRight" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('AcidMode')" onkeydown="" value="mode_gloriousMode"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Snowing',[255,255,0,1],false)" onkeydown=""
-            value="mode_Snowing" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Matrix3',[255,255,0,1],false)" value="mode_Matrix3"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Matrix3',[255,255,0,1],true)" value="mode_Matrix3Multicolor"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Matrix2',[255,255,0,1],false)" value="mode_Matrix2"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Matrix2',[255,255,0,1],true)" value="mode_Matrix2Multicolor"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Starlight',[255,255,0,1],false)" onkeydown=""
-            value="mode_Starlight" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],false)" onkeydown=""
-            value="mode_DigitTimes" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],true)" onkeydown=""
-            value="mode_DigitTimesMulticolor" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],false)" onkeydown=""
-            value="PassWithoutTrace" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],true)" onkeydown=""
-            value="PassWithoutTraceMulticolor" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],false)" onkeydown=""
+        value="mode_FastRunWithoutTrace" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('ConicRipple',[0,0,255,1],false)" onkeydown=""
+        value="mode_ConicRipple" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],true)" onkeydown=""
+        value="mode_FastRunWithoutTraceRaindow" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('mode_TrainMove',[255,255,0,1],true);" onkeydown=""
+        value="mode_TrainMove" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('AcidMode')" onkeydown="" value="mode_gloriousMode"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Snowing',[255,255,0,1],false)" onkeydown=""
+        value="mode_Snowing" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Matrix3',[255,255,0,1],false)" value="mode_Matrix3"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Matrix3',[255,255,0,1],true)" value="mode_Matrix3Multicolor"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Matrix2',[255,255,0,1],false)" value="mode_Matrix2"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Matrix2',[255,255,0,1],true)" value="mode_Matrix2Multicolor"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Starlight',[255,255,0,1],false)" onkeydown=""
+        value="mode_Starlight" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],false)" onkeydown=""
+        value="mode_DigitTimes" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('DigitTimes',[255,255,0,1],true)" onkeydown=""
+        value="mode_DigitTimesMulticolor" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],false)" onkeydown=""
+        value="PassWithoutTrace" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('PassWithoutTrace',[255,0,0,1],true)" onkeydown=""
+        value="PassWithoutTraceMulticolor" class="ButtonStyle">
+
+
+
+    <input type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],false)" onkeydown=""
+        value="mode_HeartbeatSensor" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],true)" onkeydown=""
+        value="mode_HeartbeatSensor_Rainbow" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Rainbow',[255,255,0,1],true)" onkeydown="" value="mode_Rainbow"
+        class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('mode_SlopeRight',[255,255,0,1],true)" onkeydown=""
+        value="mode_SlopeRight" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('WaveSync',[255,255,0,1],false)" onkeydown=""
+        value="mode_WaveSync" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Wave1',[0,0,255,1],false)" onkeydown="" value="mode_Wave1"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],true)" onkeydown=""
+        value="mode_Wave1_raindow" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],false)" onkeydown="" value="mode_Wave2"
+        class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],true)" onkeydown=""
+        value="mode_Wave2_raindow" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('mode_Spiral',[0,0,255,1],false);" onkeydown=""
+        value="mode_Spiral" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('mode_Spiral',[0,0,255,1],true);" onkeydown=""
+        value="mode_Spiral_raindow" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('mode_SlopeMoveR',[0,0,255,1],true);" onkeydown=""
+        value="mode_SlopeMoveR" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('mode_Cooking',[0,0,255,1],true);" onkeydown=""
+        value="mode_Cooking" class="ButtonStyle">
+
+
+    <input type="button" id="AddSpace" (click)="setMode('RippleGraff',[0,0,255,1],true)" onkeydown=""
+        value="mode_RippleGraff" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Cross',[255,255,0,1],false)" onkeydown="" value="mode_Cross"
+        class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('RippleGraff',[255,255,0,1],false)" onkeydown=""
+        value="mode_RippleGraff_Single" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Blossom',[255,255,0,1],false)" onkeydown=""
+        value="mode_Blossom" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],true)" onkeydown=""
+        value="mode_BreathingMulticolor" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],false)" onkeydown=""
+        value="mode_Breathing" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],false)" onkeydown=""
+        value="mode_NormallyOn" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],true)" onkeydown=""
+        value="mode_NormallyOnMulticolor" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('AcidMode',[[0,0,255,1]],false)" onkeydown=""
+        value="mode_AcidMode" class="ButtonStyle">
+
+
+    <input type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],true)" onkeydown=""
+        value="mode_Kamehemeha_rainbow" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],false)" onkeydown=""
+        value="mode_Kamehemeha_Single" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('mode_Wave1',[255,255,0,1],false)" onkeydown="" 
+    value="mode_Wave1" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('mode_Wave1',[255,255,0,1],true)" onkeydown=""
+        value="mode_Wave1_rainbow" class="ButtonStyle">
     
-    
-    
-        <input type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],false)" onkeydown=""
-            value="mode_HeartbeatSensor" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('HeartbeatSensor',[255,255,0,1],true)" onkeydown=""
-            value="mode_HeartbeatSensor_Rainbow" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Rainbow',[255,255,0,1],true)" onkeydown="" value="mode_Rainbow"
-            class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SlopeRight()" onkeydown="" value="mode_SlopeRight"
-            class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('WaveSync',[255,255,0,1],false)" onkeydown=""
-            value="mode_WaveSync" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Wave1',[0,0,255,1],false)" onkeydown="" value="mode_Wave1"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],true)" onkeydown=""
-            value="mode_Wave1_raindow" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],false)" onkeydown="" value="mode_Wave2"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Wave2',[0,0,255,1],true)" onkeydown=""
-            value="mode_Wave2_raindow" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('mode_Spiral',[0,0,255,1],false);" onkeydown=""
-            value="mode_Spiral" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('mode_Spiral',[0,0,255,1],true);" onkeydown=""
-            value="mode_Spiral_raindow" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Peacock()" onkeydown="" value="mode_Peacock"
-            class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_WaveSyncbackup()" onkeydown=""
-            value="mode_WaveSyncbackup" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_WaveTwoArray()" onkeydown=""
-            value="mode_WaveTwoArray" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_SlopeMoveR()" onkeydown="" value="mode_SlopeMoveR"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Cooking()" onkeydown="" value="mode_Cooking"
-            class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('RippleGraff',[0,0,255,1],true)" onkeydown=""
-            value="mode_RippleGraff" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Cross',[255,255,0,1],false)" onkeydown="" value="mode_Cross"
-            class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('RippleGraff',[255,255,0,1],false)" onkeydown=""
-            value="mode_RippleGraff_Single" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Blossom',[255,255,0,1],false)" onkeydown=""
-            value="mode_Blossom" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],true)" onkeydown=""
-            value="mode_BreathingMulticolor" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Breathing',[0,0,255,1],false)" onkeydown=""
-            value="mode_Breathing" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],false)" onkeydown=""
-            value="mode_NormallyOn" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],true)" onkeydown=""
-            value="mode_NormallyOnMulticolor" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('AcidMode',[[0,0,255,1]],false)" onkeydown=""
-            value="mode_AcidMode" class="ButtonStyle">
-    
-    
-        <input type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],true)" onkeydown=""
-            value="mode_Kamehemeha_rainbow" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],false)" onkeydown=""
-            value="mode_Kamehemeha_Single" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave1([[0,0,255,1]],true)" onkeydown=""
-            value="mode_Wave1_rainbow" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_Wave1([[0,0,255,1]],false)" onkeydown=""
-            value="mode_Wave1" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],true)" onkeydown=""
-            value="mode_Pingpong_rainbow" class="ButtonStyle">
-        <input type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],false)" onkeydown=""
-            value="mode_Pingpong" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="setMode('Surmount',[0,0,255,1],false)" onkeydown=""
-            value="mode_Surmount" class="ButtonStyle">
-    
-        <input type="button" id="AddSpace" (click)="this.M_Light_CS.mode_BreatheSeparately()" onkeydown=""
-            value="mode_BreatheSeparately" class="ButtonStyle">
-    
-        <BR>
-    </div>
-    <div id="TopFunction" style="display: flex;
+    <input type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],true)" onkeydown=""
+        value="mode_Pingpong_rainbow" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Pingpong',[0,0,255,1],false)" onkeydown=""
+        value="mode_Pingpong" class="ButtonStyle">
+
+    <input type="button" id="AddSpace" (click)="setMode('Surmount',[0,0,255,1],false)" onkeydown=""
+        value="mode_Surmount" class="ButtonStyle">
+
+    <BR>
+</div>
+<div id="TopFunction" style="display: flex;
     width: auto;
     height: 4vh;
     /* justify-content: center; */
     align-items: center;">
-      <div class="ClassName" style="color: red;font-size: 1.3vw;">speed </div>
-      <input id="PRESETS_RateSlider" type="range" min="0" max="100" 
-      class="slider" style="width: 13vw;" step="5"
-          [(ngModel)]="this.Built_ineffect.Built_inSelected.speed" (mouseup)="sliderChange()"
-          (ngModelChange)="lightSliderMove('PRESETS_RateSlider')" onkeydown="event.preventDefault()">
+    <div class="ClassName" style="color: red;font-size: 1.3vw;">speed </div>
+    <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
+        [(ngModel)]="this.Built_ineffect.Built_inSelected.speed" (mouseup)="sliderChange()"
+        (ngModelChange)="lightSliderMove('PRESETS_RateSlider')" onkeydown="event.preventDefault()">
 
-          <div class="ClassName" style="color: red;font-size: 1.3vw;">brightness </div>
-          <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" 
-          class="slider" style="width: 13vw;" step="5"
-              [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
-              (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')" onkeydown="event.preventDefault()">
-        <input type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown="" value="GMMK_imgVisible" class="ButtonStyle">    
-    </div>
-      <!-- background: linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,36,61,0.6) 80%), -->
-    <div id="EventCanBoxSelectRange" style="
+    <div class="ClassName" style="color: red;font-size: 1.3vw;">brightness </div>
+    <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
+        [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
+        (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')" onkeydown="event.preventDefault()">
+    <input type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown="" value="GMMK_imgVisible"
+        class="ButtonStyle">
+</div>
+<!-- background: linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,36,61,0.6) 80%), -->
+<div id="EventCanBoxSelectRange" style="
           position: absolute;
           left: 17%;
           top: 20%;" class="Keyboard-content">
-        <div id="GMMK_0x320F0x5044" class="Content1">
-            <div style="position: absolute; display: flex">
-                <img id="GMMK_img" src="assets/image/GMMK3.png"
-                    style="width: 834px; height: 372px; z-index: 3;display: none;" />
-                <div id="keyAssignPrompt" style="
+    <div id="GMMK_0x320F0x5044" class="Content1">
+        <div style="position: absolute; display: flex">
+            <img id="GMMK_img" src="assets/image/GMMK3.png"
+                style="width: 834px; height: 372px; z-index: 3;display: none;" />
+            <div id="keyAssignPrompt" style="
                               position: absolute;
                               margin-top: -146px;
                               margin-left: -65px;
@@ -169,9 +154,9 @@
                               background-image: url('./image/keybinding/Indicator.png');
                               z-index: 5;
                           " [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
-                    <div id="keyAssignPromptline"
-                        style="background-color: rgb(255, 255, 255); position: absolute; width: 1px; display: flex"></div>
-                    <div id="KeyDefaultValue" style="
+                <div id="keyAssignPromptline"
+                    style="background-color: rgb(255, 255, 255); position: absolute; width: 1px; display: flex"></div>
+                <div id="KeyDefaultValue" style="
                                   color: white;
                                   margin-bottom: 84px;
                                   width: 50%;
@@ -180,12 +165,12 @@
                                   white-space: nowrap;
                                   text-align: center;
                               ">
-                        {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue }}
-                    </div>
-                    <div id="SingleKeyClass" style="position: absolute; color: white; margin-top: -57px">
-                        {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
-                    </div>
-                    <div id="SingleKeyAssignValue" style="    position: absolute;
+                    {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue }}
+                </div>
+                <div id="SingleKeyClass" style="position: absolute; color: white; margin-top: -57px">
+                    {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
+                </div>
+                <div id="SingleKeyAssignValue" style="    position: absolute;
                                                   color: white;
                                                   margin-top: -25px;
                                                   width: 50%;
@@ -194,21 +179,21 @@
                                                   white-space: nowrap;
                                                   text-align: center;
                                                   ">
-                        {{ switchChangAllkey() }}
-                    </div>
+                    {{ switchChangAllkey() }}
                 </div>
-                <!-- [style.background-color]="this.M_Light_CS.getIndexRGBCss(i)" -->
-                <div id="KeyLightUI_section" style="position: absolute;
+            </div>
+            <!-- [style.background-color]="this.M_Light_CS.getIndexRGBCss(i)" -->
+            <div id="KeyLightUI_section" style="position: absolute;
                       display: flex;
                       WIDTH:  834px;
                       HEIGHT: 372px;">
-                    <div [style.display]="lightingflag ? 'flex' : 'none'"
-                        *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
-                        [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}" [attr.data-index]="i">
-                    </div>
+                <div [style.display]="lightingflag ? 'flex' : 'none'"
+                    *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
+                    [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}" [attr.data-index]="i">
                 </div>
-                <!-- -->
-                <!-- <div id="KeyAssignBlock_section" style="position: absolute;
+            </div>
+            <!-- -->
+            <!-- <div id="KeyAssignBlock_section" style="position: absolute;
                       display: flex;
                       WIDTH: auto;
                       HEIGHT: 100%;">
@@ -219,9 +204,9 @@
                               <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}" class="KeyAssignHasValue"></div>
                           </div>
                       </div> -->
-    
-            </div>
+
         </div>
-    
-    
     </div>
+
+
+</div>
