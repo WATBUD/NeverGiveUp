@@ -1456,49 +1456,7 @@ export class M_Light_CS {
             }
         },500*this.animationSpeed)
     }
-    mode_SlopeMoveR(colors = [[255,0,0,1]], isRainbow = true,bandwidth=200){
-        //this.addBlockIndex();
-        clearInterval(this.repeater);
-        this.currentBlockIndex=30;
-        var repeatMin=5;
-        var repeatMax=200;
-        var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
-        //var SlopeEquation=this.SlopeEquation([0,0],[834,372]);//StartPoint.clientWidth
-        var startX=-StartPoint.clientWidth*5;
-        this.repeater=setInterval(()=>{
-            var SlopeEquation=this.slopeEquation([0+startX,this.imageMaxWidth/85],[startX+StartPoint.clientWidth*5,372]);
-            //console.log('SlopeEquation', SlopeEquation);
-            var target = this.AllBlockColor;
-            for (let index = 0; index < target.length; index++) {
-                const element = target[index];
-                for (let i2 = 0; i2 < SlopeEquation.length; i2++) {
-                    var T = SlopeEquation[i2];
-                    //console.log('SlopeEquation[index]', i2, T, element.coordinateData.top_Left);
 
-                    if (T[0] > element.coordinateData.top_Left[0] &&
-                        T[0] < element.coordinateData.top_Right[0] &&
-                        T[1] > element.coordinateData.top_Left[1] &&
-                        T[1] < element.coordinateData.bottom_Left[1]
-                    ) {
-                        var temp_colorData = JSON.parse(JSON.stringify(colors[0]));
-                        for (let index = 0; index < 3; index++) {
-                            temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
-                        }
-                        element.color = temp_colorData;
-                        continue;
-                    }
-                }
-            }
-            if(startX<this.imageMaxWidth){
-                startX+=22;
-            }
-            else{
-                startX=-StartPoint.clientWidth*5;
-                this.mode_reset();
-            }
-        },25*this.animationSpeed)
-    }
     mode_SlopeRight(colors = [[255,0,0,1]], isRainbow = true,bandwidth=200){
         //this.addBlockIndex();
         clearInterval(this.repeater);
@@ -2997,9 +2955,15 @@ export class M_Light_CS {
                 }
                 if(h_Item['repeatCount']%2==0){
                     h_Item['coordinate'][1]-=40;
+                    if(h_Item['coordinate'][1]<=0){
+                        h_Item['coordinate'][1]=0;
+                    }
                 }
                 else{
                     h_Item['coordinate'][1]+=40;
+                    if(h_Item['coordinate'][1]>=this.imageMaxHeight){
+                       h_Item['coordinate'][1]=this.imageMaxHeight;
+                    }
                 }   
             }
             // if(isEnd){

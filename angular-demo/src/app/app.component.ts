@@ -378,9 +378,6 @@ export class AppComponent implements OnInit {
             case 'mode_SlopeRight':
                 T_CS.mode_SlopeRight(inputColor, target.Multicolor, 300);
                 break; 
-            case 'mode_SlopeMoveR':
-                T_CS.mode_SlopeRight(inputColor, target.Multicolor, 300);
-                break;
             case 'mode_Cooking':
                 T_CS.mode_Cooking(inputColor, target.Multicolor);
                 break;
