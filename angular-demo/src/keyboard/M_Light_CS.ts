@@ -1612,7 +1612,7 @@ export class M_Light_CS {
         }, BaseSpeed*this.animationSpeed)
     }
 
-    mode_Spiral(colors = [[255,0,0,1]], isRainbow = true){
+    mode_Spiral(colors = [[255,0,0,1]], isRainbow = true,direction=0){
         console.log('%c mode_Spiral','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
@@ -1659,7 +1659,12 @@ export class M_Light_CS {
         var target = this.AllBlockColor;       
         position+=5;    
         this.repeater = setInterval(() => {
-            angle+=10*1;//-1 反向
+            if (direction == 1) {
+                angle+=10*1;//-1 反向
+            }
+            else {
+                angle+=10*-1;//-1 反向
+            }
             var bandangle=360/(colors.length);
             var dis_angle=angle%360;
             for (let index = 0; index < target.length; index++) {
