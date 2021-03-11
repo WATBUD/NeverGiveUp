@@ -442,7 +442,12 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Spiral();
         //this.setMode('ConicRipple',[0,0,255,1],false);
 
-        this.setMode('ConicRippleRaindow',[0,0,255,1],false);
+        //this.setMode('ConicRippleRaindow',[0,0,255,1],false);
+
+        this.setMode('ConicRipple',[0,0,255,1],true);
+
+
+
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {

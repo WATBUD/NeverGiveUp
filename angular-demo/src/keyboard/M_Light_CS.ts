@@ -736,10 +736,6 @@ export class M_Light_CS {
         var r_totalstep = 30;
         var r_nowStep = 0;
         var setRGB;
-        // for (let index = 0; index < array.length; index++) {
-        //     const element = array[index];
-            
-        // }  
         var zzzzzzz=[
             [255,  0,  0,1],
             [255, 65,  0,1],
@@ -778,38 +774,51 @@ export class M_Light_CS {
             [255,  0,125,1],
             [255 , 0, 65,1],
             ];
-        //var zzzzz=[]
-        //var T=[[255, 0,0,1]];
-        // var sadada=false;
-        // while (sadada<=255) {
-        //     //return;
-        //     if(T[0]>5){
-        //         T[0]=T[0]-5;
-        //         T[1]=T[1]+5;
-        //     }
-        //     else if(T[1]>5){
-        //         T[1]=T[1]-5;
-        //         T[2]=T[2]+5;
-        //     }
-
-        //     // else if(T[2]>5){
-        //     //     T[2]-=5;
-        //     //     T[0]+=5;
-        //     // }
-        //     zzzzz.push(JSON.parse(JSON.stringify(T)));
-        //     //break;
-        //     console.log('zzzzz', zzzzz);
-        // }
 
         if (isRainbow) {
-            setRGB = zzzzzzz;//this.rainbow7Color();
+            var gradientRGB=[];
+            var T_RGB=this.rainbow7Color();
+            //var T_RGB=[[255,0,0,1],[0,255,0,1]];
+            var g_totalStep=2;
+            var g_nowstep=0;
+            var T_nowColorIndex=0;
+            while (T_nowColorIndex<T_RGB.length-1) {
+                var T1Color=T_RGB[T_nowColorIndex];
+                var T2Color=T_RGB[T_nowColorIndex+1];
+                var gradient_COLOR=[0,0,0,1];
+                for (let i_2 = 0; i_2 < 3; i_2++) {
+                    console.log('%c mode_ConicRippleRGB_gradientRGB','color:rgb(255,75,255,1)', T1Color[i_2],T2Color[i_2],gradient_COLOR,T1Color,T2Color);
+                    gradient_COLOR[i_2]=(T1Color[i_2] * (g_totalStep - g_nowstep) + T2Color[i_2] * g_nowstep) /g_totalStep;
+                }
+                gradientRGB.push(gradient_COLOR);
+                if(g_nowstep<g_totalStep){
+                    g_nowstep+=1;
+                }
+                else{
+                    g_nowstep=0;
+                    T_nowColorIndex+=1;
+                }
+
+            }
+            // for (let index = 0; index < T_RGB.length; index++) {
+            //     const element = T_RGB[index];
+                
+            // }  
+            console.log('%c mode_ConicRippleRGB_gradientRGB','color:rgb(255,75,255,1)',gradientRGB);
+            setRGB = gradientRGB;//this.rainbow7Color();
+
+            //setRGB = zzzzzzz;//this.rainbow7Color();
+            
+       
         }
         else {
             setRGB = colors[this.getRandom(0, colors.length - 1)];
         }
         var T_center_Point=StartPoint.center_Point;
         //[this.imageMaxWidth/2,this.imageMaxHeight/2]
-        var diameter=this.imageMaxWidth-T_center_Point[0];//StartPoint.center_Point[0]
+        var diameter=this.imageMaxWidth-T_center_Point[0]+this.minKeyWidth;//StartPoint.center_Point[0]
+        var diameter=this.minKeyWidth*setRGB.length;//StartPoint.center_Point[0]
+
         //var diameter=this.imageMaxHeight-T_center_Point[1];//StartPoint.center_Point[0]
 
         var target = this.AllBlockColor;
@@ -817,11 +826,11 @@ export class M_Light_CS {
         var direction=0;
         //var average=[];
         var averagearr=[];
-         for (let d_index = 0; d_index < 10; d_index++) {
+         for (let d_index = 0; d_index < setRGB.length; d_index++) {
             //average.push(diameter/setRGB.length);
             //var averageNow=Math.round(diameter/setRGB.length*d_index);
-            var averagePrevious=diameter/10*d_index;
-            var averageNext=averagePrevious+(diameter/10);
+            var averagePrevious=diameter/setRGB.length*d_index;
+            var averageNext=averagePrevious+(diameter/setRGB.length);
 
             //var T_averageArr=[];
              for (let index = 0; index < target.length; index++) {
@@ -881,7 +890,7 @@ export class M_Light_CS {
                }
                target[element.recordIndex].color = temp_colorData;
            }
-        }, 700*this.animationSpeed)
+        }, 220*this.animationSpeed)
         //clearInterval(this.repeater);
     }
 
