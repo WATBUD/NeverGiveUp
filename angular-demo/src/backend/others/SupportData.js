@@ -39,9 +39,9 @@ var KeyMapping = [
     {"keyCode":"9","functionType":"Singlekey","value":"Tab","hid":43,"translate":"Tab","code":"Tab"},
     {"keyCode":"144","functionType":"Singlekey","value":"Num Lock","hid":83,"translate":"Num Lock","code":"NumLock"},
     {"keyCode":"13","functionType":"Singlekey","value":"Enter","hid":40,"translate":"Enter","code":"Enter"},
-    {"keyCode":"16","functionType":"Singlekey","value":"Shift","hid":225,"translate":"Shift","code":"ShiftRight"},
-    {"keyCode":"17","functionType":"Singlekey","value":"Ctrl","hid":224,"translate":"Ctrl","code":"ControlLeft"},
-    {"keyCode":"18","functionType":"Singlekey","value":"Alt","hid":226,"translate":"Alt","code":"AltRight"},
+    {"keyCode":"16","functionType":"Singlekey","value":"Shift","hid":225,"Modifier":0x02,"translate":"Shift","code":"ShiftRight"},
+    {"keyCode":"17","functionType":"Singlekey","value":"Ctrl","hid":224,"Modifier":0x01,"translate":"Ctrl","code":"ControlLeft"},
+    {"keyCode":"18","functionType":"Singlekey","value":"Alt","hid":226,"Modifier":0x04,"translate":"Alt","code":"AltRight"},
     {"keyCode":"19","functionType":"Singlekey","value":"Break","hid":72,"translate":"Break","code":"Pause"},
     {"keyCode":"20","functionType":"Singlekey","value":"CapsLock","hid":57,"translate":"CapsLock","code":"CapsLock"},
     {"keyCode":"27","functionType":"Singlekey","value":"Esc","hid":41,"translate":"Esc","code":"Escape"},
@@ -57,12 +57,13 @@ var KeyMapping = [
     {"keyCode":"44","functionType":"Singlekey","value":"PrintScreen","hid":"0x46","translate":"PrintScreen","code":"PrintScreen"},
     {"keyCode":"45","functionType":"Singlekey","value":"Insert","hid":73,"translate":"Insert","code":"Insert"},
     {"keyCode":"46","functionType":"Singlekey","value":"Delete","hid":76,"translate":"Delete","code":"Delete"},
-    {"keyCode":"91","functionType":"Singlekey","value":"Left Win","hid":227,"translate":"Left Win","code":"MetaLeft"},
-    {"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"translate":"Right Win"},
+    {"keyCode":"91","functionType":"Singlekey","value":"Left Win","hid":227,"Modifier":0x08,"translate":"Left Win","code":"MetaLeft"},
+    {"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"Modifier":0x80,"translate":"Right Win","code":"Right Win"},
     {"keyCode":"93","functionType":"Singlekey","value":"Menu","hid":101,"translate":"Menu","code":"ContextMenu"},
     {"keyCode":"106","functionType":"Singlekey","value":"*","hid":85,"translate":"*","code":"NumpadMultiply"},
     {"keyCode":"107","functionType":"Singlekey","value":"+","hid":87,"translate":"+","code":"NumpadAdd"},
     {"keyCode":"109","functionType":"Singlekey","value":"-","hid":86,"translate":"-","code":"NumpadSubtract"},
+    {"keyCode":"110","functionType":"Singlekey","value":"-","hid":86,"translate":"-","code":"NumpadDecimal"},
     {"keyCode":"111","functionType":"Singlekey","value":"/","hid":84,"translate":"/","code":"NumpadDivide"},
     {"keyCode":"112","functionType":"Singlekey","value":"F1","hid":58,"translate":"F1","code":"F1"},
     {"keyCode":"113","functionType":"Singlekey","value":"F2","hid":59,"translate":"F2","code":"F2"},
@@ -88,6 +89,7 @@ var KeyMapping = [
     {"keyCode":"220","functionType":"Singlekey","value":"|","hid":49,"translate":"|","code":"Backslash"},
     {"keyCode":"221","functionType":"Singlekey","value":"]","hid":48,"translate":"]","code":"BracketRight"},
     {"keyCode":"222","functionType":"Singlekey","value":"'","hid":52,"translate":"'","code":"Quote"}
+
 ]
 var MediaMapping = [
     { keyCode: '1', value: 'None', "hid":0x04, hidMap: [0x00, 0x00], translate: '' },
@@ -144,10 +146,10 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"Multimedia_Fun_7","functionType":"Multimedia","value":"Volume down","hid":4,"translate":"Volume down","code":"Multimedia_Fun_7"},
 {"keyCode":"Multimedia_Fun_8","functionType":"Multimedia","value":"Next track","hid":7,"translate":"Next trac","code":"Multimedia_Fun_8"},
 {"keyCode":"Multimedia_Fun_9","functionType":"Multimedia","value":"Previoustrack","hid":6,"translate":"Previoustrack","code":"Multimedia_Fun_9"},
-{"keyCode":"KEYBOARD_Fun_10","functionType":"KEYBOARD","value":"Profilecycleup","hid":1,"translate":"Profilecycleup","code":"KEYBOARD_Fun_10"},
-{"keyCode":"KEYBOARD_Fun_11","functionType":"KEYBOARD","value":"Profilecycledown","hid":2,"translate":"Profilecycledown","code":"KEYBOARD_Fun_11"},
-{"keyCode":"KEYBOARD_Fun_12","functionType":"KEYBOARD","value":"Layercycleup","hid":3,"translate":"Layercycleup","code":"KEYBOARD_Fun_12"},
-{"keyCode":"KEYBOARD_Fun_13","functionType":"KEYBOARD","value":"Layercycledown","hid":4,"translate":"Layercycledown","code":"KEYBOARD_Fun_13"},
+{"keyCode":"KEYBOARD_Fun_10","functionType":"KEYBOARD","value":"Profilecycleup","hid":2,"translate":"Profilecycleup","code":"KEYBOARD_Fun_10"},
+{"keyCode":"KEYBOARD_Fun_11","functionType":"KEYBOARD","value":"Profilecycledown","hid":1,"translate":"Profilecycledown","code":"KEYBOARD_Fun_11"},
+{"keyCode":"KEYBOARD_Fun_12","functionType":"KEYBOARD","value":"Layercycleup","hid":4,"translate":"Layercycleup","code":"KEYBOARD_Fun_12"},
+{"keyCode":"KEYBOARD_Fun_13","functionType":"KEYBOARD","value":"Layercycledown","hid":3,"translate":"Layercycledown","code":"KEYBOARD_Fun_13"},
 {"keyCode":"MOUSE_Fun_14","functionType":"MOUSE","value":"Leftbutton","hid":1,"translate":"Leftbutton","code":"MOUSE_Fun_14"},
 {"keyCode":"MOUSE_Fun_15","functionType":"MOUSE","value":"Rightbutton","hid":2,"translate":"Rightbutton","code":"MOUSE_Fun_15"},
 {"keyCode":"MOUSE_Fun_16","functionType":"MOUSE","value":"Middlebutton","hid":3,"translate":"Middlebutton","code":"MOUSE_Fun_16"},
@@ -240,7 +242,7 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"45","functionType":"Singlekey","value":"Insert","hid":73,"translate":"Insert","code":"Insert"},
 {"keyCode":"46","functionType":"Singlekey","value":"Delete","hid":76,"translate":"Delete","code":"Delete"},
 {"keyCode":"91","functionType":"Singlekey","value":"Left Win","hid":227,"translate":"Left Win","code":"MetaLeft"},
-{"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"translate":"Right Win"},
+{"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"Modifier":0x80,"translate":"Right Win","code":"Right Win"},
 {"keyCode":"93","functionType":"Singlekey","value":"Menu","hid":101,"translate":"Menu","code":"ContextMenu"},
 {"keyCode":"96","functionType":"Singlekey","value":"Numpad0","hid":0x62,"translate":"Numpad0","code":"Numpad0"},
 {"keyCode":"97","functionType":"Singlekey","value":"Numpad1","hid":0x59,"translate":"Numpad1","code":"Numpad1"},
@@ -256,6 +258,7 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"106","functionType":"Singlekey","value":"*","hid":85,"translate":"*","code":"NumpadMultiply"},
 {"keyCode":"107","functionType":"Singlekey","value":"+","hid":87,"translate":"+","code":"NumpadAdd"},
 {"keyCode":"109","functionType":"Singlekey","value":"-","hid":86,"translate":"-","code":"NumpadSubtract"},
+{"keyCode":"110","functionType":"Singlekey","value":"-","hid":86,"translate":"-","code":"NumpadDecimal"},
 {"keyCode":"111","functionType":"Singlekey","value":"/","hid":84,"translate":"/","code":"NumpadDivide"},
 {"keyCode":"112","functionType":"Singlekey","value":"F1","hid":0x3A,"translate":"F1","code":"F1"},
 {"keyCode":"113","functionType":"Singlekey","value":"F2","hid":0x3B,"translate":"F2","code":"F2"},
@@ -279,12 +282,9 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"192","functionType":"Singlekey","value":"~","hid":53,"translate":"~","code":"Backquote"},
 {"keyCode":"219","functionType":"Singlekey","value":"[","hid":47,"translate":"[","code":"BracketLeft"},
 {"keyCode":"220","functionType":"Singlekey","value":"|","hid":49,"translate":"|","code":"Backslash"},
+{"keyCode":"226","functionType":"Singlekey","value":"\\","hid":49,"translate":"IntlBackslash","code":"IntlBackslash"},
 {"keyCode":"221","functionType":"Singlekey","value":"]","hid":48,"translate":"]","code":"BracketRight"},
 {"keyCode":"222","functionType":"Singlekey","value":"'","hid":52,"translate":"'","code":"Quote"}]
-
-
-
-
 
 exports.KeyMapping = KeyMapping
 exports.MediaMapping = MediaMapping
