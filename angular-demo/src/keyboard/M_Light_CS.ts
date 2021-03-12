@@ -50,29 +50,22 @@ export class M_Light_CS {
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
                 this.twoDimensionalArray[index]=[];
         }
-        //coordinate:
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
-            //var temp_=new Array(26);
             for (let index2 = 0; index2 < 8; index2++) {
-                //const element = array[index];
                 this.twoDimensionalArray[index].push(this.defaultModule());
             }
         }
-        //for (var i_block = 0; i_block < this.maxkaycapNumber; i_block++) {
         for (let index = 0; index < this.breakGradation.length; index++) {
             var min = this.breakGradation[index][0];//14
             var max = this.breakGradation[index][1];//29
             var total = max - min;
-            // if (i_block >= min && i_block <= max) {
-            //     this.twoDimensionalArray[index].index=i_block;
-            // }
             for (let i3 = 0; i3 <= total; i3++) {
                 this.twoDimensionalArray[i3][index].blockIndex = i3 + min;
                 //console.log('twoDimensionalArray', this.twoDimensionalArray[index][i3]=i3+min);
 
             }
         }
-        console.log('twoDimensionalArray', this.twoDimensionalArray);
+        //console.log('twoDimensionalArray', this.twoDimensionalArray);
     }
     defaultModule(type = '') {
         var T = 
@@ -86,9 +79,7 @@ export class M_Light_CS {
 
     showTwoDimensionalArray(){      
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
-            //var temp_=new Array(26);
             for (let index2 = 0; index2 < 8; index2++) {
-                //const element = array[index];
                 let target=this.twoDimensionalArray[index][index2];
                 if(target.blockIndex!=9999){
                     this.AllBlockColor[target.blockIndex].color=target.color;

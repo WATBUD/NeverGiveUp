@@ -64,9 +64,6 @@ export class AppComponent implements OnInit {
     DeleteFlag: boolean = false
     AddFlag: boolean = false
     DeleteColorIconFlag: boolean = true
-    SyncCrossKeyboardCheckValue: boolean = true
-    FlashSideLightEnable: boolean = true
-    sidelightBreathingEnable: boolean = true
     KeyBoardStyle = new KeyBoardStyle()
     M_Light_CS = new M_Light_CS(83)
     KeyBoardManager = new KeyBoardManager(83)
