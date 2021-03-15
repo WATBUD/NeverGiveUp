@@ -104,7 +104,7 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"45","functionType":"Singlekey","value":"Insert","hid":73,"translate":"Insert","code":"Insert"},
 {"keyCode":"46","functionType":"Singlekey","value":"Delete","hid":76,"translate":"Delete","code":"Delete"},
 {"keyCode":"91","functionType":"Singlekey","value":"Left Win","hid":227,"translate":"Left Win","code":"MetaLeft"},
-{"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"Modifier":0x80,"translate":"Right Win","code":"Right Win"},
+{"keyCode":"92","functionType":"Singlekey","value":"Right Win","hid":231,"Modifier":0x80,"translate":"Right Win","code":"MetaRight"},
 {"keyCode":"93","functionType":"Singlekey","value":"Menu","hid":101,"translate":"Menu","code":"ContextMenu"},
 {"keyCode":"96","functionType":"Singlekey","value":"Numpad0","hid":0x62,"translate":"Numpad0","code":"Numpad0"},
 {"keyCode":"97","functionType":"Singlekey","value":"Numpad1","hid":0x59,"translate":"Numpad1","code":"Numpad1"},
