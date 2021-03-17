@@ -1,0 +1,22 @@
+<div id="CenterWindows" style="    background: #12131066;
+position: absolute;
+height: 40vh;
+width: 15vw;
+display: flex;
+flex-wrap: wrap;
+align-content: flex-start;">
+
+  <div *ngFor="let item of CenterWindows.childData ;let i = index" class="ChildDataStyle" data-identity="SelecListUI"
+    (click)="CenterWindows.childDataExecute(i)" [style.border]="CenterWindows.foucsChild==i?'2px solid #ffc757':''">
+    <!-- <div class="checkedText">
+    {{getSelectedDataName(i)}}
+  </div> -->
+  </div>
+  <!-- <iframe id="resultFrame" style="color:green;" class="report-iframe" width="50px" height="50px" [src]="iframe">
+  </iframe> -->
+
+
+</div>
+
+<!-- (click)="someMethod()" -->
+<!-- [style.background-color]="(CenterWindows.foucsChild==i)?'rgba(0, 0, 0, 0.1)':'transparent'" -->

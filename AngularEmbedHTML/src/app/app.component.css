@@ -1,0 +1,18 @@
+
+#dragArea {
+    width:200px;
+    border-style:dashed;
+    border-width:0.2em;
+    height:200px;
+}
+h4 {
+    margin:20px auto 10px;
+}
+.ChildDataStyle{
+    height: 50px;
+    width: 50px;
+    background: red;
+    box-sizing: border-box;
+    margin-left: 5px;
+    margin-top: 5px;
+}
