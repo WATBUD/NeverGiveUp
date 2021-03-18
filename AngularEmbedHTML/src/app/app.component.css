@@ -9,10 +9,16 @@ h4 {
     margin:20px auto 10px;
 }
 .ChildDataStyle{
+    color: blue;
+    display: flex;
+    font-size: 1vh;
+    justify-content: center;
+    align-items: center;
     height: 50px;
     width: 50px;
     background: red;
     box-sizing: border-box;
     margin-left: 5px;
     margin-top: 5px;
+
 }

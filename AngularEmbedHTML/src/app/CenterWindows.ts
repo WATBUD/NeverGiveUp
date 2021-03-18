@@ -10,7 +10,13 @@ export class CenterWindows {
 
         for (let index = 0; index < 15; index++) {
             var T_data=this.default_LightData();
-            this.childData.push(T_data.Text="Sample"+index);            
+            let src="./assets/TestHTML1/"    
+            T_data.path=src;
+            // url(./image/DarkAlert.jpg);
+            T_data.text="Sample"+index;
+            console.log('T_data.path+ T_data.backgroudImage',T_data.path+ T_data.backgroudImage);
+
+            this.childData.push(T_data);    
         }
     }
     static getInstance() {
@@ -37,15 +43,16 @@ export class CenterWindows {
     reset(){
 
     }
-    getTargetVersionCompare(){
-        return this.versionCompare(this.getTarget().newVersion,this.getTarget().newVersion,2)
-    }
+
 
     default_LightData(defaultcolor = [255,0,0,1]) {
         var T = {
+            title:"Youtube",
             foucs:false,
-            Text:"Sample1",
-            backgroudImage:"",
+            text:"Sample1",
+            backgroudImage:"./assets/TestHTML1/image/FunctionIcon.png",
+            path:"./assets/TestHTML1/",
+            nowVersion:"1",
         }
         return T;
     }

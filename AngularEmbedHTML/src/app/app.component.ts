@@ -31,7 +31,7 @@ export class AppComponent {
   }
 
 	ngOnInit() {
-		let src="./assets/TestHTML1/index.html"    //此处链接到你写的大转盘代码处
+		let src="./assets/TestHTML1/index.html"    
 		this.iframe=this.sanitizer.bypassSecurityTrustResourceUrl(src);
     //tttTTTTTTTTTTTT();
     console.log('%c ngOnInit', 'background: black; color: blue',System);
