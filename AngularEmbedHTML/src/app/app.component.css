@@ -22,3 +22,16 @@ h4 {
     margin-top: 5px;
 
 }
+
+.PluginListChildDataStyle{
+    color: blue;
+    display: flex;
+    font-size: 1vh;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    background: #ff000040;
+    box-sizing: border-box;
+    margin: 5px;
+    flex-wrap: wrap;
+}

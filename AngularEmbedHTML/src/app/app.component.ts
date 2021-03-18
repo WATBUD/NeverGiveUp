@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer,SafeResourceUrl } from "@angular/platform-browser";
 
 import { CenterWindows } from './CenterWindows';
+import { PluginModule } from './PluginModule';
+
 declare var System;
 
 //declare function tttTTTTTTTTTTTT();
@@ -22,6 +24,8 @@ export class AppComponent {
   htmlString;
   iframe;
   CenterWindows=new CenterWindows();
+  PluginModule=new PluginModule();
+  src="./assets/TestHTML1/index.html";    
 
   constructor(
     private sanitizer: DomSanitizer
@@ -30,9 +34,14 @@ export class AppComponent {
 
   }
 
+
+
+
+
+  
 	ngOnInit() {
-		let src="./assets/TestHTML1/index.html"    
-		this.iframe=this.sanitizer.bypassSecurityTrustResourceUrl(src);
+		//let src="./assets/TestHTML1/index.html"    
+		this.iframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
     //tttTTTTTTTTTTTT();
     console.log('%c ngOnInit', 'background: black; color: blue',System);
 	}
@@ -53,7 +62,30 @@ export class AppComponent {
     // console.log('%c T', 'background: black; color: blue',iWindow,aaa);
 
 
- 
+    let dragSources = document.querySelectorAll('[draggable="true"]');
+    var _this=this;
+    dragSources.forEach(dragSource => {
+        dragSource.addEventListener("dragstart", (e)=>{
+          // e.preventDefault();
+          // e.stopPropagation();
+          console.log('%c dragstart', 'background: black; color: yellow',_this.src);
+        });
+        dragSource.addEventListener("dragend",(e)=>{
+          // e.preventDefault();
+          // e.stopPropagation();
+          console.log('%c dragend', 'background: black; color: yellow',_this.src);
+        });
+        dragSource.addEventListener("dragover", (e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('%c dragover', 'background: black; color: yellow',_this.src);
+        });
+        dragSource.addEventListener("dragleave",(e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('%c dragleave', 'background: black; color: yellow',_this.src);
+        });
+    });
   }
   someMethod() {
     console.log('%c someMethod', 'background: black; color: blue');

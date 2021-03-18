@@ -1,20 +1,77 @@
-<div id="CenterWindows" style="    background: #12131066;
-height: 40vh;
-width: 15vw;
+<div id="LeftArea" style="background: #12131066;
+height: 100vh;
+width: 80vw;
 display: flex;
 flex-wrap: wrap;
 align-content: flex-start;">
+  <div id="CenterWindowsArea" style="    background: #739c1f66;
+  height: 50vh;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;">
+    <div id="CenterWindows" style="    background: #12131066;
+  height: 40vh;
+  width: 280px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;">
 
-  <div *ngFor="let item of CenterWindows.childData ;let i = index" class="ChildDataStyle" data-identity="SelecListUI"
-    (click)="CenterWindows.childDataExecute(i)" [style.border]="CenterWindows.foucsChild==i?'2px solid #ffc757':''"
-    [style.background]="'url('+item.path+'/image/FunctionIcon.png'+')'">
-    {{item.text}}
+      <div *ngFor="let item of CenterWindows.childData ;let i = index" class="ChildDataStyle"
+        data-identity="SelecListUI" (click)="CenterWindows.childDataExecute(i)"
+        [style.border]="CenterWindows.focusChild==i?'2px solid #ffc757':''"
+        [style.background]="'url('+item.path+'/image/FunctionIcon.png'+')'" draggable="true">
+        {{item.text}}
+      </div>
+      <!-- <iframe id="resultFrame" style="color:green;" class="report-iframe" width="50px" height="50px" [src]="iframe">
+    </iframe> -->
+
+    </div>
   </div>
-  <!-- <iframe id="resultFrame" style="color:green;" class="report-iframe" width="50px" height="50px" [src]="iframe">
-  </iframe> -->
+
+
+  <div id="bottomSetting" style="background: #0dcc36bd;height: 50vh;
+  width: 80vw;display: flex;flex-wrap: wrap;align-content: center;
+  display: flex;
+  justify-content: center;">
+            select a key to confirgure its action
+
+  </div>
+</div>
+
+
+
+
+<div id="PluginWindows" style="background: #12131066;
+height: 100vh;width: 15vw;display: flex;flex-wrap: wrap;align-content: flex-start;margin-left: 1vw;overflow: auto;">
+  <div *ngFor="let item of PluginModule.pluginData ;let i = index" class="PluginListChildDataStyle"
+    data-identity="SelecListUI" (click)="PluginModule.childDataExecute(i)" draggable="true" 
+    [ngStyle]="{
+      width:item.focus?'100%':'100%',
+      height:item.focus? 'auto':'auto'
+    }">
+    <img alt="不存在" style="margin-right: 30%;" src="./assets/TestHTML1/image/FunctionIcon.png"> 
+    {{item.text}}
+    <ng-container *ngIf="item.focus">
+      <div *ngFor="let item of PluginModule.pluginData ;let i = index" 
+      style="width: 100%;
+      height: 4vh;
+      background: red;" draggable="true">
+      </div>
+    </ng-container>
+
+  </div>
+
 
 
 </div>
+
+<!-- <div *ngFor="let item of CenterWindows.childData ;let i = index" style="width:80%" draggable="true"
+data-identity="SelecListUI" (click)="CenterWindows.childDataExecute(i)"
+[style.border]="CenterWindows.focusChild==i?'2px solid #ffc757':''">
+{{item.text}}
+</div>  -->
 
 <!-- <input type="text" draggable="true" value="dragElement"/> -->
 
@@ -22,4 +79,4 @@ align-content: flex-start;">
 <!-- style="background: url(./assets/TestHTML1/image/FunctionIcon.png);" -->
 
 <!-- (click)="someMethod()" -->
-<!-- [style.background-color]="(CenterWindows.foucsChild==i)?'rgba(0, 0, 0, 0.1)':'transparent'" -->
+<!-- [style.background-color]="(CenterWindows.focusChild==i)?'rgba(0, 0, 0, 0.1)':'transparent'" -->

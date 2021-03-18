@@ -1,10 +1,8 @@
 
-export class CenterWindows {
+export class PluginModule {
     focusChild=0;
     pageIndex=0;
-    childData=[];
-    
-    FwServerData=[];
+    pluginData=[];
     static instance;
     constructor(){
 
@@ -14,9 +12,12 @@ export class CenterWindows {
             T_data.path=src;
             // url(./image/DarkAlert.jpg);
             T_data.text="Sample"+index;
+            for (let index_2 = 0; index_2 < 10; index_2++) {
+            T_data.functionList.push(index_2);
+            }
             console.log('T_data.path+ T_data.backgroudImage',T_data.path+ T_data.backgroudImage);
-
-            this.childData.push(T_data);    
+            this.pluginData.push(T_data);
+                
         }
     }
     static getInstance() {
@@ -25,7 +26,7 @@ export class CenterWindows {
             return this.instance;
         }
         else {
-            this.instance = new CenterWindows();
+            this.instance = new PluginModule();
             return this.instance;
         }
     }
@@ -36,18 +37,19 @@ export class CenterWindows {
 
     childDataExecute(i){
         console.log('%c childDataExecute', 'background: black; color: blue',i);
-
-        this.focusChild=i;
+        //this.focusChild=i;
+        this.pluginData[i].focus=!this.pluginData[i].focus;
     }
 
     reset(){
 
     }
-
+      
 
     default_LightData(defaultcolor = [255,0,0,1]) {
         var T = {
             title:"Youtube",
+            functionList:[],
             focus:false,
             text:"Sample1",
             backgroudImage:"./assets/TestHTML1/image/FunctionIcon.png",
