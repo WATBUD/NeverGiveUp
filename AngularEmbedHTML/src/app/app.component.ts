@@ -4,6 +4,8 @@ import { DomSanitizer,SafeResourceUrl } from "@angular/platform-browser";
 
 import { CenterWindows } from './CenterWindows';
 import { PluginModule } from './PluginModule';
+import { PluginController } from '../assets/PluginController';
+
 
 declare var System;
 
@@ -25,8 +27,9 @@ export class AppComponent {
   iframe;
   CenterWindows=new CenterWindows();
   PluginModule=new PluginModule();
+  PluginController=new PluginController();
   src="./assets/TestHTML1/index.html";    
-
+  PluginData=[];
   constructor(
     private sanitizer: DomSanitizer
 
@@ -86,6 +89,9 @@ export class AppComponent {
           console.log('%c dragleave', 'background: black; color: yellow',_this.src);
         });
     });
+    this.PluginController.getPluginDataSetting();
+
+    //this.PluginController.getInstance();
   }
   someMethod() {
     console.log('%c someMethod', 'background: black; color: blue');

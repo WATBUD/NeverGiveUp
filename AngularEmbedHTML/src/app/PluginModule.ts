@@ -4,21 +4,10 @@ export class PluginModule {
     pageIndex=0;
     pluginData=[];
     static instance;
+    rootDirectory="./assets/"
     constructor(){
 
-        for (let index = 0; index < 15; index++) {
-            var T_data=this.default_LightData();
-            let src="./assets/TestHTML1/"    
-            T_data.path=src;
-            // url(./image/DarkAlert.jpg);
-            T_data.text="Sample"+index;
-            for (let index_2 = 0; index_2 < 10; index_2++) {
-            T_data.functionList.push(index_2);
-            }
-            console.log('T_data.path+ T_data.backgroudImage',T_data.path+ T_data.backgroudImage);
-            this.pluginData.push(T_data);
-                
-        }
+
     }
     static getInstance() {
         console.log('LayoutManager_getInstance',this.instance);
@@ -33,7 +22,31 @@ export class PluginModule {
     getTarget(){
 
     }
- 
+    setPluginData(obj){
+        this.pluginData=JSON.parse(JSON.stringify(obj));
+        // for (let index = 0; index < 15; index++) {
+        //     var T_data=this.default_LightData();
+        //     let src="./assets/TestHTML1/"    
+        //     T_data.path=src;
+        //     // url(./image/DarkAlert.jpg);
+        //     T_data.text="Plugin"+index;
+        //     for (let index_2 = 0; index_2 < 10; index_2++) {
+        //     T_data.functionList.push(index_2);
+            
+        //     }
+        //     console.log('T_data.path+ T_data.backgroudImage',T_data.path+ T_data.backgroudImage);
+        //     this.pluginData.push(T_data);
+                
+        // }
+
+    }
+    
+
+
+
+
+
+
 
     childDataExecute(i){
         console.log('%c childDataExecute', 'background: black; color: blue',i);
