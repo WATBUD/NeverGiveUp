@@ -100,7 +100,6 @@ export class AppComponent {
 
     var T23=document.getElementById("resultFrame");
     T23.contentWindow.ABCDEFGHU();
-
     T23.onload = function(){
       T23.contentWindow.ABCDEFGHU();
     };

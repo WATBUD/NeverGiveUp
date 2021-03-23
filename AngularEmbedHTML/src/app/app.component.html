@@ -11,7 +11,7 @@ align-content: flex-start;">
   justify-content: center;
   flex-wrap: wrap;
   align-content: flex-start;">
-    <div id="CenterWindows" style="    background: #12131066;
+    <div id="CenterWindows" style="background: #12131066;
   height: 40vh;
   width: 280px;
   display: flex;
@@ -35,7 +35,7 @@ align-content: flex-start;">
   width: 80vw;display: flex;flex-wrap: wrap;align-content: center;
   display: flex;
   justify-content: center;">
-            select a key to confirgure its action
+    select a key to confirgure its action
 
   </div>
 </div>
@@ -46,16 +46,14 @@ align-content: flex-start;">
 <div id="PluginWindows" style="background: #12131066;
 height: 100vh;width: 15vw;display: flex;flex-wrap: wrap;align-content: flex-start;margin-left: 1vw;overflow: auto;">
   <div *ngFor="let item of PluginModule.pluginData ;let i = index" class="PluginListChildDataStyle"
-    data-identity="SelecListUI" (click)="PluginModule.childDataExecute(i)" draggable="true" 
-    [ngStyle]="{
+    data-identity="SelecListUI" (click)="PluginModule.childDataExecute(i)" draggable="true" [ngStyle]="{
       width:item.focus?'100%':'100%',
       height:item.focus? 'auto':'auto'
     }">
-    <img alt="不存在" style="margin-right: 30%;" src="./assets/TestHTML1/image/FunctionIcon.png"> 
+    <img alt="不存在" style="margin-right: 30%;" src="./assets/TestHTML1/image/FunctionIcon.png">
     {{item.text}}
     <ng-container *ngIf="item.focus">
-      <div *ngFor="let item of PluginModule.pluginData ;let i = index" 
-      style="width: 100%;
+      <div *ngFor="let item of PluginModule.pluginData ;let i = index" style="width: 100%;
       height: 4vh;
       background: red;" draggable="true">
       </div>
