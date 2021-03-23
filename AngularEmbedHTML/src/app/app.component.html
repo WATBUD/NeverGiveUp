@@ -21,7 +21,7 @@ align-content: flex-start;">
       <div *ngFor="let item of CenterWindows.childData ;let i = index" class="ChildDataStyle"
         data-identity="SelecListUI" (click)="CenterWindows.childDataExecute(i)"
         [style.border]="CenterWindows.focusChild==i?'2px solid #ffc757':''"
-        [style.background]="item.backgroudImage" draggable="true">
+        [style.background]="'url('+item.backgroudImage+')'" draggable="true">
         {{item.text}}
       </div>
       <!-- <iframe id="resultFrame" style="color:green;" class="report-iframe" width="50px" height="50px" [src]="iframe">
