@@ -13,7 +13,7 @@ export class PluginController{
     ) {
         PluginController.instance=this;
 
-        console.log('%c PluginSetting','background: blue; color: red');
+        console.log('%c PluginSetting_instance','background: blue; color: yellow');
     }
     static getInstance() {
         if (this.instance) {
@@ -21,7 +21,7 @@ export class PluginController{
         } else {
             //console.log("new PluginController Class");
             this.instance = new PluginController();
-            console.log('%c PluginController_getInstance_err','background: blue; color: red');
+            console.log('%c PluginController_getInstance_err','background: blue; color: yellow');
             return this.instance;
         }
     }
@@ -51,9 +51,7 @@ export class PluginController{
              DataSetting.push(PluginSetting);
          }
          console.log('%c getPluginDataSetting','background: blue; color: red',DataSetting);
+         return DataSetting;
 
     }
-    SystemDefault:any = [
-        "url('./image/Share/Off/SystemDefault.png')",
-    ]
 }

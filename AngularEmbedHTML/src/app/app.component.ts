@@ -5,6 +5,7 @@ import { DomSanitizer,SafeResourceUrl } from "@angular/platform-browser";
 import { CenterWindows } from './CenterWindows';
 import { PluginModule } from './PluginModule';
 import { PluginController } from '../assets/PluginController';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 declare var System;
@@ -46,11 +47,11 @@ export class AppComponent {
 		//let src="./assets/TestHTML1/index.html"    
 		this.iframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
     //tttTTTTTTTTTTTT();
-    console.log('%c ngOnInit', 'background: black; color: blue',System);
+    console.log('%c ngOnInit', 'background: black; color: yellow',System);
 	}
   
   ngAfterViewInit(): void {
-    console.log('%c ngAfterViewInit', 'background: black; color: blue');
+    console.log('%c ngAfterViewInit', 'background: black; color: yellow');
     // var T23=document.getElementById("resultFrame");
     // var aaa=document.getElementById("resultFrame").contentWindow;
     // var _this=this;
@@ -62,7 +63,7 @@ export class AppComponent {
     // var iWindow = (<HTMLIFrameElement>T23).contentWindow;
     // //T23.contentWindow.ABCDEFGHU();
     // //var TTT=window.frames["resultFrame"];
-    // console.log('%c T', 'background: black; color: blue',iWindow,aaa);
+    // console.log('%c T', 'background: black; color: yellow',iWindow,aaa);
 
 
     let dragSources = document.querySelectorAll('[draggable="true"]');
@@ -89,12 +90,13 @@ export class AppComponent {
           console.log('%c dragleave', 'background: black; color: yellow',_this.src);
         });
     });
-    this.PluginController.getPluginDataSetting();
+    
+    this.CenterWindows.setChildData(this.PluginController.getPluginDataSetting());
 
     //this.PluginController.getInstance();
   }
   someMethod() {
-    console.log('%c someMethod', 'background: black; color: blue');
+    console.log('%c someMethod', 'background: black; color: yellow');
 
     var T23=document.getElementById("resultFrame");
     T23.contentWindow.ABCDEFGHU();
