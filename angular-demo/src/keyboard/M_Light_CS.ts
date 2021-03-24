@@ -885,7 +885,7 @@ export class M_Light_CS {
         //clearInterval(this.repeater);
     }
 
-    mode_ConicRippleRaindow(colors = [[255,0,0,1]], isRainbow = true,blockIndex=37) {
+    mode_ConicRippleRainbow(colors = [[255,0,0,1]], isRainbow = true,blockIndex=37) {
         console.log('%c mode_ConccRipple','color:rgb(255,75,255,1)',colors,isRainbow);
         clearInterval(this.repeater);
         var repeatCount = 0;

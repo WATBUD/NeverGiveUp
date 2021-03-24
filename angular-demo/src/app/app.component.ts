@@ -361,9 +361,9 @@ export class AppComponent implements OnInit {
                 //}
                 break;
    
-            case 'ConicRippleRaindow':
+            case 'ConicRippleRainbow':
                     //if (target.Multicolor) {
-                        T_CS.mode_ConicRippleRaindow(inputColor, true);
+                        T_CS.mode_ConicRippleRainbow(inputColor, true);
                     //}
                     break;  
             case 'mode_Spiral':
@@ -439,7 +439,7 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Spiral();
         //this.setMode('ConicRipple',[0,0,255,1],false);
 
-        //this.setMode('ConicRippleRaindow',[0,0,255,1],false);
+        //this.setMode('ConicRippleRainbow',[0,0,255,1],false);
 
         this.setMode('ConicRipple',[0,0,255,1],true);
 
