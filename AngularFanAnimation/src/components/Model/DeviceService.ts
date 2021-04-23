@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-let electron_Instance = window['System']._nodeRequire('electron').remote; 
+//let electron_Instance = window['System']._nodeRequire('electron').remote; 
 @Injectable()
 export class DeviceService{
     NoDeviceindex=0;

@@ -2,7 +2,7 @@
     height: 3.2vh;
     width: 3.2vw;
     background-size: 100% 100%;
-    background-image: url('./image/Share/OnOffUI_1.png');
+    background-image: url('/image/Share/OnOffUI_1.png');
     pointer-events: auto;
     margin-left: 1vw;
 }
@@ -26,29 +26,29 @@
 
 .ZoomOut{
     background-color: transparent;
-    /* background-image:url('./image/Share/ZoomOut.png'); */
+    /* background-image:url('/image/Share/ZoomOut.png'); */
 
 }
 .ZoomOut:hover{
-    /* background-image:url('./image/FanMode/ZoomOut.png'); */
+    /* background-image:url('/image/FanMode/ZoomOut.png'); */
     background-color: #17beff;
 
 }
 
 .ZoomIn{
-    /* background-image:url('./image/Share/Off/ZoomIn.png'); */
+    /* background-image:url('/image/Share/Off/ZoomIn.png'); */
     background-color: transparent;
 }
 .ZoomIn:hover{
-    /* background-image:url('./image/Share/On/ZoomIn.png'); */
+    /* background-image:url('/image/Share/On/ZoomIn.png'); */
     background-color: #17beff;
 }
 .closeProgram{
-    /* background-image:url('./image/Share/Off/closeProgram.png'); */
+    /* background-image:url('/image/Share/Off/closeProgram.png'); */
     background-color: transparent;
 }
 .closeProgram:hover{
-    /* background-image:url('./image/Share/On/closeProgram.png'); */
+    /* background-image:url('/image/Share/On/closeProgram.png'); */
     background-color: #ff3c1d;
 }
 #ZoomAppList {
@@ -164,7 +164,7 @@
     bottom: 8%;
 }
 #SharedMask .NoticeUI_Icon{
-    background-image: url('./image/Share/TipIcon.png');
+    background-image: url('/image/Share/TipIcon.png');
     top: 6vh;left: 6vh;
     background-size: 100% 100%;
     position: absolute;
@@ -201,10 +201,10 @@
     position: absolute;
     right: 12vw;
     background-size: 100% 100%;
-    background-image: url('./image/Share/Off/SettingIcon.png');
+    background-image: url('/image/Share/Off/SettingIcon.png');
 }
 #SettingBtn:hover{
-    background-image: url('./image/Share/On/SettingIcon.png');
+    background-image: url('/image/Share/On/SettingIcon.png');
 }
 
 

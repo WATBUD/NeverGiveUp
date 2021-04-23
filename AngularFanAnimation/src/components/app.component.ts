@@ -116,6 +116,9 @@ export class AppComponent implements OnInit {
     }
 
     ngAfterViewInit(){
+        //this.DeviceService.currentDevice=this.SL_DevicePage;
+        console.log('ngAfterViewInit:~~~~~~~~~~~~~~~~~~~~~~',this.SL_DevicePage,this.AL_DevicePage);  
+
         //var TTTTindex=this.switchPageBtn.findindex((x) => x.check == true);
         let TTTTindex = this.switchPageBtn.findIndex(
             (x) => x.check == true

@@ -1,5 +1,10 @@
+
 /*#region Area*/
-.ControllersItem {
+
+
+
+
+.ControllersItem{
     color: white;
     width: 7vw;
     display: flex;
@@ -29,22 +34,6 @@
     border-left-width: 2px;
     height: 50%;
 } */
-
-
-
-
-
-
-.FanGroupStyle{  
-    width: 38.5vw;
-    height: 24.6vh;
-    background-size: 100% 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-direction: column;
-}
 .GroupTextAreaStyle{
     color: #C9CACA;
     line-height: 1.8vh;
@@ -55,7 +44,7 @@
     height: 3.9vh;
     font-size: 1.7vh;
     background-size: 100% 100%;
-    background-image: url('./image/FanMode/fansInfoText.png');
+    background-image: url('/image/FanMode/fansInfoText.png');
     /* border-radius: 0px 0px 8px 8px; */
 }
 .GroupFanTextStyle{
@@ -63,7 +52,7 @@
     width: 0.7vw;
     height: 0.7vw;
     background-size: 100% 100%;
-    background-image: url('./image/FanMode/FanMode_Icon.png');
+    background-image: url('/image/FanMode/FanMode_Icon.png');
     pointer-events: none;
     margin-left: 2vw;
 }
@@ -81,7 +70,7 @@
     width: 1.1vw;
     height: 1.5vh;
     background-size: 100% 100%;
-    background-image: url('./image/FanMode/RPM_Icon.png');
+    background-image: url('/image/FanMode/RPM_Icon.png');
     pointer-events: none;
     margin-left: 0.6vw;
 
@@ -89,7 +78,7 @@
 
 .GroupLedTextStyle{
     background-size: 100% 100%;
-    background-image: url('./image/FanMode/LedMode_Icon.png');
+    background-image: url('/image/FanMode/LedMode_Icon.png');
     width: 1.3vw;
     height: 1.5vh;
     pointer-events: none;
@@ -156,7 +145,7 @@
     background-size: 100% 100%;
     margin-top: 1vh;
     justify-content: center;
-    /* background-image: url(./image/FanMode/btn01_normal.png); */
+    /* background-image: url(/image/FanMode/btn01_normal.png); */
 }
 .LPB_Content{
     display: flex;
@@ -251,7 +240,7 @@
     overflow: hidden;
     /* -webkit-clip-path: polygon(50% 0%, 80% 10%, 100% 8%, 100% 70%, 77% 100%, 50% 100%, 23% 100%, 0% 70%, 0 7%, 20% 10%);
     clip-path: polygon(50% 0%, 80% 10%, 100% 8%, 100% 70%, 77% 100%, 50% 100%, 23% 100%, 0% 70%, 0 7%, 20% 10%); */ 
-    /* -webkit-mask-image: url('./image/canvasElements/frame.png'); */
+    /* -webkit-mask-image: url('/image/canvasElements/frame.png'); */
 }
 
 
@@ -318,19 +307,19 @@
     font-size: 20px;
     font-weight: normal;
     color: rgb(129, 129, 129);
-    background:  url('./image/FanMode/BtnLeftSide_normal.png');
+    background:  url('/image/FanMode/BtnLeftSide_normal.png');
     /* background-color: rgb(24, 30, 36); */
 }
 
 #switchPageBtn a:hover {
     cursor: pointer;
     color: rgb(255, 255, 255);
-    background:  url('./image/FanMode/BtnLeftSide_over.png');
+    background:  url('/image/FanMode/BtnLeftSide_over.png');
 }
 #switchPageBtn a:active {
     cursor: pointer;
     color: rgb(255, 255, 255);
-    background:  url('./image/FanMode/BtnLeftSide_over.png');
+    background:  url('/image/FanMode/BtnLeftSide_over.png');
 }
 
 #Pagebuttons{
@@ -449,7 +438,7 @@ input[type=range] {
     width: 15vw;
     height: 6.6vh;
     position: absolute;
-    background-image: url('./image/FanMode/SliderFan_normal.png');
+    background-image: url('/image/FanMode/SliderFan_normal.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -460,7 +449,7 @@ input[type=range] {
     width: 15vw;
     height: 6.6vh;
     position:absolute;
-    background-image:url('./image/FanMode/SliderFan_over.png');
+    background-image:url('/image/FanMode/SliderFan_over.png');
     background-repeat: no-repeat;
     /* background-size: 100% 100%; */
 }
@@ -479,7 +468,7 @@ input[type=range] {
     width: 1vw;
     background-color: #17beff;
     border-radius: 15px;
-    background-image: url('./image/Share/InputButton.png');
+    background-image: url('/image/Share/InputButton.png');
     background-size: 100% 100%;
 }
 #InputSpeed {
@@ -502,7 +491,7 @@ input[type=range] {
     width: 1vw;
     background-color: #17beff;
     border-radius: 15px;
-    background-image: url('./image/Share/InputButton.png');
+    background-image: url('/image/Share/InputButton.png');
     background-size: 100% 100%;
 }
 #InputBright {
@@ -525,7 +514,7 @@ input[type=range] {
     background: #181F32;
     border: white 0.01vw solid;
     /* background-size: 100% 100%;
-    background-image:url('./image/FanMode/colorBarH_ico.png'); */
+    background-image:url('/image/FanMode/colorBarH_ico.png'); */
 
 }
 
@@ -535,7 +524,7 @@ input[type=range] {
     background: #181F32;
     border: white 0.01vw solid;
     /* background-size: 100% 100%;
-    background-image:url('./image/FanMode/colorBarH_ico.png'); */
+    background-image:url('/image/FanMode/colorBarH_ico.png'); */
 
 }
 #ColorSliderV::-webkit-slider-thumb {
@@ -545,7 +534,7 @@ input[type=range] {
     border: white 0.01vw solid;
     background-repeat: no-repeat;
     /* background-size: 100% 100%;
-    background-image:url('./image/FanMode/colorBarH_ico.png'); */
+    background-image:url('/image/FanMode/colorBarH_ico.png'); */
 
 }
 
@@ -558,7 +547,7 @@ input[type=range] {
     width: 15.2vw;
     height: 1.5vh;
     background-size: 100% 100%;
-    background-image: url('./image/FanMode/colorBarH.png');
+    background-image: url('/image/FanMode/colorBarH.png');
 }
 #ColorSliderS{
     position: absolute;
