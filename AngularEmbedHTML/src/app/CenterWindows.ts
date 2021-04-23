@@ -3,7 +3,6 @@ export class CenterWindows {
     focusChild=0;
     pageIndex=0;
     childData=[];
-    
     FwServerData=[];
     static instance;
     constructor(){
