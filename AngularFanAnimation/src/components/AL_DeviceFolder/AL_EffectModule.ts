@@ -744,20 +744,19 @@ export class AL_EffectModule extends ModeParameter {
         var outerColorsArray = [];
         var outerColorsArray2 = [];
         var combination = [];
-        var upArray =[];
-        var downArray = [7,6,5,4];
-        for (let index = 0; index < 4; index++) {
-            upArray.push(index * 8);
+        var upArray;
+        var downArray;
+        function reset(){
+            upArray =[];
+            downArray = [];
+            for (let index = 0; index < 4; index++) {
+                upArray.push(0 + index * 8);
+                downArray.push(7 + index * 8);
+            }
         }
 
-        for (let index = 7; index > 4; index--) {
-            upArray.push(index*4);
-        }
-
-
-
-
-
+        // for (let index = 7; index > 4; index--) {
+        // }
        var outer_combination=[];
         combination=innerColorsArray.concat(innerColorsArray2);
         for (let index = 1; index < innerArr.length+1; index++) {
@@ -787,21 +786,61 @@ export class AL_EffectModule extends ModeParameter {
         // }
         //console.log('%c reOuterTempData','color:rgb(255,77,255)',reOuterTempData,outer_Reorganization);
         //console.log('%c showColosArray','color:rgb(255,77,255)',combination,outer_combination);
-            var posindex=0;
-            this.stopVar[TempName[0]] = setInterval(() => {
-                for (let index = 0; index < upArray.length; index++) {
-                    if(posindex<8){
-                        upArray[index]+=1;
-                        posindex+=1;
-                    }
-                }
+        reset();
+        var animationStep=0;
+        var posindex = 0;
+        this.stopVar[TempName[0]] = setInterval(() => {
+            if(animationStep%2==0){
                 for (let dindex = 0; dindex < upArray.length; dindex++) {
                     var data = reInnerTempData[upArray[dindex]];
-                    data.HTML_target.style.background = this.getColorEffectValue(colorArrays[0], 0)
+                    data.HTML_target.style.background = this.getColorEffectValue(colorArrays[0].getRGBA(), 0)
                 }
-            }, effectData.repeatTime);
-        
+                for (let dindex = 0; dindex < downArray.length; dindex++) {
+                    var data = reInnerTempData[downArray[dindex]];
+                    data.HTML_target.style.background = this.getColorEffectValue(colorArrays[0].getRGBA(), 0)
+                }
+                if (posindex < 3) {
+                    posindex += 1;
+                    for (let index = 0; index < upArray.length; index++) {
+                        upArray[index] += 1;
+                        downArray[index] -= 1;
+                    }
+                }
+                else {
+                    posindex=0;
+                    reset();
+                    animationStep+=1;
+                }
+            }
+            else{
+                for (let dindex = 0; dindex < upArray.length; dindex++) {
+                    var data = reInnerTempData[upArray[dindex]];
+                    data.HTML_target.style.background = this.getColorEffectValue(colorArrays[1].getRGBA(), 0)
+                }
+                for (let dindex = 0; dindex < downArray.length; dindex++) {
+                    var data = reInnerTempData[downArray[dindex]];
+                    data.HTML_target.style.background = this.getColorEffectValue(colorArrays[1].getRGBA(), 0)
+                }
+                if (posindex < 3) {
+                    posindex += 1;
+                    for (let index = 0; index < upArray.length; index++) {
+                        upArray[index] += 1;
+                        downArray[index] -= 1;
+                    }
+                }
+                else {
+                    posindex=0;
+                    reset();
+                    animationStep+=1;
+                }
+            }
 
+        console.log('%c mode_Tide','color:rgb(255,77,255)',posindex,animationStep,upArray,downArray);
+
+
+        }, 200);
+
+            effectData.repeatTime
        
 
         console.log('%c mode_Tide','color:rgb(255,77,255)',reInnerTempData,innerArr.length,outerArr.length,TempName);
