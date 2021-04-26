@@ -123,38 +123,26 @@ export class Breathing_Color extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 0;
+        var max = 250;
         switch (this.speed) {
             case 0:
-                this.repeatTime = 1000;//by Rainbow
+                this.repeatTime = max;//by Rainbow
                 break;
             case 1:
-                this.repeatTime = 600;
+                this.repeatTime = max*0.8;
                 break;
             case 2:
-                this.repeatTime = 480;
+                this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = 360;
+                this.repeatTime = max*0.4;
                 break;
             case 4:
-                this.repeatTime = 240;
+                this.repeatTime = max*0.2;
                     break;   
          
         }
-      
-        this.schedule[GroupNumber-1] = T;
     }
-
-
-
-    visiblePositionEffect(){
-
-        //getLinearGradientText
-    }
-
-
-
 }
 export class Static_Color  extends ModeParameter{
 
@@ -1048,7 +1036,7 @@ export class Tide extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 100;
+        var max = 500;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow

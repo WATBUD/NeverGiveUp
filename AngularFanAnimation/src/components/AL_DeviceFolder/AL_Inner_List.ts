@@ -4,7 +4,7 @@ export class AL_Inner_List {
     modeindexTranslate="Rainbow";
     modeType='Inner';
     modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Color_Cycle,new Wave,new Spring,new Tail_Chasing,
-        new Runway,new Mop_up,new Meteor,new Lottery,new Warning,new Voice,new Stack,new Tide];
+        new Runway,new Mop_up,new Pac_Man,new Meteor,new Lottery,new Warning,new Voice,new Stack,new Tide];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
     getMode(){
@@ -122,36 +122,26 @@ export class Breathing_Color extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 0;
+        var max = 250;
         switch (this.speed) {
             case 0:
-                this.repeatTime = 1000;//by Rainbow
+                this.repeatTime = max;//by Rainbow
                 break;
             case 1:
-                this.repeatTime = 600;
+                this.repeatTime = max*0.8;
                 break;
             case 2:
-                this.repeatTime = 480;
+                this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = 360;
+                this.repeatTime = max*0.4;
                 break;
             case 4:
-                this.repeatTime = 240;
+                this.repeatTime = max*0.2;
                     break;   
          
         }
-      
-        this.schedule[GroupNumber-1] = T;
     }
-
-
-
-    visiblePositionEffect(){
-
-        //getLinearGradientText
-    }
-
 
 
 }
@@ -342,6 +332,56 @@ export class Mop_up extends ModeParameter{
     constructor(){
         super();
         this.name="Mop up";
+        this.colors=this.rainbow7Color();
+        //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
+        this.setLEDVarDefault();
+    }
+    setLEDVarDefault() {
+        this.bright = 4;
+        this.speed = 3;
+        this.dircetion=1;
+        for (let index = 0; index < this.colorArrays.length; index++) {
+            this.colorArrays[index].SetHex("#00FF00");
+        }
+        for (let index = 0; index <  this.syncConcatenation.length; index++) {
+            this.syncConcatenation[index]=2;
+        }
+    }  
+
+
+    scheduleCreateData(GroupNumber) {
+        this.loopCount=0;
+        var T = [];
+        var max = 100;
+        switch (this.speed) {
+            case 0:
+                this.repeatTime = max;//by Rainbow
+                break;
+            case 1:
+                this.repeatTime = max*0.8;
+                break;
+            case 2:
+                this.repeatTime = max*0.6;
+                break; 
+            case 3:
+                this.repeatTime = max*0.4;
+                break;
+            case 4:
+                this.repeatTime = max*0.2;
+                    break;   
+         
+        }
+      
+        this.schedule[GroupNumber-1] = T;
+    }
+}
+export class Pac_Man extends ModeParameter{
+
+    showSPBTable:any=[true, true, false];
+    colorVisibleNum=2;
+    constructor(){
+        super();
+        this.name="Pac-Man";
         this.colors=this.rainbow7Color();
         //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
         this.setLEDVarDefault();
@@ -868,7 +908,7 @@ export class Tide extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 100;
+        var max = 800;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow

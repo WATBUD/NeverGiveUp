@@ -115,6 +115,9 @@ export class AL_FanSetting {
             case 'Stack':
                 this.AL_EffectModule.mode_Stack(effect_Data, Type);
                 break; 
+            case 'Pac-Man':
+                this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
+                break;   
             case 'Tide':
                 this.AL_EffectModule.mode_Tide(effect_Data, Type);
                 break;       
