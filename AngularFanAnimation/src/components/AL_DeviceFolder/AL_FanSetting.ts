@@ -109,6 +109,9 @@ export class AL_FanSetting {
             case 'Meteor':
                 this.AL_EffectModule.mode_Meteor(effect_Data, Type);
                 break;
+            case 'Meteor Rainbow':
+                this.AL_EffectModule.mode_Meteor_Rainbow(effect_Data, Type);
+                break;  
             case 'Lottery':
                 this.AL_EffectModule.mode_Lottery(effect_Data, Type);
                 break;
@@ -118,6 +121,9 @@ export class AL_FanSetting {
             case 'Pac-Man':
                 this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
                 break;   
+            case 'Scan':
+                this.AL_EffectModule.mode_Scan(effect_Data, Type);
+                break;
             case 'Tide':
                 this.AL_EffectModule.mode_Tide(effect_Data, Type);
                 break;       

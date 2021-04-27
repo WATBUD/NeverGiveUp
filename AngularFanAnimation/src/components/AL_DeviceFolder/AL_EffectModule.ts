@@ -979,6 +979,138 @@ export class AL_EffectModule extends ModeParameter {
         }
         console.log('%c mode_Tide','color:rgb(255,77,255)',reInnerTempData,innerArr.length,outerArr.length,TempName,effectData.repeatTime);
     }
+    mode_Scan(effectData,Mode='Inner') {
+        var TempName = this.elementsName;
+        var animationStep=0;
+        var posindex = 0;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays = effectData.colorArrays;
+        var reInnerTempData = [];
+        for (let index = 1; index < innerArr.length+1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+            reInnerTempData.push({
+                colors:colorArrays[0].getRGBA(),
+                HTML_target: innerArr[index-1],
+            })
+        }
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length+1; index++) {
+            reOuterTempData.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: outerArr[index-1],
+            });
+        }
+        var fanUpNumber=4;
+        var totalInnerUpArray=this.totalInnerUpArray(4);
+        var totalInnerDownArray=this.totalInnerDownArray(4);
+        var totalOuterUpArray=this.totalOuterUpArray(4);
+        var totalOuterDownArray=this.totalOuterDownArray(4);
+
+        for (let index = 1; index < totalInnerUpArray.length+1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+            reInnerTempData.push({
+                colors:colorArrays[0].getRGBA(),
+                HTML_target: innerArr[index-1],
+            })
+        }
+        var loopCount=0;
+        var loopDirection=0;
+        if (Mode != "Outer") {
+            var i_step={
+                loopCount:0,
+                loopDirection:0,
+                tempUpArray:[],
+            }
+            var setColor=colorArrays[0].getRGBA();
+            i_step.tempUpArray.push([0,0,0,0]);
+            i_step.tempUpArray.push([0,0,0,0]);
+            i_step.tempUpArray.push([0,0,0,0]);
+            for (let index = 0; index < fanUpNumber*8/2; index++) {
+                i_step.tempUpArray.push([0,0,0,0]);
+            }
+            i_step.tempUpArray.push(this.gerRGB_Alpha(setColor,0.25));
+            i_step.tempUpArray.push(this.gerRGB_Alpha(setColor,0.5));
+            i_step.tempUpArray.push(this.gerRGB_Alpha(setColor,0.75));
+            i_step.tempUpArray.push(this.gerRGB_Alpha(setColor,1));
+            i_step.tempUpArray.push([0,0,0,0]);
+            i_step.tempUpArray.push([0,0,0,0]);
+            i_step.tempUpArray.push([0,0,0,0]);
+            this.stopVar[TempName[0]] = setInterval(() => {
+                if(i_step.loopDirection%2==0){
+                    i_step.tempUpArray = this.loopArrDisplacement(2, i_step.tempUpArray);
+                    if(i_step.loopCount>totalInnerUpArray.length+6){
+                        i_step.loopCount=0;
+                        i_step.loopDirection+=1;
+                    }
+                }
+                else{
+                    i_step.tempUpArray = this.loopArrDisplacement(1, i_step.tempUpArray);
+                    if(i_step.loopCount>totalInnerUpArray.length+6){
+                        i_step.loopCount=0;
+                        i_step.loopDirection+=1;
+                    }
+                }
+
+                for (let index = 0; index < totalInnerUpArray.length; index++) {
+                    var data = reInnerTempData[totalInnerUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step.tempUpArray[index], 1)
+                }
+                for (let index = 0; index < totalInnerDownArray.length; index++) {
+                    var data = reInnerTempData[totalInnerDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step.tempUpArray[index], 1)
+                }
+                i_step.loopCount+=1;
+            }, effectData.repeatTime);
+        }
+        if (Mode != "Inner") {
+            var o_step={
+                loopCount:0,
+                loopDirection:0,
+                tempUpArray:[],
+            }
+            var setColor=colorArrays[0].getRGBA();
+            o_step.tempUpArray.push([0,0,0,0]);
+            o_step.tempUpArray.push([0,0,0,0]);
+            o_step.tempUpArray.push([0,0,0,0]);
+            for (let index = 0; index < fanUpNumber*12/2; index++) {
+                o_step.tempUpArray.push([0,0,0,0]);
+            }
+            for (let index = 1; index < 6; index++) {
+                o_step.tempUpArray.push(this.gerRGB_Alpha(setColor,index*1/6));
+            }
+            o_step.tempUpArray.push([0,0,0,0]);
+            o_step.tempUpArray.push([0,0,0,0]);
+            o_step.tempUpArray.push([0,0,0,0]);
+            this.stopVar[TempName[1]] = setInterval(() => {
+                if(o_step.loopDirection%2==0){
+                    o_step.tempUpArray = this.loopArrDisplacement(2, o_step.tempUpArray);
+                    if(o_step.loopCount>totalOuterUpArray.length+6){
+                        o_step.loopCount=0;
+                        o_step.loopDirection+=1;
+                    }
+                }
+                else{
+                    o_step.tempUpArray = this.loopArrDisplacement(1, o_step.tempUpArray);
+                    if(o_step.loopCount>totalOuterUpArray.length+6){
+                        o_step.loopCount=0;
+                        o_step.loopDirection+=1;
+                    }
+                }
+
+                for (let index = 0; index < totalOuterUpArray.length; index++) {
+                    var data = reOuterTempData[totalOuterUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_step.tempUpArray[index], 1)
+                }
+                for (let index = 0; index < totalOuterDownArray.length; index++) {
+                    var data = reOuterTempData[totalOuterDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_step.tempUpArray[index], 1)
+                }
+                o_step.loopCount+=1;
+            }, effectData.repeatTime);
+        }
+        console.log('%c mode_Tide','color:rgb(255,77,255)',reInnerTempData,innerArr.length,outerArr.length,TempName,effectData.repeatTime);
+    }
     totalOuterUpArray(fanNnmber=1){
         var totalOuterUpArray;
         totalOuterUpArray =[];
@@ -1026,7 +1158,11 @@ export class AL_EffectModule extends ModeParameter {
         console.log('%c totalDownArray','color:rgb(255,77,255)',totalInnerDownArray);
         return totalInnerDownArray;
     }
-
+    gerRGB_Alpha(RGBA=[0,0,0,1],magnification=0.5){
+        var tempRGBA=JSON.parse(JSON.stringify(RGBA));
+        tempRGBA[3]=magnification;
+        return tempRGBA;
+    }
 
     mode_Spring(effectData,Mode='Inner') {
         var TempName=this.elementsName;
@@ -1193,6 +1329,134 @@ export class AL_EffectModule extends ModeParameter {
                         //var setTarget = data_4[index];
                         if(index==innerNowindex){
                             data_4[index].HTML_target.style.background = this.getColorEffectValue(colorArrays[dindex].getRGBA(), 0)
+                        }
+                        else{
+                            data_4[index].HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 0)
+                        }
+                    }
+                }
+            }, effectData.repeatTime);
+        }
+        var outerNowindex=-1;
+        var outerNowCount=0;
+        if (Mode != "Inner") {
+            if(effectData.dircetion==2){
+                outerNowindex=-1;
+            }
+            else{
+                outerNowindex=9;
+            }
+            this.stopVar[TempName[1]] = setInterval(() => {
+                if(effectData.dircetion==2){
+                    if(outerNowindex<9){
+                        outerNowindex+=1;    
+                    }
+                    else{
+                        outerNowindex=-1;
+                    }
+                }
+                else{
+                    if(outerNowindex>-1){
+                        outerNowindex-=1;    
+                    }
+                    else{
+                        outerNowindex=9;
+                    }
+                }        
+                for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+                    var data_4=reOuterTempData[dindex];
+                    for (let index = 0; index < data_4.length; index++) {
+                        //var setTarget = data_4[index];
+                        if(index==outerNowindex){
+                            data_4[index].HTML_target.style.background = this.getColorEffectValue(colorArrays[dindex].getRGBA(), 1)
+                        }
+                        else{
+                            data_4[index].HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 1)
+                        }
+                    }
+                }
+    
+            }, effectData.repeatTime);
+        }
+        console.log('%c mode_Meteor','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
+    }
+    mode_Meteor_Rainbow(effectData,Mode='Inner') {
+        var TempName=this.elementsName;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays=effectData.colorArrays;
+        var reInnerTempData = [];
+        var InnerTempData4 = [];
+        for (let index = 1; index < innerArr.length+1; index++) {
+            InnerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: innerArr[index-1],
+            });
+            if (index % 8 == 0) {
+                reInnerTempData.push(InnerTempData4);
+                InnerTempData4=[];
+            }
+        }
+        var outerTempData4 = [];
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length+1; index++) {
+            outerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: outerArr[index-1],
+            });
+            if (index % 12 == 0) {
+                reOuterTempData.push(outerTempData4);
+                outerTempData4=[];
+            }
+        }
+        var innerNowindex=-1;
+        var innerNowCount=0;
+
+        var innerRainbowIndex=0;
+        if (Mode != "Outer") {
+            if(effectData.dircetion==2){
+                innerNowindex=-1;
+            }
+            else{
+                innerNowindex=9;
+            }
+            this.stopVar[TempName[0]] = setInterval(() => {
+                if(effectData.dircetion==2){
+                    if(innerNowindex<9){
+                        innerNowindex+=1;    
+                    }
+                    else{
+                        innerNowindex=-1;
+                        if(innerRainbowIndex<this.rainbow7Color().length-1){
+                            innerRainbowIndex+=1;
+                        }
+                        else{
+                            innerRainbowIndex=0;
+                        }
+                    }
+                }
+                else{
+                    if(innerNowindex>-1){
+                        innerNowindex-=1;    
+                    }
+                    else{
+                        innerNowindex=9;
+                        if(innerRainbowIndex<this.rainbow7Color().length-1){
+                            innerRainbowIndex+=1;
+                        }
+                        else{
+                            innerRainbowIndex=0;
+                        }
+                    }
+                }
+
+
+                for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+                    var data_4=reInnerTempData[dindex];
+                    for (let index = 0; index < data_4.length; index++) {
+                        //var setTarget = data_4[index];
+                        if(index==innerNowindex){
+                            data_4[index].HTML_target.style.background = this.getColorEffectValue(this.rainbow7Color()[innerRainbowIndex], 0)
                         }
                         else{
                             data_4[index].HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 0)
