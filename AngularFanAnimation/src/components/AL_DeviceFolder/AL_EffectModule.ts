@@ -1111,6 +1111,94 @@ export class AL_EffectModule extends ModeParameter {
         }
         console.log('%c mode_Tide','color:rgb(255,77,255)',reInnerTempData,innerArr.length,outerArr.length,TempName,effectData.repeatTime);
     }
+    mode_tornado(effectData,Mode='Inner') {
+        var TempName=this.elementsName;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays=effectData.colorArrays;
+        var reInnerTempData = [];
+        var InnerTempData4 = [];
+        for (let index = 1; index < innerArr.length+1; index++) {
+            InnerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: innerArr[index-1],
+            });
+            if (index % 8 == 0) {
+                reInnerTempData.push(InnerTempData4);
+                InnerTempData4=[];
+            }
+        }
+        var outerTempData4 = [];
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length+1; index++) {
+            outerTempData4.push({
+                colors:colorArrays[0].getRGBA(),
+                HTML_target: outerArr[index-1],
+            });
+            if (index % 12 == 0) {
+                reOuterTempData.push(outerTempData4);
+                outerTempData4=[];
+            }
+        }
+        var mixingTempData=[];
+        for (let index = 0; index < reInnerTempData.length; index++) {
+            var reorganizationData= reInnerTempData[index].concat(reOuterTempData[index]);
+            mixingTempData.push(reorganizationData);
+        }
+        console.log('%c mode_tornado_mixingTempData','color:rgb(255,77,255)',mixingTempData);
+        var innerNowindex=0;
+        var min_maxValue=[0,7];  
+        if (Mode != "Outer") {
+            //var maxValue=mixingTempData[0].length;
+            var maxValue=5;
+            var nowColorConunt=0;
+            var nowRangeConunt=0;
+            this.stopVar[TempName[2]] = setInterval(() => {
+
+                var setPos;
+                if(nowRangeConunt%2==0){
+                    maxValue=8;
+                    setPos=Math.round(innerNowindex*8/maxValue);
+                }
+                else{
+                    maxValue=12;
+                    setPos=Math.round((innerNowindex)*12/maxValue)+8;
+                    //setPos+=8;
+                }
+                var setColor=colorArrays[nowColorConunt%2].getRGBA();
+                console.log('%c data_4','color:rgb(255,77,255)',nowColorConunt%2,setPos,setColor);
+                for (let dindex = 0; dindex < mixingTempData.length; dindex++) {
+                    var data_4=mixingTempData[dindex];
+                    for (let index_20 = 0; index_20 < data_4.length; index_20++) {
+                        var data_4_20=data_4[index_20];
+                        if(nowRangeConunt%2==0){
+                            if(index_20<=setPos){
+                                data_4_20.HTML_target.style.background = this.getColorEffectValue(setColor, 0)
+                            } 
+                        }
+                        else{
+                            if(index_20<=setPos&&index_20>7){
+                                data_4_20.HTML_target.style.background = this.getColorEffectValue(setColor, 0)
+                            }
+                        }
+                    }
+                }
+                if (innerNowindex < maxValue) {
+                    innerNowindex += 1;
+                }
+                else {
+                    innerNowindex = 0;
+                    nowRangeConunt+=1;
+                    if(nowRangeConunt%2==0){
+                        nowColorConunt+=1;
+                    }
+
+                }
+
+            }, effectData.repeatTime);
+        }
+        console.log('%c mode_tornado','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
+    }
     totalOuterUpArray(fanNnmber=1){
         var totalOuterUpArray;
         totalOuterUpArray =[];
@@ -1134,7 +1222,6 @@ export class AL_EffectModule extends ModeParameter {
         console.log('%c totalOuterDownArray','color:rgb(255,77,255)',totalOuterDownArray);
         return totalOuterDownArray;
     }
-
     totalInnerUpArray(fanNnmber=1){
         var totalInnerUpArray;
         totalInnerUpArray =[];
@@ -1163,7 +1250,6 @@ export class AL_EffectModule extends ModeParameter {
         tempRGBA[3]=magnification;
         return tempRGBA;
     }
-
     mode_Spring(effectData,Mode='Inner') {
         var TempName=this.elementsName;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;

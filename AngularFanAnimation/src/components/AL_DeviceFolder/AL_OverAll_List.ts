@@ -3,7 +3,7 @@ export class AL_OverAll_List {
     modeindex=0;
     modeindexTranslate="Rainbow";
     modeType='OverAll';
-    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Taichi,new Color_Cycle,new Warning,new Voice,new Stack,new Tide];
+    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Taichi,new Color_Cycle,new Warning,new Voice,new Stack,new Tide,new tornado];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
     getMode(){
@@ -615,4 +615,56 @@ export class Scan extends ModeParameter{
 
 
 }
+export class tornado extends ModeParameter{
 
+    showSPBTable:any=[true, true, false];
+    colorVisibleNum=2;
+    constructor(){
+        super();
+        this.name="tornado";
+        this.colors=this.rainbow7Color();
+        //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
+        this.setLEDVarDefault();
+    }
+    setLEDVarDefault() {
+        this.bright = 4;
+        this.speed = 3;
+        this.dircetion=1;
+        for (let index = 0; index < this.colorArrays.length; index++) {
+            this.colorArrays[index].SetHex("#00FF00");
+        }
+        for (let index = 0; index <  this.syncConcatenation.length; index++) {
+            this.syncConcatenation[index]=2;
+        }
+    }  
+
+
+    scheduleCreateData(GroupNumber) {
+        this.loopCount=0;
+        var T = [];
+        var max = 500;
+        switch (this.speed) {
+            case 0:
+                this.repeatTime = max;//by Rainbow
+                break;
+            case 1:
+                this.repeatTime = max*0.8;
+                break;
+            case 2:
+                this.repeatTime = max*0.6;
+                break; 
+            case 3:
+                this.repeatTime = max*0.4;
+                break;
+            case 4:
+                this.repeatTime = max*0.2;
+                    break;   
+         
+        }
+      
+        this.schedule[GroupNumber-1] = T;
+    }
+
+
+
+}

@@ -124,6 +124,9 @@ export class AL_FanSetting {
             case 'Scan':
                 this.AL_EffectModule.mode_Scan(effect_Data, Type);
                 break;
+            case 'tornado':
+                this.AL_EffectModule.mode_tornado(effect_Data, Type);
+                break;
             case 'Tide':
                 this.AL_EffectModule.mode_Tide(effect_Data, Type);
                 break;       

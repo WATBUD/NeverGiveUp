@@ -2596,22 +2596,23 @@ export class M_Light_CS {
 
 
     mode_Rainbow(){
+        console.log('%c Enter_mode_Rainbow','color:rgb(255,77,255)');
         clearInterval(this.repeater);
        this.currentBlockIndex=0;
-       var rainbowColors=this.rainbow7Color();
        var StartPoint = this.getNowBlock(0).coordinateData;
        this.setAllBlockColor([0,0,0,1]);
        var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
        var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
        var repeatCountList=[];
        var times=0;
+       var setColors=this.rainbow7Color();
       var target = this.twoDimensionalArray;
        for (let index = 0; index < this.max_X_Number; index++) {
            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-           for (let index2 = 0; index2 < rainbowColors.length; index2++) {
+           for (let index2 = 0; index2 < setColors.length; index2++) {
                repeatCountList.push({
                    nowPos:index2,
-                   color: rainbowColors[index2],
+                   color: setColors[index2],
                    pos: [index,index2],
                    backupPos:[index,index2],
                    step: 5,
@@ -2630,22 +2631,21 @@ export class M_Light_CS {
                 T.nowStep=0;
                 T.nowPos+=1;
                }
-               var temp_C=this.rainbow7Color()[T.nowPos];
+               var temp_C=setColors[T.nowPos];
                var nextColor=[];
-               if (T.nowPos + 1 < this.rainbow7Color().length) {
-                   nextColor = this.rainbow7Color()[T.nowPos + 1];
+               if (T.nowPos + 1 < setColors.length-1) {
+                   //T.nowPos+=1;
+                   nextColor = setColors[T.nowPos+1];
                }
                else {
-                   T.nowPos = 0;1
-                   nextColor = this.rainbow7Color()[T.nowPos];
+                   T.nowPos = 0;
+                   nextColor = setColors[T.nowPos];
                }
                var temp_colorData = [0, 0, 0, 1];
                for (let index2 = 0; index2 < 3; index2++) {
                    temp_colorData[index2]= (temp_C[index2]*(T.step-T.nowStep)+nextColor[index2]*T.nowStep)/T.step;
                    temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
                }
-               //console.log('T.step;',T.step,T.nowStep,temp_C,nextColor);
-
                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=temp_colorData;              
            }
            this.showTwoDimensionalArray();
