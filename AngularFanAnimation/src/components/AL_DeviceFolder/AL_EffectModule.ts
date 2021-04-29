@@ -1241,7 +1241,269 @@ export class AL_EffectModule extends ModeParameter {
         }
         //console.log('%c mode_Mixing','color:rgb(255,77,255)',i_step,TempName,effectData.repeatTime);
     }
+    mode_Mixing2(effectData,Mode='Inner') {
+        var TempName = this.elementsName;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays = effectData.colorArrays;
+        var reInnerTempData = [];
+        var posindex = 0;
+        var fanUpNumber = 4;
+        for (let index = 1; index < innerArr.length + 1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+            reInnerTempData.push({
+                colors: colorArrays[3].getRGBA(),
+                HTML_target: innerArr[index - 1],
+            })
+        }
 
+        var totalInnerUpArray = this.totalInnerUpArray(fanUpNumber);
+        var totalInnerDownArray = this.totalInnerDownArray(fanUpNumber);
+        var totalOuterUpArray = this.totalOuterUpArray(fanUpNumber);
+        var totalOuterDownArray = this.totalOuterDownArray(fanUpNumber);
+        var i_step2 = {
+            loopCount: 0,
+            loopDirection: 0,
+            maxframes:0,
+            tempUpArray: [],
+            nowUpArray: [],
+        }
+        for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
+            i_step2.tempUpArray.push([0, 0, 0, 0]);
+        }
+        var getColorMixing = this.getColorMixing([colorArrays[0].getRGBA(), colorArrays[1].getRGBA()]);
+        for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
+            i_step2.tempUpArray.push(getColorMixing);
+        }
+        i_step2.tempUpArray.push([0, 0, 0, 0]);
+        i_step2.tempUpArray.push([0, 0, 0, 0]);
+        i_step2.tempUpArray.push([0, 0, 0, 0]);
+        i_step2.nowUpArray = JSON.parse(JSON.stringify(i_step2.tempUpArray));
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length + 1; index++) {
+            reOuterTempData.push({
+                colors: colorArrays[3].getRGBA(),
+                HTML_target: outerArr[index - 1],
+            });
+        }
+
+        var o_Step2 = {
+            loopCount: 0,
+            maxframes:12,
+            loopDirection: 0,
+            tempUpArray: [],
+            nowUpArray: [],
+        }
+        for (let index = 0; index < fanUpNumber * 12 / 4; index++) {
+            o_Step2.tempUpArray.push([0, 0, 0, 0]);
+        }
+        var getColorMixing = this.getColorMixing([colorArrays[0].getRGBA(), colorArrays[1].getRGBA()]);
+        for (let index = 0; index < fanUpNumber * 12 / 4; index++) {
+            o_Step2.tempUpArray.push(getColorMixing);
+        }
+        o_Step2.tempUpArray.push([0, 0, 0, 0]);
+        o_Step2.tempUpArray.push([0, 0, 0, 0]);
+        o_Step2.tempUpArray.push([0, 0, 0, 0]);
+        o_Step2.nowUpArray = JSON.parse(JSON.stringify(o_Step2.tempUpArray));
+
+        var o_Step = {
+            loopCount: 0,
+            loopDirection: 0,
+            maxframes:0,
+            tempUpArray: [],
+            nowUpArray: [],
+            setColor: colorArrays[0].getRGBA(),
+            animationStep: 0,
+        }
+        for (let index = 0; index < fanUpNumber * 12 / 2; index++) {
+            o_Step.tempUpArray.push([0, 0, 0, 0]);
+        }
+        var part = 6;
+        for (let index = 1; index <= part; index++) {
+            o_Step.tempUpArray.push(this.gerRGB_Alpha(o_Step.setColor, index * 1 / part));
+        }
+        o_Step.nowUpArray = JSON.parse(JSON.stringify(o_Step.tempUpArray));
+
+        var i_step = {
+            loopCount: 0,
+            loopDirection: 0,
+            maxframes:8,
+            tempUpArray: [],
+            part:4,
+            maxArrlen:(4*fanUpNumber/2)/4,
+            nowUpArray: [],
+            setColor: colorArrays[0].getRGBA(),
+            animationStep: 0,
+        }
+        for (let index = 0; index < 4*fanUpNumber/2; index++) {
+            i_step.tempUpArray.push([0, 0, 0, 0]);
+        }
+        for (let index = 1; index <= i_step.part; index++) {
+            i_step.tempUpArray.push(this.gerRGB_Alpha(i_step.setColor, index * 1 / i_step.part));
+        }
+        i_step.nowUpArray = JSON.parse(JSON.stringify(i_step.tempUpArray));
+
+
+
+        //console.log('%c i_step2.nowUpArray', 'color:rgb(255,77,255)', i_step.nowUpArray);
+        //console.log('%c  loopArrDisplacementAssignSpacing', 'color:rgb(255,77,255)', this.loopArrDisplacementAssignSpacing(2,i_step.nowUpArray,2));
+        this.stopVar[TempName[2]] = setInterval(() => {
+            if (i_step.animationStep == 0) {
+                if (i_step.loopDirection % 2 == 0) {
+                    var setRange=Math.round (i_step.loopCount*(i_step.maxArrlen)/i_step.maxframes);
+                    // if(isNaN(setRange)){
+                    // console.log('%c i_step_isNaN', 'color:rgb(255,77,255)',i_step);
+                    //   clearInterval(this.stopVar[TempName[2]]); 
+                    // }
+
+                    console.log('%c  setRange', 'color:rgb(255,77,255)',setRange,i_step);
+                    i_step.tempUpArray = this.loopArrDisplacementAssignSpacing(2,i_step.tempUpArray,setRange);
+                    if (i_step.loopCount <  i_step.maxframes) {
+                        i_step.loopCount += 1;
+                    }
+                    else{
+                        i_step.loopCount=0;
+                        i_step.tempUpArray = JSON.parse(JSON.stringify(i_step.nowUpArray));
+                        //i_step.loopDirection += 1;
+                    }
+                    // if (i_step.loopCount >  totalInnerUpArray.length / 2 + 6) {
+                    //     i_step.loopCount = 0;
+                    //     i_step.loopDirection += 1;
+                    // }
+                }
+                else {
+                    //i_step.loopDirection = 0;
+                    //i_step.animationStep = 1;
+                }
+                for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
+                    var data = reInnerTempData[totalInnerUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step.tempUpArray[index], 1)
+                    var data = reInnerTempData[totalInnerDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step.tempUpArray[index], 1)
+                }
+                var rightUpArr = JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
+                var rightDownArr = JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
+                for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
+                    var set_C = colorArrays[1].getRGBA();
+                    if (i_step.tempUpArray[index] != [0, 0, 0, 0]) {
+                        set_C[3] = i_step.tempUpArray[index][3];
+                    }
+                    else {
+                        set_C = [0, 0, 0, 0];
+                    }
+                    var data = reInnerTempData[rightUpArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(set_C, 1)
+                    var data = reInnerTempData[rightDownArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(set_C, 1)
+                }
+
+                // if( i_step.loopCount>5)
+                // clearInterval(this.stopVar[TempName[0]]);
+
+            }
+            else {
+                if (i_step2.loopDirection % 2 == 0) {
+                    i_step2.tempUpArray = this.loopArrDisplacement(1, i_step2.tempUpArray);
+                    //i_step2.tempUpArray = this.loopArrDisplacement(1, i_step2.tempUpArray);
+                    if (i_step2.loopCount > totalInnerUpArray.length) {
+                        i_step2.loopCount = 0;
+                        i_step2.loopDirection += 1;
+                    }
+                }
+                else {
+                    i_step2.loopDirection = 0;
+                    i_step2.tempUpArray = JSON.parse(JSON.stringify(i_step2.nowUpArray));
+                    i_step.animationStep = 0;
+                }
+                var rightUpArr = JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
+                var rightDownArr = JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
+                for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
+                    var data = reInnerTempData[totalInnerUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step2.tempUpArray[index], 1)
+                    var data = reInnerTempData[totalInnerDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step2.tempUpArray[index], 1)
+                    var data = reInnerTempData[rightUpArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step2.tempUpArray[index], 1)
+                    var data = reInnerTempData[rightDownArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(i_step2.tempUpArray[index], 1)
+                }
+                i_step2.loopCount += 1;
+            }
+            if (o_Step.animationStep == 0) {
+                if (o_Step.loopDirection % 2 == 0) {
+                    o_Step.tempUpArray = this.loopArrDisplacement(2, o_Step.tempUpArray);
+                    if (o_Step.loopCount > totalOuterUpArray.length / 2 + 6) {
+                        o_Step.loopCount = 0;
+                        o_Step.loopDirection += 1;
+                    }
+                }
+                else {
+                    o_Step.loopDirection = 0;
+                    o_Step.tempUpArray = JSON.parse(JSON.stringify(o_Step.nowUpArray));
+                    o_Step.animationStep = 1;
+                }
+                for (let index = 0; index < totalOuterUpArray.length / 2; index++) {
+                    //console.log('%c  o_Step.tempUpArray', 'color:rgb(255,77,255)', o_Step.tempUpArray[index]);
+
+                    var data = reOuterTempData[totalOuterUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step.tempUpArray[index], 1)
+                    var data = reOuterTempData[totalOuterDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step.tempUpArray[index], 1)
+                }
+                var rightUpArr = JSON.parse(JSON.stringify(totalOuterUpArray)).reverse();
+                var rightDownArr = JSON.parse(JSON.stringify(totalOuterDownArray)).reverse();
+                for (let index = 0; index < totalOuterUpArray.length / 2; index++) {
+                    var set_C = colorArrays[1].getRGBA();
+                    if (o_Step.tempUpArray[index] != [0, 0, 0, 0]) {
+                        set_C[3] = o_Step.tempUpArray[index][3];
+                    }
+                    else {
+                        set_C = [0, 0, 0, 0];
+                    }
+                    var data = reOuterTempData[rightUpArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(set_C, 1)
+                    var data = reOuterTempData[rightDownArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(set_C, 1)
+                }
+                o_Step.loopCount += 1;
+            }
+            else {
+                if (o_Step2.loopDirection % 2 == 0) {
+                    o_Step2.tempUpArray = this.loopArrDisplacement(1, o_Step2.tempUpArray);
+                    //o_Step2.tempUpArray = this.loopArrDisplacement(1, o_Step2.tempUpArray);
+                    if (o_Step2.loopCount > totalOuterUpArray.length) {
+                        o_Step2.loopCount = 0;
+                        o_Step2.loopDirection += 1;
+                    }
+                }
+                else {
+                    o_Step2.loopDirection = 0;
+                    o_Step2.tempUpArray = JSON.parse(JSON.stringify(o_Step2.nowUpArray));
+                    o_Step.animationStep = 0;
+                }
+                var rightUpArr = JSON.parse(JSON.stringify(totalOuterUpArray)).reverse();
+                var rightDownArr = JSON.parse(JSON.stringify(totalOuterDownArray)).reverse();
+                for (let index = 0; index < totalOuterUpArray.length / 2; index++) {
+                    var data = reOuterTempData[totalOuterUpArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step2.tempUpArray[index], 1)
+                    var data = reOuterTempData[totalOuterDownArray[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step2.tempUpArray[index], 1)
+                    var data = reOuterTempData[rightUpArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step2.tempUpArray[index], 1)
+                    var data = reOuterTempData[rightDownArr[index]];
+                    data.HTML_target.style.background = this.getColorEffectValue(o_Step2.tempUpArray[index], 1)
+                }
+
+                o_Step2.loopCount += 1;
+            }
+        }, effectData.repeatTime);
+
+        //console.log('%c mode_Mixing', 'color:rgb(255,77,255)', i_step, TempName, effectData.repeatTime);
+
+
+
+        //console.log('%c mode_Mixing','color:rgb(255,77,255)',i_step,TempName,effectData.repeatTime);
+    }
 
     getColorMixing(RGBAList=[]){
 
@@ -2865,6 +3127,15 @@ export class AL_EffectModule extends ModeParameter {
                     Arr[index] = Oringin;
                 }
             }
+        }
+        return Arr;
+    }
+    loopArrDisplacementAssignSpacing(directionSwitch=1,Arr,Spacing=1) {
+        if (directionSwitch == 2) {
+            Arr=(Arr.splice(Arr.length-Spacing,Arr.length)).concat(Arr);
+        }
+        else if (directionSwitch == 1) {//反向陣列
+            Arr = Arr.concat(Arr.splice(0, Spacing));
         }
         return Arr;
     }
