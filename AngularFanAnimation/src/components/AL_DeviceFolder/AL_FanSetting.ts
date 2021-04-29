@@ -136,6 +136,9 @@ export class AL_FanSetting {
             case 'Voice':
                 this.AL_EffectModule.mode_Voice(effect_Data, Type);
                 break;
+            case 'Mixing':
+                this.AL_EffectModule.mode_Mixing(effect_Data, Type);
+                break;
             case 'Warning':
                 this.AL_EffectModule.mode_Warning(effect_Data, Type);
                 break;
