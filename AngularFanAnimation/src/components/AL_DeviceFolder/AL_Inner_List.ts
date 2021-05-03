@@ -785,7 +785,7 @@ export class Voice extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 1000;
+        var max = 200;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow
