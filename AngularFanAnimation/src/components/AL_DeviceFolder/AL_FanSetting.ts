@@ -134,7 +134,7 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_Taichi(effect_Data, Type);
                 break;
             case 'Voice':
-                this.AL_EffectModule.mode_Voice(effect_Data, Type);
+                this.AL_EffectModule.mode_Voice2(effect_Data, Type);
                 break;
             case 'Mixing':
                 this.AL_EffectModule.mode_Mixing2(effect_Data, Type);
