@@ -128,7 +128,7 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_tornado(effect_Data, Type);
                 break;
             case 'Tide':
-                this.AL_EffectModule.mode_Tide(effect_Data, Type);
+                this.AL_EffectModule.mode_Tide2(effect_Data, Type);
                 break;       
             case 'Taichi':
                 this.AL_EffectModule.mode_Taichi(effect_Data, Type);
