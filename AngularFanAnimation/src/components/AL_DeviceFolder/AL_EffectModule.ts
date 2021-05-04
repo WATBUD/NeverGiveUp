@@ -1011,10 +1011,10 @@ export class AL_EffectModule extends ModeParameter {
         var o_Step = {
             nowFrames: 0,
             loopDirection: 0,
-            maxframes:8,
+            maxframes:12,
             tempUpArray: [],
             part:4,
-            maxArrlen:12*fanUpNumber/2,
+            maxArrlen:6*fanUpNumber/2,
             nowUpArray: [],
             setColor: colorArrays[0].getRGBA(),
             setColorindex:0,
@@ -1034,7 +1034,7 @@ export class AL_EffectModule extends ModeParameter {
         var i_step = {
             nowFrames: 0,
             loopDirection: 0,
-            maxframes:4,
+            maxframes:12,
             tempUpArray: [],
             part:4,
             maxArrlen:4*fanUpNumber/2,
@@ -1075,10 +1075,9 @@ export class AL_EffectModule extends ModeParameter {
         //console.log('%c i_step2.nowUpArray', 'color:rgb(255,77,255)', i_step.nowUpArray
         //console.log('%c  loopArrDisplacementAssignSpacing', 'color:rgb(255,77,255)', this.loopArrDisplacementAssignSpacing(2,i_step.nowUpArray,2));
         this.stopVar[setTempName] = setInterval(() => {
+            var setRange=Math.ceil (i_step.nowFrames*(i_step.maxArrlen)/i_step.maxframes);
             if (i_step.animationStep == 0) {
                 var set_C=colorArrays[i_step.setColorindex].getRGBA();
-                var setRange=Math.ceil (i_step.nowFrames*(i_step.maxArrlen)/i_step.maxframes);
-                console.log('%c  setRange', 'color:rgb(255,77,255)', setRange)
                 var rightUpArr = JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
                 var rightDownArr = JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
                 for (let index = 0; index < totalInnerUpArray.length / 2; index++) {
@@ -1116,11 +1115,13 @@ export class AL_EffectModule extends ModeParameter {
                 }
                
             }
+            var setRange2=Math.ceil(o_Step.nowFrames*(o_Step.maxArrlen)/o_Step.maxframes);
+
             //------------o_Step--------/////////////
             if (o_Step.animationStep == 0) {
                 var set_C2=colorArrays[o_Step.setColorindex].getRGBA();
-                var setRange2=Math.ceil(o_Step.nowFrames*(o_Step.maxArrlen)/o_Step.maxframes);
-                console.log('%c  setRange2', 'color:rgb(255,77,255)', setRange2)
+                //console.log('%c  setRange2', 'color:rgb(255,77,255)', setRange2)
+                console.log('%c  setRange', 'color:rgb(255,77,255)', setRange,setRange2)
                 var rightUpArr = JSON.parse(JSON.stringify(totalOuterUpArray)).reverse();
                 var rightDownArr = JSON.parse(JSON.stringify(totalOuterDownArray)).reverse();
                 for (let index = 0; index < totalOuterUpArray.length / 2; index++) {
