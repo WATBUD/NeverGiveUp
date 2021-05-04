@@ -122,7 +122,7 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
                 break;   
             case 'Scan':
-                this.AL_EffectModule.mode_Scan(effect_Data, Type);
+                this.AL_EffectModule.mode_Scan2(effect_Data, Type);
                 break;
             case 'tornado':
                 this.AL_EffectModule.mode_tornado(effect_Data, Type);
@@ -133,6 +133,10 @@ export class AL_FanSetting {
             case 'Taichi':
                 this.AL_EffectModule.mode_Taichi(effect_Data, Type);
                 break;
+            case 'Staggered':
+                this.AL_EffectModule.mode_Staggered(effect_Data, Type);
+                break;
+
             case 'Voice':
                 this.AL_EffectModule.mode_Voice2(effect_Data, Type);
                 break;

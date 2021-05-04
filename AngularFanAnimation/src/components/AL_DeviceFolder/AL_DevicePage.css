@@ -96,15 +96,15 @@
 .GroupTextAreaStyle{
     color: #C9CACA;
     line-height: 1.8vh;
-    top: 82%;
+    margin-top: 14.3vh;
     display: flex;
     width: 32vw;
     align-items: center;
     height: 3.9vh;
     font-size: 1.7vh;
     background-size: 100% 100%;
-    background-image: url('/image/FanMode/fansInfoText.png');
-    /* border-radius: 0px 0px 8px 8px; */
+    background-image: url(/image/FanMode/fansInfoText.png);
+    position: absolute;
 }
 .GroupFanTextStyle{
 
@@ -301,6 +301,7 @@
     height: 14.5vh;
     pointer-events: none;
     display: flex;
+    margin-top: -3.9vh;
 }
 
 
