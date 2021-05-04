@@ -658,7 +658,7 @@
         </div>
 
     </section>
-    <section id="setting speed bright And Dircetion" class="SpeedBrightDircetion">
+    <section id="setting speed bright And direction" class="SpeedBrightDircetion">
         <div style=" margin-left: 1.5vw;height: 1.7vh;"></div>
         <div *ngIf="this.FanSetting.getGradientMode().showSPBTable[0]" (mouseenter)="hover1=true" (mouseleave)="hover1=false" class="FrameDefault"
             style="display:inline-block;margin-left: 1.5vw; margin-top: 1vh">
@@ -704,8 +704,8 @@
             background-size: 100% 100%;
             width: 5.5vw;
             height: 2.8vh;"
-                [style.backgroundImage]="FanSetting.getGradientMode().dircetion==1? ImagePath.dirBgNormalL[0]:ImagePath.dirBgNormalL[1]"
-                (mousedown)="FanSetting.getGradientMode().dircetion=1">
+                [style.backgroundImage]="FanSetting.getGradientMode().direction==1? ImagePath.dirBgNormalL[0]:ImagePath.dirBgNormalL[1]"
+                (mousedown)="FanSetting.getGradientMode().direction=1">
             </div>
             <div id="dirBgNormalR" style="display: inline-block;
             margin-left: 8%;
@@ -714,8 +714,8 @@
             width: 5.5vw;
             height: 2.8vh;"
             
-                [style.backgroundImage]="FanSetting.getGradientMode().dircetion==2? ImagePath.dirBgNormalR[0]:ImagePath.dirBgNormalR[1]"
-                (mousedown)="FanSetting.getGradientMode().dircetion=2">
+                [style.backgroundImage]="FanSetting.getGradientMode().direction==2? ImagePath.dirBgNormalR[0]:ImagePath.dirBgNormalR[1]"
+                (mousedown)="FanSetting.getGradientMode().direction=2">
             </div>
 
         </div>

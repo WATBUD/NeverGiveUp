@@ -3,7 +3,7 @@ export class AL_OverAll_List {
     modeindex=0;
     modeindexTranslate="Rainbow";
     modeType='OverAll';
-    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Taichi,new Color_Cycle,new Warning,new Voice,new Mixing,new Stack,new Tide,new tornado,new Staggered];
+    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Taichi,new Color_Cycle,new Warning,new Voice,new Mixing,new Stack,new Tide,new Scan,new tornado,new Staggered];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
     getMode(){
@@ -62,7 +62,7 @@ export class Rainbow extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
         }
@@ -111,7 +111,7 @@ export class Breathing_Color extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
         }
@@ -168,7 +168,7 @@ export class Taichi extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -228,7 +228,7 @@ export class Static_Color  extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -289,7 +289,7 @@ export class Color_Cycle extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -350,7 +350,7 @@ export class Voice extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -410,7 +410,7 @@ export class Warning extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -470,7 +470,7 @@ export class Stack extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -523,7 +523,7 @@ export class Tide extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -568,7 +568,7 @@ export class Scan extends ModeParameter{
     colorVisibleNum=2;
     constructor(){
         super();
-        this.name="Tide";
+        this.name="Scan";
         this.colors=this.rainbow7Color();
         //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
         this.setLEDVarDefault();
@@ -576,7 +576,7 @@ export class Scan extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -628,7 +628,7 @@ export class tornado extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -679,7 +679,7 @@ export class Mixing extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -731,7 +731,7 @@ export class Staggered extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }

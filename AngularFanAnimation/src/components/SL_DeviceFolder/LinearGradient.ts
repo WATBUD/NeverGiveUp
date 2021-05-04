@@ -19,7 +19,7 @@ export class ModeParameter {
     repeatTime = 1000;
     speed: any = 3; // step
     bright: any = 4;//step
-    dircetion: any = 1;//左1又2
+    direction: any = 1;//左1又2
     name: string;
     chooseGroup: any = 0;
     loopCount=0;
@@ -241,7 +241,7 @@ export class Firework extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[1].SetHex('#FF0000');
         this.colorArrays[0].SetHex('#0000FF');
         
@@ -461,7 +461,7 @@ export class Neon  extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         this.loopCount=0;
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
@@ -975,7 +975,7 @@ export class StaticColor extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[0].SetHex("#0000FF");
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
@@ -1085,7 +1085,7 @@ export class ColorCycle extends ModeParameter{
         this.colorArrays[2].SetHex("#0000FF");
         this.bright = 3;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
         }
@@ -1096,7 +1096,7 @@ export class ColorCycle extends ModeParameter{
         for (let index = 0; index < this.colors.length; index++) {
             this.colors[index]=this.colorArrays[index].Hex;
         }
-        //this.colors=this.dircetion==2?this.colors:this.colors.reverse();
+        //this.colors=this.direction==2?this.colors:this.colors.reverse();
         var gap = 0;
         switch (GroupNumber) {
             case 1:
@@ -1205,11 +1205,11 @@ export class ColorCycle extends ModeParameter{
 
     startAllFanGradient_4(ElementClass) {
         this.scheduleCreateData(4);
-        this.schedule[3]=this.dircetion==2?this.schedule[3]:this.schedule[3].reverse();
+        this.schedule[3]=this.direction==2?this.schedule[3]:this.schedule[3].reverse();
         stopVar[ElementClass] = setInterval(() => {
             var FGTArr = document.getElementsByClassName(ElementClass) as HTMLCollectionOf<HTMLElement>;
             this.schedule[3] = this.LoopArrDisplacement(this.schedule[3]);
-            if(this.dircetion==2){
+            if(this.direction==2){
             FGTArr[7].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
             FGTArr[3].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
             FGTArr[6].style.background = this.getLinearGradientText(this.schedule[3], 32, 48);
@@ -1219,7 +1219,7 @@ export class ColorCycle extends ModeParameter{
             FGTArr[4].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
             FGTArr[0].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
             } 
-            else if(this.dircetion==1){
+            else if(this.direction==1){
             FGTArr[7].style.background = this.getLinearGradientText(this.schedule[3], 80, 96);
             FGTArr[3].style.background = this.getLinearGradientText(this.schedule[3], 80, 96);
             FGTArr[6].style.background = this.getLinearGradientText(this.schedule[3], 64, 80);
@@ -1233,8 +1233,8 @@ export class ColorCycle extends ModeParameter{
     }
 
     getLinearGradientText(arr = [], startpos, finalpos) {
-        //var T_d=this.dircetion==1?"right":"left";
-        //var a2=this.dircetion==1?JSON.parse(JSON.stringify(arr.reverse())):JSON.parse(JSON.stringify(arr))
+        //var T_d=this.direction==1?"right":"left";
+        //var a2=this.direction==1?JSON.parse(JSON.stringify(arr.reverse())):JSON.parse(JSON.stringify(arr))
         //array1.reverse();
         //var reverse
         var text = "-webkit-linear-gradient("+"left"
@@ -1247,7 +1247,7 @@ export class ColorCycle extends ModeParameter{
     }
     LoopArrDisplacement(Arr) {
 
-        if (this.dircetion == 2) {
+        if (this.direction == 2) {
             var start = Arr[Arr.length - 1];//24
             for (let index = Arr.length - 1; index >= 0; index--) {
                 //console.log("Runway_index",index)
@@ -1261,7 +1261,7 @@ export class ColorCycle extends ModeParameter{
                 }
             }
         }
-        else if (this.dircetion == 1) {//反向陣列
+        else if (this.direction == 1) {//反向陣列
             var Oringin = Arr[0];
             for (let index = 0; index < Arr.length; index++) {
                 if (index < Arr.length - 1) {
@@ -1296,7 +1296,7 @@ export class Breathing extends ModeParameter{
         this.bright = 4;
         this.speed = 3;
         this.nowAlpga=1;
-        this.dircetion = 1;
+        this.direction = 1;
         this.BreathSwitch=false;
         //this.colorArrays[0].SetHex("#FF0000");
         for (let index = 0; index < this.colors.length; index++) {
@@ -1429,7 +1429,7 @@ export class Runway extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[0].SetHex("#ff0000");
         this.colorArrays[1].SetHex("#0000FF");//blue
         for (let index = 0; index < this.syncConcatenation.length; index++) {
@@ -1634,7 +1634,7 @@ export class RunwaySync extends ModeParameter{
         this.bright = 4;
         this.speed = 2;
         this.isSync=true;
-        this.dircetion = 2;
+        this.direction = 2;
         this.loopCount=0;
         this.colorArrays[0].SetHex("#ff0000");
         this.colorArrays[1].SetHex("#0000FF");//blue
@@ -1644,7 +1644,7 @@ export class RunwaySync extends ModeParameter{
     }
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
-        this.dircetion=2;
+        this.direction=2;
         switch (this.speed) {
             case 0:
                 this.repeatTime = 100;//by RunwaySync
@@ -1750,14 +1750,14 @@ export class RunwaySync extends ModeParameter{
         //console.log("Runway_LoopArrDisplacement", this.loopCount);
         if(this.loopCount==Arr.length){
             this.loopCount=0;
-            this.dircetion=this.dircetion==1?2:1;
+            this.direction=this.direction==1?2:1;
 
         }
         else if(this.loopCount < Arr.length){
             this.loopCount+=1;
         }
         
-        if (this.dircetion == 2) {//正向陣列
+        if (this.direction == 2) {//正向陣列
             //console.log("Runway_正",Arr)
             var start = Arr[Arr.length - 1];//24
             for (let index = Arr.length - 1; index >= 0; index--) {
@@ -1772,7 +1772,7 @@ export class RunwaySync extends ModeParameter{
                 }
             }
         }
-        else if (this.dircetion == 1) {//反向陣列
+        else if (this.direction == 1) {//反向陣列
             //console.log("Runway_final",Arr);
             var Oringin = Arr[0];
             for (let index = 0; index < Arr.length; index++) {
@@ -1809,7 +1809,7 @@ export class Rainbow extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion=1;
+        this.direction=1;
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
         }
@@ -1915,7 +1915,7 @@ export class Rainbow extends ModeParameter{
         }, this.repeatTime);
     }
     getLinearGradientText(arr = [], startpos, finalpos) {
-        var T_d=this.dircetion==1?"right":"left";
+        var T_d=this.direction==1?"right":"left";
         var text = "-webkit-linear-gradient("+T_d;
         for (let index = startpos; index < finalpos; index++) {
             text += ',' + arr[index];
@@ -1955,7 +1955,7 @@ export class Mixing extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[0].SetHex('#0000FF');
         this.colorArrays[1].SetHex('#FF0000');
         for (let index = 0; index < this.syncConcatenation.length; index++) {
@@ -2111,7 +2111,7 @@ export class Staggered extends ModeParameter{
         this.bright = 4;
         this.speed = 3;
         this.alpha=40;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[0].SetHex("#0000FF");
         this.colorArrays[1].SetHex("#FF0000");//blue
         for (let index = 0; index < this.syncConcatenation.length; index++) {
@@ -2341,7 +2341,7 @@ export class Stack extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         this.colorArrays[0].SetHex('#FF0000');
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
@@ -2453,7 +2453,7 @@ export class Stack extends ModeParameter{
         stopVar[ElementClass] = setInterval(() => {
             var FGTArr = document.getElementsByClassName(ElementClass) as HTMLCollectionOf<HTMLElement>;
             this.schedule[3] = this.loopArrDisplacement(this.schedule[3]);
-            var showArray=this.dircetion==1?JSON.parse(JSON.stringify(this.schedule[3])).reverse():this.schedule[3];
+            var showArray=this.direction==1?JSON.parse(JSON.stringify(this.schedule[3])).reverse():this.schedule[3];
             FGTArr[7].style.background = this.getLinearGradientText(showArray, 48, 64);
             FGTArr[3].style.background = this.getLinearGradientText(showArray, 48, 64);
             FGTArr[6].style.background = this.getLinearGradientText(showArray, 32, 48);
@@ -2465,7 +2465,7 @@ export class Stack extends ModeParameter{
         }, this.repeatTime);
     }
     getLinearGradientText(arr = [], startpos, finalpos) {
-        var T_d=this.dircetion==1?"right":"left";
+        var T_d=this.direction==1?"right":"left";
 
         var text = "-webkit-linear-gradient(left"
         for (let index = startpos; index < finalpos; index++) {
@@ -2526,7 +2526,7 @@ export class StackMultiColor extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 2;
-        this.dircetion = 1;
+        this.direction = 1;
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
         }
@@ -2625,7 +2625,7 @@ export class StackMultiColor extends ModeParameter{
         stopVar[ElementClass] = setInterval(() => {
             var FGTArr = document.getElementsByClassName(ElementClass) as HTMLCollectionOf<HTMLElement>;
             this.schedule[3] = this.loopArrDisplacement(this.schedule[3]);
-            var showArray=this.dircetion==1?JSON.parse(JSON.stringify(this.schedule[3])).reverse():this.schedule[3];
+            var showArray=this.direction==1?JSON.parse(JSON.stringify(this.schedule[3])).reverse():this.schedule[3];
             FGTArr[7].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
             FGTArr[3].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
             FGTArr[6].style.background = this.getLinearGradientText(this.schedule[3], 32, 48);

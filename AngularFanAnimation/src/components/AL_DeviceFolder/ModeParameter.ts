@@ -6,7 +6,7 @@ export class ModeParameter {
     repeatTime = 1000;
     speed: any = 3; // step
     bright: any = 4;//step
-    dircetion: any = 1;//左1又2
+    direction: any = 1;//左1又2
     name: string;
     chooseGroup: any = 0;
     loopCount=0;
