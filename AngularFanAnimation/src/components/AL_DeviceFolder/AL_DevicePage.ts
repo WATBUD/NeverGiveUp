@@ -56,7 +56,6 @@ export class AL_DevicePageComponent implements OnInit {
     LEDModeDropDown = false;
     LEDIconDropDown = false;
     fanApplyEnable = false;
-
     _Global = AppComponent.getInstance();
     // mainApp= AppComponent.getInstance();
     i18nManager = i18nManager.getInstance();

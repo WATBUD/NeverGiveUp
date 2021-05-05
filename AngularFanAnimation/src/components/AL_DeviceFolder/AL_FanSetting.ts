@@ -69,6 +69,7 @@ export class AL_FanSetting {
     }
 
     showAnimation(effect_Data, Type) {
+        
         switch (effect_Data.name) {
             case 'Static Color':
                 this.AL_EffectModule.mode_Static_Color(effect_Data, Type);
@@ -98,7 +99,7 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_Tail_Chasing(effect_Data, Type);
                 break;
             case 'Color Cycle':
-                this.AL_EffectModule.mode_Color_Cycle(effect_Data, Type);
+                this.AL_EffectModule.mode_Color_Cycle2(effect_Data, Type);
                 break;
             case 'Runway':
                 this.AL_EffectModule.mode_Runway(effect_Data, Type);
@@ -116,7 +117,7 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_Lottery(effect_Data, Type);
                 break;
             case 'Stack':
-                this.AL_EffectModule.mode_Stack(effect_Data, Type);
+                this.AL_EffectModule.mode_Stack2(effect_Data, Type);
                 break; 
             case 'Pac-Man':
                 this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
@@ -136,9 +137,12 @@ export class AL_FanSetting {
             case 'Staggered':
                 this.AL_EffectModule.mode_Staggered(effect_Data, Type);
                 break;
+            case 'Contest':
+                this.AL_EffectModule.mode_Contest(effect_Data, Type);
+                break;
             case 'Spinning Teacups':
                 this.AL_EffectModule.mode_Spinning_Teacups(effect_Data, Type);
-                    break;
+                break;
             case 'Voice':
                 this.AL_EffectModule.mode_Voice2(effect_Data, Type);
                 break;
