@@ -113,6 +113,11 @@ export class AppComponent implements OnInit {
         // });
         console.log('%c ngOnInit','color:rgb(255,77,255)');
         this.onLoading=true;
+        function changesize(){ 
+            window.resizeTo(960,540); //指定預開啟的寬度與高度
+            } 
+            window.onload=changesize; 
+            window.onresize=changesize;
     }
 
     ngAfterViewInit(){

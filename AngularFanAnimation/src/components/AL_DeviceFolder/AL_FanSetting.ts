@@ -136,7 +136,9 @@ export class AL_FanSetting {
             case 'Staggered':
                 this.AL_EffectModule.mode_Staggered(effect_Data, Type);
                 break;
-
+            case 'Spinning Teacups':
+                this.AL_EffectModule.mode_Spinning_Teacups(effect_Data, Type);
+                    break;
             case 'Voice':
                 this.AL_EffectModule.mode_Voice2(effect_Data, Type);
                 break;

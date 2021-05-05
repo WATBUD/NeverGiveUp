@@ -1,5 +1,6 @@
 import { ColorModule } from '../Model/ColorModule';
 import { JsonPipe } from '@angular/common';
+import { isType } from '@angular/core/src/type';
 //export var stopVar: any = [];
 export class ModeParameter {
     LEDConcatenation: any = [true, true, false, false];
@@ -343,6 +344,116 @@ export class AL_EffectModule extends ModeParameter {
         //console.log('%c mode_Breathing_Rainbow','color:rgb(255,77,255)',innerArr.length,outerArr.length,TempName,rangeMode);
     }
     mode_Color_Cycle(effectData,Mode='Inner') {
+        var TempName=this.elementsName;
+        var innerArrGroupNum=8;
+        var outerArrGroupNum=12;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays=effectData.colorArrays;
+        var reInnerTempData = [];
+        var InnerTempData4 = [];
+        var innerColorsArray = [];
+        var outerColorsArray = [];
+
+        for (let c_2 = 0; c_2 < innerArrGroupNum; c_2++) {
+            innerColorsArray.push(colorArrays[3].getRGBA());
+        }
+        if(effectData.direction==1){
+            for (let index = 0; index < colorArrays.length-1; index++) {
+                for (let c_2 = 0; c_2 < innerArrGroupNum; c_2++) {
+                    innerColorsArray.push(colorArrays[index].getRGBA());
+                }
+            }
+        }
+        else{
+            for (let index = colorArrays.length-1; index > -1; index--) {
+                for (let c_2 = 0; c_2 < innerArrGroupNum; c_2++) {
+                    innerColorsArray.push(colorArrays[index].getRGBA());
+                }
+            }
+        }
+        for (let c_2 = 0; c_2 < outerArrGroupNum; c_2++) {
+            outerColorsArray.push(colorArrays[3].getRGBA());
+        }
+        if(effectData.direction==1){
+            for (let index = 0; index < colorArrays.length-1; index++) {
+                for (let c_2 = 0; c_2 < outerArrGroupNum; c_2++) {
+                    outerColorsArray.push(colorArrays[index].getRGBA());
+                }
+            }
+        }
+        else{
+            for (let index = colorArrays.length-1; index > -1; index--) {
+                for (let c_2 = 0; c_2 < outerArrGroupNum; c_2++) {
+                    outerColorsArray.push(colorArrays[index].getRGBA());
+                }
+            }
+        }
+
+        console.log('%c showColosArray','color:rgb(255,77,255)',innerColorsArray);
+
+        for (let index = 1; index < innerArr.length+1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+            InnerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: innerArr[index-1],
+            });
+            if (index % 8 == 0) {
+                reInnerTempData.push(InnerTempData4);
+                InnerTempData4=[];
+                //innerIndex+=1;
+            }
+        }
+        var outerTempData4 = [];
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length+1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex);
+            outerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: outerArr[index-1],
+            });
+            if (index % 12 == 0) {
+                reOuterTempData.push(outerTempData4);
+                outerTempData4=[];
+            }
+        }
+
+
+        if (Mode != "Outer") {
+            // for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+            //     var data = reInnerTempData[dindex];
+            //     for (let i_index = 0; i_index < data.length; i_index++) {
+            //         var HtmLdiv = data[i_index];
+            //         HtmLdiv.HTML_target.style.background =this.getColorEffectValue(colorArrays[3].getRGBA(),0)
+            //     }
+            // }
+            this.stopVar[TempName[0]] = setInterval(() => {               
+                for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+                    var data = reInnerTempData[dindex];
+                    for (let i_index = 0; i_index < data.length; i_index++) {
+                        var HtmLdiv = data[i_index];
+                        HtmLdiv.HTML_target.style.background =this.getColorEffectValue(innerColorsArray[i_index],0)
+                    }
+                }
+                innerColorsArray=this.loopArrDisplacement(effectData.direction,innerColorsArray);
+            }, effectData.repeatTime);
+        }
+        if (Mode != "Inner") {
+            this.stopVar[TempName[1]] = setInterval(() => {               
+                for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+                    var data = reOuterTempData[dindex];
+                    for (let i_index = 0; i_index < data.length; i_index++) {
+                        var HtmLdiv = data[i_index];
+                        HtmLdiv.HTML_target.style.background =this.getColorEffectValue(outerColorsArray[i_index],1)
+                    }
+                }
+                outerColorsArray=this.loopArrDisplacement(effectData.direction,outerColorsArray);
+            }, effectData.repeatTime);
+        }
+
+        console.log('%c mode_Color_Cycle','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
+    }
+    mode_Color_Cycle2(effectData,Mode='Inner') {
         var TempName=this.elementsName;
         var innerArrGroupNum=8;
         var outerArrGroupNum=12;
@@ -1185,18 +1296,6 @@ export class AL_EffectModule extends ModeParameter {
                 outerTempData4=[];
             }
         }
-        // var mixingTempData1=[];
-        // var reorganizationData= reInnerTempData[0].concat(reOuterTempData[1]);
-
-        // // var mixingTempData=[];
-        // for (let index = 0; index < reInnerTempData.length; index++) {
-        //     var reorganizationData= reInnerTempData[index].concat(reOuterTempData[index]);
-        //     reorganizationData=effectData.direction==1?reorganizationData.reverse():reorganizationData;
-        //     mixingTempData.push(reorganizationData);
-        // }
-
-
-
         var o_Step = {
             nowFrames: 0,
             loopDirection: 0,
@@ -1223,16 +1322,6 @@ export class AL_EffectModule extends ModeParameter {
             animationStep: 8888,
             loopPos:[[0,3],[1,2]],
         }
-        
-        // for (let index = 0; index < 4*fanUpNumber/2; index++) {
-        //     i_step.tempUpArray.push([0, 0, 0, 0]);
-        // }
-        // for (let c_index = 0; c_index < colorArrays.length; c_index++) {
-        //     for (let index = 0; index < 4*fanUpNumber/2; index++) {
-        //         i_step.tempUpArray.push(colorArrays[c_index].getRGBA());
-        //     }
-        // }
-        // i_step.nowUpArray = JSON.parse(JSON.stringify(i_step.tempUpArray));
         var setTempName;
         switch (Mode) {
             case 'Inner':
@@ -1312,7 +1401,7 @@ export class AL_EffectModule extends ModeParameter {
             //var setRange2=Math.ceil(o_Step.nowFrames*(o_Step.maxArrlen)/o_Step.maxframes);
 
         }, effectData.repeatTime);
-        //console.log('%c mode_Mixing','color:rgb(255,77,255)',i_step,TempName,effectData.repeatTime);
+        //console.log('%c mode_Staggered','color:rgb(255,77,255)',i_step,TempName,effectData.repeatTime);
     }
     
 
@@ -2265,6 +2354,227 @@ export class AL_EffectModule extends ModeParameter {
 
         console.log('%c mode_tornado','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
     }
+
+
+    mode_Spinning_Teacups(effectData,Mode='Inner') {
+        var TempName=this.elementsName;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays=effectData.colorArrays;
+        var reInnerTempData = [];
+        var InnerTempData4 = [];
+        for (let index = 1; index < innerArr.length+1; index++) {
+            InnerTempData4.push({
+                colors:colorArrays[3].getRGBA(),
+                HTML_target: innerArr[index-1],
+            });
+            if (index % 8 == 0) {
+                reInnerTempData.push(InnerTempData4);
+                InnerTempData4=[];
+            }
+        }
+        var fanUpNumber=4;
+        var outerTempData4 = [];
+        var reOuterTempData = [];
+        for (let index = 1; index < outerArr.length+1; index++) {
+            outerTempData4.push({
+                colors:colorArrays[0].getRGBA(),
+                HTML_target: outerArr[index-1],
+            });
+            if (index % 12 == 0) {
+                reOuterTempData.push(outerTempData4);
+                outerTempData4=[];
+            }
+        }
+        var o_Step = {
+            nowFrames: 0,
+            loopDirection: 0,
+            maxframes:16,
+            tempUpArray: [],
+            part:4,
+            maxArrlen:24,
+            nowUpArray: [],
+            setColor: colorArrays[0].getRGBA(),
+            setColorindex:0,
+            animationStep: 8888,
+            loopPos:3,
+        }
+        var i_Step = {
+            nowFrames: 0,
+            loopDirection: 0,
+            maxframes:16,
+            tempUpArray: [],
+            part:4,
+            maxArrlen:16,
+            nowUpArray: [],
+            setColor: colorArrays[0].getRGBA(),
+            setColorindex:0,
+            animationStep: 8888,
+            loopPos:0,
+        }
+        // var mixingTempData=[];
+        // for (let index = 0; index < reInnerTempData.length; index++) {
+        //     var reorganizationData= reInnerTempData[index].concat(reOuterTempData[index]);
+        //     reorganizationData=effectData.direction==1?reorganizationData.reverse():reorganizationData;
+        //     mixingTempData.push(reorganizationData);
+        // }
+        //console.log('%c mode_Spinning_Teacups','color:rgb(255,77,255)',i_Step);
+        var innerNowindex=0;
+        var min_maxValue=[0,7];  
+        var colorLength = colorArrays.length;
+        var maxValue = 5;
+        var nowColorConunt = 0;
+        var nowRangeConunt = 0;
+        for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+            var data_4 = reInnerTempData[dindex];
+            data_4=effectData.direction==1?data_4.reverse():data_4;
+        }
+        for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+            var data_4 = reOuterTempData[dindex];
+            data_4=effectData.direction==1?data_4.reverse():data_4;
+        }
+
+
+        this.stopVar[TempName[2]] = setInterval(() => {
+            if(i_Step.loopDirection==0){
+                if(i_Step.nowFrames<=3){
+                    var setColor = colorArrays[i_Step.nowFrames].getRGBA();
+    
+                    for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+                        var data_4 = reInnerTempData[dindex];
+                        data_4[i_Step.loopPos].HTML_target.style.background = this.getColorEffectValue(setColor, 1)
+                    }
+                    i_Step.tempUpArray.push(this.getColorEffectValue(setColor, 1));
+                    i_Step.tempUpArray.push(this.getColorEffectValue([0,0,0,0], 1));
+                    i_Step.loopPos+=2;
+                    i_Step.nowFrames+=1;
+                    console.log('%c mode_Spinning_Teacups','color:rgb(255,77,255)',i_Step.tempUpArray);
+                }
+                else{
+                    //i_Step.tempUpArray=i_Step.tempUpArray
+                    i_Step.loopDirection+=1;
+                    i_Step.nowFrames=0;
+                    i_Step.loopPos=0;
+                    i_Step.nowUpArray=JSON.parse(JSON.stringify(i_Step.tempUpArray));
+                    //i_Step.tempUpArray = JSON.parse(JSON.stringify(i_Step.nowUpArray));
+
+                }
+            }
+            else if(i_Step.loopDirection==1){
+                
+                var setRange=Math.round(i_Step.nowFrames*(i_Step.maxArrlen)/i_Step.maxframes);
+                if(i_Step.nowFrames<=16){
+                    i_Step.tempUpArray = this.loopArrDisplacementAssignSpacing(2,i_Step.nowUpArray,setRange);
+                    for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+                        var data_4 = reInnerTempData[dindex];
+                        for (let index = 0; index <  i_Step.tempUpArray.length; index++) {
+                            
+                            data_4[index].HTML_target.style.background =i_Step.tempUpArray[index];
+                        }
+                        //data_4[i_Step.loopPos].HTML_target.style.background = this.getColorEffectValue(setColor, 1)
+                    }
+                    i_Step.nowFrames+=1;
+                }
+                else{
+                    i_Step.loopDirection+=1;
+                    i_Step.nowFrames=0;
+                    i_Step.tempUpArray = [];
+                }
+            }
+            else if(i_Step.loopDirection==2){
+                if(i_Step.nowFrames<=3){    
+                    for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+                        var data_4 = reInnerTempData[dindex];
+                        data_4[i_Step.loopPos].HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 1)
+                    }
+                    i_Step.loopPos+=2;
+                    i_Step.nowFrames+=1;
+                }
+                else{
+                    //i_Step.tempUpArray=i_Step.tempUpArray
+                    i_Step.loopDirection=3;
+                    i_Step.nowFrames=0;
+                    i_Step.loopPos=0;
+                    //i_Step.nowUpArray=JSON.parse(JSON.stringify(i_Step.tempUpArray));
+                    //i_Step.tempUpArray = JSON.parse(JSON.stringify(i_Step.nowUpArray));
+
+                }
+            }
+            if(i_Step.loopDirection==3){
+
+                if(o_Step.nowFrames<=3){
+                    var setColor = colorArrays[o_Step.nowFrames].getRGBA();
+                    for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+                        var data_4 = reOuterTempData[dindex];
+                        data_4[o_Step.loopPos-1].HTML_target.style.background = this.getColorEffectValue(setColor, 1);
+                        data_4[o_Step.loopPos-2].HTML_target.style.background = this.getColorEffectValue(setColor, 1);
+                        data_4[o_Step.loopPos-3].HTML_target.style.background = this.getColorEffectValue(setColor, 1);
+
+                    }
+                    o_Step.tempUpArray.push(this.getColorEffectValue(setColor, 1));
+                    o_Step.tempUpArray.push(this.getColorEffectValue(setColor, 1));
+                    o_Step.tempUpArray.push(this.getColorEffectValue(setColor, 1));
+                    o_Step.loopPos+=3;
+                    o_Step.nowFrames+=1;
+                }
+                else{
+                    o_Step.nowUpArray=JSON.parse(JSON.stringify(o_Step.tempUpArray));
+                    i_Step.loopDirection+=1;
+                    o_Step.nowFrames=0;
+                    o_Step.loopPos=3;
+                }
+            }
+            else if(i_Step.loopDirection==4){
+                
+                var setRange_o_Step=Math.round(o_Step.nowFrames*(o_Step.maxArrlen)/o_Step.maxframes);
+                if(o_Step.nowFrames<=o_Step.maxframes){
+                    o_Step.tempUpArray = this.loopArrDisplacementAssignSpacing(2,o_Step.nowUpArray,setRange_o_Step);
+                    for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+                        var data_4 = reOuterTempData[dindex];
+                        for (let index = 0; index <  o_Step.tempUpArray.length; index++) {
+                            data_4[index].HTML_target.style.background =o_Step.tempUpArray[index];
+                        }
+                    }
+                    o_Step.nowFrames+=1;
+                }
+                else{
+                    i_Step.loopDirection+=1;
+                    o_Step.nowFrames=0;
+                }
+            }
+            else if(i_Step.loopDirection==5){
+                if(o_Step.nowFrames<=3){
+                    var setColor2 = [0,0,0,0];
+                    for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+                        var data_4 = reOuterTempData[dindex];
+                        data_4[o_Step.loopPos-1].HTML_target.style.background = this.getColorEffectValue(setColor2, 1);
+                        data_4[o_Step.loopPos-2].HTML_target.style.background = this.getColorEffectValue(setColor2, 1);
+                        data_4[o_Step.loopPos-3].HTML_target.style.background = this.getColorEffectValue(setColor2, 1);
+
+                    }
+                    o_Step.loopPos+=3;
+                    o_Step.nowFrames+=1;
+                }
+                else{
+                    i_Step.loopDirection=0;
+                    o_Step.nowFrames=0;
+                    o_Step.loopPos=3;
+                    o_Step.tempUpArray=[];
+                }
+            }
+            
+
+        
+            //console.log('%c data_4', 'color:rgb(255,77,255)', nowColorConunt % colorLength, setPos, setColor);
+            
+
+        }, effectData.repeatTime);
+
+        console.log('%c mode_Spinning_Teacups','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
+    }
+
+
+    
     totalOuterUpArray(fanNnmber=1){
         var totalOuterUpArray;
         totalOuterUpArray =[];
