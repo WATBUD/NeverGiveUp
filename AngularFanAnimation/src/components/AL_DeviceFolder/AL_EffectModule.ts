@@ -2193,12 +2193,13 @@ export class AL_EffectModule extends ModeParameter {
         var reInnerTempData = [];
         var posindex = 0;
         var fanUpNumber = 4;
+        // var total_CrossOut_UPArr = this.total_CrossOut_UPArr(fanUpNumber);
+        // var total_CrossOut_DownArr = this.total_CrossOut_DownArr(fanUpNumber);
         var totalInnerUpArray = this.totalInnerUpArray(fanUpNumber);
         var totalInnerDownArray = this.totalInnerDownArray(fanUpNumber);
-        var totalOuterUpArray = this.totalOuterUpArray(fanUpNumber);
-        var totalOuterDownArray = this.totalOuterDownArray(fanUpNumber);
+        var totalOuterUpArray = this.total_CrossOut_UPArr(fanUpNumber);
+        var totalOuterDownArray = this.total_CrossOut_DownArr(fanUpNumber);
         for (let index = 1; index < innerArr.length + 1; index++) {
-            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
             reInnerTempData.push({
                 colors: colorArrays[3].getRGBA(),
                 HTML_target: innerArr[index - 1],
@@ -2211,9 +2212,6 @@ export class AL_EffectModule extends ModeParameter {
                 HTML_target: outerArr[index - 1],
             });
         }
-
-
-
         var o_Step = {
             nowFrames: 0,
             loopDirection: 0,
@@ -2221,7 +2219,7 @@ export class AL_EffectModule extends ModeParameter {
             tempUpArray: [],
             tempDownArray:[],
             part:4,
-            maxArrlen:6*fanUpNumber,
+            maxArrlen:6*fanUpNumber+6,
             nowUpArray: [],
             nowDownArray: [],
             setColor: colorArrays[1].getRGBA(),
@@ -2307,6 +2305,16 @@ export class AL_EffectModule extends ModeParameter {
                 break;
         }
 
+            if(effectData.direction==1){
+                totalInnerUpArray=JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
+                totalInnerDownArray=JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
+                totalOuterUpArray=JSON.parse(JSON.stringify(totalOuterUpArray)).reverse();
+                totalOuterDownArray=JSON.parse(JSON.stringify(totalOuterDownArray)).reverse();
+            }
+            else{
+
+            }
+            
 
         this.stopVar[setTempName] = setInterval(() => {
             if (i_Step.animationStep == 0) {
@@ -2319,8 +2327,7 @@ export class AL_EffectModule extends ModeParameter {
                     }
                     else{
                         //i_Step.nowUpArray=JSON.parse(JSON.stringify(i_Step.nowUpArray)).reverse();
-                        totalInnerUpArray=JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
-                        totalInnerDownArray=JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
+
                         i_Step.nowFrames=0;
                     }
                 }
@@ -2344,8 +2351,7 @@ export class AL_EffectModule extends ModeParameter {
                     else{
                         o_Step.nowFrames=0;
                         //o_Step.nowUpArray=JSON.parse(JSON.stringify(o_Step.nowUpArray)).reverse();
-                        totalOuterUpArray=JSON.parse(JSON.stringify(totalOuterUpArray)).reverse();
-                        totalOuterDownArray=JSON.parse(JSON.stringify(totalOuterDownArray)).reverse();
+
                         // o_Step.loopDirection +=1;
                         // o_Step.tempUpArray = JSON.parse(JSON.stringify(o_Step.nowUpArray));
                     }
@@ -2645,9 +2651,6 @@ export class AL_EffectModule extends ModeParameter {
         }, effectData.repeatTime);
         console.log('%c mode_Scan2','color:rgb(255,77,255)',reInnerTempData,innerArr.length,outerArr.length,TempName,effectData.repeatTime);
     }
-
-
-
     mode_tornado(effectData,Mode='Inner') {
         var TempName=this.elementsName;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
@@ -2738,8 +2741,6 @@ export class AL_EffectModule extends ModeParameter {
 
         console.log('%c mode_tornado','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
     }
-
-
     mode_Spinning_Teacups(effectData,Mode='Inner') {
         var TempName=this.elementsName;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
@@ -2955,9 +2956,6 @@ export class AL_EffectModule extends ModeParameter {
 
         console.log('%c mode_Spinning_Teacups','color:rgb(255,77,255)',reOuterTempData,innerArr.length,outerArr.length,TempName);
     }
-
-
-    
     totalOuterUpArray(fanNnmber=1){
         var totalOuterUpArray;
         totalOuterUpArray =[];
@@ -2992,6 +2990,28 @@ export class AL_EffectModule extends ModeParameter {
         }
         console.log('%c totalUPArray','color:rgb(255,77,255)',totalInnerUpArray);
         return totalInnerUpArray;
+    }
+
+    total_CrossOut_UPArr(fanNnmber=4){
+        var total_CrossOut_UPArr=[0,1,2,3,4,5,23,22,21,20,19,18,24,25,26,27,28,29,47,46,45,44,43,42]
+        // for (let f_index = 0; f_index < fanNnmber; f_index++) {           
+        //     for (let index = 0; index < 6; index++) {
+        //         total_CrossOut_UPArr.push(index+12*f_index);
+        //      }
+        // }
+        console.log('%c total_CrossOut_UPArr','color:rgb(255,77,255)',total_CrossOut_UPArr);
+        return total_CrossOut_UPArr;
+    }
+
+    total_CrossOut_DownArr(fanNnmber=1){
+          var total_CrossOut_DownArr=[11,10,9,8,7,6,12,13,14,15,16,17,35,34,33,32,31,30,36,37,38,39,40,41]
+        //   for (let f_index = 0; f_index < fanNnmber; f_index++) {           
+        //       for (let index = 6; index < 12; index++) {
+        //           total_CrossOut_DownArr.push(index+12*f_index);
+        //        }
+        //   }
+          console.log('%c total_CrossOut_DownArr','color:rgb(255,77,255)',total_CrossOut_DownArr);
+          return total_CrossOut_DownArr;
     }
     totalInnerDownArray(fanNnmber=1){
         var totalInnerDownArray =[];
