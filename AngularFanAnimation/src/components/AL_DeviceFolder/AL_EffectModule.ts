@@ -1,6 +1,5 @@
 import { ColorModule } from '../Model/ColorModule';
 import { JsonPipe } from '@angular/common';
-import { isType } from '@angular/core/src/type';
 //export var stopVar: any = [];
 export class ModeParameter {
     LEDConcatenation: any = [true, true, false, false];
@@ -21,8 +20,10 @@ export class ModeParameter {
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     };
+
     constructor() {
     }
+    
 }
 var effectBlockClass4 = ["Inner_Circle0", "Inner_Circle1", "Inner_Circle2", "Inner_Circle3"];
 export class AL_EffectModule extends ModeParameter {
@@ -33,6 +34,15 @@ export class AL_EffectModule extends ModeParameter {
     constructor(name = "") {
         super();
         this.elementsName = name;
+    }
+    ImportClassData(target) {
+        // var FSADarr = Object.keys(target);
+        // for (let index2 = 0; index2 < FSADarr.length; index2++) {
+        //     var fieldString = FSADarr[index2];
+        //     if (fieldString != "elementsName") {
+        //         this[FSADarr[index2]] = target[FSADarr[index2]];
+        //     }
+        // } 
     }
     stopAnimation(rangeMode) {
         this.onPlay = false;

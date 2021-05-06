@@ -69,7 +69,6 @@ export class AL_FanSetting {
     }
 
     showAnimation(effect_Data, Type) {
-        
         switch (effect_Data.name) {
             case 'Static Color':
                 this.AL_EffectModule.mode_Static_Color(effect_Data, Type);
@@ -122,7 +121,7 @@ export class AL_FanSetting {
             case 'Pac-Man':
                 this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
                 break;   
-            case 'Scan':
+            case 'Scan': 
                 this.AL_EffectModule.mode_Scan2(effect_Data, Type);
                 break;
             case 'tornado':
@@ -157,40 +156,41 @@ export class AL_FanSetting {
                 break;
         }
     }
-
-
-
     getNowTypeModeList(){
         return this.gradient.getNowTypeData().modeArray;       
     }
-
-
     checkSettingType(){
         return this.gradient.nowEffectListModule;
     }
-
-
-
     stopAnimationAndClear(){
-        var effectData=this.gradient.getMode();
-        this.AL_EffectModule.stopAnimationAndClear(effectData);
+        this.AL_EffectModule.stopAnimation('empty');
+        // var effectData=this.gradient.getMode();
+        // this.AL_EffectModule.stopAnimationAndClear(effectData);
+        
     }
     ImportClassData(target){
         var FSADarr = Object.keys(target);
         console.log('FanSetting_ImportClassData:', target);
         for (let index2 = 0; index2 < FSADarr.length; index2++) {
-            if (FSADarr[index2] != "gradient") {
+            var fieldString=FSADarr[index2];
+            if (fieldString != "gradient" && fieldString!="AL_EffectModule") {
                 this[FSADarr[index2]] = target[FSADarr[index2]];
             }
             else {
-                this.gradient.ImportClassData(target.gradient);
+                switch (fieldString) {
+                    case 'gradient':
+                        this.gradient.ImportClassData(target.gradient);
+                        break;
+                    case 'AL_EffectModule':
+                        this.AL_EffectModule.ImportClassData(target.AL_EffectModule);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         //this.checkisSync();
     } 
-
- 
-
     setFanMode(index) {
         this.fanMode=index;
         switch (index) {
