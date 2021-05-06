@@ -441,7 +441,7 @@ export class AL_DevicePageComponent implements OnInit {
 
     ledConcatenation(targetIndex) {
         var target = this.FanSetting.getGradientMode().LEDConcatenation;
-        var FourColorMode = ['Static Color'];
+        var FourColorMode = ['Static Color','Breathing Color'];
         var SpecificMode = FourColorMode.find((x) => x == this.FanSetting.getGradientMode().name)
         console.log('LedPartb_index:', targetIndex, this.FanSetting.gradient);
         console.log('SpecificMode:', SpecificMode);
