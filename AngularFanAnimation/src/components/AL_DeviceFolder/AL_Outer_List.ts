@@ -5,7 +5,7 @@ export class AL_Outer_List {
     modeType='Outer';
     modeArray = [new Rainbow,new Static_Color,new Static_Colorful,new Breathing_Color,new Breathing_Colorful,new Breathing_Rainbow,
         new Color_Cycle,new Runway,new Mop_up,new Meteor,new Meteor_Rainbow,
-        new Lottery,new Wave,new Spring,new Tail_Chasing,,new Warning,
+        new Lottery,new Wave,new Spring,new Tail_Chasing,new Warning,
         new Voice,new Mixing,new Stack,new Tide,new Scan];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 

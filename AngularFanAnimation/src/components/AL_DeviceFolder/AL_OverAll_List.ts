@@ -4,7 +4,7 @@ export class AL_OverAll_List {
     modeindexTranslate="Rainbow";
     modeType='OverAll';
     modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Taichi,new Color_Cycle,new Warning,
-        new Voice,new Spinning_Teacups,new tornado,,new Mixing,new Stack,
+        new Voice,new Spinning_Teacups,new tornado,new Mixing,new Stack,
         new Staggered,new Tide,new Scan,new Scan_Sync,new Contest,new Contest_Sync];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
