@@ -21,30 +21,10 @@ export class AL_FanSetting {
 
     startAnimationManager(){
         this.gradient.setAnimationData();
-        //var effect_Data=this.gradient.getMode();
+        var now_effect_Data=this.gradient.getMode();
         var modeType=this.gradient.nowEffectListModule;
         var effectDataArray =this.gradient.effectModuleArray;
-
-        this.AL_EffectModule.stopAnimation(modeType);
-        // var returnData;
-        // switch (modeType) {
-        //     case 'Inner':
-        //         returnData = effectDataArray[0];
-        //         this.AL_EffectModule.mode_Static_Color(effectDataArray[0],modeType);
-        //         this.AL_EffectModule.mode_Static_Color(effectDataArray[1],modeType);
-        //         break;
-        //     case 'Outer':
-        //         returnData = effectDataArray[1];                
-        //         break;
-        //     case 'OverAll':
-        //         returnData = effectDataArray[2];
-        //         break;    
-        //     default:
-        //         returnData = effectDataArray[2];
-
-        //         break;
-        // }
-
+        this.AL_EffectModule.stopAnimationAndClear(now_effect_Data);
         if (modeType != 'OverAll') {
             for (let index = 0; index < 2; index++) {
                 var effect_Data = effectDataArray[index].getMode();
@@ -121,9 +101,6 @@ export class AL_FanSetting {
             case 'Pac-Man':
                 this.AL_EffectModule.mode_Pac_Man(effect_Data, Type);
                 break;   
-            case 'Scan': 
-                this.AL_EffectModule.mode_Scan2(effect_Data, Type);
-                break;
             case 'tornado':
                 this.AL_EffectModule.mode_tornado(effect_Data, Type);
                 break;
@@ -136,8 +113,17 @@ export class AL_FanSetting {
             case 'Staggered':
                 this.AL_EffectModule.mode_Staggered(effect_Data, Type);
                 break;
+            case 'Scan': 
+                this.AL_EffectModule.mode_Scan2(effect_Data, Type);
+                break;
+            case 'Scan Sync':
+                this.AL_EffectModule.mode_Scan_Sync(effect_Data, Type);
+                break;    
             case 'Contest':
                 this.AL_EffectModule.mode_Contest(effect_Data, Type);
+                break;
+            case 'Contest Sync':
+                this.AL_EffectModule.mode_Contest_Sync(effect_Data, Type);
                 break;
             case 'Spinning Teacups':
                 this.AL_EffectModule.mode_Spinning_Teacups(effect_Data, Type);
@@ -163,9 +149,8 @@ export class AL_FanSetting {
         return this.gradient.nowEffectListModule;
     }
     stopAnimationAndClear(){
-        this.AL_EffectModule.stopAnimation('empty');
-        // var effectData=this.gradient.getMode();
-        // this.AL_EffectModule.stopAnimationAndClear(effectData);
+        var effectData=this.gradient.getMode();
+        this.AL_EffectModule.stopAnimationAndClear(effectData);
         
     }
     ImportClassData(target){

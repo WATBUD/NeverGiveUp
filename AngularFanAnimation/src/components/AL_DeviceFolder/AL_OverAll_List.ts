@@ -901,7 +901,7 @@ export class Contest extends ModeParameter{
 export class Contest_Sync extends ModeParameter{
 
     showSPBTable:any=[true, true, false];
-    colorVisibleNum=2;
+    colorVisibleNum=3;
     constructor(){
         super();
         this.name="Contest Sync";
@@ -912,7 +912,7 @@ export class Contest_Sync extends ModeParameter{
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
-        this.direction=1;
+        this.direction=2;
         for (let index = 0; index < this.colorArrays.length; index++) {
             this.colorArrays[index].SetHex("#00FF00");
         }
@@ -961,7 +961,7 @@ export class Contest_Sync extends ModeParameter{
 export class Scan_Sync extends ModeParameter{
 
     showSPBTable:any=[true, true, false];
-    colorVisibleNum=3;
+    colorVisibleNum=2;
     constructor(){
         super();
         this.name="Scan Sync";
