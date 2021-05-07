@@ -3,8 +3,10 @@ export class AL_Inner_List {
     modeindex=0;
     modeindexTranslate="Rainbow";
     modeType='Inner';
-    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Color_Cycle,new Wave,new Spring,new Tail_Chasing,
-        new Runway,new Mop_up,new Pac_Man,new Meteor,new Meteor_Rainbow,new Lottery,new Warning,new Voice,new Mixing,new Stack,new Tide,new Scan];
+    modeArray = [new Rainbow,new Static_Color,new Breathing_Color,new Color_Cycle,
+        new Runway,new Mop_up,new Pac_Man,new Meteor,new Meteor_Rainbow,
+        new Lottery,new Wave,new Spring,new Tail_Chasing,new Warning,
+        new Voice,new Mixing,new Stack,new Tide,new Scan];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
     getMode(){

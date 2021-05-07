@@ -3,9 +3,10 @@ export class AL_Outer_List {
     modeindex=0;
     modeindexTranslate="Rainbow";
     modeType='Outer';
-    modeArray = [new Breathing_Rainbow,new Rainbow,new Static_Color,new Static_Colorful,new Breathing_Color,new Breathing_Colorful,
-        new Color_Cycle,new Wave,new Spring,new Tail_Chasing,new Runway,new Mop_up,new Meteor,new Meteor_Rainbow,new Lottery
-        ,new Warning,new Voice,new Mixing,new Stack,new Tide,new Scan];
+    modeArray = [new Rainbow,new Static_Color,new Static_Colorful,new Breathing_Color,new Breathing_Colorful,new Breathing_Rainbow,
+        new Color_Cycle,new Runway,new Mop_up,new Meteor,new Meteor_Rainbow,
+        new Lottery,new Wave,new Spring,new Tail_Chasing,,new Warning,
+        new Voice,new Mixing,new Stack,new Tide,new Scan];
     //modeArray = [new Static_Color,new Rainbow,new Breathing_Color];
 
     getMode(){
