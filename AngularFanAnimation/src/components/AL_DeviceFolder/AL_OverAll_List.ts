@@ -218,7 +218,7 @@ export class Taichi extends ModeParameter{
 }
 export class Static_Color  extends ModeParameter{
 
-    showSPBTable:any=[true, true, false];
+    showSPBTable:any=[false, true, false];
     colorVisibleNum=4;
     constructor(){
         super();
@@ -837,7 +837,6 @@ export class Spinning_Teacups extends ModeParameter{
 
 
 }
-
 export class Contest extends ModeParameter{
 
     showSPBTable:any=[true, true, true];

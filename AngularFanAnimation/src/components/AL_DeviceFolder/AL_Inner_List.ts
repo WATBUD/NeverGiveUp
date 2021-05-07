@@ -149,7 +149,7 @@ export class Breathing_Color extends ModeParameter{
 }
 export class Static_Color  extends ModeParameter{
 
-    showSPBTable:any=[true, true, false];
+    showSPBTable:any=[false, true, false];
     colorVisibleNum=4;
     constructor(){
         super();
