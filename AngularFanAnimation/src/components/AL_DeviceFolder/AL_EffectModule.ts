@@ -1071,10 +1071,10 @@ export class AL_EffectModule extends ModeParameter {
         var i_Step = {
             nowFrames: 0,
             loopDirection: 0,
-            maxframes:8,
+            maxframes:4,
             tempUpArray: [],
             part:4,
-            maxArrlen:4*fanUpNumber+4,
+            maxArrlen:4,
             nowUpArray: [],
             setColor: colorArrays[0].getRGBA(),
             animationStep: 8888,
@@ -1082,9 +1082,12 @@ export class AL_EffectModule extends ModeParameter {
         for (let index = 0; index < i_Step.maxArrlen; index++) {
             i_Step.tempUpArray.push([0, 0, 0, 0]);
         }
-        for (let index = 1; index <= i_Step.part; index++) {
-            i_Step.tempUpArray.push(this.gerRGB_Alpha(i_Step.setColor, index * 1 / i_Step.part));
+        for (let index = 0; index < i_Step.maxArrlen; index++) {
+            i_Step.tempUpArray.push(colorArrays[0].getRGBA());
         }
+        // for (let index = 1; index <= i_Step.part; index++) {
+        //     i_Step_2.tempUpArray.push(colorArrays[0].getRGBA());
+        // }
         i_Step.nowUpArray = JSON.parse(JSON.stringify(i_Step.tempUpArray));
 
 
@@ -1097,7 +1100,7 @@ export class AL_EffectModule extends ModeParameter {
             loopType:0,
             pushCount:0,
             biteCount:0,
-            biteCount_2:0,
+            biteCount_2:3,
             Count:0,
             tempUpArray: [],
             part:4,
@@ -1106,15 +1109,24 @@ export class AL_EffectModule extends ModeParameter {
             setColor: colorArrays[0].getRGBA(),
             animationStep: 8888,
         }
-        for (let index = 0; index < i_Step_2.maxArrlen; index++) {
-            i_Step_2.tempUpArray.push([0, 0, 0, 0]);
-        }
-        // for (let index = 1; index <= i_Step_2.part; index++) {
-        //     i_Step_2.tempUpArray.push(this.gerRGB_Alpha(i_Step_2.setColor, index * 1 / i_Step_2.part));
+        // for (let index = 0; index < i_Step_2.maxArrlen; index++) {
+        //     i_Step_2.tempUpArray.push([0, 0, 0, 0]);
         // }
-        for (let index = 1; index <= i_Step_2.part; index++) {
+        // // for (let index = 1; index <= i_Step_2.part; index++) {
+        // //     i_Step_2.tempUpArray.push(this.gerRGB_Alpha(i_Step_2.setColor, index * 1 / i_Step_2.part));
+        // // }
+        for (let index = 0; index < 4*fanUpNumber; index++) {
+            i_Step_2.tempUpArray.push(colorArrays[0].getRGBA());
+
+        }
+        for (let index = 0; index < 4*fanUpNumber; index++) {
+            i_Step_2.tempUpArray.push([0, 0, 0, 0]);
+
+        }
+        for (let index = 0; index < i_Step_2.part; index++) {
             i_Step_2.tempUpArray.push(colorArrays[1].getRGBA());
         }
+        
         i_Step_2.nowUpArray = JSON.parse(JSON.stringify(i_Step_2.tempUpArray));
 
 
@@ -1124,7 +1136,7 @@ export class AL_EffectModule extends ModeParameter {
         var setTempName;
         switch (Mode) {
             case 'Inner':
-                i_Step.animationStep=1;
+                i_Step.animationStep=0;
                 setTempName=TempName[0];
                 break;
             default:
@@ -1132,74 +1144,108 @@ export class AL_EffectModule extends ModeParameter {
                 break;
         }
 
+        var color_0=colorArrays[0].getRGBA();
+
+        var color_1=colorArrays[1].getRGBA();
 
         this.stopVar[setTempName] = setInterval(() => {
             if (i_Step.animationStep == 0) {
-                // if (i_Step.loopDirection % 2 == 0) {
-                //     var setRange=Math.round (i_Step.nowFrames*(i_Step.maxArrlen)/i_Step.maxframes);
-                //     console.log('%c setRange','color:rgb(255,77,255)',setRange);
-                //     i_Step.tempUpArray = this.loopArrDisplacementAssignSpacing(2,i_Step.nowUpArray,setRange);
-                //     if (i_Step.nowFrames <  i_Step.maxframes) {
-                //         i_Step.nowFrames += 1;
-                //     }
-                //     else{
-                //         //i_Step.nowUpArray=JSON.parse(JSON.stringify(i_Step.nowUpArray)).reverse();
-                //         totalInnerUpArray=JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
-                //         totalInnerDownArray=JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
-                //         i_Step.nowFrames=0;
-                //     }
-                // }
-                // for (let index = 0; index < totalInnerUpArray.length; index++) {
-                //     var data = reInnerTempData[totalInnerUpArray[index]];
-                //     data.HTML_target.style.background = this.getColorEffectValue(i_Step.tempUpArray[index], 1)
-                //     var data = reInnerTempData[totalInnerDownArray[index]];
-                //     data.HTML_target.style.background = this.getColorEffectValue(i_Step.tempUpArray[index], 1)
-                // }
-              
+                if (i_Step.loopDirection % 2 == 0) {
+                    //var setRange=Math.round (i_Step.nowFrames*(i_Step.maxArrlen)/i_Step.maxframes);
+                    var i_Step_setRange = i_Step.nowFrames;
+                    //console.log('%c i_Step_setRange', 'color:rgb(255,77,255)', i_Step_setRange);
+                    i_Step.tempUpArray = this.loopArrDisplacementAssignSpacing(2, i_Step.nowUpArray,i_Step_setRange);
+
+                    if (i_Step.nowFrames < i_Step.maxframes) {
+                        for (let index = 0; index < fanUpNumber; index++) {
+                            var setPos=i_Step.nowFrames+(index*fanUpNumber);
+                            //console.log('%c setPos', 'color:rgb(255,77,255)', setPos);
+                            var data = reInnerTempData[totalInnerUpArray[setPos]];
+                            data.HTML_target.style.background = this.getColorEffectValue(color_0, 1)
+                            var data = reInnerTempData[totalInnerDownArray[setPos]];
+                            data.HTML_target.style.background = this.getColorEffectValue(color_0, 1)
+                        }
+                        i_Step.nowFrames += 1;
+                    }
+                    else {
+                        // totalInnerUpArray=JSON.parse(JSON.stringify(totalInnerUpArray)).reverse();
+                        // totalInnerDownArray=JSON.parse(JSON.stringify(totalInnerDownArray)).reverse();
+                        i_Step.nowFrames = 0;
+                        i_Step.animationStep = 1;
+                        //i_Step_2.tempUpArray=JSON.parse(JSON.stringify(i_Step.nowUpArray));
+
+                    }
+                }
+
+
             }
             else if (i_Step.animationStep == 1) {
-                if (i_Step_2.loopType % 2 == 0) {
-                    var setRange=i_Step_2.nowFrames;
-                    console.log('%c setRange','color:rgb(255,77,255)',setRange);
-                    i_Step_2.tempUpArray = this.loopArrDisplacementAssignSpacing(2,i_Step_2.nowUpArray,setRange);
-                    if (i_Step_2.nowFrames < 4*fanUpNumber+4) {
-                        if(i_Step_2.pushCount<4){
-                            i_Step_2.pushCount+=1;
-                            i_Step_2.nowFrames+=1;        
+                var i_Step_2_setRange = i_Step_2.nowFrames;
+                //console.log('%c i_Step_2_setRange', 'color:rgb(255,77,255)', i_Step_2_setRange);
+                console.log('%c i_Step_2.nowUpArray', 'color:rgb(255,77,255)',  i_Step_2.nowUpArray);
+
+     
+                i_Step_2.tempUpArray = this.loopArrDisplacementAssignSpacing(2, i_Step_2.nowUpArray, i_Step_2_setRange);
+     
+                if (i_Step_2.nowFrames < 4 * fanUpNumber + 5) {
+                    if (i_Step_2.loopType == 0) {
+                        if (i_Step_2.pushCount < 4) {
+                            i_Step_2.pushCount += 1;
+                            i_Step_2.nowFrames += 1;
                         }
-                        else if(i_Step_2.biteCount<2){
-                            i_Step_2.biteCount+=1;
-                            i_Step_2.nowFrames-=1;
-                            i_Step_2.tempUpArray[i_Step_2.nowFrames-3]= this.getColorEffectValue([0,0,0,0], 1);
-                            i_Step_2.tempUpArray[i_Step_2.nowFrames-4]= this.getColorEffectValue([0,0,0,0], 1);
+                        else {
+                            i_Step_2.loopType = 1;
                         }
-                        else if(i_Step_2.biteCount_2<2){
-                            i_Step_2.biteCount_2+=1;
-                            i_Step_2.nowFrames+=1;
+                        for (let index = 0; index < totalInnerUpArray.length; index++) {
+                            var data = reInnerTempData[totalInnerUpArray[index]];
+                            data.HTML_target.style.background = this.getColorEffectValue(i_Step_2.tempUpArray[index], 1)
+                            var data = reInnerTempData[totalInnerDownArray[index]];
+                            data.HTML_target.style.background = this.getColorEffectValue(i_Step_2.tempUpArray[index], 1)
                         }
-                        else{
-                            i_Step_2.pushCount=0;
-                            i_Step_2.biteCount=0;
-                            i_Step_2.biteCount_2=0;
-                        }                    
                     }
-                    else{
-                        //     i_Step.animationStep=0;
-                        //     i_Step_2.nowFrames=0;
+                    else if (i_Step_2.loopType == 1) {
+                        if (i_Step_2.biteCount < 2) {
+                            i_Step_2.biteCount += 1;
+                        }
+                        else {
+                            i_Step_2.loopType = 2;
+                        }
+                        var data = reInnerTempData[totalInnerUpArray[i_Step_2.nowFrames-i_Step_2.biteCount]];
+                        data.HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 1)
+                        var data = reInnerTempData[totalInnerDownArray[i_Step_2.nowFrames-i_Step_2.biteCount]];
+                        data.HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 1)
                     }
+                    else if (i_Step_2.loopType == 2) {
+                        if (i_Step_2.biteCount_2 >1) {
+                            i_Step_2.biteCount_2 -= 1;
+
+                        }
+                        else {
+                            i_Step_2.pushCount = 0;
+                            i_Step_2.biteCount = 0;
+                            i_Step_2.biteCount_2 = 3;
+                            i_Step_2.loopType = 0;
+                        }
+                        var data = reInnerTempData[totalInnerUpArray[i_Step_2.nowFrames-i_Step_2.biteCount_2]];
+                        data.HTML_target.style.background = this.getColorEffectValue(color_1, 1)
+                        var data = reInnerTempData[totalInnerDownArray[i_Step_2.nowFrames-i_Step_2.biteCount_2]];
+                        data.HTML_target.style.background = this.getColorEffectValue(color_1, 1)
+
+                    }
+                    //var setLoopTypeValue = i_Step_2.nowFrames + i_Step_2.biteCount - 4;
                 }
-                for (let index = 0; index < totalInnerUpArray.length; index++) {
-                    var data = reInnerTempData[totalInnerUpArray[index]];
-                    data.HTML_target.style.background = this.getColorEffectValue(i_Step_2.tempUpArray[index], 1)
-                    var data = reInnerTempData[totalInnerDownArray[index]];
-                    data.HTML_target.style.background = this.getColorEffectValue(i_Step_2.tempUpArray[index], 1)
+                else {
+                    //i_Step_2.nowUpArray=JSON.parse(JSON.stringify(i_Step_2.nowUpArray)).reverse();
+                    i_Step_2.nowFrames = 0;
+                    i_Step.animationStep=0;
+                    i_Step_2.pushCount = 0;
+                    i_Step_2.biteCount = 0;
+                    i_Step_2.biteCount_2 = 3;
+                    i_Step_2.loopType = 0;
                 }
-                // if(i_Step_2.biteCount<2){
-                //     reInnerTempData[totalInnerUpArray[i_Step_2.nowFrames-3]].HTML_target.style.background  = this.getColorEffectValue([0,0,0,0], 1);
-                //     reInnerTempData[totalInnerUpArray[i_Step_2.nowFrames-4]].HTML_target.style.background  = this.getColorEffectValue([0,0,0,0], 1);
-                //     reInnerTempData[totalInnerDownArray[i_Step_2.nowFrames-3]].HTML_target.style.background  = this.getColorEffectValue([0,0,0,0], 1);
-                //     reInnerTempData[totalInnerDownArray[i_Step_2.nowFrames-4]].HTML_target.style.background  = this.getColorEffectValue([0,0,0,0], 1);
-                // }
+                // if(i_Step_2.nowFrames>=9)
+                // clearInterval(this.stopVar[setTempName]);
+
             }
 
            

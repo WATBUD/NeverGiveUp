@@ -402,7 +402,7 @@ export class Pac_Man extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 500;
+        var max = 250;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow
