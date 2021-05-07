@@ -1128,11 +1128,6 @@ export class AL_EffectModule extends ModeParameter {
         }
         
         i_Step_2.nowUpArray = JSON.parse(JSON.stringify(i_Step_2.tempUpArray));
-
-
-
-
-
         var setTempName;
         switch (Mode) {
             case 'Inner':
@@ -1143,11 +1138,8 @@ export class AL_EffectModule extends ModeParameter {
                 alert('Mode_Error'+Mode);
                 break;
         }
-
         var color_0=colorArrays[0].getRGBA();
-
         var color_1=colorArrays[1].getRGBA();
-
         this.stopVar[setTempName] = setInterval(() => {
             if (i_Step.animationStep == 0) {
                 if (i_Step.loopDirection % 2 == 0) {
@@ -1173,20 +1165,14 @@ export class AL_EffectModule extends ModeParameter {
                         i_Step.nowFrames = 0;
                         i_Step.animationStep = 1;
                         //i_Step_2.tempUpArray=JSON.parse(JSON.stringify(i_Step.nowUpArray));
-
                     }
                 }
-
-
             }
             else if (i_Step.animationStep == 1) {
                 var i_Step_2_setRange = i_Step_2.nowFrames;
                 //console.log('%c i_Step_2_setRange', 'color:rgb(255,77,255)', i_Step_2_setRange);
                 console.log('%c i_Step_2.nowUpArray', 'color:rgb(255,77,255)',  i_Step_2.nowUpArray);
-
-     
                 i_Step_2.tempUpArray = this.loopArrDisplacementAssignSpacing(2, i_Step_2.nowUpArray, i_Step_2_setRange);
-     
                 if (i_Step_2.nowFrames < 4 * fanUpNumber + 5) {
                     if (i_Step_2.loopType == 0) {
                         if (i_Step_2.pushCount < 4) {
@@ -1232,7 +1218,6 @@ export class AL_EffectModule extends ModeParameter {
                         data.HTML_target.style.background = this.getColorEffectValue(color_1, 1)
 
                     }
-                    //var setLoopTypeValue = i_Step_2.nowFrames + i_Step_2.biteCount - 4;
                 }
                 else {
                     //i_Step_2.nowUpArray=JSON.parse(JSON.stringify(i_Step_2.nowUpArray)).reverse();
