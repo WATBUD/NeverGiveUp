@@ -225,10 +225,10 @@ export class AL_DevicePageComponent implements OnInit {
         console.log('LEDAreaApplyBtn:', 'Type', Type);
         var checkData = this.FanSettingArrayData;
         for (let index = 0; index < checkData.length; index++) {
-            if (checkData[index].gradient.getMode().isSync) {
+            //if (checkData[index].gradient.getMode().isSync) {
                 checkData[index].stopAnimationAndClear();
-                break;
-            }
+                //break;
+            //}
         }
 
         if (Type == 'All') {
@@ -236,18 +236,17 @@ export class AL_DevicePageComponent implements OnInit {
                 console.log('apply_this.FanSetting.gradient.stopVar', stopVar, index);
                 this.importGradientAndStart(this.FanSetting.gradient,index)
             }
-
         }
         else {
             this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex)
-            for (let index = 0; index < 4; index++) {
-                console.log('FanSettingArrayData,isSync', this.FanSettingArrayData[index].gradient.getMode().isSync);
-                if (index != this.fanGroupIndex && this.FanSettingArrayData[index].gradient.getMode().isSync) {
-                    this.FanSettingArrayData[index].gradient.setLEDMode('Rainbow');
-                    //this.FanSettingArrayData[index].setLEDVarDefault();
-                    this.FanSettingArrayData[index].startAnimationManager();
-                }
-            }
+            // for (let index = 0; index < 4; index++) {
+            //     console.log('FanSettingArrayData,isSync', this.FanSettingArrayData[index].gradient.getMode().isSync);
+            //     if (index != this.fanGroupIndex && this.FanSettingArrayData[index].gradient.getMode().isSync) {
+            //         this.FanSettingArrayData[index].gradient.setLEDMode('Rainbow');
+            //         //this.FanSettingArrayData[index].setLEDVarDefault();
+            //         this.FanSettingArrayData[index].startAnimationManager();
+            //     }
+            // }
         }
         //this.refreshAllAnimation();
         this.applyDataToServer('LEDArea');//by LEDAreaApplyBtn

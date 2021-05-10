@@ -5,7 +5,6 @@ import { ColorModule }  from '../Model/ColorModule';
 export class AL_FanSetting {
     fanMode = 0;
     fanRPMValue = 800;
-    //isSync=false;
     gradient=new AL_CircleEffectManager();
     finalSetMode=['Rainbow','Rainbow','Rainbow'];
     AL_EffectModule=new AL_EffectModule();  

@@ -904,6 +904,7 @@ export class Contest_Sync extends ModeParameter{
     colorVisibleNum=3;
     constructor(){
         super();
+        this.isSync=true;
         this.name="Contest Sync";
         this.colors=this.rainbow7Color();
         //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
@@ -966,6 +967,7 @@ export class Scan_Sync extends ModeParameter{
         super();
         this.name="Scan Sync";
         this.colors=this.rainbow7Color();
+        this.isSync=true;
         //this.colors= ['#FF0000', '#FF7D00','#FFFF00','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFFFF'];
         this.setLEDVarDefault();
     }
