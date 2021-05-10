@@ -5,7 +5,6 @@ import { DomSanitizer,SafeResourceUrl } from "@angular/platform-browser";
 import { CenterWindows } from './CenterWindows';
 import { PluginModule } from './PluginModule';
 import { PluginController } from '../assets/PluginController';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 declare var System;

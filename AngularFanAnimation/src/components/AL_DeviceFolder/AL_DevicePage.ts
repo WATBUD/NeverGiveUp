@@ -149,9 +149,16 @@ export class AL_DevicePageComponent implements OnInit {
         var target = this.FanSettingArrayData[this.fanGroupIndex];
         this.FanSetting.ImportClassData(target);
         this.fanGroupOnClick(this.fanGroupIndex);
-        this.refreshAllAnimation();
+        this.startAllAnimation();
     }
-    refreshAllAnimation() {
+
+    stopAllAnimation() {
+        var checkData = this.FanSettingArrayData;
+        for (let index = 0; index < checkData.length; index++) { 
+            checkData[index].stopAnimationAndClear();
+        }
+    }
+    startAllAnimation() {
         var checkData = this.FanSettingArrayData;
         for (let index = 0; index < checkData.length; index++) {
             checkData[index].stopAnimationAndClear();
@@ -165,16 +172,6 @@ export class AL_DevicePageComponent implements OnInit {
             var T = this.FanSettingArrayData[index];
             this.FanSettingArrayData[index].startAnimationManager();
         }
-    }
-
-    stopAllAnimation() {
-        var checkData = this.FanSettingArrayData;
-        for (let index = 0; index < checkData.length; index++) { 
-            checkData[index].stopAnimationAndClear();
-        }
-    }
-    startAllAnimation() {
-        this.refreshAllAnimation();
     }
     applyDataToServer(SetTargetfield = "") {
         console.log('applyDataToServer_SetProfileDB:');
@@ -221,14 +218,24 @@ export class AL_DevicePageComponent implements OnInit {
     LEDAreaApplyBtn(Area = "", Type) {
         console.log('apply_this.FanSetting.gradient.stopVar', stopVar)
         console.log('LEDAreaApplyBtn:', 'Type', Type);
-        var checkData = this.FanSettingArrayData;
+        // var checkData = this.FanSettingArrayData[this.fanGroupIndex];
+        // if (checkData.gradient.getMode().isSync) {
+        //     checkData.stopAnimationAndClear();
+        // }
+        var checkData = this.FanSettingArrayData;//cancel all sync
         for (let index = 0; index < checkData.length; index++) {
-            //if (checkData[index].gradient.getMode().isSync) {
+            if (checkData[index].gradient.getMode().isSync) {
                 checkData[index].stopAnimationAndClear();
-                //break;
-            //}
+                //this.importGradientAndStart(this.FanSetting.gradient,index)
+                //this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
+                //this.startAllAnimation();
+                //return;
+                break;
+            }
         }
 
+
+        var nowTarget=this.FanSetting;//[this.fanGroupIndex]
         if (Type == 'All') {
             for (let index = 0; index < 4; index++) {
                 console.log('apply_this.FanSetting.gradient.stopVar', stopVar, index);
@@ -236,17 +243,25 @@ export class AL_DevicePageComponent implements OnInit {
             }
         }
         else {
-            this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex)
-            // for (let index = 0; index < 4; index++) {
-            //     console.log('FanSettingArrayData,isSync', this.FanSettingArrayData[index].gradient.getMode().isSync);
-            //     if (index != this.fanGroupIndex && this.FanSettingArrayData[index].gradient.getMode().isSync) {
-            //         this.FanSettingArrayData[index].gradient.setLEDMode('Rainbow');
-            //         //this.FanSettingArrayData[index].setLEDVarDefault();
-            //         this.FanSettingArrayData[index].startAnimationManager();
-            //     }
-            // }
-        }
-        //this.refreshAllAnimation();
+            if(nowTarget.gradient.getMode().isSync){
+                this.stopAllAnimation();
+                //this.refreshAllAnimation();
+                this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
+            }
+            else{
+                var checkData = this.FanSettingArrayData;//cancel all sync
+                for (let index = 0; index < checkData.length; index++) {
+                    if (checkData[index].gradient.getMode().isSync) {
+                        //checkData[index].stopAnimationAndClear();
+                        this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
+                        //this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
+                        this.startAllAnimation();
+                        return;
+                    }
+                }
+                this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
+            }
+        }      
         this.applyDataToServer('LEDArea');//by LEDAreaApplyBtn
     }
 
