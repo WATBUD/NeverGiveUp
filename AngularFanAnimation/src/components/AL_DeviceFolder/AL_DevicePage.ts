@@ -56,6 +56,7 @@ export class AL_DevicePageComponent implements OnInit {
     LEDModeDropDown = false;
     LEDIconDropDown = false;
     fanApplyEnable = false;
+    fileType="AL_Device_EX";
     onPlugDevice=[];
     _Global = AppComponent.getInstance();
     // mainApp= AppComponent.getInstance();
@@ -191,8 +192,6 @@ export class AL_DevicePageComponent implements OnInit {
             'controller_index': this.controller_index,
             'DeviceName': 'AL',
         }
-        // let obj2 = {
-        //     Type: funcVar.FuncType.System,
         //     Func: funcVar.FuncName.SetProfileDB,
         //     Param: obj
         // }
@@ -204,7 +203,6 @@ export class AL_DevicePageComponent implements OnInit {
         console.log('updateImportData', data);
         data = JSON.parse(JSON.stringify(data));
         this.FanSetting.ImportClassData(data['FanSetting']);
-        //this.FanSetting.gradient.elementsName = ["Inner_Circle" + this.fanGroupIndex];
         this.cdr.detectChanges();
     }
 
