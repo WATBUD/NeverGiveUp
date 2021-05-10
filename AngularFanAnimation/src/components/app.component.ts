@@ -1,4 +1,4 @@
-// declare var System;
+declare var System;
 // declare var fs;
 import { Component, OnInit, Input,ViewChild,ElementRef, ChangeDetectorRef,AfterViewInit  } from '@angular/core';
 // declare var $: any;
@@ -12,10 +12,13 @@ import {
     SharesFunction,
     DeviceService,
  } from './Model/ModelManager';
-
 import { DomSanitizer } from '@angular/platform-browser';
 import { SL_DevicePageComponent } from './SL_DeviceFolder/SL_DevicePage';
 import { AL_DevicePageComponent } from './AL_DeviceFolder/AL_DevicePage';
+
+//import { AppProtocol } from './AppProtocol';
+
+
 // let evtVar = System._nodeRequire('./backend/others/EventVariable');
 // let funcVar = System._nodeRequire('./backend/others/FunctionVariable');
 // let env = System._nodeRequire('./backend/others/env');
@@ -29,13 +32,12 @@ import { AL_DevicePageComponent } from './AL_DeviceFolder/AL_DevicePage';
     providers: []
 
 })
-
 export class AppComponent implements OnInit {
     //subscription: Subscription;
+    //protocol =new AppProtocol();
     langsMode: number = 0;
     @ViewChild(SL_DevicePageComponent) SL_DevicePage:SL_DevicePageComponent;
     @ViewChild(AL_DevicePageComponent) AL_DevicePage:AL_DevicePageComponent;
-    GlobalManager
     realAppContent = false;
     deviceON = true;
     isMaximizeScreen=false;
@@ -71,7 +73,6 @@ export class AppComponent implements OnInit {
     onLoading=false;
     static instance=undefined;
 
-    onPlugDevice=[];
     /*********************/
     moveknobcheck = true;
     GetMouseClickObjData(e) {
@@ -105,26 +106,51 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        //System
+        console.log('%c System', 'background: blue; color: red',System);
+
                 //this.changeWinSystemTaskBar();//by ngOnInit 
         // //-----------------ScreenSize取螢幕解析度-----------------
         // let windowsMenu = this;
         // ElectronEventService.on('icpEvent').subscribe((e: any) => { //硬體被動傳值
+        //     var obj = JSON.parse(e.detail);
+        //     var objlog = {
+        //         "obj": obj,       
+        //     };
+        //     //console.log('ElectronEventService.on_icpEvent:', objlog); 
+        //     if (obj.Func == evtVar.EventTypes.FanPRMCallBack)
+        //     {
+        //         var data = obj.Param;
+        //         //this.DeviceService.getTarget().motherBoardFanValue=data;
+        //         this.AL_DevicePage.motherBoardFanValue=data.ALFanValue;
+        //         this.SL_DevicePage.motherBoardFanValue=data.SLFanValue;
+        //         //console.log('FanPRMCallBack被動回值:', data);
+        //     }
+        //     if (obj.Func === evtVar.EventTypes.RefreshDevice) {
+        //         var data = obj.Param;
+        //         console.log('EventTypes.RefreshDevice被動回值:', data);
+        //         if(data.ALFanValue.length<1 ||data.SLFanValue.length<1){
+        //             this.showUITip('ConnectError');
+        //         }
+        //         else{
+        //             this.AL_DevicePage.onPlugDevice=data.ALFanValue;
+        //             this.SL_DevicePage.onPlugDevice=data.SLFanValue;
+        //         }
+        //     };
+        //     //console.log('ElectronEventService.on_icpEvent:', objlog);
 
+        // });
+        
+        // let obj = {
+        //     Type: funcVar.FuncType.System,
+        //     Func: funcVar.FuncName.InitDevice,
+        //     Param: null
+        // }
+        // this.protocol.RunSetFunction(obj).then((data) => {
+            
         // });
         console.log('%c ngOnInit','color:rgb(255,77,255)');
         this.onLoading=true;
-        function changesize(){ 
-            window.resizeTo(960,540); //指定預開啟的寬度與高度
-            } 
-            window.onload=changesize; 
-            window.onresize=changesize;
-    }
-
-    ngAfterViewInit(){
-        //this.DeviceService.currentDevice=this.SL_DevicePage;
-        console.log('ngAfterViewInit:~~~~~~~~~~~~~~~~~~~~~~',this.SL_DevicePage,this.AL_DevicePage);  
-
-        //var TTTTindex=this.switchPageBtn.findindex((x) => x.check == true);
         let TTTTindex = this.switchPageBtn.findIndex(
             (x) => x.check == true
         )
@@ -147,12 +173,41 @@ export class AppComponent implements OnInit {
             console.log('%c switchPageBtn.find_error','color:rgb(255,77,255)',TTTTindex);
 
         }
+    }
+
+    ngAfterViewInit(){
+        //var TTTTindex=this.switchPageBtn.findindex((x) => x.check == true);
+        
         console.log('ngAfterViewInit:~~~~~~~~~~~~~~~~~~~~~~',this.DeviceService.currentDevice);  
 
         // console.log('obj:', obj);
         //this.ImportProfile(); 
         //this.ExportProfile();
         this.DeviceService.getTarget().packaged_Code();
+        // let obj = {
+        //     Type: funcVar.FuncType.System,
+        //     Func: funcVar.FuncName.ReadProfileDB,
+        //     Param: null
+        // }
+        // this.protocol.RunSetFunction(obj).then((data) => {
+        //     console.log('getDBData',data);
+
+        //     if (data['AL'] !=false) {
+        //         this.AL_DevicePage.getDBData(data['AL']);
+        //         //this.DeviceService.getTarget().getDBData();//全新架構資料
+        //     }
+        //     if (data['SL'] !=false) {
+        //         this.SL_DevicePage.getDBData(data['SL']);
+        //     }
+
+        //     // if(!this._Global.SettingData.notShowAgainExport){
+        //     //     this._Global.showUITip('InitExportTip');
+        //     // }
+
+        // });
+        // setTimeout(() => {
+        //    this.fanGroupOnClick(0); //因為有延遲 
+        // }, 2000);
         this.cdr.detectChanges();//Invoke change detection explicitly then Angular will update the DOM immediately.
         this.onLoading=false;
 
@@ -232,16 +287,92 @@ export class AppComponent implements OnInit {
     }
     
 
-    HyperLinkGO(index){
-
-    }
+    // HyperLinkGO(index){
+    //     console.log("Enter_customHyper_Link",ipcRenderer.cp,ipcRenderer,ipcRenderer.remote);
+    //     switch (index) {
+    //         case 0:
+    //             ipcRenderer.send("customHyper_Link","https://lian-li.com/faq/");
+    //             break;
+    //         case 1:
+    //             ipcRenderer.send("customHyper_Link","https://www.instagram.com/kemovedirect/");
+    //             break;
+    //     }
+    // }
  
     ImportProfile() {
+        if (this.fanisOnOff ||this.onAppImportExport) {
+            return;
+        }
+        this.noticeShow=false;
+        this.onAppImportExport=true;
+        // dialog.showOpenDialog(null, { defaultPath: '', filters: [{ name: 'Json File', extensions: ['EF'] }] }, (fns) => {
+           
+        //     if (fns != undefined) {
+
+        //         console.log('讀取路徑fns',fns);
+        //         let obj = {                   
+        //             Path: fns,
+        //         }
+                
+        //         let obj2 = {
+        //             Type: funcVar.FuncType.System,
+        //             Func: funcVar.FuncName.ImportProfile,
+        //             Param: obj
+        //         }
+        //         this.protocol.RunSetFunction(obj2).then((data) => {
+        //             if(data!=null&&data['fileType']==this.fileType){
+        //             console.log('ImportProfile:', data);
+        //             //this.updateImportData(data);//by ImportProfile
+        //             //this.fanApplyEnable=true;
+        //             }
+        //             else{
+        //                alert("檔案有誤 請重新輸入");
+        //             }
+        //         });
+        //     }
+
+        //         this.onAppImportExport=false;
+        //         this.cdr.detectChanges();;
+
+            
+        
+        // })
 
 
     }
     ExportProfile() {    
-      
+        // if (this.fanisOnOff ||this.onAppImportExport) {
+        //     return;
+        // }    
+        // this.noticeShow=false;
+        // this.onAppImportExport=true;
+
+        // dialog.showSaveDialog(null, { defaultPath: 'Profile1', filters: [{ name: 'Json File', extensions: ['EF'] }] }, (fns) => {
+        //     if (fns != undefined) {
+        //         let data = {
+        //             FanSetting: this.DeviceService.getTarget().getNowFanSetting(),
+        //             f_Identifier: String(new Date().getTime()),
+        //             fileType: this.fileType,
+        //         }
+        //         let obj = {
+        //             Path: fns,   
+        //             Data:data, 
+        //         }
+           
+        //         let obj2 = {
+        //             Type: funcVar.FuncType.System,
+        //             Func: funcVar.FuncName.ExportProfile,
+        //             Param: obj
+        //         }
+        //         this.protocol.RunSetFunction(obj2).then((data) => {
+        //             console.log('ExportProfile:', data);
+        //         });
+        //     }
+        //         this.onAppImportExport=false;
+        //         this.cdr.detectChanges();;
+
+            
+        // })
     }
 
     switchAutoRunOnBoot(defaultValue){

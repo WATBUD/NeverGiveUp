@@ -100,9 +100,11 @@
             /* background: red; */
         ">
             <!-- border-bottom: 1px solid #17BEFF; -->
-            <div *ngFor="let item of onPlugDevice; let i = index" (mouseover)="controller_mouseover=i"
+            <div *ngFor="let item of this.DeviceService.getTarget().onPlugDevice; let i = index" (mouseover)="controller_mouseover=i"
                 [style.border-top]="controller_index==i||controller_mouseover==i?'1px solid #17BEFF':'1px solid #0000'"
-                class="ControllersItem" (click)="switch_Packaged_Code(i)">
+                [style.pointer-events]="item>0?'auto':'none'"
+                [style.color]="item>0?'#ffffff':'#666666'"
+                class="ControllersItem" (click)=" this.DeviceService.getTarget().switch_Packaged_Code(i)">
                 {{i18nManager.getTarget('DeviceController')+'0'+(i+1)}}
             </div>
 
@@ -113,7 +115,8 @@
 
     </section>
     <div id="SettingMask" [style.display]="settingPage?'flex': 'none'"
-        style="background: rgba(0, 0, 0, 0.63);position: absolute;pointer-events: auto;height: 100vh;width: 100vw;display: flex;justify-content: center;align-items: center;z-index: 9999">
+        style="background: rgba(0, 0, 0, 0.63);position: absolute;pointer-events: auto;height: 100vh;width: 100vw;display: flex;justify-content: center;align-items: center;z-index: 9999"
+        class="">
 
 
         <div style="position: absolute;height: 75vh;width: 72vw;display: flex;color: #FFFFFF;">

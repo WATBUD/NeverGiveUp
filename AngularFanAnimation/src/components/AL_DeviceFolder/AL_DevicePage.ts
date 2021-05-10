@@ -56,6 +56,7 @@ export class AL_DevicePageComponent implements OnInit {
     LEDModeDropDown = false;
     LEDIconDropDown = false;
     fanApplyEnable = false;
+    onPlugDevice=[];
     _Global = AppComponent.getInstance();
     // mainApp= AppComponent.getInstance();
     i18nManager = i18nManager.getInstance();
@@ -139,7 +140,6 @@ export class AL_DevicePageComponent implements OnInit {
             this.device_ControllerUpdate(data);
         }
     }
-
     device_ControllerUpdate(data) {
         for (let rank = 0; rank < this.FanSettingArrayData.length; rank++) {
             this.FanSettingArrayData[rank].ImportClassData(data["FanSettingArrayData"][rank]);
@@ -150,8 +150,6 @@ export class AL_DevicePageComponent implements OnInit {
         this.fanGroupOnClick(this.fanGroupIndex);
         this.refreshAllAnimation();
     }
-
-
     refreshAllAnimation() {
         var checkData = this.FanSettingArrayData;
         for (let index = 0; index < checkData.length; index++) {
@@ -170,7 +168,7 @@ export class AL_DevicePageComponent implements OnInit {
 
     stopAllAnimation() {
         var checkData = this.FanSettingArrayData;
-        for (let index = 0; index < checkData.length; index++) {
+        for (let index = 0; index < checkData.length; index++) { 
             checkData[index].stopAnimationAndClear();
         }
     }
@@ -252,7 +250,7 @@ export class AL_DevicePageComponent implements OnInit {
             }
         }
         //this.refreshAllAnimation();
-        this.applyDataToServer();//by LEDAreaApplyBtn
+        this.applyDataToServer('LEDArea');//by LEDAreaApplyBtn
     }
 
 
@@ -358,7 +356,7 @@ export class AL_DevicePageComponent implements OnInit {
             this.FanSetting.setLEDVarDefault();
             this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
         }
-        this.applyDataToServer();//LEDAreaDefault
+        this.applyDataToServer('LEDArea');//LEDAreaDefault
     }
 
     importGradientAndStart(data,index){
@@ -397,7 +395,7 @@ export class AL_DevicePageComponent implements OnInit {
             this.fanApplyEnable = false;
         }
         //this.cdr.detectChanges();
-        this.applyDataToServer();//FanAreaApplyBtn
+        this.applyDataToServer('FanArea');//FanAreaApplyBtn
     }
 
 

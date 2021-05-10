@@ -2271,9 +2271,11 @@ export class Staggered extends ModeParameter{
         //var target=this.alpha;
         switch (step) {
             case 0:
+                break;
             case 1:
                 return [this.colors[0]+Math.round(this.alpha).toString(16),'#000000',this.colors[0]+Math.round(this.alpha).toString(16)];
             case 2 :
+                break;
             case 3 :  
                 return ['#000000',this.colors[0]+Math.round(this.alpha).toString(16),'#000000'];
             case 4 :

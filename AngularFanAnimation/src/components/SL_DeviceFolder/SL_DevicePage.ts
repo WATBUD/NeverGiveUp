@@ -57,7 +57,7 @@ export class SL_DevicePageComponent implements OnInit {
     fanModeDropDown = false;
     LEDModeDropDown = false;
     fanApplyEnable = false;
-
+    onPlugDevice=[];
     _Global = AppComponent.getInstance();
     // mainApp= AppComponent.getInstance();
     i18nManager = i18nManager.getInstance();
@@ -213,17 +213,6 @@ export class SL_DevicePageComponent implements OnInit {
         this.FanSetting.gradient.elementsName = ["fanGroupTrapezoid" + this.fanGroupIndex];
         this.cdr.detectChanges();
     }
-
-
-
-
-
-
-
-
-
-
-
     chooseFanMode(index) {
         console.log('%c chooseFanMode_index:', 'background: blue; color: red', index);
         if (this.FanSetting.fanMode != index) {
@@ -235,12 +224,6 @@ export class SL_DevicePageComponent implements OnInit {
 
         this.fanModeDropDown = false;
     }
-
-
-
-
-
-
     LEDAreaApplyBtn(Area = "", Type) {
         console.log('apply_this.FanSetting.gradient.stopVar', stopVar)
         console.log('LEDAreaApplyBtn:', 'Type', Type);
@@ -278,13 +261,8 @@ export class SL_DevicePageComponent implements OnInit {
             }
         }
         this.refreshAllAnimation();
-        this.applyDataToServer();//by LEDAreaApplyBtn
+        this.applyDataToServer('LEDArea');//by LEDAreaApplyBtn
     }
-
-
-
-
-
     fanGroupOnClick(index) {
         if (!this.FanSetting.gradient.getMode().isSync) {
             this.fanGroupIndex = index;
@@ -301,8 +279,6 @@ export class SL_DevicePageComponent implements OnInit {
             this.FanSetting.fanRPMValue = this.FanSettingArrayData[this.FanSetting.gradient.getMode().chooseGroup].fanRPMValue;
             this.updateFanSliderWidth();//by_fanGroupOnClick
         }
-
-
     }
     updateFanSliderWidth() {
         // var T = get_Windows_Vw_Vh();//vw vh
@@ -322,9 +298,7 @@ export class SL_DevicePageComponent implements OnInit {
         this.LEDModeDropDown = false;
 
     }
-
     changeSliderProgerss(currentStep, maxStep, length, assignUIId) {
-
         var target = document.getElementById(assignUIId);
         var resultwidth = (length / maxStep) * currentStep + "px";
         var arrlog = {
@@ -338,9 +312,6 @@ export class SL_DevicePageComponent implements OnInit {
 
         document.getElementById(assignUIId).style.width = resultwidth;
     }
-
-
-
     colorControl() {
         this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].hsv_Rgb_hexSet();
         //console.log('colorControl',this.colorArrays[this.colorRecordIndex]);
@@ -366,10 +337,7 @@ export class SL_DevicePageComponent implements OnInit {
         };
         return styles;
     }
-
-
     LEDAreaDefault() {
-
         if (this.FanSetting.gradient.getMode().isSync) {
             for (let index = 0; index < 4; index++) {
                 this.FanSetting.setLEDVarDefault();
@@ -386,9 +354,8 @@ export class SL_DevicePageComponent implements OnInit {
             T.gradient.playAnimation();
         }
 
-        this.applyDataToServer();//LEDAreaDefault
+        this.applyDataToServer('LEDArea');//LEDAreaDefault
     }
-
     FanAreaApplyBtn(Area, Type) {
         console.log('FanAreaApplyBtn:', 'Type', Type);
 
@@ -418,18 +385,12 @@ export class SL_DevicePageComponent implements OnInit {
             this.fanApplyEnable = false;
         }
         //this.cdr.detectChanges();
-        this.applyDataToServer();//FanAreaApplyBtn
+        this.applyDataToServer('FanArea');//FanAreaApplyBtn
     }
-
-
-
-
-
     onclickColorDefault(styleColor) {
         //styleColor=$event.target.style.backgroundColor
         this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].formatRGB(styleColor.style.backgroundColor);
     }
-
     checkDrop(e) {
         // console.log("e.target.id:", e.target.id);
         // console.log("e.target", e.target);
@@ -448,10 +409,6 @@ export class SL_DevicePageComponent implements OnInit {
             this.LEDModeDropDown = false;
         }
     }
-
-
-
-
     ledConcatenation(targetIndex) {
         var target = this.FanSetting.gradient.getMode().LEDConcatenation;
         var FourColorMode = [1, 2];
