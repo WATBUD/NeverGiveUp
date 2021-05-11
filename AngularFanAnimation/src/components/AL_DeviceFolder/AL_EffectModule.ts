@@ -1,6 +1,5 @@
 import { ColorModule } from '../Model/ColorModule';
 import { JsonPipe } from '@angular/common';
-import { IfStmt } from '@angular/compiler';
 //export var stopVar: any = [];
 export class ModeParameter {
     LEDConcatenation: any = [true, true, false, false];
