@@ -256,6 +256,7 @@ export class AL_DevicePageComponent implements OnInit {
                         this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
                         //this.importGradientAndStart(this.FanSetting.gradient,this.fanGroupIndex);
                         this.startAllAnimation();
+                        this.applyDataToServer('LEDArea');//by LEDAreaApplyBtn
                         return;
                     }
                 }

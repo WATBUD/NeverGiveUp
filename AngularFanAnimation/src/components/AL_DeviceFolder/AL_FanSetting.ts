@@ -53,7 +53,8 @@ export class AL_FanSetting {
                 this.AL_EffectModule.mode_Static_Color(effect_Data, Type);
                 break;
             case 'Rainbow':
-                this.AL_EffectModule.mode_Rainbow(effect_Data, Type);
+                //this.AL_EffectModule.mode_Rainbow(effect_Data, Type);
+                this.AL_EffectModule.mode_Rainbow2(effect_Data, Type);
                 break;
             case 'Breathing Color':
                 this.AL_EffectModule.mode_Breath_Overall(effect_Data, Type);

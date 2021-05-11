@@ -1,5 +1,6 @@
 import { ColorModule } from '../Model/ColorModule';
 import { JsonPipe } from '@angular/common';
+import { IfStmt } from '@angular/compiler';
 //export var stopVar: any = [];
 export class ModeParameter {
     LEDConcatenation: any = [true, true, false, false];
@@ -4780,6 +4781,142 @@ export class AL_EffectModule extends ModeParameter {
         }
         console.log('%c mode_Rainbow','color:rgb(255,77,255)',innerArr.length,outerArr.length,TempName,rangeMode);
     }
+    mode_Rainbow2(effectData,rangeMode='Inner') {
+        var TempName=this.elementsName;
+        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
+        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
+        var colorArrays=effectData.colorArrays;
+        var innerIndex=0;
+        var outerIndex=0;
+        var innerRainbowIndex = 0;
+        var outerRainbowIndex = 0;
+        var reOuterTempData = [];
+        var direction = 0;//0左1右
+        var repeatCountList=[];
+        var reInnerTempData = [];
+        var InnerTempData4 = [];
+        for (let index = 1; index < innerArr.length+1; index++) {
+            //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+            InnerTempData4.push({
+                colors:colorArrays[innerIndex].getRGBA(),
+                HTML_target: innerArr[index-1],
+            });
+            if (index % 8 == 0) {
+                reInnerTempData.push(InnerTempData4);
+                InnerTempData4=[];
+                //innerIndex+=1;
+            }
+        }
+        for (let index = 1; index <= 8; index++) {
+            repeatCountList.push({
+                color: [0,0,0,1],
+                colorIndex:Math.ceil(index/2),
+                nowStep: index,
+                maxStep:8,
+            });
+
+        }
+        // repeatCountList[0].colorIndex=1;
+        // repeatCountList[1].colorIndex=2;
+        // repeatCountList[2].colorIndex=3;
+        for (let index = 1; index < outerArr.length + 1; index++) {
+            reOuterTempData.push({
+                colors: colorArrays[outerIndex].getRGBA(),
+                recordIndex: outerRainbowIndex,
+                repeatTime: this.getRandom(5, 25),
+                HTML_target: outerArr[index - 1],
+            });
+            if (outerRainbowIndex < this.rainbow7Color().length - 1) {
+                outerRainbowIndex += 1;
+            }
+            else {
+                outerRainbowIndex = 0;
+            }
+            if (index % 12 == 0) {
+                outerIndex += 1;
+                outerRainbowIndex = 0;
+            }
+        }
+        repeatCountList=effectData.direction==2?repeatCountList.reverse():repeatCountList;
+        if (rangeMode != "Outer") {
+            this.stopVar[TempName[0]] = setInterval(() => {
+                for (let index = 0; index < repeatCountList.length; index++) {
+                    var temp_colorData = [0, 0, 0, 1];
+                    var item = repeatCountList[index];
+                    if (item.nowStep < item.maxStep) {
+                        item.nowStep += 1;
+                    }
+                    else {
+                        item.nowStep=0;
+                        if(item.colorIndex<this.rainbow7Color().length-1){
+                            item.colorIndex+=1;
+
+                        }
+                        else{
+                            item.colorIndex=0;
+                        }
+                    }
+                    //var setPos = [0, 0];
+                    var nowColor;
+                    var nextColor;
+                    var temp_Color=[0,0,0,1];
+                    if (item.colorIndex >= this.rainbow7Color().length - 1) {
+                        nowColor = this.rainbow7Color()[item.colorIndex];
+                        nextColor = this.rainbow7Color()[0];
+                    }
+                    else {
+                        nowColor = this.rainbow7Color()[item.colorIndex];
+                        nextColor = this.rainbow7Color()[item.colorIndex + 1];
+                    }
+
+                    for (let index2 = 0; index2 < 3; index2++) {
+                    temp_Color[index2]= (nowColor[index2]*(item.maxStep-item.nowStep)+nextColor[index2]*item.nowStep)/item.maxStep;
+                    }
+                    item.color=temp_Color;
+                }
+                console.log('%c repeatCountList','color:rgb(255,77,255)',repeatCountList);
+
+
+                for (let index = 0; index < reInnerTempData.length; index++) {
+                    var data = reInnerTempData[index];
+                    for (let index_4 = 0; index_4 < data.length; index_4++) {
+                        var child=data[index_4];
+                        //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
+                        child.HTML_target.style.background =this.getColorEffectValue(repeatCountList[index_4].color,0)
+                    }
+                }
+                //     var setRgba = this.rainbow7Color()[data.recordIndex];
+            }, effectData.repeatTime*0.1);
+        }
+        if (rangeMode != "Inner") {
+            this.stopVar[TempName[1]] = setInterval(() => {
+                for (let index = 0; index < reOuterTempData.length; index++) {
+                    var data = reOuterTempData[index];
+                    var setRgba = this.rainbow7Color()[data.recordIndex];
+                    data.HTML_target.style.background =this.getColorEffectValue(setRgba,1)
+                    if (direction == 1) {
+                        if (data.recordIndex < this.rainbow7Color().length - 1) {
+                            data.recordIndex += 1;
+
+                        }
+                        else {
+                            data.recordIndex = 0;
+                        }
+                    }
+                    else {
+                        if (data.recordIndex > 0) {
+                            data.recordIndex -= 1;
+                        }
+                        else {
+                            data.recordIndex = this.rainbow7Color().length - 1;
+                        }
+                    }
+                }
+
+            }, effectData.repeatTime);
+        }
+        console.log('%c mode_Rainbow','color:rgb(255,77,255)',innerArr.length,outerArr.length,TempName,rangeMode);
+}
     mode_Warning(effectData,rangeMode='Inner') {
         var TempName=this.elementsName;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
