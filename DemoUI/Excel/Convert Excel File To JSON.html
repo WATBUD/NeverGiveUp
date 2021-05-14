@@ -44,28 +44,6 @@ class sclass{
 
          };
 }
-//z.prototype.__proto__ = p;;
-var dgdgdf=new sclass(); 
-dgdgdf.ttt[sss.toString()]={
-    
-            targetIndex:0,
-            data:[{
-                "startTime":this.timeout_percent,       
-                "marginleft":this.timeout_percent+'px',          
-                "endTime":this.timeout_percent,     
-                "width":5,  
-                "isDown": true,
-                "tipStart":FindkeyCode+'_tipStart'+'0',
-                "tipEnd":FindkeyCode+'_tipEnd'+'0',
-                "tipInterval":FindkeyCode+'_tipInterval'+'0',  
-                
-            }]
-};
-
-console.log("XL_row_object=",dgdgdf);
-
-
-
         $(document).ready(function () {
             $("#fileUploader").change(function (evt) {
                 var selectedFile = evt.target.files[0];
@@ -88,14 +66,24 @@ console.log("XL_row_object=",dgdgdf);
                                 // T.push(element.EN);
                                 // T.push(element.DE);
                                 // T.push(element.CN);
+                                
                                 for (const [key, value] of Object.entries(element)) {
                                     //element.style.width = '100px'
-                                    if(value.includes("[")){
-
+                                    try {
+                                        if(value.includes("[")){
+                                        console.log('%c key', 'background: blue; color: red',key);
+                                        console.log('%c value', 'background: blue; color: red',value);
+                                        console.log('%c element[key]', 'background: blue; color: red',element[key]);
                                         element[key]=JSON.parse(element[key]);
-
+                                        //return;
+                                        }
                                     } 
-                                    //console.log('key', key,'value', value);
+                                    catch (error) {
+                                        console.log('%c key_value.includes("["', 'background: blue; color: red',key);
+                                        console.log('%c value', 'background: blue; color: red',value);
+                                        console.log('%c element[key]', 'background: blue; color: red',element[key]);
+                                        //return;
+                                    }
                                 }
                                 
                                 // if(element.EN.includes("[")){
@@ -103,27 +91,27 @@ console.log("XL_row_object=",dgdgdf);
                                 //     element.EN=JSON.parse(element.EN.toString());
                                 // }
                                 var field=Object.keys(element);
-                                delete field.splice(0,1);field[0];
-                                delete field.splice(field.length-1,1);
-                                // console.log('key', key,'value', value);
                                 console.log('splice_field',field);
 
+                                delete field.splice(0,1);field[0];
+                                //delete field.splice(field.length-1,1);
+                                // console.log('key', key,'value', value);
+
                                 //console.log('element',element);
-                                var T={};
+                                var temp_obj={};
                                 for (let index = 0; index < field.length; index++) {
                                     var type=field[index];
                                     try{
-                                        T[type]=element[type];
+                                        temp_obj[type]=element[type];
 
                                     }
                                     catch{
-                                      console.log('field_lose',T,element,type);
-
+                                    console.log('%c field_lose', 'background: blue; color: red',temp_obj,element,type);
                                     }
                                 }
                                 
                                 //delete T.參數名稱;
-                                processArr[element['參數名稱']] = T;
+                                processArr[element['參數名稱']] = temp_obj;
                                 //console.log("processArr=>processArr[element['參數名稱']] ", JSON.stringify(processArr[element['參數名稱']]));
                              
                                 //element['參數名稱']=

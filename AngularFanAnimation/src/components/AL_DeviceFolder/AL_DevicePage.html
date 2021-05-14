@@ -353,12 +353,8 @@
             </div>
         
         </div>
-
         <!-- *ngIf="fanModeDropDown"  -->
         <div style="height: 18.5vh;" [style.display]="fanModeDropDown?'block': 'none'" data-Title="Frameline" class="Frameline">
-        
-
-
             <div class="dropsdownBox">
                 <a class='cursor hoveritem' *ngFor="let item of i18nManager.getTarget('FAN_MODE_LIST'); let i = index"
                     (click)='chooseFanMode(i)'   

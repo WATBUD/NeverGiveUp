@@ -11,13 +11,12 @@ import {
     TestGradient,
     SharesFunction,
     DeviceService,
+    GlobalManager,
  } from './Model/ModelManager';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SL_DevicePageComponent } from './SL_DeviceFolder/SL_DevicePage';
 import { AL_DevicePageComponent } from './AL_DeviceFolder/AL_DevicePage';
-
 //import { AppProtocol } from './AppProtocol';
-
 
 // let evtVar = System._nodeRequire('./backend/others/EventVariable');
 // let funcVar = System._nodeRequire('./backend/others/FunctionVariable');
@@ -41,9 +40,11 @@ export class AppComponent implements OnInit {
     realAppContent = false;
     deviceON = true;
     isMaximizeScreen=false;
+    ExportUIEnter=false;
     fanisOnOff=false;//off:軟體 on:主機板
     noticeShow=false;//off:軟體 on:主機板
     settingPage=false;
+    GlobalManager=new GlobalManager();
     i18nManager=new i18nManager();
     ImagePath=new ImagePath();
     SharesFN=new SharesFunction();
@@ -104,10 +105,21 @@ export class AppComponent implements OnInit {
             return this.instance;
         }
     }
-
+    QuitApp(){
+        // let obj = {
+        //     Type: funcVar.FuncType.QuitApp,
+        //     Func: funcVar.FuncName.QuitApp,
+        //     Param: null
+        // }
+        // this.protocol.RunSetFunction(obj).then((data) => {
+            
+        // });
+    }
     ngOnInit() {
         //System
         console.log('%c System', 'background: blue; color: red',System);
+        //console.log('%c window[System],evtVar', 'background: blue; color: red',window['System'],evtVar);
+        //console.log('%c System_nodeRequire','color:rgb(255,77,255)',System._nodeRequire);
 
                 //this.changeWinSystemTaskBar();//by ngOnInit 
         // //-----------------ScreenSize取螢幕解析度-----------------
@@ -177,9 +189,7 @@ export class AppComponent implements OnInit {
 
     ngAfterViewInit(){
         //var TTTTindex=this.switchPageBtn.findindex((x) => x.check == true);
-        
         console.log('ngAfterViewInit:~~~~~~~~~~~~~~~~~~~~~~',this.DeviceService.currentDevice);  
-
         // console.log('obj:', obj);
         //this.ImportProfile(); 
         //this.ExportProfile();

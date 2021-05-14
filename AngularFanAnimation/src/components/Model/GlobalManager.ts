@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 //let electron_Instance = window['System']._nodeRequire('electron').remote; 
 @Injectable()
 export class GlobalManager{
-    NoDeviceindex=0;
-    pluginDeviceData=[];
-    //dbService = electron_Instance.getGlobal('AppProtocol').GlobalManager.nedbObj;
     currentDevice;
+    Notice_Mes={
+        ConnectError:true,
+
+    }
     static instance=undefined;
     constructor(
     ) {

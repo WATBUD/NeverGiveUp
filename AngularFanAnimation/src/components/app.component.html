@@ -43,6 +43,74 @@
         </div>
         <div id="fanisOnOff_SharedMask" class="SharedMask" [style.display]="fanisOnOff?'flex':'none'">
         </div>
+        <div data-identity="ConnectError" id="SharedMask">
+            <div *ngIf="GlobalManager.Notice_Mes.ConnectError" id="ConnectTip_img" style="width: 80vw;
+            height: 90vh;
+            background-image: url(./image/Share/ConnectTip.png);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 100% 100%;">
+            
+            <div (click)="HyperLinkGO(0)" [innerHtml]="this.i18nManager.getTarget('ConnectError1')" style="margin-top: -56vh;
+            text-align: center;
+            margin-left: -0.9vw;
+            line-height: 3vh;
+            font-size: 2.4vh;">
+            </div>
+            <div (click)="HyperLinkGO(0)" style="    position: absolute;
+            text-decoration: underline;
+            margin-top: -47.5vh;
+            text-align: center;
+            margin-left: -0.9vw;
+            line-height: 3vh;
+            font-size: 2.4vh;">
+                {{this.i18nManager.getTarget('HyperLink')}}
+            </div>
+            <div (click)="HyperLinkGO(0)" [innerHtml]="this.i18nManager.getTarget('ConnectError2')" style="    position: absolute;
+            margin-top: -38vh;
+            text-align: center;
+            margin-left: -0.9vw;
+            line-height: 3vh;
+            font-size: 2.4vh;">
+            </div>
+                <div id="ConnectTip_Title" 
+                style="position: absolute;
+                color: #17beff;
+                font-size: 3vh;
+                border-radius: 1vh;
+                top: 12.7%;
+                left: 49%;
+                display: flex;
+                justify-content: center;
+                align-items: center;">{{i18nManager.getTarget('Notice')}}
+                </div>
+                <div id="ControllerRestart" class="BtnDefault" style="position: absolute;
+                bottom: 9%;
+                left: 35%;
+                width: auto;
+                height: 4.3vh;
+                padding-left: 2vw;
+                padding-right: 2vw;
+                display: flex;
+                align-items: center;" (click)="QuitApp()">
+                    {{i18nManager.getTarget('ControllerRestart')}}
+                </div>
+                <div  id="Quit" class="BtnDefault" style="    position: absolute;
+                bottom: 9%;
+                left: 59%;
+                width: auto;
+                height: 4.3vh;
+                padding-left: 1.4vw;
+                padding-right: 1.5vw;
+                display: flex;
+                align-items: center;" (click)="QuitApp()">
+                    {{i18nManager.getTarget('Quit')}}
+                </div>
+                
+            </div>
+
+        </div>
         <div id="SharedMask" [style.display]="onAppImportExport||noticeShow?'flex':'none'">
             <div *ngIf="noticeShow" class="NoticeUI">
                 <div class="NoticeUI_OK" (mouseenter)="NoticeOKleave=true;"
