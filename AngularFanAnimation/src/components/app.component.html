@@ -43,8 +43,8 @@
         </div>
         <div id="fanisOnOff_SharedMask" class="SharedMask" [style.display]="fanisOnOff?'flex':'none'">
         </div>
-        <div data-identity="ConnectError" id="SharedMask">
-            <div *ngIf="GlobalManager.Notice_Mes.ConnectError" id="ConnectTip_img" style="width: 80vw;
+        <div *ngIf="GlobalManager.Notice_Mes.ConnectError"  data-identity="ConnectError" id="SharedMask">
+            <div id="ConnectTip_img" style="width: 80vw;
             height: 90vh;
             background-image: url(./image/Share/ConnectTip.png);
             display: flex;
@@ -111,31 +111,56 @@
             </div>
 
         </div>
-        <div id="SharedMask" [style.display]="onAppImportExport||noticeShow?'flex':'none'">
-            <div *ngIf="noticeShow" class="NoticeUI">
+        <div *ngIf="GlobalManager.Notice_Mes.InitExportTip" data-identity="InitExportTip" id="SharedMask" >
+            <div class="NoticeUI">
                 <div class="NoticeUI_OK" (mouseenter)="NoticeOKleave=true;"
                     (mouseleave)="NoticeOKleave=false;SharesFN.logCustom('NoticeOKleave',NoticeOKleave);"
-                    (click)="closeUITip()" [style.background-color]="NoticeOKleave==true?'#17beff':'#2c3647'">
+                    (click)="closeUITip('InitExportTip')" [style.background-color]="NoticeOKleave==true?'#17beff':'#2c3647'">
                     {{i18nManager.getTarget('OK')}}
                 </div>
                 <div class="NoticeUI_Icon"></div>
-                <div class="NoticeUI_Title">{{Notice_Mes.title}}</div>
-                <div class="NoticeUI_Content">
-                    <span [innerHtml]="Notice_Mes.content" (click)="HyperLinkGO(0)"></span>
-                    <span *ngIf="Notice_Mes.showType=='ConnectError'" (click)="HyperLinkGO(0)"
-                        style="text-decoration: underline;">{{this.i18nManager.getTarget('HyperLink')}}
-                    </span>
-                    <div *ngIf="Notice_Mes.showType=='InitExportTip'"
-                        style="align-items: center;display: flex;margin-top: 1vw;">
+                <div class="NoticeUI_Title">{{this.i18nManager.getTarget('Notice')}}</div>
+                <div class="NoticeUI_Content">       
+                    <span [innerHtml]="this.i18nManager.getTarget('InitExportTip')" ></span>
+                    <div style="align-items: center;display: flex;margin-top: 1vw;">
                         <input type="checkbox" [(ngModel)]="SettingData.notShowAgainExport" />
                         <span
                             style="margin-left: 2%;font-size: 2.1vh;">{{this.i18nManager.getTarget('DoNotShowAgain')}}</span>
                     </div>
-                    <div *ngIf="Notice_Mes.showType=='StaticMax48Tip'"
-                        style="align-items: center;display: flex;margin-top: 1vw;">
-                        <input type="checkbox" [(ngModel)]="notShowAgainStaticTip" />
+                </div>
+            </div>
+        </div>
+        <div data-identity="StaticMax48Tip" id="SharedMask" [style.display]="GlobalManager.Notice_Mes.StaticMax48Tip?'flex':'none'">
+            <div class="NoticeUI">
+                <div class="NoticeUI_OK" (mouseenter)="NoticeOKleave=true;"
+                    (mouseleave)="NoticeOKleave=false;SharesFN.logCustom('NoticeOKleave',NoticeOKleave);"
+                    (click)="closeUITip('StaticMax48Tip')" [style.background-color]="NoticeOKleave==true?'#17beff':'#2c3647'">
+                    {{i18nManager.getTarget('OK')}}
+                </div>
+                <div class="NoticeUI_Icon"></div>
+                <div class="NoticeUI_Title">{{this.i18nManager.getTarget('Notice')}}</div>
+                <div class="NoticeUI_Content">       
+                    <span [innerHtml]="this.i18nManager.getTarget('StaticMax48Tip')" ></span>
+                    <div style="align-items: center;display: flex;margin-top: 1vw;">
+                        <input type="checkbox" [(ngModel)]="GlobalManager.notShowAgainStaticTip" />
                         <span
                             style="margin-left: 2%;font-size: 2.1vh;">{{this.i18nManager.getTarget('DoNotShowAgain')}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-identity="SyncTipMessage" id="SharedMask" [style.display]="GlobalManager.Notice_Mes.SyncTipMessage?'flex':'none'">
+            <div class="NoticeUI">
+                <div class="NoticeUI_OK" (mouseenter)="NoticeOKleave=true;"
+                    (mouseleave)="NoticeOKleave=false;SharesFN.logCustom('NoticeOKleave',NoticeOKleave);"
+                    (click)="closeUITip('SyncTipMessage')" [style.background-color]="NoticeOKleave==true?'#17beff':'#2c3647'">
+                    {{i18nManager.getTarget('OK')}}
+                </div>
+                <div class="NoticeUI_Icon"></div>
+                <div class="NoticeUI_Title">{{this.i18nManager.getTarget('Notice')}}</div>
+                <div class="NoticeUI_Content">   
+                    <span [innerHtml]="this.i18nManager.getTarget('SyncTipMessage')" ></span>
+                    <div style="align-items: center;display: flex;margin-top: 1vw;">
                     </div>
                 </div>
             </div>
@@ -177,9 +202,6 @@
             </div>
 
         </div>
-
-
-
 
     </section>
     <div id="SettingMask" [style.display]="settingPage?'flex': 'none'"

@@ -8,6 +8,7 @@ import { AppComponent } from '../app.component';
 import {
     i18nManager,
     ImagePath,
+    GlobalManager,
     ColorModule,
     WindowsFn,
     TestGradient,
@@ -58,8 +59,8 @@ export class SL_DevicePageComponent implements OnInit {
     LEDModeDropDown = false;
     fanApplyEnable = false;
     onPlugDevice=[];
-    _Global = AppComponent.getInstance();
-    // mainApp= AppComponent.getInstance();
+    //_Global = AppComponent.getInstance();
+    _Global=GlobalManager.getInstance();
     i18nManager = i18nManager.getInstance();
     ImagePath = ImagePath.getInstance();
     // DeviceService=DeviceService.getInstance();
@@ -289,9 +290,9 @@ export class SL_DevicePageComponent implements OnInit {
     }
     chooseLedMode(index) {
         console.log('chooseLedMode_index:', index);
-        //console.log('%c chooseLedMode_index','background: blue; color: red',this.notShowAgainStaticTip);
+        //console.log('%c chooseLedMode_index','background: blue; color: red',this._Global.notShowAgainStaticTip);
         if (index == 1 && this._Global.notShowAgainStaticTip == false) {
-            //this.showUITip("StaticMax48Tip");
+            this._Global.showUITip("StaticMax48Tip");
         }
         this.FanSetting.setLEDMode(index);
         this.colorRecordIndex = 0;

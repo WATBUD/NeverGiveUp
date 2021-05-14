@@ -64,7 +64,6 @@ export class AppComponent implements OnInit {
         version:"2.0",
         language:0,
     }
-    notShowAgainStaticTip=false;
     
     Notice_Mes={
         title:"default",
@@ -142,7 +141,7 @@ export class AppComponent implements OnInit {
         //         var data = obj.Param;
         //         console.log('EventTypes.RefreshDevice被動回值:', data);
         //         if(data.ALFanValue.length<1 ||data.SLFanValue.length<1){
-        //             this.showUITip('ConnectError');
+        //             this._Global.showUITip('ConnectError');
         //         }
         //         else{
         //             this.AL_DevicePage.onPlugDevice=data.ALFanValue;
@@ -224,68 +223,30 @@ export class AppComponent implements OnInit {
     }
 
 
-    showUITip(Type=""){
-        this.noticeShow=true;
-        this.Notice_Mes.showType=Type;
+
+    closeUITip(Type=""){
         switch (Type) {
-            case "SyncTipMessage":
-            this.Notice_Mes.title=this.i18nManager.getTarget('Notice')
-            this.Notice_Mes.content=this.i18nManager.getTarget('SyncTipMessage')
+            case "StaticMax48Tip":
+                this.GlobalManager.Notice_Mes.StaticMax48Tip = false;
                 break;
             case "InitExportTip":
-            this.Notice_Mes.title=this.i18nManager.getTarget('Notice')
-            this.Notice_Mes.content=this.i18nManager.getTarget('InitExportTip')
-            break;
-            case "ConnectError": 
-            this.Notice_Mes.title=this.i18nManager.getTarget('Tips')
-            this.Notice_Mes.content=this.i18nManager.getTarget('ConnectError')
-            break;
-            case "StaticMax48Tip": 
-            this.Notice_Mes.title=this.i18nManager.getTarget('Notice')
-            this.Notice_Mes.content=this.i18nManager.getTarget('StaticMax48Tip')
-            break;
-            // "<span (click)=\"HyperLinkGO(0)\" style=\"text-decoration: underline;\">"+this.i18nManager.getTarget('HyperLink')
-            // +"</span>"
-            
-            // var createDiv = document.createElement('div');
-            // createDiv.classList.add("circle");
-            // createDiv.style.cssText = 'position: absolute;\
-            // background-color: yellow;\ssss
-            // width: 5%;\
-            // height: 100%;';
-            // createDiv.id = 'RGBcircle' + circlecs.length;
-            // e.target.appendChild(createDiv);
-            // createDiv.addEventListener("mousedown", RGBcircleEventArr[0]);
+                this.GlobalManager.Notice_Mes.InitExportTip = false;
+                break;
+            case "SyncTipMessage":
+                this.GlobalManager.Notice_Mes.SyncTipMessage = false;
+                break;
             default:
+                console.log('%c this.Notice_Mes_error', 'background: black; color: red', this.Notice_Mes);
                 break;
         }
-        console.log('%c this.Notice_Mes','background: blue; color: red',this.Notice_Mes);
-
-        //this.cdr.detectChanges();
-
-    }
-    closeUITip(Type=""){
-        this.noticeShow=false;
         this.DeviceService.getTarget().applyDataToServer('SettingData');
-        switch (Type) {
-            case "":
-                
-                break;
-            case "":
-                
-            break;
-            case "": 
-               
-                break;
-            default:
-                break;
-        }
+
     }
 
     switchFanisOnOff(){
         this.fanisOnOff=!this.fanisOnOff;
         if(this.fanisOnOff){
-            this.showUITip('SyncTipMessage');
+            this.GlobalManager.Notice_Mes.SyncTipMessage=true;
             this.DeviceService.getTarget().stopAllAnimation();
         }
         else{

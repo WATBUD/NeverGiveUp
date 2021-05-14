@@ -7,6 +7,7 @@ import { AppComponent } from '../app.component';
 import {
     i18nManager,
     ImagePath,
+    GlobalManager,
     ColorModule,
     WindowsFn,
     TestGradient,
@@ -58,8 +59,8 @@ export class AL_DevicePageComponent implements OnInit {
     fanApplyEnable = false;
     fileType="AL_Device_EX";
     onPlugDevice=[];
-    _Global = AppComponent.getInstance();
-    // mainApp= AppComponent.getInstance();
+    //_Global = AppComponent.getInstance();
+    _Global=GlobalManager.getInstance();
     i18nManager = i18nManager.getInstance();
     ImagePath = ImagePath.getInstance();
     // DeviceService=DeviceService.getInstance();
@@ -298,9 +299,9 @@ export class AL_DevicePageComponent implements OnInit {
     }
     chooseLedMode(name) {
         console.log('chooseLedMode_index:');
-        //console.log('%c chooseLedMode_index','background: blue; color: red',this.notShowAgainStaticTip);
+        //console.log('%c chooseLedMode_index','background: blue; color: red',this._Global.notShowAgainStaticTip);
         if (name == "static" && this._Global.notShowAgainStaticTip == false) {
-            //this.showUITip("StaticMax48Tip");
+            this._Global.showUITip("StaticMax48Tip");
         }
         this.FanSetting.gradient.setLEDMode(name);
         this.colorRecordIndex = 0;
