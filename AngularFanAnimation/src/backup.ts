@@ -52,3 +52,35 @@
         //         break;
         // }
 
+
+
+
+//         <!-- <div id="SharedMask" [style.display]="onAppImportExport||noticeShow?'flex':'none'">
+//         <div *ngIf="noticeShow" class="NoticeUI">
+//             <div class="NoticeUI_OK" (mouseenter)="NoticeOKleave=true;"
+//                 (mouseleave)="NoticeOKleave=false;SharesFN.logCustom('NoticeOKleave',NoticeOKleave);"
+//                 (click)="closeUITip()" [style.background-color]="NoticeOKleave==true?'#17beff':'#2c3647'">
+//                 {{i18nManager.getTarget('OK')}}
+//             </div>
+//             <div class="NoticeUI_Icon"></div>
+//             <div class="NoticeUI_Title">{{Notice_Mes.title}}</div>
+//             <div class="NoticeUI_Content">
+//                 <span [innerHtml]="Notice_Mes.content" (click)="HyperLinkGO(0)"></span>
+//                 <span *ngIf="Notice_Mes.showType=='ConnectError'" (click)="HyperLinkGO(0)"
+//                     style="text-decoration: underline;">{{this.i18nManager.getTarget('HyperLink')}}
+//                 </span>
+//                 <div *ngIf="Notice_Mes.showType=='InitExportTip'"
+//                     style="align-items: center;display: flex;margin-top: 1vw;">
+//                     <input type="checkbox" [(ngModel)]="SettingData.notShowAgainExport" />
+//                     <span
+//                         style="margin-left: 2%;font-size: 2.1vh;">{{this.i18nManager.getTarget('DoNotShowAgain')}}</span>
+//                 </div>
+//                 <div *ngIf="Notice_Mes.showType=='StaticMax48Tip'"
+//                     style="align-items: center;display: flex;margin-top: 1vw;">
+//                     <input type="checkbox" [(ngModel)]="notShowAgainStaticTip" />
+//                     <span
+//                         style="margin-left: 2%;font-size: 2.1vh;">{{this.i18nManager.getTarget('DoNotShowAgain')}}</span>
+//                 </div>
+//             </div>
+//         </div>
+//     </div> -->
