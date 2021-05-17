@@ -332,11 +332,13 @@ export class AL_DevicePageComponent implements OnInit {
 
 
     colorControl() {
-        this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].hsv_Rgb_hexSet();
+        this._Global.getColorTarget().hsv_Rgb_hexSet();
+        //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].hsv_Rgb_hexSet();
         //console.log('colorControl',this.colorArrays[this.colorRecordIndex]);
     }
     connectSBGcolor() {
-        let SColorRGBArr = this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].getS_RGBColor();
+        let SColorRGBArr = this._Global.getColorTarget().getS_RGBColor();
+        //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].getS_RGBColor();
         var SColor = "-webkit-linear-gradient(left,#FFFFFF," + "rgb(" + SColorRGBArr[0] + "," + SColorRGBArr[1] + "," + SColorRGBArr[2] + ")" +
             ")";
         let styles = {
@@ -346,8 +348,8 @@ export class AL_DevicePageComponent implements OnInit {
         return styles;
     }
     connectVBGcolor() {
-        let VColorRGBArr = this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].getV_RGBColor();
-
+        let VColorRGBArr = this._Global.getColorTarget().getV_RGBColor();
+        //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].getV_RGBColor();
         var VColor = "-webkit-linear-gradient(left,#000000," + "rgb(" + VColorRGBArr[0] + "," + VColorRGBArr[1] + "," + VColorRGBArr[2] + ")" +
             ")";
         let styles = {
@@ -416,9 +418,11 @@ export class AL_DevicePageComponent implements OnInit {
 
 
 
-    onclickColorDefault(styleColor) {
+    onclickColorDefault(index) {
         //styleColor=$event.target.style.backgroundColor
-        this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].formatRGB(styleColor.style.backgroundColor);
+        var t_color=this._Global.getColorTarget().getRGB();   
+        this.FanSetting.gradient.getMode().colorArrays[index].onclickColorTicket(t_color);
+        //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].formatRGB(styleColor.style.backgroundColor);
     }
 
     checkDrop(e) {

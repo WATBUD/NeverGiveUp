@@ -571,46 +571,35 @@
     width: 24.5%;
     height: 100%;">
         <div id="LED setting color " *ngIf="FanSetting.getGradientMode().colorVisibleNum>0" >
-
             <input id="ColorSliderH" type="range" min="0" max="359" step="1"
-                [(ngModel)]="this.FanSetting.getGradientMode().colorArrays[colorRecordIndex].Hue" (ngModelChange)='colorControl()'>
+                [(ngModel)]="_Global.getColorTarget().Hue" (ngModelChange)='colorControl()'>
             <input id="ColorSliderS" type="range" min="0" max="100" step="1" [ngStyle]="connectSBGcolor()"
-                [(ngModel)]="this.FanSetting.getGradientMode().colorArrays[colorRecordIndex].Saturation" (ngModelChange)='colorControl()'>
+                [(ngModel)]="_Global.getColorTarget().Saturation" (ngModelChange)='colorControl()'>
             <input id="ColorSliderV" [ngStyle]="connectVBGcolor()" type="range" min="0" max="100" step="1"
-                [(ngModel)]="this.FanSetting.getGradientMode().colorArrays[colorRecordIndex].Value" (ngModelChange)='colorControl()'>
-
+                [(ngModel)]="_Global.getColorTarget().Value" (ngModelChange)='colorControl()'>
             <div id="DefulatColorArea" style="position: absolute;
                 top:8.5vh;
                 left: 8.1%;
                 width: 16.1vw;
                 height: 2vh;
+                display: flex;
                 ">
-
-                <div id="colorBase1" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute; left:0%; width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(255, 0, 0)">
+                <div id="colorBase1" *ngFor="let item of _Global.colorArrays; let i = index" 
+                (mousedown)="_Global.colorRecordIndex=i" style="display: flex;
+                                    border: 1px solid #17beff;
+                                    width: 1.1vw;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 1.1vw;"
+                                    [style.border]="_Global.colorRecordIndex==i?'1px solid #17beff':''">
+                    <div id="colorBase1" 
+                        style="width: 50%; height: 50%; background-color: rgb(255, 0, 0)" [style.background-color]="item.getColorFormat_RGB()">
+                    </div>
                 </div>
-                <div id="colorBase2" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute; left:8%; width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(255, 255, 0)">
-                </div>
-                <div id="colorBase3" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute;  left:16%;width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(0,128, 0)">
-                </div>
-                <div id="colorBase4" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute;  left:24%;width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(0, 0, 255)">
-                </div>
-                <div id="colorBase5" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute; left:32%; width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(75, 0, 130)">
-                </div>
-                <div id="colorBase6" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute;  left:40%; width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(128, 0, 128)">
-                </div>
-                <div id="colorBase7" (mousedown)="onclickColorDefault($event.target)"
-                    style="position: absolute;  left:48%; width: 1.1vw; height: 1.1vw; border:1px #2e2f2e solid; background-color: rgb(255, 255, 255)">
-                </div>
+                
             </div> 
             <div id='colorRecordArea'>
-            <div  id='RAF1' class="cursor RecordAreaFrame"  (click)="colorRecordIndex=0"
-            [style.border]="colorRecordIndex==0?'1px solid #17beff':''" >
+            <div  id='RAF1' class="cursor RecordAreaFrame"  (click)="onclickColorDefault(0)">
                 <input class="RecordAreaBtn" type="button" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex">
                 <div class="HSBText">
                     H:{{this.FanSetting.getGradientMode().colorArrays[0].Hue}}° S:{{this.FanSetting.getGradientMode().colorArrays[0].Saturation}}%
@@ -618,8 +607,7 @@
                 </div>
             </div>
             
-            <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>1"  id='RAF2' class="cursor RecordAreaFrame"  (click)="colorRecordIndex=1"
-            [style.border]="colorRecordIndex==1?'1px solid #17beff':''" >
+            <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>1"  id='RAF2' class="cursor RecordAreaFrame"  (click)="onclickColorDefault(1)">
                 <input class="RecordAreaBtn" type="button" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[1].Hex">
                 <div class="HSBText">
                     H:{{this.FanSetting.getGradientMode().colorArrays[1].Hue}}° S:{{this.FanSetting.getGradientMode().colorArrays[1].Saturation}}%
@@ -627,8 +615,7 @@
                 </div>
             </div>
             <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>2" 
-            id='RAF2' class="cursor RecordAreaFrame"  (click)="colorRecordIndex=2"
-            [style.border]="colorRecordIndex==2?'1px solid #17beff':''" >
+            id='RAF2' class="cursor RecordAreaFrame"  (click)="onclickColorDefault(2)">
                 <input class="RecordAreaBtn" type="button" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[2].Hex">
                 <div class="HSBText">
                     H:{{this.FanSetting.getGradientMode().colorArrays[2].Hue}}° S:{{this.FanSetting.getGradientMode().colorArrays[2].Saturation}}%
@@ -636,8 +623,7 @@
                 </div>
             </div>
             <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>3" 
-                id='RAF2' class="cursor RecordAreaFrame"  (click)="colorRecordIndex=3"
-                [style.border]="colorRecordIndex==3?'1px solid #17beff':''" >
+                id='RAF2' class="cursor RecordAreaFrame"  (click)="onclickColorDefault(3)">
                     <input class="RecordAreaBtn" type="button" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[3].Hex">
                     <div class="HSBText">
                         H:{{this.FanSetting.getGradientMode().colorArrays[3].Hue}}° S:{{this.FanSetting.getGradientMode().colorArrays[3].Saturation}}%

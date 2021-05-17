@@ -122,18 +122,7 @@
     margin-top: 8%;
 }
 
-.HSBText{
-    font-size: 1.5vh;
-    color: #C9CACA;
-    line-height: 2.7vh;
-    width: 68%;
-    display: flex;
-    height: 8vh;
-    padding-top: 0.6vh;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-}
+
 
 
 /*#endregion Area*/

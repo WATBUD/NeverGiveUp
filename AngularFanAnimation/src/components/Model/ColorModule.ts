@@ -143,13 +143,16 @@
             this.SetHex("#66CC33");
             
         } 
+        onclickColorTicket(styleColor){
+            this.SetRGB(styleColor);
+            //this.customlog('onclickColorTicket',styleColor.style.backgroundColor);
+        }
 
         onclickColorDefault(styleColor,index){
             this.currentRecordIndex=index;
             //styleColor=$event.target.style.backgroundColor
             this.formatRGB(styleColor.style.backgroundColor);
             this.customlog('onclickColorDefault',styleColor.style.backgroundColor);
-
             this.updateCircleDivPos();
             this.setGradientBGcolor();
     
@@ -176,10 +179,9 @@
             this.Hue=Math.round(HSL[0]);
             this.Saturation=Math.round(HSL[1]);
             this.Lightness=Math.round(HSL[2]);
-        
-        
+            this.Hex= this.rgbToHex(Arr[0],Arr[1],Arr[2]);
+
             var HSV_B=this.getRgb2HSV();  
-            
             this.Hue=HSV_B[0];
             this.Saturation=HSV_B[1];
             this.Value=HSV_B[2];
@@ -198,7 +200,8 @@
                 Value:this.Value,
                 Lightness:this.Lightness,
             }
-            this.customlog(colorlog);
+            //this.customlog(colorlog);
+            console.log('%c showColorVarData','background: red; color: white',colorlog);
         }
 
 
@@ -301,6 +304,9 @@
 
         getColorFormat_RGB(){
             return  "rgb(" + this.Red + "," + this.Green + "," + this. Blue + ")";
+        }
+        getRGB(){
+            return [Number(this.Red),Number(this.Green),Number(this.Blue)];
         }
 
         getRGBA(){
