@@ -51,20 +51,10 @@ export class AppComponent implements OnInit {
     DeviceService=new DeviceService();
     fileType='FALSL';
     onAppImportExport=false;
-    gradientTextMenu: any = ["Rainbow","Static Color","Breathing","Color Cycle",
-    "Runway","Runway Sync", "Staggered", "Mixing", "Meteor","Meteor Sync",
-    "Firework", "Stack", "Stack Multi Color", "Neon"];
     switchPageBtn: any = [
         { name: 'UNI FAN SL', check:false, },
         { name: 'UNI FAN AL', check:true },
     ]
-    SettingData={
-        notShowAgainExport:false,
-        AutoRunOnBoot:false,
-        version:"2.0",
-        language:0,
-    }
-    
     Notice_Mes={
         title:"default",
         content:"default",

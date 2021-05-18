@@ -123,7 +123,7 @@
                 <div class="NoticeUI_Content">       
                     <span [innerHtml]="this.i18nManager.getTarget('InitExportTip')" ></span>
                     <div style="align-items: center;display: flex;margin-top: 1vw;">
-                        <input type="checkbox" [(ngModel)]="SettingData.notShowAgainExport" />
+                        <input type="checkbox" [(ngModel)]="GlobalManager.SettingData.notShowAgainExport" />
                         <span
                             style="margin-left: 2%;font-size: 2.1vh;">{{this.i18nManager.getTarget('DoNotShowAgain')}}</span>
                     </div>
@@ -196,7 +196,7 @@
             <div *ngFor="let item of this.DeviceService.getTarget().onPlugDevice; let i = index" (mouseover)="controller_mouseover=i"
                 [style.border-top]="controller_index==i||controller_mouseover==i?'1px solid #17BEFF':'1px solid #0000'"
                 [style.pointer-events]="item>0?'auto':'none'"
-                [style.color]="item>0?'#ffffff':'#666666'"
+                [style.display]="item>0?'auto':'none'"
                 class="ControllersItem" (click)=" this.DeviceService.getTarget().switch_Packaged_Code(i)">
                 {{i18nManager.getTarget('DeviceController')+'0'+(i+1)}}
             </div>
@@ -232,7 +232,7 @@
             <div id="SettingVersion" style="position: absolute;
                                     bottom: 5.5%;left: 3%;
                                     color:#B3B3B4;
-                                    font-size: 1.8vh;">{{i18nManager.getTarget('Version')+" "+SettingData.version}}
+                                    font-size: 1.8vh;">{{i18nManager.getTarget('Version')+" "+GlobalManager.SettingData.version}}
             </div>
 
             <div style="height: 100%;width: 20%;display: flex;background: #292E41;">
@@ -254,19 +254,19 @@
                     style="height: 73%;width: 86%;display: flex;margin-top: 14%;margin-left: 8%;font-size: 2.1vh;">
                     <div
                         style="width: 100%;height: 13%;justify-content: center;align-items: center;display: flex;border-bottom: 3px solid #323949;box-sizing: content-box;">
-                        <div [style.color]="SettingData.AutoRunOnBoot?'white':'#b3b3b4'"
+                        <div [style.color]="GlobalManager.SettingData.AutoRunOnBoot?'white':'#b3b3b4'"
                             style="width: 8%;height: 100%;display: flex;align-items: center;">
                             {{
-                            this.SettingData.AutoRunOnBoot?i18nManager.getTarget('ONOFF')[0]:i18nManager.getTarget('ONOFF')[1]
+                            this.GlobalManager.SettingData.AutoRunOnBoot?i18nManager.getTarget('ONOFF')[0]:i18nManager.getTarget('ONOFF')[1]
                             }}
                         </div>
-                        <div [style.backgroundImage]="SettingData.AutoRunOnBoot? ImagePath.onOffUI[0]:ImagePath.onOffUI[1]"
+                        <div [style.backgroundImage]="GlobalManager.SettingData.AutoRunOnBoot? ImagePath.onOffUI[0]:ImagePath.onOffUI[1]"
                             style="width: 10%;
                                                 height: 55%;
                                                 background-repeat: no-repeat;
                                                 background-image: url(./image/Share/OnOffUI_1.png);
                                                 background-size: 100% 100%;
-                                                margin-left: 1vw;" (click)="switchAutoRunOnBoot();">
+                                                margin-left: 1vw;" (click)="GlobalManager.switchAutoRunOnBoot();">
                         </div>
 
                         <div id="RightArea_Item"

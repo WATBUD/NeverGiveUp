@@ -19,6 +19,12 @@ export class GlobalManager{
         StaticMax48Tip:false,
         SyncTipMessage:false,
     }
+    SettingData={
+        notShowAgainExport:false,
+        AutoRunOnBoot:false,
+        version:"2.0",
+        language:0,
+    }
     colorArrays=[];
     colorRecordIndex=0;
     defaultColor=[[255, 255, 0],[0,128, 0],[0, 0, 255],[75, 0, 130],[128, 0, 128],[255, 255, 255]];
@@ -51,7 +57,14 @@ export class GlobalManager{
         }
     }
 
-
+    switchAutoRunOnBoot(defaultValue){
+        if(defaultValue==undefined){
+            this.SettingData.AutoRunOnBoot=!this.SettingData.AutoRunOnBoot;
+        }
+        else{
+            this.SettingData.AutoRunOnBoot=defaultValue;
+        }
+    }
 
     showUITip(Type=""){
         switch (Type) {

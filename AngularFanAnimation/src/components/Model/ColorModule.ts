@@ -201,7 +201,7 @@
                 Lightness:this.Lightness,
             }
             //this.customlog(colorlog);
-            console.log('%c showColorVarData','background: red; color: white',colorlog);
+            //console.log('%c showColorVarData','background: red; color: white',colorlog);
         }
 
 
