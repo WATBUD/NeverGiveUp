@@ -336,15 +336,7 @@ export class AppComponent implements OnInit {
         // })
     }
 
-    switchAutoRunOnBoot(defaultValue){
-        if(defaultValue==undefined){
-            this.SettingData.AutoRunOnBoot=!this.SettingData.AutoRunOnBoot;
-        }
-        else{
-            this.SettingData.AutoRunOnBoot=defaultValue;
 
-        }
-    }
     switchSettingPage(defaultValue){
         if(defaultValue==undefined){
             this.settingPage= this.settingPage;
