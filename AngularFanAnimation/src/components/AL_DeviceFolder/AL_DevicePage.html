@@ -577,67 +577,48 @@
                 [(ngModel)]="_Global.getColorTarget().Saturation" (ngModelChange)='colorControl()'>
             <input id="ColorSliderV" [ngStyle]="connectVBGcolor()" type="range" min="0" max="100" step="1"
                 [(ngModel)]="_Global.getColorTarget().Value" (ngModelChange)='colorControl()'>
-            <div id="DefulatColorArea" style="position: absolute;
-                    top:8.5vh;
-                    left: 8.1%;
-                    width: 16.1vw;
-                    height: 2vh;
-                    display: flex;
+            <div id="DefulatColorArea" style="    position: absolute;
+            top: 8.5vh;
+            left: 9.7%;
+            width: 14vw;
+            height: 9vh;
+            display: flex;
+            /* background: red; */
+            flex-wrap: wrap;
                     ">
                 <div id="colorBase1" *ngFor="let item of _Global.colorArrays; let i = index"
-                    (mousedown)="_Global.colorRecordIndex=i" style="display: flex;
-                                        border: 1px solid #17beff;
-                                        width: 1.1vw;
-                                        justify-content: center;
-                                        align-items: center;
-                                        height: 1.1vw;"
+                    (mousedown)="_Global.colorRecordIndex=i" style="    display: flex;
+                    border: 1px solid #17beff;
+                    width: 1.6vw;
+                    justify-content: center;
+                    align-items: center;
+                    height: 1.6vw;
+                    box-sizing: border-box;"
                     [style.border]="_Global.colorRecordIndex==i?'1px solid #17beff':''">
-                    <div id="colorBase1" style="width: 50%; height: 50%; background-color: rgb(255, 0, 0)"
+                    <div id="colorBase1" style="width: 80%; height: 80%; background-color: rgb(255, 0, 0)"
                         [style.background-color]="item.getColorFormat_RGB()">
                     </div>
                 </div>
     
             </div>
             <div id='colorRecordArea'>
-                <div id='RAF1' class="cursor RecordAreaFrame" (click)="onclickColorDefault(0)">
-                    <input class="RecordAreaBtn" type="button"
-                        [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex">
-                    <div class="HSBText">
+                <div id='RAF1' class="cursor RecordAreaFrame" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex"
+                (click)="onclickColorDefault(0)">
+                    <!-- <div class="HSBText">
                         H:{{this.FanSetting.getGradientMode().colorArrays[0].Hue}}°
                         S:{{this.FanSetting.getGradientMode().colorArrays[0].Saturation}}%
                         B:{{this.FanSetting.getGradientMode().colorArrays[0].Value}}%
-                    </div>
+                    </div> -->
                 </div>
     
                 <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>1" id='RAF2' class="cursor RecordAreaFrame"
-                    (click)="onclickColorDefault(1)">
-                    <input class="RecordAreaBtn" type="button"
-                        [style.background-color]="this.FanSetting.getGradientMode().colorArrays[1].Hex">
-                    <div class="HSBText">
-                        H:{{this.FanSetting.getGradientMode().colorArrays[1].Hue}}°
-                        S:{{this.FanSetting.getGradientMode().colorArrays[1].Saturation}}%
-                        B:{{this.FanSetting.getGradientMode().colorArrays[1].Value}}%
-                    </div>
+                    (click)="onclickColorDefault(1)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[1].Hex">
                 </div>
                 <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>2" id='RAF2' class="cursor RecordAreaFrame"
-                    (click)="onclickColorDefault(2)">
-                    <input class="RecordAreaBtn" type="button"
-                        [style.background-color]="this.FanSetting.getGradientMode().colorArrays[2].Hex">
-                    <div class="HSBText">
-                        H:{{this.FanSetting.getGradientMode().colorArrays[2].Hue}}°
-                        S:{{this.FanSetting.getGradientMode().colorArrays[2].Saturation}}%
-                        B:{{this.FanSetting.getGradientMode().colorArrays[2].Value}}%
-                    </div>
+                    (click)="onclickColorDefault(2)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[2].Hex">
                 </div>
                 <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>3" id='RAF2' class="cursor RecordAreaFrame"
-                    (click)="onclickColorDefault(3)">
-                    <input class="RecordAreaBtn" type="button"
-                        [style.background-color]="this.FanSetting.getGradientMode().colorArrays[3].Hex">
-                    <div class="HSBText">
-                        H:{{this.FanSetting.getGradientMode().colorArrays[3].Hue}}°
-                        S:{{this.FanSetting.getGradientMode().colorArrays[3].Saturation}}%
-                        B:{{this.FanSetting.getGradientMode().colorArrays[3].Value}}%
-                    </div>
+                    (click)="onclickColorDefault(3)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[3].Hex">
                 </div>
             </div>
     

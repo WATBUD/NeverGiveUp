@@ -119,21 +119,16 @@
     display: flex;
     align-items: center;
     width: 16vw;
-    margin-left: 1.3vw;
-    MARGIN-TOP: 12vh;
-    height: 14.8vh;
-    /* BACKGROUND: RED; */
-
+    margin-left: 1.8vw;
+    MARGIN-TOP: 19vh;
+    height: 6.8vh;
 }
 .RecordAreaFrame{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 4vw;
-    margin-left: 0.3vw;
-    height: 14.8vh;
-    background-size: 100% 100%;
+    width: 5vw;
+    height: 100%;
+    margin-right: 0.8vw;
+    background: red;
 }
 .RecordAreaBtn{
     outline: none;
