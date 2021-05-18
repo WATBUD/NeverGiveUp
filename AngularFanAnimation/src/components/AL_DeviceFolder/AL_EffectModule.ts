@@ -4463,18 +4463,18 @@ export class AL_EffectModule extends ModeParameter {
                             if (i_L_Array < setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalInner_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue(i_Step.setRGBA, 0)
+                                data.HTML_target.style.background = this.getColorEffectValue(i_Step.setRGBA, 1)
                                 var data = data_4[totalInner_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue(i_Step.setRGBA, 0)
+                                data.HTML_target.style.background = this.getColorEffectValue(i_Step.setRGBA, 1)
                             }
                         }
                         else {
                             if (i_L_Array >= setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalInner_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 0)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
                                 var data = data_4[totalInner_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 0)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
                             }
                         }
 
@@ -4518,18 +4518,18 @@ export class AL_EffectModule extends ModeParameter {
                             if (i_L_Array < setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalOuter_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue(o_Step.setRGBA, 0)
+                                data.HTML_target.style.background = this.getColorEffectValue(o_Step.setRGBA, 1)
                                 var data = data_4[totalOuter_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue(o_Step.setRGBA, 0)
+                                data.HTML_target.style.background = this.getColorEffectValue(o_Step.setRGBA, 1)
                             }
                         }
                         else {
                             if (i_L_Array >= setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalOuter_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 0)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
                                 var data = data_4[totalOuter_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 0)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
                             }
                         }
 
