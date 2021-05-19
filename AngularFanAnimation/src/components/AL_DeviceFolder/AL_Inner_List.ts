@@ -954,7 +954,7 @@ export class Tide extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 800;
+        var max = 300;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow

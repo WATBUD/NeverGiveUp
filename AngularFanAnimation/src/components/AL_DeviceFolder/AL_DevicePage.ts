@@ -7,7 +7,6 @@ import { AppComponent } from '../app.component';
 import {
     i18nManager,
     ImagePath,
-    GlobalManager,
     ColorModule,
     WindowsFn,
     TestGradient,
@@ -15,7 +14,10 @@ import {
 } from '../Model/ModelManager';
 
 import {
-    AL_CircleEffectManager,
+    GlobalManager
+} from '../Model/GlobalManager';
+
+import {
     stopVar
 } from './AL_CircleEffectManager';
 import {

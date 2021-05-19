@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import {
     i18nManager,
     ImagePath,
     ColorModule,
     WindowsFn,
-    TestGradient,
-    SharesFunction,
-    DeviceService,
  } from './ModelManager';
 //let electron_Instance = window['System']._nodeRequire('electron').remote; 
 @Injectable()

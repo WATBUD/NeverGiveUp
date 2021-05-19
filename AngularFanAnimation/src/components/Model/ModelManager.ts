@@ -5,5 +5,4 @@ export * from './WindowsFn';
 export * from './TestGradient';
 export * from './SharesFunction';
 export * from './DeviceService';
-export * from './GlobalManager';
 

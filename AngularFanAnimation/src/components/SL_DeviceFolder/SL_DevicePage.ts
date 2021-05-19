@@ -8,12 +8,14 @@ import { AppComponent } from '../app.component';
 import {
     i18nManager,
     ImagePath,
-    GlobalManager,
     ColorModule,
     WindowsFn,
     TestGradient,
     SharesFunction,
 } from '../Model/ModelManager';
+import {
+    GlobalManager
+} from '../Model/GlobalManager';
 import {
     LinearGradient,
     stopVar

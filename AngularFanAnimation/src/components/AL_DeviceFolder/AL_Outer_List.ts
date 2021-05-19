@@ -683,7 +683,7 @@ export class Lottery extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 100;
+        var max = 250;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow
@@ -1089,7 +1089,7 @@ export class Tide extends ModeParameter{
     scheduleCreateData(GroupNumber) {
         this.loopCount=0;
         var T = [];
-        var max = 500;
+        var max = 300;
         switch (this.speed) {
             case 0:
                 this.repeatTime = max;//by Rainbow

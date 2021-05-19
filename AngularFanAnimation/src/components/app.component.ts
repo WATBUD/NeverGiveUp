@@ -11,8 +11,10 @@ import {
     TestGradient,
     SharesFunction,
     DeviceService,
-    GlobalManager,
  } from './Model/ModelManager';
+ import {
+    GlobalManager,
+ } from './Model/GlobalManager';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SL_DevicePageComponent } from './SL_DeviceFolder/SL_DevicePage';
 import { AL_DevicePageComponent } from './AL_DeviceFolder/AL_DevicePage';
