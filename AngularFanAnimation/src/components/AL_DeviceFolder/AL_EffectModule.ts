@@ -1970,12 +1970,7 @@ export class AL_EffectModule extends ModeParameter {
         for (let index = 0; index < fanUpNumber*6/2; index++) {
             o_Step2.tempUpArray.push(getColorMixing);
         }
-        // o_Step2.tempUpArray.push([0, 0, 0, 0]);
-        // o_Step2.tempUpArray.push([0, 0, 0, 0]);
-        // o_Step2.tempUpArray.push([0, 0, 0, 0]);
         o_Step2.nowUpArray = JSON.parse(JSON.stringify(o_Step2.tempUpArray));
-
-
         var i_Step = {
             nowFrames: 0,
             loopDirection: 0,
@@ -2082,7 +2077,7 @@ export class AL_EffectModule extends ModeParameter {
                 if (o_Step2.loopDirection % 2 == 0) {
                     var setRange = Math.round(o_Step2.nowFrames * (o_Step2.maxArrlen) / o_Step2.maxframes);
                     o_Step2.tempUpArray = this.loopArrDisplacementAssignSpacing(1, o_Step2.nowUpArray, setRange);
-                    console.log('%c  o_Step.setRange', 'color:rgb(255,77,255)', setRange);
+                    //console.log('%c  o_Step.setRange', 'color:rgb(255,77,255)', setRange);
 
                     if (o_Step2.nowFrames < o_Step2.maxframes) {
                         o_Step2.nowFrames += 1;
@@ -2162,12 +2157,8 @@ export class AL_EffectModule extends ModeParameter {
             if (i_Step.animationStep == 1) {
                 if (i_step2.loopDirection % 2 == 0) {
                     var setRange = Math.round(i_step2.nowFrames * (i_step2.maxArrlen) / i_step2.maxframes);
-                    // if(isNaN(setRange)){
-                    // console.log('%c i_step_isNaN', 'color:rgb(255,77,255)',i_Step);
                     //   clearInterval(this.stopVar[TempName[2]]); 
-                    // }
-                    // console.log('%c  setRange', 'color:rgb(255,77,255)',setRange,i_Step);
-                    console.log('%c i_step2_setRange', 'color:rgb(255,77,255)', setRange, i_step2);
+                    //console.log('%c i_step2_setRange', 'color:rgb(255,77,255)', setRange, i_step2);
                     i_step2.tempUpArray = this.loopArrDisplacementAssignSpacing(1, i_step2.nowUpArray, setRange);
                     if (i_step2.nowFrames < i_step2.maxframes) {
                         i_step2.nowFrames += 1;
@@ -3453,13 +3444,16 @@ export class AL_EffectModule extends ModeParameter {
         for (let index = 0; index <colorArrays.length; index++) {
             for (let c_2 = 0; c_2 < 48; c_2++) {
              if(c_2<5){
-                 innerColorsArray.push(colorArrays[index].getRGBA());
+                outerColorsArray.push(colorArrays[index].getRGBA());
              }
              else{
-                 innerColorsArray.push([0,0,0,0])
+                outerColorsArray.push([0,0,0,0])
              }
          }
         }
+
+
+
         outer_combination=outerColorsArray.concat(outerColorsArray2);
         var outerTempData4 = [];
         var reOuterTempData = [];
