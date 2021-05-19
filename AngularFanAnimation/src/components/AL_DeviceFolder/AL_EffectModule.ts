@@ -1934,7 +1934,7 @@ export class AL_EffectModule extends ModeParameter {
         var o_Step = {
             nowFrames: 0,
             loopDirection: 0,
-            maxframes:12,
+            maxframes:16,
             tempUpArray: [],
             part:4,
             maxArrlen:(6*fanUpNumber/2)+3,
@@ -1955,7 +1955,7 @@ export class AL_EffectModule extends ModeParameter {
         var o_Step2 = {
             nowFrames: 2,
             loopDirection: 0,
-            maxframes:16,
+            maxframes:10,
             tempUpArray: [],
             part:4,
             maxArrlen:(fanUpNumber*6)+3,
@@ -1979,7 +1979,7 @@ export class AL_EffectModule extends ModeParameter {
         var i_Step = {
             nowFrames: 0,
             loopDirection: 0,
-            maxframes:12,
+            maxframes:16,
             tempUpArray: [],
             part:4,
             maxArrlen:(4*fanUpNumber/2),
@@ -2000,7 +2000,7 @@ export class AL_EffectModule extends ModeParameter {
         var i_step2 = {
             nowFrames: 2,
             loopDirection: 0,
-            maxframes:16,
+            maxframes:10,
             tempUpArray: [],
             part:4,
             maxArrlen:(4*fanUpNumber),            
