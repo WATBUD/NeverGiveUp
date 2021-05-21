@@ -316,7 +316,8 @@ export class SL_DevicePageComponent implements OnInit {
         document.getElementById(assignUIId).style.width = resultwidth;
     }
     colorControl() {
-        this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].hsv_Rgb_hexSet();
+        this._Global.getColorTarget().hsv_Rgb_hexSet();
+        //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].hsv_Rgb_hexSet();
         //console.log('colorControl',this.colorArrays[this.colorRecordIndex]);
     }
     connectSBGcolor() {
@@ -394,7 +395,16 @@ export class SL_DevicePageComponent implements OnInit {
     onclickColorDefault(index) {
         //styleColor=$event.target.style.backgroundColor
         var t_color=this._Global.getColorTarget().getRGB();   
-        this.FanSetting.gradient.getMode().colorArrays[index].onclickColorTicket(t_color);
+        if(index=="All"){
+            var target=this.FanSetting.gradient.getMode().colorArrays;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                element.onclickColorTicket(t_color);
+            }
+        }
+        else{
+            this.FanSetting.gradient.getMode().colorArrays[index].onclickColorTicket(t_color);
+        }
         //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].formatRGB(styleColor.style.backgroundColor);
     }
     checkDrop(e) {

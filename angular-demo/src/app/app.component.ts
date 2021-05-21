@@ -96,8 +96,13 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         //this.M_Light_CS.lightData=this.default_LightData();
         this.M_Light_CS.lightData=this.Built_ineffect.getTarget();
-
-        
+        var temp_data = this.KeyBoardStyle.getTarget();
+        console.log('%c KeyBoardStyle.getTarget','color:rgb(255,75,255,1)',temp_data);
+        this.M_Light_CS.qigong_Step1_Range = temp_data.qigong_Step1_Range;
+        this.M_Light_CS.qigong_Step2_Range = temp_data.qigong_Step2_Range;
+        this.M_Light_CS.setKeyTableArray(temp_data.KeyTableArray);
+        this.M_Light_CS.imageMaxWidth = temp_data.imageMaxWidth;
+        this.M_Light_CS.imageMaxHeight = temp_data.imageMaxHeight;
     }
 
     ngOnDestroy() {
@@ -126,8 +131,7 @@ export class AppComponent implements OnInit {
         this.M_Light_CS.BSApage1.setSelectContainer('EventCanBoxSelectRange')
         var RGBCBSList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         this.KeyBoardStyle.applyStyles(RGBCBSList);
-        console.log(RGBCBSList.length);
-
+        console.log('%c LightPageRegisterEvent_Box_selection','color:rgb(255,77,255)', RGBCBSList);
         // RGBCBSList
         // var coordinates = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         // var element = coordinates[0] as HTMLElement;
@@ -363,7 +367,7 @@ export class AppComponent implements OnInit {
    
             case 'ConicRippleRainbow':
                     //if (target.Multicolor) {
-                        T_CS.mode_ConicRippleRainbow(inputColor, true);
+                    T_CS.mode_ConicRippleRainbow(inputColor, true);
                     //}
                     break;  
             case 'mode_Spiral':

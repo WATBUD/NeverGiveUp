@@ -30,7 +30,6 @@ export class AL_FanSetting {
                 var Type = effectDataArray[index].modeType;
                 this.showAnimation(effect_Data,Type);      
                 console.log('%c showAnimationI+O', 'color:rgb(255,77,255)', effect_Data);
-
             }
         }
         else{
@@ -38,13 +37,7 @@ export class AL_FanSetting {
             var Type = effectDataArray[2].modeType;
             this.showAnimation(effect_Data,Type);      
             console.log('%c showAnimation', 'color:rgb(255,77,255)', effect_Data);
-
-        
         }
-        
-
-
-
     }
 
     showAnimation(effect_Data, Type) {

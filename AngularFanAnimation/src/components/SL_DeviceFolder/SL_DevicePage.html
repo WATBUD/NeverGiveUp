@@ -227,7 +227,7 @@
                 [(ngModel)]="_Global.getColorTarget().Value" (ngModelChange)='colorControl()'>
         
                 <div id="DefulatColorArea" style="    position: absolute;
-                top: 8.5vh;
+                top: 10vh;
                 left: 9.7%;
                 width: 14vw;
                 height: 9vh;
@@ -269,6 +269,15 @@
                     (click)="onclickColorDefault(3)"
                     [style.background-color]="this.FanSetting.gradient.getMode().colorArrays[3].Hex">
         
+                </div>
+                <div id="colorSelectAll" style="
+                background-image: url(./image/Share/Off/ColorSelectAll.png);
+                width: 2.3vw;
+                height: 4.7vh;
+                background-size: 100% 100%;"
+                (click)="onclickColorDefault('All')"  
+                (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
+                [style.backgroundImage]="ColorSelectAll_Enter? ImagePath.ColorSelectAll[0]:ImagePath.ColorSelectAll[1]">
                 </div>
             </div>
 

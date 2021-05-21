@@ -578,15 +578,15 @@
             <input id="ColorSliderV" [ngStyle]="connectVBGcolor()" type="range" min="0" max="100" step="1"
                 [(ngModel)]="_Global.getColorTarget().Value" (ngModelChange)='colorControl()'>
             <div id="DefulatColorArea" style="    position: absolute;
-            top: 8.5vh;
+            top: 10vh;
             left: 9.7%;
             width: 14vw;
             height: 9vh;
             display: flex;
             /* background: red; */
-            flex-wrap: wrap;
+            flex-wrap: wrap;  
                     ">
-                <div id="colorBase1" *ngFor="let item of _Global.colorArrays; let i = index"
+                <div *ngFor="let item of _Global.colorArrays; let i = index"
                     (mousedown)="_Global.colorRecordIndex=i" style="    display: flex;
                     border: 1px solid #17beff;
                     width: 1.6vw;
@@ -595,11 +595,11 @@
                     height: 1.6vw;
                     box-sizing: border-box;"
                     [style.border]="_Global.colorRecordIndex==i?'1px solid #17beff':''">
-                    <div id="colorBase1" style="width: 80%; height: 80%; background-color: rgb(255, 0, 0)"
+                    <div id="colorBase{{i}}" style="width: 80%; height: 80%; background-color: rgb(255, 0, 0)"
                         [style.background-color]="item.getColorFormat_RGB()">
                     </div>
                 </div>
-    
+
             </div>
             <div id='colorRecordArea'>
                 <div id='RAF1' class="cursor RecordAreaFrame" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex"
@@ -619,6 +619,24 @@
                 </div>
                 <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>3" id='RAF2' class="cursor RecordAreaFrame"
                     (click)="onclickColorDefault(3)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[3].Hex">
+                </div>
+                <div id="colorSelectAll" style="
+                background-image: url(./image/Share/Off/ColorSelectAll.png);
+                width: 2.3vw;
+                height: 4.7vh;
+                background-size: 100% 100%;"
+                (click)="onclickColorDefault('All')"  
+                (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
+                [style.backgroundImage]="ColorSelectAll_Enter? ImagePath.ColorSelectAll[0]:ImagePath.ColorSelectAll[1]">
+                </div>
+                <div id="colorSelectAll" style="
+                background-image: url(./image/Share/Off/ColorSelectAll.png);
+                width: 2.3vw;
+                height: 4.7vh;
+                background-size: 100% 100%;"
+                (click)="onclickColorDefault('All')"  
+                (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
+                [style.backgroundImage]="ColorSelectAll_Enter? ImagePath.ColorSelectAll[0]:ImagePath.ColorSelectAll[1]">
                 </div>
             </div>
     

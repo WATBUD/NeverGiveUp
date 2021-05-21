@@ -28,7 +28,7 @@ export class M_Light_CS {
     currentModeIndex: any = 0
     BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
     twoDimensionalArray=new Array(26);//8*26;
-    breakGradation=[[0,14],[15,29],[30,44],[45,58],[59,72],[73,82]];
+    KeyTableArray=[];
     qigong_Step2_Range=[22,23, 38,52,51 ,36];
     qigong_Step1_Range=[0,15,30,58,71,82];
     BreathTempArray=[];
@@ -55,17 +55,7 @@ export class M_Light_CS {
                 this.twoDimensionalArray[index].push(this.defaultModule());
             }
         }
-        for (let index = 0; index < this.breakGradation.length; index++) {
-            var min = this.breakGradation[index][0];//14
-            var max = this.breakGradation[index][1];//29
-            var total = max - min;
-            for (let i3 = 0; i3 <= total; i3++) {
-                this.twoDimensionalArray[i3][index].blockIndex = i3 + min;
-                //console.log('twoDimensionalArray', this.twoDimensionalArray[index][i3]=i3+min);
 
-            }
-        }
-        //console.log('twoDimensionalArray', this.twoDimensionalArray);
     }
     defaultModule(type = '') {
         var T = 
@@ -77,6 +67,20 @@ export class M_Light_CS {
         return T
     }
 
+    setKeyTableArray(KeyTableArray){
+        this.KeyTableArray=KeyTableArray;
+        for (let index = 0; index < this.KeyTableArray.length; index++) {
+            var min = this.KeyTableArray[index][0];//14
+            var max = this.KeyTableArray[index][1];//29
+            var total = max - min;
+            for (let i3 = 0; i3 <= total; i3++) {
+                this.twoDimensionalArray[i3][index].blockIndex = i3 + min;
+                //console.log('twoDimensionalArray', this.twoDimensionalArray[index][i3]=i3+min);
+            }
+        }
+        //console.log('twoDimensionalArray', this.twoDimensionalArray);
+        //console.log('KeyTableArray', this.KeyTableArray);
+    }
     showTwoDimensionalArray(){      
         for (let index = 0; index < this.twoDimensionalArray.length; index++) {
             for (let index2 = 0; index2 < 8; index2++) {
@@ -715,6 +719,7 @@ export class M_Light_CS {
         clearInterval(this.repeater);
         var repeatCount = 0;
         var StartPoint = this.getNowBlock(blockIndex).coordinateData;
+        console.log('%c StartPoint','color:rgb(255,75,255,1)',StartPoint);
         //var setRGB=[255,0,0,1];
         var mode_step = 0;
         var totalstep = 30;
@@ -791,10 +796,6 @@ export class M_Light_CS {
                 }
 
             }
-            // for (let index = 0; index < T_RGB.length; index++) {
-            //     const element = T_RGB[index];
-                
-            // }  
             console.log('%c mode_ConicRippleRGB_gradientRGB','color:rgb(255,75,255,1)',gradientRGB);
             setRGB = gradientRGB;//this.rainbow7Color();
 
@@ -1521,18 +1522,18 @@ export class M_Light_CS {
             var currentPercent=55;
             var tempColorArray=[];
             var inputColor_T=colors[0];
-            console.log('%c inputColor_T','color:rgb(255,75,255,1)',inputColor_T);
+            //console.log('%c inputColor_T','color:rgb(255,75,255,1)',inputColor_T);
             while (currentPercent>25) {
                 currentPercent-=5;
                 var tempColor=[0,0,0,1];
                 tempColor[0]=inputColor_T[0]*currentPercent/maxPercent;
                 tempColor[1]=inputColor_T[1]*currentPercent/maxPercent;
                 tempColor[2]=inputColor_T[2]*currentPercent/maxPercent;
-                console.log('%c currentPercent>0','color:rgb(255,75,255,1)',tempColor);
+                //console.log('%c currentPercent>0','color:rgb(255,75,255,1)',tempColor);
                 tempColorArray.push(tempColor);
             }
             colors=tempColorArray;
-            console.log('%c tempColorArray','color:rgb(255,75,255,1)',tempColorArray);
+            //console.log('%c tempColorArray','color:rgb(255,75,255,1)',tempColorArray);
 
         }
         //console.log('%c colors','color:rgb(255,75,255,1)',colors);
@@ -2413,7 +2414,6 @@ export class M_Light_CS {
     //     }
     //     var exist=[];
         var repeatCount=0;
-
         var nowColor=[];
         var newColor=[];
         this.repeater = setInterval(() => {
@@ -2791,17 +2791,17 @@ export class M_Light_CS {
         var target = this.twoDimensionalArray;
         // var a2=[0,3,5,8,11,13];
         //    var randomList=[];
-        //    for (let i = 0; i < this.breakGradation[0][1]-1; i++) {
-        //        randomList.push(this.getRandom(0, this.breakGradation[0][1]-1));   //亂數產生，亂數產生的範圍是1~9
+        //    for (let i = 0; i < this.KeyTableArray[0][1]-1; i++) {
+        //        randomList.push(this.getRandom(0, this.KeyTableArray[0][1]-1));   //亂數產生，亂數產生的範圍是1~9
         //        for (let j = 0; j < i; j++) {
         //            while (randomList[j] == randomList[i])    //檢查是否與前面產生的數值發生重複，如果有就重新產生
         //            {
         //                j = 0;  //如有重複，將變數j設為0，再次檢查 (因為還是有重複的可能)
-        //                randomList[i] = this.getRandom(0, this.breakGradation[0][1]-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
+        //                randomList[i] = this.getRandom(0, this.KeyTableArray[0][1]-1);   //重新產生，存回陣列，亂數產生的範圍是1~9
         //            }
         //        }
         //    }
-        for (let index = 0; index <= this.breakGradation[0][1]; index++) {
+        for (let index = 0; index <= this.KeyTableArray[0][1]; index++) {
             //this.twoDimensionalArray[index][0].color=[0,0,255,1];
             repeatCountList.push({
                 color: colors[this.getRandom(0, colors.length - 1)],

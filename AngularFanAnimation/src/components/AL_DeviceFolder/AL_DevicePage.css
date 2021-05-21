@@ -158,15 +158,14 @@
     align-items: center;
     width: 16vw;
     margin-left: 1.8vw;
-    MARGIN-TOP: 19vh;
-    height: 6.2vh;
+    MARGIN-TOP: 21vh;
+    height: 4.7vh;
 }
 .RecordAreaFrame{
     display: flex;
-    width: 3.2vw;
-    height: 100%;
-    margin-right: 0.8vw;
-    background: red;
+    width: 2.3vw;
+    height: 4.7vh;
+    margin-right: 2%;
 }
 .RecordAreaBtn{
     outline: none;
@@ -481,10 +480,10 @@
 }
 
 .PolygonFanUp{
-    position: absolute;margin-top: -4.5vh;margin-left: -2.4vw;transform-origin: center center;
+    position: absolute;margin-top: -3.8vh;margin-left: -2.4vw;transform-origin: center center;
     background:transparent;
     width: 7.6vw;
-    height: 7.1vw;
+    height: 7.6vw;
     border-radius: 100px;
     clip-path: polygon(50% 50%, 0% 50%, 0% 0%);
 

@@ -70,6 +70,10 @@ export class ImagePath {
         "url('./image/Share/On/ExportIcon.png')",
         "url('./image/Share/Off/ExportIcon.png')",
     ];
+    ColorSelectAll: any = [
+        "url('./image/Share/On/ColorSelectAll.png')",
+        "url('./image/Share/Off/ColorSelectAll.png')",
+    ];
     // NoticeMessage=[
     //     "url(./image/FanMode/NoticeMessageEN.png)",
     //     "url(./image/FanMode/NoticeMessageCN.png)",

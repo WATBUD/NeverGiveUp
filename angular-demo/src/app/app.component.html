@@ -115,9 +115,7 @@
     <div id="GMMK_0x320F0x5044" class="Content1">
         <div style="position: absolute; display: flex">
             <img id="GMMK_img" src="./app/GMMK3.png"
-                style="width: 834px; height: 372px; z-index: 3;display: none;" />
-            <!-- <img id="GMMK_img" class="GroupRPMTextIcon"
-                style="width: 834px; height: 372px; z-index: 3;" /> -->
+                style="width: 834px; height: 372px; z-index: 3;" />
             <div id="keyAssignPrompt" style="
                               position: absolute;
                               margin-top: -146px;
@@ -165,7 +163,7 @@
                       WIDTH:  834px;
                       HEIGHT: 372px;">
                 <div [style.display]="lightingflag ? 'flex' : 'none'"
-                    *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index" class="RGBColorBlockStyle"
+                    *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="RGBColorBlockStyle"
                     [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}" [attr.data-index]="i">
                 </div>
             </div>
@@ -175,7 +173,7 @@
                       WIDTH: auto;
                       HEIGHT: 100%;">
                           <div id="KeyAssignBlock" [style.display]="keybindingflag ? 'flex' : 'none'"
-                              *ngFor="let item of KeyBoardStyle.getTarget().target; let i = index"
+                              *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
                               (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i" [style.background-color]="setkeyUIColor(i)" 
                               class="KeyAssignUIStyle">
                               <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}" class="KeyAssignHasValue"></div>

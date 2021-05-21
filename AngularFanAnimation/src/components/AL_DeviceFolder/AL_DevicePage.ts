@@ -423,7 +423,16 @@ export class AL_DevicePageComponent implements OnInit {
     onclickColorDefault(index) {
         //styleColor=$event.target.style.backgroundColor
         var t_color=this._Global.getColorTarget().getRGB();   
-        this.FanSetting.gradient.getMode().colorArrays[index].onclickColorTicket(t_color);
+        if(index=="All"){
+            var target=this.FanSetting.gradient.getMode().colorArrays;
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                element.onclickColorTicket(t_color);
+            }
+        }
+        else{
+            this.FanSetting.gradient.getMode().colorArrays[index].onclickColorTicket(t_color);
+        }
         //this.FanSetting.gradient.getMode().colorArrays[this.colorRecordIndex].formatRGB(styleColor.style.backgroundColor);
     }
 
