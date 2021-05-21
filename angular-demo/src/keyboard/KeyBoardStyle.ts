@@ -103,6 +103,7 @@ export class KeyBoardStyle {
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
+            centerBlockPoint:37,
             qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
             qigong_Step2_Range: [22, 23, 38, 52, 51, 36],
             KeyTableArray: [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]],
@@ -186,6 +187,7 @@ export class KeyBoardStyle {
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
+            centerBlockPoint:37,
             qigong_Step1_Range: [0, 15, 30, 33, 43, 54],
             qigong_Step2_Range: [21, 22, 37, 50, 49, 35],
             KeyTableArray: [[0, 14], [15, 29], [30, 43], [44, 57], [58, 66]],
@@ -373,6 +375,7 @@ export class KeyBoardStyle {
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
+            centerBlockPoint:37,
             qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
             qigong_Step2_Range: [22, 23, 38, 52, 51, 36],
             KeyTableArray: [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]],
@@ -488,9 +491,10 @@ export class KeyBoardStyle {
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
-            qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
-            qigong_Step2_Range: [22, 23, 38, 52, 51, 36],
-            KeyTableArray: [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]],
+            centerBlockPoint:62,
+            qigong_Step1_Range: [0, 18, 36, 69, 86, 98],
+            qigong_Step2_Range: [44, 45, 63, 78, 77, 61],
+            KeyTableArray: [[0, 17], [18, 35], [36, 53], [54, 69], [70, 86], [87, 98]],
             imageMaxWidth: 765,
             imageMaxHeight: 308,
         },
@@ -498,11 +502,16 @@ export class KeyBoardStyle {
 
     }
 
-    constructor() { }
+    constructor() 
+    { 
+
+    }
+
     getAssignTarget(name) {
         //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
         return this.keyBoardList[name]
     }
+
     getTarget() {
         //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
         return this.keyBoardList[this.nowTargetKey]
