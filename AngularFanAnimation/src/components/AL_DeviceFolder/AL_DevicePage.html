@@ -599,7 +599,19 @@
                         [style.background-color]="item.getColorFormat_RGB()">
                     </div>
                 </div>
-
+                <div id="ReSetDefault" style="    background-size: 100% 100%;
+                background-image: url(./image/Share/Off/ReSetDefault.png);
+                display: flex;
+                width: 1.6vw;
+                justify-content: center;
+                align-items: center;
+                height: 1.6vw;
+                box-sizing: border-box;
+                margin-left: 1.7vw;"
+                (click)="_Global.reSetAllDefaultColor()"  
+                (mouseenter)="ReSetDefault_Enter=true;" (mouseleave)="ReSetDefault_Enter=false;"
+                [style.backgroundImage]="ReSetDefault_Enter? ImagePath.ReSetDefault[0]:ImagePath.ReSetDefault[1]">
+                </div>
             </div>
             <div id='colorRecordArea'>
                 <div id='RAF1' class="cursor RecordAreaFrame" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex"
@@ -629,15 +641,7 @@
                 (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
                 [style.backgroundImage]="ColorSelectAll_Enter? ImagePath.ColorSelectAll[0]:ImagePath.ColorSelectAll[1]">
                 </div>
-                <div id="colorSelectAll" style="
-                background-image: url(./image/Share/Off/ColorSelectAll.png);
-                width: 2.3vw;
-                height: 4.7vh;
-                background-size: 100% 100%;"
-                (click)="onclickColorDefault('All')"  
-                (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
-                [style.backgroundImage]="ColorSelectAll_Enter? ImagePath.ColorSelectAll[0]:ImagePath.ColorSelectAll[1]">
-                </div>
+
             </div>
     
         </div>

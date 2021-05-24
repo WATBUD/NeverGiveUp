@@ -74,6 +74,11 @@ export class ImagePath {
         "url('./image/Share/On/ColorSelectAll.png')",
         "url('./image/Share/Off/ColorSelectAll.png')",
     ];
+    ReSetDefault: any = [
+        "url('./image/Share/On/ReSetDefault.png')",
+        "url('./image/Share/Off/ReSetDefault.png')",
+    ];
+    
     // NoticeMessage=[
     //     "url(./image/FanMode/NoticeMessageEN.png)",
     //     "url(./image/FanMode/NoticeMessageCN.png)",

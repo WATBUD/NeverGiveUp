@@ -34,12 +34,19 @@ export class GlobalManager{
     constructor(
     ) {
         GlobalManager.instance=this;
-
         for (let index = 0; index < this.defaultColor.length; index++) {
             this.colorArrays.push(new ColorModule());
             this.colorArrays[index].SetRGB(this.defaultColor[index]);
         }
+   
     }
+
+    reSetAllDefaultColor(){
+        for (let index = 0; index <this.colorArrays.length; index++) {
+            this.colorArrays[index].SetRGB(this.defaultColor[index]);
+        }
+    }
+
     static getInstance() {
         if (this.instance) {
             return this.instance;
