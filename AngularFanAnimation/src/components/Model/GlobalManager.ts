@@ -75,16 +75,19 @@ export class GlobalManager{
         }
     }
 
-    showUITip(Type=""){
+    showUITip(Type = "") {
         switch (Type) {
             case "StaticMax48Tip":
                 this.Notice_Mes.StaticMax48Tip = true;
                 break;
             case "InitExportTip":
-                this.Notice_Mes.InitExportTip = false;
+                this.Notice_Mes.InitExportTip = true;
                 break;
             case "SyncTipMessage":
-                this.Notice_Mes.SyncTipMessage = false;
+                this.Notice_Mes.SyncTipMessage = true;
+                break;
+            case "ConnectError":
+                this.Notice_Mes.ConnectError = true;
                 break;
             default:
                 console.log('%c this.Notice_Mes_error', 'background: black; color: red', this.Notice_Mes);

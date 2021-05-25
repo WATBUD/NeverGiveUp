@@ -1,4 +1,7 @@
 import { ModeParameter } from './ModeParameter';
+var modeDefaultColor = [
+    [0, 0, 255],[255, 0, 0], [0, 255, 0], [255, 255, 0]
+];     
 export class AL_OverAll_List {
     modeindex=0;
     modeindexTranslate="Rainbow";
@@ -172,7 +175,7 @@ export class Taichi extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -232,7 +235,7 @@ export class Static_Color  extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -293,7 +296,7 @@ export class Color_Cycle extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -354,7 +357,7 @@ export class Voice extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -414,7 +417,7 @@ export class Warning extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -474,7 +477,7 @@ export class Stack extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -527,7 +530,7 @@ export class Tide extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -580,7 +583,7 @@ export class Scan extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -632,7 +635,7 @@ export class tornado extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -682,7 +685,7 @@ export class Mixing extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -733,7 +736,7 @@ export class Staggered extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -793,7 +796,7 @@ export class Spinning_Teacups extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -853,7 +856,7 @@ export class Contest extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -915,7 +918,7 @@ export class Contest_Sync extends ModeParameter{
         this.speed = 3;
         this.direction=2;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;
@@ -976,7 +979,7 @@ export class Scan_Sync extends ModeParameter{
         this.speed = 3;
         this.direction=1;
         for (let index = 0; index < this.colorArrays.length; index++) {
-            this.colorArrays[index].SetHex("#00FF00");
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
         }
         for (let index = 0; index <  this.syncConcatenation.length; index++) {
             this.syncConcatenation[index]=2;

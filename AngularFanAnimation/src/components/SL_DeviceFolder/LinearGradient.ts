@@ -961,34 +961,37 @@ export class MeteorSync extends ModeParameter{
 
 }
 
-
-
+function toCssRGB(RGBA = [0, 0, 0, 0]) {
+    return 'rgb(' + RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ',' + RGBA[3] + ')';
+}
+var modeDefaultColor = [
+    [0, 0, 255,1],[255, 0, 0,1], [0, 255, 0,1],[255, 255, 0,1]
+];     
 export class StaticColor extends ModeParameter{
     showSPBTable:any=[false, true, false];
     colorVisibleNum=4;
     constructor(){
         super();
         this.name="Static Color";
-        this.colors= ['#0000FF','#0000FF','#0000FF','#0000FF'];// 16,32,48,64
         this.setLEDVarDefault();
     }
     setLEDVarDefault() {
         this.bright = 4;
         this.speed = 3;
         this.direction = 1;
-        this.colorArrays[0].SetHex("#0000FF");
+        for (let index = 0; index < this.colorArrays.length; index++) {
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
+        }
         for (let index = 0; index < this.syncConcatenation.length; index++) {
             this.syncConcatenation[index] = 2;
         }
     }  
+
     scheduleCreateData(GroupNumber) {
-        for (let index = 0; index < this.colors.length; index++) {
-            this.colors[index]=this.colorArrays[index].Hex;
-        }        
         var T=[];
         for (let index = 0; index < 64; index++) {
             var compareValue=Math.trunc(index/16);
-            T.push(this.colors[compareValue]);
+            T.push(toCssRGB(this.colorArrays[compareValue].getRGBA()));
         }
         this.schedule[0] = T;
         this.schedule[1] = T;
@@ -1013,6 +1016,7 @@ export class StaticColor extends ModeParameter{
         //     //console.log('randArr',arr);
         //     return arr;
         // }
+        
     }
 
     startAllFanGradient_2(ElementClass) {
@@ -1024,9 +1028,6 @@ export class StaticColor extends ModeParameter{
             FGTArr[2].style.background = this.getLinearGradientText(this.schedule[1], 0, 16);
             FGTArr[3].style.background = this.getLinearGradientText(this.schedule[1], 0, 16);
         }, this.repeatTime);
-
-
-
     }
 
     startAllFanGradient_3(ElementClass) {
@@ -1059,7 +1060,10 @@ export class StaticColor extends ModeParameter{
             FGTArr[4].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
             FGTArr[0].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
         }, this.repeatTime);
+        console.log('this.schedule[3]', this.schedule[3]);
+
     }
+    
 
     getLinearGradientText(arr = [], startpos, finalpos) {
         var text = "-webkit-linear-gradient(left"
@@ -1298,13 +1302,9 @@ export class Breathing extends ModeParameter{
         this.nowAlpga=1;
         this.direction = 1;
         this.BreathSwitch=false;
-        //this.colorArrays[0].SetHex("#FF0000");
-        for (let index = 0; index < this.colors.length; index++) {
-            this.colors[index]=this.colorArrays[index].Hex;
-        }     
-        // for (let index = 0; index < this.syncConcatenation.length; index++) {
-        //     this.syncConcatenation[index] = 2;
-        // }  
+        for (let index = 0; index < this.colorArrays.length; index++) {
+            this.colorArrays[index].SetRGB(modeDefaultColor[index]);
+        }
     }
     scheduleCreateData(GroupNumber) {
         this.tempColors=[];
@@ -1333,17 +1333,13 @@ export class Breathing extends ModeParameter{
         var T=[];
         for (let index = 0; index < 64; index++) {
             var compareValue=Math.trunc(index/16);
-            T.push(this.colors[compareValue]); 
-            //T.push(this.colors[0]);
+            T.push(toCssRGB(this.colorArrays[compareValue].getRGBA()));
         }
         this.schedule[0] = T;
         this.schedule[1] = T;
         this.schedule[2] = T;
         this.schedule[3] = T;
         console.log('%c this.colors','background: yellow; color: red',this.tempColors);  
-
-        //console.log('%c this.colors','background: yellow; color: red',this.schedule);  
-
     }
     hexToRgb(InputData) {
         //console.log("hexToRgbInputData",InputData);
@@ -1382,13 +1378,19 @@ export class Breathing extends ModeParameter{
             }
         }
         //console.log('%c this.colors','background: yellow; color: red',this.schedule[3]);  
+        var tempArr=[];
         for (let index = 0; index < 64; index++) {
-            //var element = this.schedule[0][index];\
             var compareValue=Math.trunc(index/16);
-            //T.push(this.colors[compareValue]);
-            var colors=this.tempColors[compareValue];
-            this.schedule[3][index] = "rgba(" + colors[0] + "," + colors[1] + "," + colors[2] + "," + this.nowAlpga + ")";
-        }      
+            var T_color=this.colorArrays[compareValue].getRGBA();
+            T_color[3]=this.nowAlpga;
+            tempArr.push(toCssRGB(T_color));
+        }
+        this.schedule[3]=tempArr;
+        // for (let index = 0; index < 64; index++) {
+        //     var compareValue=Math.trunc(index/16);
+        //     var colors=this.tempColors[compareValue];
+        //     this.schedule[3][index] = "rgba(" + colors[0] + "," + colors[1] + "," + colors[2] + "," + this.nowAlpga + ")";
+        // }      
        
 
     }
@@ -2176,23 +2178,6 @@ export class Staggered extends ModeParameter{
         this.schedule[GroupNumber - 1] = T;
    
     }
-    
-    Refreshschedule(){
-
-        // for (let index = 0; index < 5*multiple; index++) {
-        //     T.push(this.colors[0]);
-        // }
-        // for (let index = 0; index < 6*multiple; index++) {
-        //     T.push('#000000');
-        // }
-        // for (let index = 0; index < 5*multiple; index++) {
-        //     T.push(this.colors[0]);
-        // }   
-
-    }
-    
-    
-
     startAllFanGradient_1(ElementClass) {
         this.scheduleCreateData(1);
 
@@ -2206,7 +2191,6 @@ export class Staggered extends ModeParameter{
         }, this.repeatTime);
       
     }
-
     startAllFanGradient_2(ElementClass) {
         this.scheduleCreateData(2);
         stopVar[ElementClass] = setInterval(() => {
@@ -2221,7 +2205,6 @@ export class Staggered extends ModeParameter{
 
 
     }
-
     startAllFanGradient_3(ElementClass) {
         this.scheduleCreateData(3);
         stopVar[ElementClass] = setInterval(() => {
@@ -2238,7 +2221,6 @@ export class Staggered extends ModeParameter{
 
 
     }
-
     startAllFanGradient_4(ElementClass) {
         this.scheduleCreateData(4);
         stopVar[ElementClass] = setInterval(() => {
@@ -2254,7 +2236,6 @@ export class Staggered extends ModeParameter{
             FGTArr[0].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
         }, this.repeatTime);
     }
-
     getLinearGradientText(arr = [], startpos, finalpos) {
         var text = "-webkit-linear-gradient(left"
         for (let index = startpos; index < finalpos; index++) {
@@ -2263,29 +2244,24 @@ export class Staggered extends ModeParameter{
         text += ")";
         return text;
     }
-    // getNowColor() {
-    //     return this.colors[this.nowUseColor];
-    // }
     getNowStep(step) {
-         
-        //var target=this.alpha;
         switch (step) {
             case 0:
-                break;
+                return [this.colors[0]+Math.round(this.alpha).toString(16),toCssRGB([0,0,0,0]),this.colors[0]+Math.round(this.alpha).toString(16)];
             case 1:
-                return [this.colors[0]+Math.round(this.alpha).toString(16),'#000000',this.colors[0]+Math.round(this.alpha).toString(16)];
+                return [this.colors[0]+Math.round(this.alpha).toString(16),toCssRGB([0,0,0,0]),this.colors[0]+Math.round(this.alpha).toString(16)];
             case 2 :
-                break;
+                return [toCssRGB([0,0,0,0]),this.colors[0]+Math.round(this.alpha).toString(16),toCssRGB([0,0,0,0])];
             case 3 :  
-                return ['#000000',this.colors[0]+Math.round(this.alpha).toString(16),'#000000'];
+                return [toCssRGB([0,0,0,0]),this.colors[0]+Math.round(this.alpha).toString(16),toCssRGB([0,0,0,0])];
             case 4 :
-                return ['#000000','#000000','#000000'];
+                return [toCssRGB([0,0,0,0]),toCssRGB([0,0,0,0]),toCssRGB([0,0,0,0])];
         }
 
     }
     previous:any=[]; 
     modeDisplacement(Arr) {
-
+        console.log("effectNowStep_modeDisplacement",this.effectNowStep);
         for (let index = 0; index < this.threePosition[0]; index++) {
             Arr[index] = this.getNowStep(this.effectNowStep)[0];
         }
@@ -2295,8 +2271,6 @@ export class Staggered extends ModeParameter{
         for (let index = this.threePosition[1]; index < this.threePosition[2]; index++) {
             Arr[index] = this.getNowStep(this.effectNowStep)[2];
         }
-        //console.log("effectNowStep_modeDisplacement",this.effectNowStep,this.alpha);
-
         if (this.effectNowStep==0&&this.alpha<255||this.effectNowStep==2&&this.alpha<255) {
             //console.log("effectNowStep_03",this.effectNowStep);
             this.alpha += 5;
