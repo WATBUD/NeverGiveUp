@@ -302,19 +302,24 @@
     background-image: url(./image/Share/LIAN_LOGO.png); ">
         </div>
         <!-- style.background-color]="switchPageBtn[i].check ||PBTNEnter?'#17beff':'transparent'" -->
+        <!-- [style.backgroundImage]="item.imagePath" -->
         <section id="LeftMenu">
             <div id="Pagebuttons">
-                <a class="cursor" style="text-transform: uppercase;" *ngFor="let item of switchPageBtn; let i = index"
+                <a class="cursor" style="text-transform: uppercase;" 
+                *ngFor="let item of switchPageBtn; let i = index"
                     [style.background]="item.check?'#17BEFF':''" (mousedown)="onClickPageBtn(i)"
                     (mouseenter)="PBTNEnter=true" (mouseleave)="PBTNEnter=false">
-                    <div style="    position: absolute;
+                    <div 
+                    style="    position: absolute;
                     pointer-events: none;
                     margin-left: 3.9vw;
                     width: 2vw;
                     height: 2.2vw;
                     background-size: 100% 100%;
-                    background-image: url(./image/FanMode/LeftMenuIcon1.png);
-                    font-style: normal;">
+                    font-style: normal;"  
+                    [style.backgroundImage]="item.imagePath" >    
+                    
+
                     </div>
 
                     <div style="    pointer-events: none;

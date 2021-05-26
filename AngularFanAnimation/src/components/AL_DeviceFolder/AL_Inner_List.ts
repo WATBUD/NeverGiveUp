@@ -241,16 +241,16 @@ export class Color_Cycle extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.6;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.5;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.4;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.3;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -360,19 +360,19 @@ export class Mop_up extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.8;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.7;
                 break;
             case 2:
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -410,16 +410,16 @@ export class Pac_Man extends ModeParameter{
         var max = 250;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.6;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.5;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.4;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.3;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -460,19 +460,19 @@ export class Meteor extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.8;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.7;
                 break;
             case 2:
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -510,19 +510,19 @@ export class Meteor_Rainbow extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.8;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.7;
                 break;
             case 2:
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -560,19 +560,19 @@ export class Lottery extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.8;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.7;
                 break;
             case 2:
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -611,7 +611,7 @@ export class Wave extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max;
                 break;
             case 1:
                 this.repeatTime = max*0.8;
@@ -620,10 +620,10 @@ export class Wave extends ModeParameter{
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -672,7 +672,7 @@ export class Spring extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max;
                 break;
             case 1:
                 this.repeatTime = max*0.8;
@@ -681,10 +681,10 @@ export class Spring extends ModeParameter{
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -733,7 +733,7 @@ export class Tail_Chasing extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max;
                 break;
             case 1:
                 this.repeatTime = max*0.8;
@@ -742,10 +742,10 @@ export class Tail_Chasing extends ModeParameter{
                 this.repeatTime = max*0.6;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.5;
                 break;
             case 4:
-                this.repeatTime = max*0.2;
+                this.repeatTime = max*0.4;
                     break;   
          
         }
@@ -793,16 +793,16 @@ export class Voice extends ModeParameter{
         var max = 200;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -847,16 +847,16 @@ export class Warning extends ModeParameter{
         var max = 1000;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -907,16 +907,16 @@ export class Stack extends ModeParameter{
         var max = 100;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -960,16 +960,16 @@ export class Tide extends ModeParameter{
         var max = 300;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -1013,16 +1013,16 @@ export class Scan extends ModeParameter{
         var max = 500;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;
@@ -1066,16 +1066,16 @@ export class Mixing extends ModeParameter{
         var max = 250;
         switch (this.speed) {
             case 0:
-                this.repeatTime = max;//by Rainbow
+                this.repeatTime = max*0.4;
                 break;
             case 1:
-                this.repeatTime = max*0.8;
+                this.repeatTime = max*0.35;
                 break;
             case 2:
-                this.repeatTime = max*0.6;
+                this.repeatTime = max*0.3;
                 break; 
             case 3:
-                this.repeatTime = max*0.4;
+                this.repeatTime = max*0.25;
                 break;
             case 4:
                 this.repeatTime = max*0.2;

@@ -54,8 +54,9 @@ export class AppComponent implements OnInit {
     fileType='FALSL';
     onAppImportExport=false;
     switchPageBtn: any = [
-        { name: 'UNI FAN SL', check:false, },
-        { name: 'UNI FAN AL', check:true },
+        { name: 'UNI FAN SL', check:false,imagePath:"url('./image/SL_MenuIcon.png')"},
+        { name: 'UNI FAN AL', check:true ,imagePath:"url('./image/AL_MenuIcon.png')"},
+
     ]
     Notice_Mes={
         title:"default",

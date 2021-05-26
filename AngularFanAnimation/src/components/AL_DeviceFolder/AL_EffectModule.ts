@@ -3531,7 +3531,13 @@ export class AL_EffectModule extends ModeParameter {
         }
         var innerNowindex=-1;
         var innerNowCount=0;
+        // var outerColorsArray=[];
+        // outerColorsArray.push(colorArrays[index].getRGBA())
 
+        // for (let index = 0; index <12; index++) {
+        //     outerColorsArray.push([0,0,0,0])
+        //     outerColorsArray.push(colorArrays[index].getRGBA());    
+        // }
         if (Mode != "Outer") {
             if(effectData.direction==2){
                 innerNowindex=-1;
@@ -3578,11 +3584,11 @@ export class AL_EffectModule extends ModeParameter {
                 outerNowindex=-1;
             }
             else{
-                outerNowindex=9;
+                outerNowindex=11;
             }
             this.stopVar[TempName[1]] = setInterval(() => {
                 if(effectData.direction==2){
-                    if(outerNowindex<9){
+                    if(outerNowindex<12){
                         outerNowindex+=1;    
                     }
                     else{
@@ -3594,7 +3600,7 @@ export class AL_EffectModule extends ModeParameter {
                         outerNowindex-=1;    
                     }
                     else{
-                        outerNowindex=9;
+                        outerNowindex=11;
                     }
                 }        
                 for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
