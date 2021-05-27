@@ -1,3 +1,6 @@
+<meta name="viewport" content="width=1920PX; 
+initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+
 <div id="wrapper" onDRAGSTART="window.event.returnValue=false" onCONTEXTMENU="window.event.returnValue=false"
     onSelectStart="window.event.returnValue=false" draggable="true" (mouseup)="GetMouseClickObjData($event)"
     (click)="checkDrop($event)">
@@ -20,7 +23,7 @@
     </div>
     <section id="NAV_TOP_UI"
         style="color: white;z-index: 9990;position: absolute;width: 100%;height: 100%;pointer-events: none;"
-        [style.color]="fanisOnOff?'white':'#b3b3b4'">
+        [style.color]="GlobalManager.fanisOnOff?'white':'#b3b3b4'">
         <div data-identity="SettingBtn" id="SettingBtn" (click)="switchSettingPage(true)">
         </div>
         <div id="ImportExportUI" data-identity="Export" (click)="ExportProfile()" (mouseenter)="ExportUIEnter=true;"
@@ -41,18 +44,18 @@
                 Import
             </div>
         </div>
-        <div id="fanisOnOff_SharedMask" class="SharedMask" [style.display]="fanisOnOff?'flex':'none'">
+        <div id="fanisOnOff_SharedMask" class="SharedMask" [style.display]="GlobalManager.fanisOnOff?'flex':'none'">
         </div>
-        <div *ngIf="GlobalManager.Notice_Mes.ConnectError"  data-identity="ConnectError" id="SharedMask">
-            <div id="ConnectTip_img" style="width: 80vw;
-            height: 90vh;
+        <div *ngIf="GlobalManager.Notice_Mes.ConnectError"  data-identity="ConnectError" id="SharedMask" style="z-index: 9999;">
+            <div id="ConnectTip_img" style="width: 96.5vw;
+            height: 94vh;
             background-image: url(./image/Share/ConnectTip.png);
             display: flex;
             justify-content: center;
             align-items: center;
             background-size: 100% 100%;">
             
-            <div (click)="HyperLinkGO(0)" [innerHtml]="this.i18nManager.getTarget('ConnectError1')" style="margin-top: -56vh;
+            <div [innerHtml]="this.i18nManager.getTarget('ConnectError1')" style="margin-top: -33%;
             text-align: center;
             margin-left: -0.9vw;
             line-height: 3vh;
@@ -60,15 +63,15 @@
             </div>
             <div (click)="HyperLinkGO(0)" style="    position: absolute;
             text-decoration: underline;
-            margin-top: -47.5vh;
+            margin-top: -12.8%;
             text-align: center;
             margin-left: -0.9vw;
             line-height: 3vh;
             font-size: 2.4vh;">
                 {{this.i18nManager.getTarget('HyperLink')}}
             </div>
-            <div (click)="HyperLinkGO(0)" [innerHtml]="this.i18nManager.getTarget('ConnectError2')" style="    position: absolute;
-            margin-top: -38vh;
+            <div [innerHtml]="this.i18nManager.getTarget('ConnectError2')" style="position: absolute;
+            margin-top: -9.3%;
             text-align: center;
             margin-left: -0.9vw;
             line-height: 3vh;
@@ -79,7 +82,7 @@
                 color: #17beff;
                 font-size: 3vh;
                 border-radius: 1vh;
-                top: 12.7%;
+                top: 11.7%;
                 left: 49%;
                 display: flex;
                 justify-content: center;
@@ -87,13 +90,13 @@
                 </div>
                 <div id="ControllerRestart" class="BtnDefault" style="position: absolute;
                 bottom: 9%;
-                left: 35%;
+                left: 29%;
                 width: auto;
                 height: 4.3vh;
                 padding-left: 2vw;
                 padding-right: 2vw;
                 display: flex;
-                align-items: center;" (click)="QuitApp()">
+                align-items: center;" (click)="RestartApp()">
                     {{i18nManager.getTarget('ControllerRestart')}}
                 </div>
                 <div  id="Quit" class="BtnDefault" style="    position: absolute;
@@ -175,9 +178,9 @@
                 同步主板
             </div>
             <div id="UItext_isOnOf">
-                {{fanisOnOff?i18nManager.getTarget('ONOFF')[0]:i18nManager.getTarget('ONOFF')[1]}}
+                {{GlobalManager.fanisOnOff?i18nManager.getTarget('ONOFF')[0]:i18nManager.getTarget('ONOFF')[1]}}
             </div>
-            <div id="SybcOnUI" [style.backgroundImage]="fanisOnOff? ImagePath.onOffUI[0]:ImagePath.onOffUI[1]"
+            <div id="SybcOnUI" [style.backgroundImage]="GlobalManager.fanisOnOff? ImagePath.onOffUI[0]:ImagePath.onOffUI[1]"
                 (click)="switchFanisOnOff();">
             </div>
         </div>
@@ -222,7 +225,7 @@
 
                 <img id="SettingBtn_img" src="./image/SW_Icon.png" style="width: 18%;
                 height: 32%;margin-right: 8%;">
-                L-CONNECT
+                L-Connect 2.0
             </div>
             <div id="SettingVersionTitle" style="position: absolute;
                                                 top: 8%;

@@ -23,6 +23,7 @@ export class GlobalManager{
         version:"2.0",
         language:0,
     }
+    fanisOnOff=false;
     colorArrays=[];
     colorRecordIndex=0;
     defaultColor = [

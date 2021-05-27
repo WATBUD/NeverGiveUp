@@ -578,44 +578,38 @@
             <input id="ColorSliderV" [ngStyle]="connectVBGcolor()" type="range" min="0" max="100" step="1"
                 [(ngModel)]="_Global.getColorTarget().Value" (ngModelChange)='colorControl()'>
             <div id="DefulatColorArea" style="    position: absolute;
-            top: 10vh;
+            top: 10.8vh;
             left: 9.7%;
-            width: 14vw;
+            width: 16vw;
             height: 9vh;
             display: flex;
             /* background: red; */
             flex-wrap: wrap;  
                     ">
                 <div *ngFor="let item of _Global.colorArrays; let i = index"
-                    (mousedown)="_Global.colorRecordIndex=i" style="    display: flex;
-                    border: 1px solid #17beff;
-                    width: 1.6vw;
-                    justify-content: center;
-                    align-items: center;
-                    height: 1.6vw;
-                    box-sizing: border-box;"
+                    (mousedown)="_Global.colorRecordIndex=i" class="_GlobalColorArrays"
                     [style.border]="_Global.colorRecordIndex==i?'1px solid #17beff':''">
                     <div id="colorBase{{i}}" style="width: 80%; height: 80%; background-color: rgb(255, 0, 0)"
                         [style.background-color]="item.getColorFormat_RGB()">
                     </div>
                 </div>
-                <div id="ReSetDefault" style="    background-size: 100% 100%;
-                background-image: url(./image/Share/Off/ReSetDefault.png);
-                display: flex;
-                width: 1.6vw;
-                justify-content: center;
-                align-items: center;
-                height: 1.6vw;
-                box-sizing: border-box;
-                margin-left: 1.7vw;"
-                (click)="_Global.reSetAllDefaultColor()"  
-                (mouseenter)="ReSetDefault_Enter=true;" (mouseleave)="ReSetDefault_Enter=false;"
-                [style.backgroundImage]="ReSetDefault_Enter? ImagePath.ReSetDefault[0]:ImagePath.ReSetDefault[1]">
+                <div class="_GlobalColorArrays" style="margin-left: 2vw;">
+                    <div id="ReSetDefault" style="    background-size: 100% 100%;
+                                background-image: url(./image/Share/Off/ReSetDefault.png);
+                                display: flex;
+                                width: 80%; height: 80%; 
+                                justify-content: center;
+                                align-items: center;
+                                box-sizing: border-box;" (click)="_Global.reSetAllDefaultColor()" (mouseenter)="ReSetDefault_Enter=true;"
+                        (mouseleave)="ReSetDefault_Enter=false;"
+                        [style.backgroundImage]="ReSetDefault_Enter? ImagePath.ReSetDefault[0]:ImagePath.ReSetDefault[1]">
+                    </div>
                 </div>
+                
             </div>
             <div id='colorRecordArea'>
-                <div id='RAF1' class="cursor RecordAreaFrame" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex"
-                (click)="onclickColorDefault(0)">
+                <div id='RAF1' class="RecordAreaFrame" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[0].Hex"
+                (click)="onclickColorDefault(0)" >
                     <!-- <div class="HSBText">
                         H:{{this.FanSetting.getGradientMode().colorArrays[0].Hue}}°
                         S:{{this.FanSetting.getGradientMode().colorArrays[0].Saturation}}%
@@ -623,19 +617,18 @@
                     </div> -->
                 </div>
     
-                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>1" id='RAF2' class="cursor RecordAreaFrame"
+                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>1" id='RAF2' class="RecordAreaFrame"
                     (click)="onclickColorDefault(1)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[1].Hex">
                 </div>
-                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>2" id='RAF2' class="cursor RecordAreaFrame"
+                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>2" id='RAF2' class="RecordAreaFrame"
                     (click)="onclickColorDefault(2)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[2].Hex">
                 </div>
-                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>3" id='RAF2' class="cursor RecordAreaFrame"
+                <div *ngIf="FanSetting.getGradientMode().colorVisibleNum>3" id='RAF2' class="RecordAreaFrame"
                     (click)="onclickColorDefault(3)" [style.background-color]="this.FanSetting.getGradientMode().colorArrays[3].Hex">
                 </div>
                 <div id="colorSelectAll" style="
                 background-image: url(./image/Share/Off/ColorSelectAll.png);
-                width: 2.3vw;
-                height: 4.7vh;
+                width: 2.92vw;height: 2.92vw;
                 background-size: 100% 100%;"
                 (click)="onclickColorDefault('All')"  
                 (mouseenter)="ColorSelectAll_Enter=true;" (mouseleave)="ColorSelectAll_Enter=false;"
