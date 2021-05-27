@@ -3218,15 +3218,15 @@ export class AL_EffectModule extends ModeParameter {
             }
             else if(i_Step.loopDirection==2){
                 if(i_Step.nowFrames<=3){    
+                    if(i_Step.nowFrames<1 ){
+                        o_Step.loopDirection=0;
+                    }
                     for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
                         var data_4 = reInnerTempData[dindex];
                         data_4[i_Step.loopPos].HTML_target.style.background = this.getColorEffectValue([0,0,0,0], 1)
                     }
                     i_Step.loopPos+=2;
-                    i_Step.nowFrames+=1;
-                    if(i_Step.nowFrames==2 ){
-                        o_Step.loopDirection=0;
-                    } 
+                    i_Step.nowFrames+=1; 
                 }
                 else{
                     //i_Step.tempUpArray=i_Step.tempUpArray
@@ -3278,6 +3278,7 @@ export class AL_EffectModule extends ModeParameter {
                 }
                 else{
                     o_Step.loopDirection+=1;
+                    i_Step.loopDirection=0;
                     o_Step.nowFrames=0;
                 }
             }
@@ -3295,7 +3296,6 @@ export class AL_EffectModule extends ModeParameter {
                     o_Step.nowFrames+=1;
                 }
                 else{
-                    i_Step.loopDirection=0;
                     o_Step.loopDirection=8888;
                     o_Step.nowFrames=0;
                     o_Step.loopPos=3;
