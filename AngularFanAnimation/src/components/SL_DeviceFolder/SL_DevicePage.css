@@ -128,7 +128,7 @@
     width: 2.92vw;
     height: 2.92vw;
     margin-right: 1.3%;
-    cursor: url(./image/Share/bucket.png) 0 0, auto;
+    cursor: url(/image/Share/bucket.png) 0 0, auto;
 }
 ._GlobalColorArrays{
     display: flex;
