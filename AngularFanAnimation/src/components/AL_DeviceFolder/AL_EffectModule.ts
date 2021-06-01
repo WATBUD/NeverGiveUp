@@ -624,8 +624,6 @@ export class AL_EffectModule extends ModeParameter {
     }
     mode_Runway(effectData,Mode='Inner') {
         var TempName = this.elementsName;
-        var innerArrGroupNum = 4;
-        var outerArrGroupNum = 6;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
         var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
         var colorArrays = effectData.colorArrays;
@@ -637,12 +635,16 @@ export class AL_EffectModule extends ModeParameter {
                 colors:colorArrays[3].getRGBA(),
                 HTML_target: innerArr[index-1],
             });
-            if(index-1<6){
-                innerColorsArray.push(colorArrays[0].getRGBA());
-            }
-            else{
                 innerColorsArray.push(colorArrays[1].getRGBA())
-            }
+        }
+        for (let index = 0; index < 6; index++) {
+            innerColorsArray.push(colorArrays[0].getRGBA());
+        }
+        for (let index = 0; index < 6; index++) {
+            innerColorsArray.push(colorArrays[1].getRGBA());
+        }
+        for (let index = 0; index < 6; index++) {
+            innerColorsArray.push(colorArrays[1].getRGBA());
         }
         console.log('%c reInnerTempData','color:rgb(255,77,255)',reInnerTempData);
         var reOuterTempData = [];
@@ -651,23 +653,40 @@ export class AL_EffectModule extends ModeParameter {
                 colors:colorArrays[3].getRGBA(),
                 HTML_target: outerArr[index-1],
             });
-            if(index-1<6){
-                outerColorsArray.push(colorArrays[0].getRGBA());
-            }
-            else{
-                outerColorsArray.push(colorArrays[1].getRGBA())
-            }
+                outerColorsArray.push(colorArrays[1].getRGBA())        
         }
-        
-        effectData.direction=2;
+        for (let index = 0; index < 6; index++) {
+            outerColorsArray.push(colorArrays[0].getRGBA());
+        }
+        for (let index = 0; index < 6; index++) {
+            outerColorsArray.push(colorArrays[1].getRGBA());
+        }
+        var inner={
+            loopDirection:0,
+            innerCount:0,
+            backupArray:JSON.parse(JSON.stringify(innerColorsArray)),
+        }
         if (Mode != "Outer") {
             this.stopVar[TempName[0]] = setInterval(() => {
-                innerColorsArray=this.loopArrDisplacement(effectData.direction,innerColorsArray);
-                //var showArray=effectData.direction==1?JSON.parse(JSON.stringify(innerColorsArray)).reverse():innerColorsArray;
+                //var showArray=effectData.direction==2?JSON.parse(JSON.stringify(innerColorsArray)).reverse():innerColorsArray;
                 for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
                     var data = reInnerTempData[dindex];
                     data.HTML_target.style.background = this.getColorEffectValue(innerColorsArray[dindex], 0)
                 } 
+                if(inner.innerCount==innerColorsArray.length){
+                    inner.loopDirection+=1;
+                    inner.innerCount=0;
+                    reInnerTempData=reInnerTempData.reverse();
+                    innerColorsArray=JSON.parse(JSON.stringify(inner.backupArray))
+                    //innerColorsArray=inner.loopDirection%2==0?JSON.parse(JSON.stringify(innerColorsArray)).reverse():innerColorsArray;
+                    //reOuterTempData=effectData.direction==1?reOuterTempData.reverse():reOuterTempData;
+                    //var showArray=inner.loopDirection%2==1?JSON.parse(JSON.stringify(innerColorsArray)).reverse():innerColorsArray;
+                    //clearInterval(this.stopVar[TempName[0]]);
+                }
+                innerColorsArray=this.loopArrDisplacementAssignSpacing(effectData.direction,innerColorsArray,1);
+
+                inner.innerCount+=1;
+
             }, effectData.repeatTime);
         }
         if (Mode != "Inner") {
@@ -4382,7 +4401,6 @@ export class AL_EffectModule extends ModeParameter {
         var colorArrays=effectData.colorArrays;
         var innerIndex=0;
         var reInnerTempData = [];
-        var direction = 0;//0左1右
         var InnerTempData4 = [];
         for (let index = 1; index < innerArr.length+1; index++) {
             //console.log('%c innerIndex','color:rgb(255,77,255)',innerIndex,colorArrays[innerIndex].getRGBA());
@@ -4456,7 +4474,6 @@ export class AL_EffectModule extends ModeParameter {
         var totalInner_R_Array = [2,3,4,5];
         var totalOuter_L_Array = [2,1,0,11,10,9];
         var totalOuter_R_Array = [3,4,5,6,7,8];
-
         totalInner_L_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalInner_L_Array)).reverse() : totalInner_L_Array;
         totalInner_R_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalInner_R_Array)).reverse() : totalInner_R_Array;
         totalOuter_L_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalOuter_L_Array)).reverse() : totalOuter_L_Array;
@@ -4575,7 +4592,6 @@ export class AL_EffectModule extends ModeParameter {
             }
         }, effectData.repeatTime);
         console.log('%c mode_Voice', 'color:rgb(255,77,255)', reOuterTempData, innerArr.length, outerArr.length, TempName);
-
     }
 
     
