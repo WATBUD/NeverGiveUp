@@ -197,7 +197,7 @@ initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
         ">
             <!-- border-bottom: 1px solid #17BEFF; -->
             <div *ngFor="let item of this.DeviceService.getTarget().onPlugDevice; let i = index" (mouseover)="controller_mouseover=i"
-                [style.border-top]="controller_index==i||controller_mouseover==i?'1px solid #17BEFF':'1px solid #0000'"
+                [style.border-top]="this.DeviceService.getTarget().controller_index==i||controller_mouseover==i?'1px solid #17BEFF':'1px solid #0000'"
                 [style.pointer-events]="item>0?'auto':'none'"
                 [style.display]="item>0?'auto':'none'"
                 class="ControllersItem" (click)=" this.DeviceService.getTarget().switch_Packaged_Code(i)">

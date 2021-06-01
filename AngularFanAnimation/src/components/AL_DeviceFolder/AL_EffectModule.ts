@@ -546,7 +546,14 @@ export class AL_EffectModule extends ModeParameter {
                 break;
         }
 
-
+        for (let dindex = 0; dindex < reInnerTempData.length; dindex++) {
+            var data_4 = reInnerTempData[dindex];
+            data_4=effectData.direction==1?data_4.reverse():data_4;
+        }
+        for (let dindex = 0; dindex < reOuterTempData.length; dindex++) {
+            var data_4 = reOuterTempData[dindex];
+            data_4=effectData.direction==1?data_4.reverse():data_4;
+        }
         this.stopVar[setTempName] = setInterval(() => {
                                 //i_Step.tempUpArray = this.loopArrDisplacementAssignSpacing(2,i_Step.nowUpArray,setRange);
 
@@ -651,6 +658,7 @@ export class AL_EffectModule extends ModeParameter {
                 outerColorsArray.push(colorArrays[1].getRGBA())
             }
         }
+        
         effectData.direction=2;
         if (Mode != "Outer") {
             this.stopVar[TempName[0]] = setInterval(() => {
@@ -4402,7 +4410,6 @@ export class AL_EffectModule extends ModeParameter {
                 outerTempData4=[];
             }
         }
-        var fanUpNumber=4;
         var i_Step = {
             nowFrames: 0,
             loopDirection: 0,
@@ -4445,21 +4452,18 @@ export class AL_EffectModule extends ModeParameter {
             default:
                 break;
         }
-        var inner_startIndex = [[1, 2], [0, 3], [7, 4], [6, 5]];
-
         var totalInner_L_Array = [1,0,7,6];
         var totalInner_R_Array = [2,3,4,5];
         var totalOuter_L_Array = [2,1,0,11,10,9];
         var totalOuter_R_Array = [3,4,5,6,7,8];
 
-        totalInner_L_Array=effectData.direction == 1 ? JSON.parse(JSON.stringify(totalInner_L_Array)).reverse() : totalInner_L_Array;
-        totalInner_R_Array=effectData.direction == 1 ? JSON.parse(JSON.stringify(totalInner_R_Array)).reverse() : totalInner_R_Array;
-        totalOuter_L_Array=effectData.direction == 1 ? JSON.parse(JSON.stringify(totalOuter_L_Array)).reverse() : totalOuter_L_Array;
-        totalOuter_R_Array=effectData.direction == 1 ? JSON.parse(JSON.stringify(totalOuter_R_Array)).reverse() : totalOuter_R_Array;
+        totalInner_L_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalInner_L_Array)).reverse() : totalInner_L_Array;
+        totalInner_R_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalInner_R_Array)).reverse() : totalInner_R_Array;
+        totalOuter_L_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalOuter_L_Array)).reverse() : totalOuter_L_Array;
+        totalOuter_R_Array=effectData.direction == 2 ? JSON.parse(JSON.stringify(totalOuter_R_Array)).reverse() : totalOuter_R_Array;
         //console.log('%c i_step2.nowUpArray', 'color:rgb(255,77,255)', i_Step.nowUpArray
         //console.log('%c  loopArrDisplacementAssignSpacing', 'color:rgb(255,77,255)', this.loopArrDisplacementAssignSpacing(2,i_Step.nowUpArray,2));
         this.stopVar[setTempName] = setInterval(() => {
-            // inner_startIndex = effectData.direction == 1 ? JSON.parse(JSON.stringify(inner_startIndex)).reverse() : inner_startIndex;
             if (i_Step.animationStep == 0) {
                 i_Step.setRGBA = colorArrays[i_Step.setColorindex].getRGBA();
                 var setRange = Math.round(i_Step.nowFrames * (i_Step.maxArrlen) / i_Step.maxframes);
@@ -4480,9 +4484,9 @@ export class AL_EffectModule extends ModeParameter {
                             if (i_L_Array >= setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalInner_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 0], 1)
                                 var data = data_4[totalInner_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 0], 1)
                             }
                         }
 
@@ -4535,9 +4539,9 @@ export class AL_EffectModule extends ModeParameter {
                             if (i_L_Array >= setRange) {
                                 //console.log('%c i_L_Array', 'color:rgb(255,77,255)', i_L_Array,data_4,totalInner_L_Array[i_L_Array]);
                                 var data = data_4[totalOuter_L_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 0], 1)
                                 var data = data_4[totalOuter_R_Array[i_L_Array]];
-                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 1], 1)
+                                data.HTML_target.style.background = this.getColorEffectValue([0, 0, 0, 0], 1)
                             }
                         }
 

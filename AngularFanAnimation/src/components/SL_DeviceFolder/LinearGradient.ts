@@ -19,7 +19,7 @@ export class ModeParameter {
     repeatTime = 1000;
     speed: any = 3; // step
     bright: any = 4;//step
-    direction: any = 1;//左1又2
+    direction: any =2;//左1又2
     name: string;
     chooseGroup: any = 0;
     loopCount=0;
@@ -1100,7 +1100,6 @@ export class ColorCycle extends ModeParameter{
         for (let index = 0; index < this.colors.length; index++) {
             this.colors[index]=this.colorArrays[index].Hex;
         }
-        //this.colors=this.direction==2?this.colors:this.colors.reverse();
         var gap = 0;
         switch (GroupNumber) {
             case 1:
@@ -1237,12 +1236,7 @@ export class ColorCycle extends ModeParameter{
     }
 
     getLinearGradientText(arr = [], startpos, finalpos) {
-        //var T_d=this.direction==1?"right":"left";
-        //var a2=this.direction==1?JSON.parse(JSON.stringify(arr.reverse())):JSON.parse(JSON.stringify(arr))
-        //array1.reverse();
-        //var reverse
         var text = "-webkit-linear-gradient("+"left"
-        //var text = "-webkit-linear-gradient("+T_d
         for (let index = startpos; index < finalpos; index++) {
             text += ',' + arr[index];
         }
@@ -2485,14 +2479,11 @@ export class Stack extends ModeParameter{
 export class StackMultiColor extends ModeParameter{
     showSPBTable:any=[true, true, true];
     colorVisibleNum=0;
-
     targetMax=64;
     nowIndex=0;
     nowUseColor=0;
     max: any = 0;
     directionSwitch=false;
-
-
     constructor(){
         super();
         this.name="StackMultiColor";
@@ -2592,9 +2583,6 @@ export class StackMultiColor extends ModeParameter{
             FGTArr[1].style.background = this.getLinearGradientText(this.schedule[2], 0, 16);
             FGTArr[0].style.background = this.getLinearGradientText(this.schedule[2], 0, 16);
         }, this.repeatTime);
-
-
-
     }
     startAllFanGradient_4(ElementClass) {
         this.scheduleCreateData(4);
@@ -2602,14 +2590,14 @@ export class StackMultiColor extends ModeParameter{
             var FGTArr = document.getElementsByClassName(ElementClass) as HTMLCollectionOf<HTMLElement>;
             this.schedule[3] = this.loopArrDisplacement(this.schedule[3]);
             var showArray=this.direction==1?JSON.parse(JSON.stringify(this.schedule[3])).reverse():this.schedule[3];
-            FGTArr[7].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
-            FGTArr[3].style.background = this.getLinearGradientText(this.schedule[3], 48, 64);
-            FGTArr[6].style.background = this.getLinearGradientText(this.schedule[3], 32, 48);
-            FGTArr[2].style.background = this.getLinearGradientText(this.schedule[3], 32, 48);
-            FGTArr[5].style.background = this.getLinearGradientText(this.schedule[3], 16, 32);
-            FGTArr[1].style.background = this.getLinearGradientText(this.schedule[3], 16, 32);
-            FGTArr[4].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
-            FGTArr[0].style.background = this.getLinearGradientText(this.schedule[3], 0, 16);
+            FGTArr[7].style.background = this.getLinearGradientText(showArray, 48, 64);
+            FGTArr[3].style.background = this.getLinearGradientText(showArray, 48, 64);
+            FGTArr[6].style.background = this.getLinearGradientText(showArray, 32, 48);
+            FGTArr[2].style.background = this.getLinearGradientText(showArray, 32, 48);
+            FGTArr[5].style.background = this.getLinearGradientText(showArray, 16, 32);
+            FGTArr[1].style.background = this.getLinearGradientText(showArray, 16, 32);
+            FGTArr[4].style.background = this.getLinearGradientText(showArray, 0, 16);
+            FGTArr[0].style.background = this.getLinearGradientText(showArray, 0, 16);
         }, this.repeatTime);
     }
     getLinearGradientText(arr = [], startpos, finalpos) {
