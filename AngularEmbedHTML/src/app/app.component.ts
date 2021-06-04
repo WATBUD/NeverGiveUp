@@ -36,12 +36,6 @@ export class AppComponent {
   ) {
 
   }
-
-
-
-
-
-  
 	ngOnInit() {
 		//let src="./assets/TestHTML1/index.html"    
 		this.iframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.src);

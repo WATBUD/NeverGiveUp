@@ -778,7 +778,7 @@ export class AL_EffectModule extends ModeParameter {
             return Arr;
         }
         var outer_nowIndex = -1;
-        var outer_TargetMax=64;
+        var outer_TargetMax=48;
         function outer_loopArrDisplacement(Arr) {
             console.log('%c _this','color:rgb(255,77,255)',Arr);
             if (outer_nowIndex == -1) {
@@ -797,7 +797,7 @@ export class AL_EffectModule extends ModeParameter {
                 //console.log("repeat>>>>", outer_nowIndex, targetMax);
             }
             else {
-                outer_TargetMax<=0?outer_TargetMax=64:outer_TargetMax-= 1;
+                outer_TargetMax<=0?outer_TargetMax=48:outer_TargetMax-= 1;
                 outer_nowIndex = -1;
                 //console.log("repeat<<<<", outer_nowIndex, targetMax);
             }
