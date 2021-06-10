@@ -20,7 +20,8 @@
     //完整圓弧度2π，所以2π rad = 360°
     //角度(rad)*(π)Math.PI/180
     //context.arc(x1, y1, radius , 起始弧度(radians), 結束弧度(radians));
-    context.arc(200, 200, 50, 0, 45/180*Math.PI);
+    context.arc(200, 200, 50, 0, 180/180*Math.PI);
+    context.strokeStyle = "blue";
     context.stroke(); //畫出你定義的圖形，若忘了這行，圈圈就不會出現
     //console.log()
 </script>

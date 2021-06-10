@@ -4700,114 +4700,6 @@ export class AL_EffectModule extends ModeParameter {
         
         console.log('%c mode_Static_Colorful','color:rgb(255,77,255)',innerArr.length,outerArr.length,TempName);
     }
-    mode_Rainbow(effectData,rangeMode='Inner') {
-        var TempName=this.elementsName;
-        var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
-        var outerArr = document.getElementsByClassName(TempName[1]) as HTMLCollectionOf<HTMLElement>;
-        var colorArrays=effectData.colorArrays;
-        var innerIndex=0;
-        var outerIndex=0;
-        var innerRainbowIndex = 0;
-        var outerRainbowIndex = 0;
-        var reInnerTempData = [];
-        var reOuterTempData = [];
-        var direction = 0;//0左1右
-        for (let index = 1; index < innerArr.length+1; index++) {
-
-            reInnerTempData.push({
-                colors:colorArrays[innerIndex].getRGBA(),
-                recordIndex: innerRainbowIndex,
-                repeatTime: this.getRandom(5, 25),
-                HTML_target: innerArr[index-1],
-            });
-
-            if(innerRainbowIndex<this.rainbow7Color().length-1){
-                innerRainbowIndex+=1;
-            }
-            else{
-                innerRainbowIndex=0;
-            }
-            if (index % 8 == 0) {
-                innerIndex+=1;
-                innerRainbowIndex=0;
-            }
-            
-        }
-        for (let index = 1; index < outerArr.length + 1; index++) {
-            reOuterTempData.push({
-                colors: colorArrays[outerIndex].getRGBA(),
-                recordIndex: outerRainbowIndex,
-                repeatTime: this.getRandom(5, 25),
-                HTML_target: outerArr[index - 1],
-            });
-            if (outerRainbowIndex < this.rainbow7Color().length - 1) {
-                outerRainbowIndex += 1;
-            }
-            else {
-                outerRainbowIndex = 0;
-            }
-            if (index % 12 == 0) {
-                outerIndex += 1;
-                outerRainbowIndex = 0;
-            }
-        }
-        if (rangeMode != "Outer") {
-            this.stopVar[TempName[0]] = setInterval(() => {
-                for (let index = 0; index < reInnerTempData.length; index++) {
-                    var data = reInnerTempData[index];
-                    var setRgba = this.rainbow7Color()[data.recordIndex];
-                    data.HTML_target.style.background =this.getColorEffectValue(setRgba,0)
-                    if (direction == 1) {
-                        if (data.recordIndex < this.rainbow7Color().length - 1) {
-                            data.recordIndex += 1;
-
-                        }
-                        else {
-                            data.recordIndex = 0;
-                        }
-                    }
-                    else {
-                        if (data.recordIndex > 0) {
-                            data.recordIndex -= 1;
-                        }
-                        else {
-                            data.recordIndex = this.rainbow7Color().length - 1;
-                        }
-                    }
-
-                }
-
-            }, effectData.repeatTime);
-        }
-        if (rangeMode != "Inner") {
-            this.stopVar[TempName[1]] = setInterval(() => {
-                for (let index = 0; index < reOuterTempData.length; index++) {
-                    var data = reOuterTempData[index];
-                    var setRgba = this.rainbow7Color()[data.recordIndex];
-                    data.HTML_target.style.background =this.getColorEffectValue(setRgba,1)
-                    if (direction == 1) {
-                        if (data.recordIndex < this.rainbow7Color().length - 1) {
-                            data.recordIndex += 1;
-
-                        }
-                        else {
-                            data.recordIndex = 0;
-                        }
-                    }
-                    else {
-                        if (data.recordIndex > 0) {
-                            data.recordIndex -= 1;
-                        }
-                        else {
-                            data.recordIndex = this.rainbow7Color().length - 1;
-                        }
-                    }
-                }
-
-            }, effectData.repeatTime);
-        }
-        console.log('%c mode_Rainbow','color:rgb(255,77,255)',innerArr.length,outerArr.length,TempName,rangeMode);
-    }
     mode_Rainbow2(effectData,rangeMode='Inner') {
         var TempName=this.elementsName;
         var innerArr = document.getElementsByClassName(TempName[0]) as HTMLCollectionOf<HTMLElement>;
@@ -4921,7 +4813,7 @@ export class AL_EffectModule extends ModeParameter {
                     var data = reOuterTempData[index];
                     var setRgba = this.rainbow7Color()[data.recordIndex];
                     data.HTML_target.style.background =this.getColorEffectValue(setRgba,1)
-                    if (direction == 1) {
+                    if (effectData.direction == 1) {
                         if (data.recordIndex < this.rainbow7Color().length - 1) {
                             data.recordIndex += 1;
 
