@@ -156,7 +156,7 @@
 
         
         <input data="test" id="rangeUI1" type="range" max="100" min="0" value="0">
-        <input id="RangeStyle2" type="range" max="100" min="0" value="0">
+        <!-- <input id="RangeStyle2" type="range" max="100" min="0" value="0"> -->
 
 
 
@@ -166,24 +166,30 @@
 <script>
     //var validator = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+$');
     var rangeUI1 = document.getElementById("rangeUI1");
+    //rangeUI1.style.backgroundSize = 80 + '% 100%';
     rangeUI1.onmousemove = function () {
         console.log('range.onmousemove',rangeUI1.value);
 
-        if(rangeUI1.value<30){
-            rangeUI1.style.background="-webkit-linear-gradient(#FF0000, #FF0000) no-repeat, #606060";
+        var alpha=rangeUI1.value/50;
+        var setColor="rgba(0,0,255,"+alpha+")";
+        var setColor2="rgba(0,0,255,"+1+")";
+        if(rangeUI1.value<50){
+            rangeUI1.style.background="-webkit-linear-gradient("+setColor+","+setColor+") no-repeat, #606060";
         }
         else{
-            rangeUI1.style.background="-webkit-linear-gradient(#2e9cfb, #2e9cfb) no-repeat, #606060";
+
+            rangeUI1.style.background="-webkit-linear-gradient("+setColor2+","+setColor2+") no-repeat, #606060";
         }
         rangeUI1.style.backgroundSize = rangeUI1.value + '% 100%';
 
         //rangeUI1.innerHTML = ".range::-webkit-slider-thumb { width: " + 100 + "px !important; height: " + 100 + "px !important; }";
 
     }
-    var RangeStyle2 = document.getElementById("RangeStyle2");
-    RangeStyle2.onmousemove = function () {
-        RangeStyle2.style.backgroundSize = RangeStyle2.value + '% 100%';
-    }
+    // var RangeStyle2 = document.getElementById("RangeStyle2");
+    // RangeStyle2.onmousemove = function () {
+    //     RangeStyle2.style.backgroundSize = RangeStyle2.value + '% 100%';
+    // }
+
     // document.getElementById("RangeStyle2").onmousemove = function () {
     //     this.style.backgroundSize = this.value + '% 100%';
     // }
