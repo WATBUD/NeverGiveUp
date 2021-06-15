@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        input[type="range"]#rangeUI1 {
+            -webkit-appearance: none;
+            /* 去除默认样式 */
+            background: -webkit-linear-gradient(#2e9cfb, #2e9cfb) no-repeat, #606060;
+            background-size: 0 100%;
+            width: 200px;
+            height: 10px;
+            border-radius: 15px;
+
+        }
+
+        input[type="range"]#RangeStyle2 {
+            -webkit-appearance: none;
+            /* 去除默认样式 */
+            background: -webkit-linear-gradient(#ff8800, #ff8800) no-repeat, #606060;
+            background-size: 0% 100%;
+            width: 200px;
+            height: 10px;
+            border-radius: 15px;
+
+        }
+
+        /* 去除获取焦点时的边框 */
+        input[type="range"]:focus {
+            outline: none;
+        }
+
+        /* chrome自定义滑动轨道 */
+        input[type="range"]::-webkit-slider-runnable-track {
+            /* border-radius: 15px; */
+            /* background-color: rgb(47, 0, 255); */
+            height: 12px;
+            margin-bottom: 2px;
+        }
+
+        /* chrome自定义滑块 */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: rgba(46, 218, 75, 0.92);
+            /* border-radius: 0 0 5px 5px; */
+            border-radius: 50%;
+            /* transform: translateY(-5px); */
+        }
+
+        /* firefox自定义滑动轨道 */
+        input[type="range"]::-moz-range-track {
+            background: #606060;
+            height: 10px;
+            border-radius: 15px;
+        }
+
+        /* firefox自定义滑块 */
+        input[type="range"]::-moz-range-thumb {
+            width: 10px;
+            height: 20px;
+            background: rgb(241, 241, 241);
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* firefox根据滑块位置填充进度条 */
+        input[type="range"]::-moz-range-progress {
+            height: 10px;
+            background: #2e9cfb;
+            border-radius: 15px;
+        }
+
+        /* IE自定义滑动轨道 */
+        input[type="range"]::-ms-track {
+            height: 10px;
+            border-color: transparent;
+            /* 去掉原有边框 */
+            color: transparent;
+            /* 去掉轨道内的竖线 */
+            border-radius: 15px;
+            background: #606060;
+        }
+
+
+        /* IE自定义滑块 */
+        input[type="range"]::-ms-thumb {
+            height: 20px;
+            /* 不生效，IE下滑块最高高度与滚动条一致 */
+            width: 10px;
+            background: rgb(241, 241, 241);
+        }
+
+        input[type=range]::-ms-fill-lower {
+            /*进度条已填充的部分*/
+            background: #2e9cfb;
+        }
+
+        input[type=range]::-ms-fill-upper {
+            /*进度条未填充的部分*/
+            background: #606060;
+        }
+
+        .LedInputTxtStyle {
+            width: 18%;
+            height: 15px;
+            margin-left: 6px;
+            padding: 0;
+            text-align: center;
+            color: white;
+            background-color: #000;
+            border: 1px #0000 solid;
+        }
+
+        input[type=number].color_quantity::-webkit-inner-spin-button {
+            background-color: #f00;
+            /* width: 12px;
+                     margin-bottom: 5px;
+             */
+             /* height: 41px; */
+            cursor: pointer;
+            /* -webkit-appearance: none; */
+            opacity: 1;
+        }
+        input[type=number].color_quantity::-webkit-outer-spin-button {
+            background-color: #f00;
+   
+            /* width: 12px;
+            height: 41px; */
+            cursor: pointer;
+            /* -webkit-appearance: none; */
+            opacity: 1;
+        }
+
+        /* input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            opacity: 1;
+        } */
+
+        /* input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            pointer-events: none;
+            opacity: 1;
+        } */
+    </style>
+</head>
+
+<body>
+    <div>
+        <style data="test" type="text/css"></style>
+
+
+        
+        <input data="test" id="rangeUI1" type="range" max="100" min="0" value="0">
+        <input id="RangeStyle2" type="range" max="100" min="0" value="0">
+
+
+
+    </div>
+
+</body>
+<script>
+    //var validator = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+$');
+    var rangeUI1 = document.getElementById("rangeUI1");
+    rangeUI1.onmousemove = function () {
+        console.log('range.onmousemove',rangeUI1.value);
+
+        if(rangeUI1.value<30){
+            rangeUI1.style.background="-webkit-linear-gradient(#FF0000, #FF0000) no-repeat, #606060";
+        }
+        else{
+            rangeUI1.style.background="-webkit-linear-gradient(#2e9cfb, #2e9cfb) no-repeat, #606060";
+        }
+        rangeUI1.style.backgroundSize = rangeUI1.value + '% 100%';
+
+        rangeUI1.innerHTML = ".range::-webkit-slider-thumb { width: " + 100 + "px !important; height: " + 100 + "px !important; }";
+
+    }
+    var RangeStyle2 = document.getElementById("RangeStyle2");
+    RangeStyle2.onmousemove = function () {
+        RangeStyle2.style.backgroundSize = RangeStyle2.value + '% 100%';
+    }
+    // document.getElementById("RangeStyle2").onmousemove = function () {
+    //     this.style.backgroundSize = this.value + '% 100%';
+    // }
+    //var content = rangeUI1.find(".track");
+    //var b = window.getComputedStyle(range,'::-webkit-slider-thumb');
+    // var style = document.querySelector('[data="test"]');
+
+    // // console.log('RangeStyle2"style',b);
+    // // console.log('RangeStyle2"style',range.innerHTML,range.cssText);
+
+
+
+
+
+
+
+
+</script>
+
+</html>
