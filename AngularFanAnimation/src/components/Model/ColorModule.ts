@@ -1,5 +1,7 @@
 // HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
 // HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB其中B即英語：Brightness。
+//backup:"-webkit-linear-gradient(left,#FFFFFF,red)";
+
     //Louis Architecture => Hex=>SET RGB=>SET HSV
     var consolelogFlag=false;
     export class ColorModule{    
@@ -14,10 +16,10 @@
         Blue: number = 0;
         SBgColor:any="";
         VBgColor:any="";
+        colorTicket=[[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1]];
         preDefineColor: any = ["#FF2000","#ff8000","#80ff00","#00ff00","#00ffff","#0000ff","#8000ff","#ff00ff","#ff0080","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"];//RGB
         currentRecordIndex=0;
         recordColorElement:any;
-        SSS:any="-webkit-linear-gradient(left,#FFFFFF,red)";
         savePosition:any={
             "precentS":0,
             "precentL":0,
@@ -300,7 +302,10 @@
         getV_RGBColor(){
             return this.HSVtoRGB(this.Hue/360, this.Saturation/100, 1);
         }
-
+        getParentDiv(){
+            var parentDiv = document.getElementById(this.name+'PickingArea');
+            return parentDiv;
+        }
 
         getColorFormat_RGB(){
             return  "rgb(" + this.Red + "," + this.Green + "," + this. Blue + ")";
@@ -345,11 +350,10 @@
                 : null;
             }
             catch{
-                return 1;
+                alert("hexToRgbError");
+                return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16) ];
             }
         }
-
-
         backGroundColorRgbToHex(col) {
             if (col.charAt(0) == 'r') {
                 col = col.replace('rgb(', '').replace(')', '').split(',');
