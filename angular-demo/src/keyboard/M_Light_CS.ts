@@ -7,8 +7,7 @@ export class M_Light_CS {
     //左上,右上,左下,右下
     maxkaycapNumber = 0
     repeater;
-    ledcoordinates: any = []
-    AllBlockColor: any = [] //TOTAL NUMBER
+    AllBlockColor: any = []
     lightData={
         translate:'GloriousMode',
         PointEffectName:'GloriousMode',
@@ -21,12 +20,10 @@ export class M_Light_CS {
     minKeyWidth=43;
     minKeyHeight=41;
     settingPerkeyName=''
-    //mode_name:any=["波浪","撞擊","螺旋","循環","觸發","漣漪","呼吸","下雨","火焰","點亮","音樂"];
     imageMaxWidth=0;
     imageMaxHeight=0;
     recordModeArr: any = []
     currentModeIndex: any = 0
-    BSApage1 = new BoxSelectionArea('RGBColorBlockStyle')
     twoDimensionalArray=new Array(26);//8*26;
     KeyTableArray=[];
     qigong_Step2_Range=[22,23, 38,52,51 ,36];
@@ -36,8 +33,6 @@ export class M_Light_CS {
     break_DimensionalArray=[];
     max_X_Number=26;
     max_Y_Number=8;
-    max_H_Number=6;
-    acceleration=5;
     // x_Array=new Array(120);//8*26;
     // y_Array=new Array(120);//8*26;
     constructor(inputMax) {
@@ -2805,8 +2800,8 @@ export class M_Light_CS {
             //this.twoDimensionalArray[index][0].color=[0,0,255,1];
             repeatCountList.push({
                 color: colors[this.getRandom(0, colors.length - 1)],
-                pos: [index, index % (this.max_H_Number / 2)],
-                backupPos: [index, index % (this.max_H_Number / 2)],
+                pos: [index, index % (this.max_Y_Number / 2)],
+                backupPos: [index, index % (this.max_Y_Number / 2)],
                 repeatTime: this.getRandom(0, 3),
             });
         }
@@ -2819,7 +2814,7 @@ export class M_Light_CS {
                     T.repeatTime -= 1;
                 }
                 if (T.repeatTime == 0) {
-                    if (T.pos[1] + 1 < this.max_H_Number) {
+                    if (T.pos[1] + 1 < this.max_Y_Number) {
                         if (T.pos[0] < 1) {
                             T.pos[1] += 1;
                         }
