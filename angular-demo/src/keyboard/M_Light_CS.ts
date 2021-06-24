@@ -557,7 +557,18 @@ export class M_Light_CS {
             var y = b[key];x
             return x - y;
         });
-	}
+    }
+    loopArrDisplacementAssignSpacing(directionSwitch=1,Arr,Spacing=1) {
+
+        var handleArr=JSON.parse(JSON.stringify(Arr));
+        if (directionSwitch == 2) {
+            handleArr=(handleArr.splice(handleArr.length-Spacing,handleArr.length)).concat(handleArr);
+        }
+        else if (directionSwitch == 1) {//反向陣列
+            handleArr = handleArr.concat(handleArr.splice(0, Spacing));
+        }
+        return handleArr;
+    }
     mode_Surmount(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
         console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
@@ -624,7 +635,44 @@ export class M_Light_CS {
         }, 50**this.animationSpeed)
         //clearInterval(this.repeater);
     }
+    mode_Retro_snake(colors = [[255,0,0,1]], isRainbow = true,InputArray=[]) {
+        console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        clearInterval(this.repeater);
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        this.repeater = setInterval(() => {
+            if (nowStep < InputArray.length) {
+                nowStep += 1;
+            }
+            else {
+                nowStep = 0;
+            }
+            //InputArray = this.loopArrDisplacementAssignSpacing(2, InputArray, nowStep);
+            var target = this.AllBlockColor;
+            var setRGB;
+            if (isRainbow) {
+                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+            }
+            else {
+                setRGB = colors[this.getRandom(0, colors.length - 1)];
+            }
 
+            for (let index = 0; index < target.length; index++) {
+                var element = target[index];
+                if (index == InputArray[nowStep]) {
+
+                    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+                    for (let index2 = 0; index2 < 3; index2++) {
+                        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+                    }
+                    element.color = temp_colorData;
+                }
+                else{
+                    element.color = [0,0,0,1];
+                }
+            }
+            }, 70 * this.animationSpeed);
+    }
     mode_RippleGraff(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
         console.log('%c mode_RippleGraff','color:rgb(255,75,255,1)',colors,isRainbow);
         clearInterval(this.repeater);

@@ -128,7 +128,7 @@ export class AppComponent implements OnInit {
     LightPageRegisterEvent_Box_selection() {
         //var RGBCBSList = this.elementRef.nativeElement.querySelectorAll('.RGBColorBlockStyle')
         //console.log('RGBCBSList', RGBCBSList)
-        this.M_Light_CS.BSApage1.setSelectContainer('EventCanBoxSelectRange')
+        //this.M_Light_CS.BSApage1.setSelectContainer('EventCanBoxSelectRange')
         var RGBCBSList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
         this.KeyBoardStyle.applyStyles(RGBCBSList);
         console.log('%c LightPageRegisterEvent_Box_selection','color:rgb(255,77,255)', RGBCBSList);
@@ -328,6 +328,9 @@ export class AppComponent implements OnInit {
                 break;
             case 'Surmount':
                 T_CS.mode_Surmount(inputColor,target.Multicolor,T_CS.centerBlockPoint);
+                break;
+            case 'Retro_snake':
+                T_CS.mode_Retro_snake(inputColor, target.Multicolor, [1, 2, 3, 4,66,40,36]);
                 break;
             case 'LEDOFF':
                 T_CS.mode_LEDOFF();
