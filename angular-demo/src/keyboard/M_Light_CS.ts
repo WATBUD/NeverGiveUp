@@ -3180,7 +3180,7 @@ export class M_Light_CS {
         },10*this.animationSpeed)
     }
 
-    mode_Matrix3(colors = [[255,255,0,1]], isRainbow = false){
+    mode_Matrix3(colors = [[255,255,0,1]], isRainbow = false,speed=1){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var RGBcolors=[];
@@ -3303,10 +3303,10 @@ export class M_Light_CS {
             // if(repeatCount>2){
             //     clearInterval(this.repeater);
             // }
-        }, 100)
+        }, 100*speed)
 
     }
-    mode_Matrix2(colors = [[255,255,0,1]], isRainbow = false){
+    mode_Matrix2(colors = [[255,255,0,1]], isRainbow = false,speed=1){
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
         var RGBcolors=[];
@@ -3320,7 +3320,6 @@ export class M_Light_CS {
             colors=[colors[0],[0,0,0,1]];
         }
         var totalStep=30;
-
         var intervalCount=0;
         var StartPoint = this.getNowBlock(0).coordinateData;
         var target = this.AllBlockColor;
@@ -3335,10 +3334,6 @@ export class M_Light_CS {
             var modStep=(target[index].coordinateData.center_Point[0]%this.imageMaxWidth)/this.imageMaxWidth;
             //var ran=this.getRandom(0, colors.length - 1);
             var ran=(colors.length - 1)-Math.round(modStep* (colors.length - 1));
-            //console.log('alpha',alpha);
-            //console.log('modStep',modStep);
-
-            //nowstep:modStep*totalStep
             repeatCountList.push({
                                 color:0,
                                 nowPos:0,
@@ -3431,10 +3426,7 @@ export class M_Light_CS {
                 exist=[];
                 repeatCount += 1;
             }
-            // if(repeatCount>2){
-            //     clearInterval(this.repeater);
-            // }
-        }, 100)
+        }, 100*speed);
 
     }
     mode_Starlight(colors = [[255,255,0,1]], isRainbow = false){
@@ -3725,6 +3717,36 @@ export class M_Light_CS {
             var temp_colorData = [0, 0, 0, 1];
             for (let index = 0; index < 3; index++) {
                 temp_colorData[index] = (randomColor[index] * (totalStep - nowStep) + nextColor[index] * nowStep) / totalStep;
+                temp_colorData[index]=temp_colorData[index]*this.lightData.brightness/100;
+            }
+            var target = this.AllBlockColor;
+            target[index].color = temp_colorData;   
+        }, 50*this.animationSpeed)
+    }
+
+    mode_Shadow_disappear(colors=[[0,0,255,1]],index=20,fixMulticolor=false) {
+        clearInterval(this.repeater);
+        if(fixMulticolor){
+            colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        }
+        this.setAllBlockColor(colors[0]);
+        var randomColor=colors[this.getRandom(0,colors.length-1)];
+        var originalColorValue=[0,0,0,1];
+        console.log('%c mode_Shadow_disappear randomColor','color:rgb(255,77,255)', originalColorValue);
+        var nowStep=0;
+        var totalStep=30;
+        var nextColor=colors[0];
+        this.repeater = setInterval(() => {
+            //this.setAllBlockColor([0,0,0,1]);
+            if (nowStep<totalStep) {
+                nowStep+=1;
+            }
+            else{
+                clearInterval(this.repeater);
+            } 
+            var temp_colorData = [0, 0, 0, 1];
+            for (let index = 0; index < 3; index++) {
+                temp_colorData[index] = (originalColorValue[index] * (totalStep - nowStep) + nextColor[index] * nowStep) / totalStep;
                 temp_colorData[index]=temp_colorData[index]*this.lightData.brightness/100;
             }
             var target = this.AllBlockColor;

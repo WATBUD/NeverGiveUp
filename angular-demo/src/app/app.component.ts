@@ -420,14 +420,17 @@ export class AppComponent implements OnInit {
                 target_cs.mode_RippleGraff(inputColor,target.Multicolor,index);
                 break;
             case 'PassWithoutTrace'://單點
-                if(target.Multicolor){
-                    var colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-                    inputColor=[colors[this.M_Light_CS.getRandom(0,colors.length-1)]];
+                if (target.Multicolor) {
+                    var colors = [[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]];
+                    inputColor = [colors[this.M_Light_CS.getRandom(0, colors.length - 1)]];
                 }
-                target_cs.mode_PassWithoutTrace(inputColor,index);
+                target_cs.mode_PassWithoutTrace(inputColor, index);
+                break;
+            case 'Shadow_disappear'://單點
+                target_cs.mode_Shadow_disappear(inputColor, index);
                 break;
             case 'FastRunWithoutTrace'://一排
-                target_cs.mode_FastRunWithoutTrace(inputColor,target.Multicolor,index);
+                target_cs.mode_FastRunWithoutTrace(inputColor, target.Multicolor, index);
                 break;
             case 'Cross'://十字
                 target_cs.mode_Cross(inputColor,false,index);
