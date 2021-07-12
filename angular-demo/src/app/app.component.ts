@@ -331,7 +331,7 @@ export class AppComponent implements OnInit {
                 T_CS.mode_Surmount(inputColor,target.Multicolor,T_CS.centerBlockPoint);
                 break;
             case 'Retro_snake':
-                T_CS.mode_Retro_snake(inputColor, target.Multicolor, [1, 2, 3, 4,66,40,36]);
+                T_CS.mode_Retro_snake(inputColor,[1, 2, 3, 4,66,40,36]);
                 break;
             case 'LEDOFF':
                 T_CS.mode_LEDOFF();
@@ -449,13 +449,8 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Breath();
         //this.M_Light_CS.mode_Spiral();
         //this.setMode('ConicRipple',[0,0,255,1],false);
-
         //this.setMode('ConicRippleRainbow',[0,0,255,1],false);
-
         this.setMode('ConicRipple',[0,0,255,1],true);
-
-
-
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {

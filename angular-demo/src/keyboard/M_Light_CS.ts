@@ -1892,8 +1892,8 @@ export class M_Light_CS {
         }, 100)
     }
 
-    mode_Rain(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
-        console.log('%c mode_Rain', 'color:rgb(255,75,255,1)', colors, this.repeater);
+    mode_KeepRaining(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
+        console.log('%c mode_KeepRaining', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex = 0;
         console.log('%c mode_Starlight', 'color:rgb(255,75,255,1)', colors);
@@ -2030,8 +2030,8 @@ export class M_Light_CS {
         }, 250)
     }
 
-    mode_RainBackup(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
-        console.log('%c mode_RainBackup', 'color:rgb(255,75,255,1)', colors, this.repeater);
+    mode_KeepRainingBackup(colors = [[0, 0, 255, 1]], isRainbow = false, bandwidth = 20, BaseSpeed = 140) {
+        console.log('%c mode_KeepRainingBackup', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex = 0;
         console.log('%c mode_Starlight', 'color:rgb(255,75,255,1)', colors);
