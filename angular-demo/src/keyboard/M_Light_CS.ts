@@ -3724,19 +3724,13 @@ export class M_Light_CS {
             }
         },35*this.animationSpeed)
     }
-    //repeaterPass;
-    mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20,fixMulticolor=false) {
+    mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
-        //this.currentBlockIndex=index;
-        if(fixMulticolor){
-            colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        }
         //this.setAllBlockColor([0,0,0,1]);
-        var randomColor=colors[this.getRandom(0,colors.length-1)];
-        console.log('%c mode_PassWithoutTrace_randomColor','color:rgb(255,77,255)', randomColor);
         var nowStep=0;
         var totalStep=30;
         var nextColor=[0,0,0,1];
+        var randomColor=colors[this.getRandom(0,colors.length-1)];
         this.repeater = setInterval(() => {
             this.setAllBlockColor([0,0,0,1]);
             if (nowStep<totalStep) {

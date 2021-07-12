@@ -277,7 +277,8 @@ export class AppComponent implements OnInit {
                 break;
             case 'Breathing':
                 if(target.Multicolor){
-                    T_CS.mode_BreathingMulticolor(inputColor, true);    
+                    //T_CS.mode_BreathingMulticolor(inputColor, true);    
+                    T_CS.mode_CycleBreath(inputColor,true);
                 }
                 else
                 {
