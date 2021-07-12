@@ -636,22 +636,11 @@ export class M_Light_CS {
         //clearInterval(this.repeater);
     }
 
-    mode_HardCode(colors = [[255,0,0,1]], isRainbow = true,InputArray=[[]]) {
-
+    mode_HardCode(colors = [[255,0,0,1]],InputArray=[[]]) {
     console.log('%c mode_HardCode_enter','color:rgb(255,75,255,1)',colors,InputArray);
     clearInterval(this.repeater);
     var nowStep = 0;
-    var setRGB;
-    if (isRainbow) {
-        setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
-    }
-    else {
-        setRGB = colors[this.getRandom(0, colors.length - 1)];
-    }
-    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
-    for (let index2 = 0; index2 < 3; index2++) {
-        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
-    }
+
     this.repeater = setInterval(() => {
         this.setAllBlockColor([0, 0, 0, 1]);
         //InputArray = this.loopArrDisplacementAssignSpacing(2, InputArray, nowStep);
@@ -661,6 +650,11 @@ export class M_Light_CS {
                 var rowArray=InputArray[nowStep];
                 for (let rowindex = 0; rowindex < rowArray.length; rowindex++) {
                     var element = rowArray[rowindex];
+                    var setRGB=colors[this.getRandom(0, colors.length - 1)];
+                    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+                    for (let index2 = 0; index2 < 3; index2++) {
+                        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+                    }
                     target[rowArray[rowindex]].color = temp_colorData;  
                 }
             }
@@ -669,18 +663,18 @@ export class M_Light_CS {
             }
             else {
                 nowStep = 0;
-                clearInterval(this.repeater);
+                // clearInterval(this.repeater);
             }
         } catch (error) {
             console.log('%c mode_HardCode_error','color:rgb(255,0,0,1)',nowStep,InputArray);
             clearInterval(this.repeater);
         }
        
-        }, 300 * this.animationSpeed);
+        }, 150 * this.animationSpeed);
 
     }
 
-    mode_Retro_snake(colors = [[255,0,0,1]], isRainbow = true,InputArray=[]) {
+    mode_Retro_snake(colors = [[255,0,0,1]],InputArray=[]) {
         console.log('%c mode_Retro_snake_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         var nowStep = 0;
@@ -694,18 +688,10 @@ export class M_Light_CS {
             }
             //InputArray = this.loopArrDisplacementAssignSpacing(2, InputArray, nowStep);
             var target = this.AllBlockColor;
-            var setRGB;
-            if (isRainbow) {
-                setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
-            }
-            else {
-                setRGB = colors[this.getRandom(0, colors.length - 1)];
-            }
-
             for (let index = 0; index < target.length; index++) {
                 var element = target[index];
                 if (index == InputArray[nowStep]) {
-
+                    var setRGB= colors[this.getRandom(0, colors.length - 1)];
                     var temp_colorData = JSON.parse(JSON.stringify(setRGB));
                     for (let index2 = 0; index2 < 3; index2++) {
                         temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
@@ -3769,18 +3755,15 @@ export class M_Light_CS {
         }, 50*this.animationSpeed)
     }
 
-    mode_Shadow_disappear(colors=[[0,0,255,1]],index=20,fixMulticolor=false) {
+    mode_Shadow_disappear(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
-        if(fixMulticolor){
-            colors=[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        }
         this.setAllBlockColor(colors[0]);
         var randomColor=colors[this.getRandom(0,colors.length-1)];
         var originalColorValue=[0,0,0,1];
         console.log('%c mode_Shadow_disappear randomColor','color:rgb(255,77,255)', originalColorValue);
         var nowStep=0;
         var totalStep=30;
-        var nextColor=colors[0];
+        var nextColor=JSON.parse(JSON.stringify(this.AllBlockColor[index].color));
         this.repeater = setInterval(() => {
             //this.setAllBlockColor([0,0,0,1]);
             if (nowStep<totalStep) {
