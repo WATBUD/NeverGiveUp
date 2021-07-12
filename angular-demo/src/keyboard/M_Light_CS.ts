@@ -570,7 +570,7 @@ export class M_Light_CS {
         return handleArr;
     }
     mode_Surmount(colors = [[255,0,0,1]], isRainbow = true,blockIndex=48) {
-        console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         //this.rainbow7Color();
@@ -635,8 +635,53 @@ export class M_Light_CS {
         }, 50**this.animationSpeed)
         //clearInterval(this.repeater);
     }
+
+    mode_HardCode(colors = [[255,0,0,1]], isRainbow = true,InputArray=[[]]) {
+
+    console.log('%c mode_HardCode_enter','color:rgb(255,75,255,1)',colors,InputArray);
+    clearInterval(this.repeater);
+    var nowStep = 0;
+    var setRGB;
+    if (isRainbow) {
+        setRGB = this.rainbow7Color()[this.getRandom(0, colors.length - 1)];
+    }
+    else {
+        setRGB = colors[this.getRandom(0, colors.length - 1)];
+    }
+    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+    for (let index2 = 0; index2 < 3; index2++) {
+        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+    }
+    this.repeater = setInterval(() => {
+        this.setAllBlockColor([0, 0, 0, 1]);
+        //InputArray = this.loopArrDisplacementAssignSpacing(2, InputArray, nowStep);
+        var target = this.AllBlockColor;
+        try {
+            for (let index = 0; index < InputArray[nowStep].length; index++) {
+                var rowArray=InputArray[nowStep];
+                for (let rowindex = 0; rowindex < rowArray.length; rowindex++) {
+                    var element = rowArray[rowindex];
+                    target[rowArray[rowindex]].color = temp_colorData;  
+                }
+            }
+            if (nowStep < InputArray.length-1) {
+                nowStep += 1;
+            }
+            else {
+                nowStep = 0;
+                clearInterval(this.repeater);
+            }
+        } catch (error) {
+            console.log('%c mode_HardCode_error','color:rgb(255,0,0,1)',nowStep,InputArray);
+            clearInterval(this.repeater);
+        }
+       
+        }, 300 * this.animationSpeed);
+
+    }
+
     mode_Retro_snake(colors = [[255,0,0,1]], isRainbow = true,InputArray=[]) {
-        console.log('%cmode_Surmount_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+        console.log('%c mode_Retro_snake_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         var nowStep = 0;
         this.setAllBlockColor([0, 0, 0, 1]);
@@ -1733,7 +1778,7 @@ export class M_Light_CS {
                     dis_angle:dis_angle,
                     part:bandangle,
                 }
-                console.log('%c data','color:rgb(255,75,255,1)',data);
+                //console.log('%c mode_Spiral','color:rgb(255,75,255,1)',data);
 
                 var scales = defaultscales.slice(0);
                 
