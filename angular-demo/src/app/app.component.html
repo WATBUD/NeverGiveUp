@@ -6,6 +6,8 @@
         value="mode_FastRunWithoutTrace" class="ButtonStyle">
     <input type="button" id="AddSpace" (click)="setMode('ConicRipple',[0,0,255,1],false)" onkeydown=""
         value="mode_ConicRipple" class="ButtonStyle">
+    <input type="button" id="AddSpace" (click)="setMode('Conical_Diffusion',[0,0,255,1],false)" onkeydown=""
+        value="mode_Conical_Diffusion" class="ButtonStyle">
     <input type="button" id="AddSpace" (click)="setMode('FastRunWithoutTrace',[255,255,0,1],true)" onkeydown=""
         value="mode_FastRunWithoutTraceRainbow" class="ButtonStyle">
     <input type="button" id="AddSpace" (click)="setMode('mode_TrainMove',[255,255,0,1],true);" onkeydown=""
@@ -166,9 +168,10 @@
                       display: flex;
                       WIDTH:  834px;
                       HEIGHT: 372px;">
-                <div [style.display]="lightingflag ? 'flex' : 'none'"
+                <div [style.display]="lightingflag?'flex':'none'"
                     *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="RGBColorBlockStyle"
-                    [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}" [attr.data-index]="i">
+                    [attr.data-index]="i"
+                    [ngStyle]="{'background':this.M_Light_CS.getIndexRGBCss(i)}">
                 </div>
             </div>
             <!-- -->

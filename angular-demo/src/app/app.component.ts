@@ -368,7 +368,9 @@ export class AppComponent implements OnInit {
                     T_CS.mode_ConicRipple(inputColor, true);
                 //}
                 break;
-   
+            case 'Conical_Diffusion':
+                T_CS.mode_Conical_Diffusion();
+                break;
             case 'ConicRippleRainbow':
                     //if (target.Multicolor) {
                     T_CS.mode_ConicRippleRainbow(inputColor, true);
@@ -450,7 +452,11 @@ export class AppComponent implements OnInit {
         //this.M_Light_CS.mode_Spiral();
         //this.setMode('ConicRipple',[0,0,255,1],false);
         //this.setMode('ConicRippleRainbow',[0,0,255,1],false);
-        this.setMode('ConicRipple',[0,0,255,1],true);
+        //this.setMode('ConicRipple',[0,0,255,1],true);
+        setTimeout(() => {
+            //this.setMode('ConicRipple',[0,0,255,1],false);
+            this.setMode('Conical_Diffusion',[0,0,255,1],false);
+        }, 100);
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
         document.addEventListener('keydown', (event) => {
