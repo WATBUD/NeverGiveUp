@@ -1794,8 +1794,6 @@ export class M_Light_CS {
         }, 100)
     }
 
-
-
     mode_WaveSyncBack2(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%c mode_WaveSyncBack2','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
@@ -2167,8 +2165,6 @@ export class M_Light_CS {
             }
         }, 250)
     }
-
-
 
     mode_WaveSyncbackup(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%ccmode_WaveSyncbackup_enter','color:rgb(255,75,255,1)',colors,this.repeater);
