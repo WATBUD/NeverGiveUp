@@ -1,4 +1,3 @@
-<!-- <script src="https://cdn.jsdelivr.net/npm/@jaames/iro/dist/iro.min.js"></script> -->
 <script src="./acolorpicker.js"></script>
 <!-- <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 <script src="../jquery.js"></script> -->
@@ -9,7 +8,6 @@
 <style>
 
 </style>
-    <!-- acp-color="red" -->
 <body>
     <div class="picker" 
     acp-palette="PALETTE_MATERIAL_CHROME"
@@ -22,14 +20,8 @@
         AColorPicker.from('.picker')
         .on('change', (picker, color) => {
           document.body.style.backgroundColor = color;
-        //   picker.color = [205, 220, 57];            // [R, G, B]
         });
-        var z=document.getElementsByClassName("picker")[0];
-        //z.acp-color ="blue";
-        console.log (document.getElementsByClassName("picker")[0]);
-
-        z.color ="blue";
-        ACPController
-        
-        //picker.color = "red";
+        var picker_0=document.getElementsByClassName("picker")[0];
+        console.log (picker_0);
+        picker_0.color ="blue";
 </script>
