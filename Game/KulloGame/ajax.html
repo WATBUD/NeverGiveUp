@@ -1,0 +1,54 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<form action="" id="myform" enctype="multipart/form-data">
+    帳號<input type="text" name="account" id="account">
+    <br>
+    密碼<input type="password" name="password" id="password">
+    <input type="file" name="file" id="file">
+    <input type="submit">
+</form>
+<script src="./jquery-3.4.1.min.js"></script>
+<script>
+    $("#myform").on("submit", function(e){
+        // 不要執行表單送出的動作
+        e.preventDefault();
+        // alert("表單沒有送出");
+        // let account = $("#account").val();
+        // let password = $("#password").val();
+        // $.ajax({
+        //     method :"POST",
+        //     url: "./form.php",
+        //     data: {
+        //         account,
+        //         password
+        //     },
+        //     dataType: "json",
+        //     success: function(r){
+        //         console.log(r);
+        //         console.log(r.success);
+        //         console.log(r.error);
+
+        //         if(r.success == true){
+        //             alert("成功");
+        //         }
+        //         else{
+        //             alert(r.error);
+        //         }
+        //     }
+        // });
+        let fd = new FormData(this);
+        // 如果要使用formdata的話一定要加
+        // processData: false 叫JQ不要處理表單資料
+        // contentType: false 編碼類型，告訴jq不需要宣告內容類型，否則內容會有問題
+        $.ajax({
+            method: "POST",
+            url: "./form.php",
+            dataType: "text",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function(r){
+                console.log(r);
+            }
+        })
+    })
+</script>

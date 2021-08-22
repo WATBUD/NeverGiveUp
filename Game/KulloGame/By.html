@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url("background1.jpg");
+            background-size: cover;
+            cursor: url("1234.png")25 25, auto;
+
+        }
+
+        .card {
+            width: 100px;
+            height: 220px;
+            position: relative;
+            /* 設置子元素在3D空間中 */
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            float: left;
+            margin: 10px;
+
+        }
+
+        .front {
+            width: 100%;
+            height: 100%;
+            background-image: url("card/card_back.jpg");
+            background-position: center;
+            background-size: cover;
+
+        }
+
+        .back {
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: 100% 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: rotateY(180deg);
+
+        }
+
+        /* 整張卡片一起翻 */
+        .open {
+            transform: rotateY(180deg);
+        }
+
+        #main {
+            width: 800px;
+            margin: auto;
+            cursor: url("1234.png")50 50, auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script src="./jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            let score = 0;
+            let state = 0;
+            // append 添加
+            for (let i = 0; i < 24; i++) {
+                $("#main").append(/*html*/`
+                <div class="card">
+                    <div class="front"></div>
+                    <div class="back"></div>
+                </div>`);
+            }
+
+            randomCard();
+
+            function randomCard() {
+                for (let i = 0; i < $(".card").length; i++) {
+                    /*
+                        每張牌要有兩個才能配對消除
+                        所以有 16/2=8種 牌
+                        以 i/8 的餘數判斷要哪張牌
+                        因為牌從1開始，i從0開始，所以要加1
+                    */
+                    // %=餘數  eq（）選擇器  attr改變圖像的屬性
+                    let add = i % ($(".card").length / 2) + 1;
+                    console.log($(".card").eq(i).find(".back"));
+                    $(".card").eq(i).find(".back").css("background-image", `url("./card/${add}S.jpg")`);
+                    $(".card").eq(i).attr("data-card", add);
+
+                    // 取隨機數字
+                    let target = Math.floor(Math.random() * $(".card").length);
+                    // 把第幾個隨機數字的卡片移動到目前i後面
+                    $(".card").eq(target).insertAfter($(".card").eq(i));
+                }
+            }
+
+            $(".card").on("click", function () {
+                if (state == 0) {
+                    console.log("click");
+
+                    // 如果翻開的牌小於兩張，且這張還沒翻開
+                    if ($(".open").length < 2 && !$(this).hasClass("open")) {
+                        console.log("open");
+                        $(this).addClass("open");
+                    }
+
+                    // 如果翻了兩張牌
+                    if ($(".open").length == 2) {
+                        state = 1;
+                        console.log(2);
+                        setTimeout(close, 1000);
+                        // 兩張一樣的話，淡出動畫
+                        if ($(".open").eq(0).attr("data-card") == $(".open").eq(1).attr("data-card")) {
+                            score++;
+                            $(".open").fadeTo(0).fadeTo(1000, 0).addClass("clear");
+                        }
+                    }
+                }
+                if ($(".clear").length == $(".card").length) {
+                    setTimeout(function () { alert("恭喜!你收服了所有的庫洛牌~") }, 1000);
+
+                    // 重設
+                    setTimeout(function () {
+                        randomCard();
+                        $(".clear").removeClass("clear");
+                        $(".card").css("opacity", "1.0");
+                    }, 1500);
+                }
+            })
+
+            function close() {
+                $(".open").removeClass("open");
+                state = 0;
+            }
+        })
+    </script>
+</body>
+
+</html>
