@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #000 url(backrogund_image.jpg) center center fixed no-repeat;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+#DIV_BIG {
+    width: 0px;
+    height: 0px;
+    background-color: #FFB326;
+    position: relative;
+}
+
+#DIV_SMALL {
+    width: 120px;
+    height: 100px;
+    background-color: #78FF78;
+    position: absolute;
+    top: 0px;
+    left: 470px;
+    z-index: 9999;
+}
