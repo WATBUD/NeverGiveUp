@@ -28,8 +28,8 @@ import {
 } from '@angular/core'
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css', './Built_ineffect.scss', './KeyBoardStyle.css']
+    templateUrl: './KeyBoard_RGB.html',
+    styleUrls: ['./KeyBoard_RGB.css', './Built_ineffect.scss', './KeyBoardStyle.css']
 })
 
 
