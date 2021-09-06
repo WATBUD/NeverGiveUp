@@ -192,3 +192,22 @@
 
 
 </div>
+
+
+<div *ngIf="this.CurrentPageName=='Built-ineffects'" [style.display]="Built_ineffect.getTarget().colors.length>0?'block': 'none'"
+    id="color-picker-container" >
+        <div id="Built_inColorPickingArea" class="PickingArea" [style.background-color]="Built_inColor.gradientBGcolor"
+        style="display: none;">
+            <div id="Built_inColorCircle" class="circle">
+            </div>
+        </div>
+        <input style="display:none;" id="ColorSliderH" type="range" min="0" max="359" step="1" [(ngModel)]="Built_inColor.Hue" (ngModelChange)='LedColorhueChange()'>
+        <div class="colorBaseList" style="left: -4%;top: 21%;">
+            <div *ngFor="let item of this.Built_ineffect.getTarget().colors ;let i = index" class="colorBase"
+                (click)="built_inColor_OnclickColorDefault($event.target,i)" id="colorBase{{i}}"
+                [style.background-color]="Built_inColor.toCssRGB(item)">
+            </div>
+        </div>
+        
+    
+    </div>

@@ -92,10 +92,10 @@ export class AppComponent {
     console.log('%c someMethod', 'background: black; color: yellow');
 
     var T23=document.getElementById("resultFrame");
-    T23.contentWindow.ABCDEFGHU();
-    T23.onload = function(){
-      T23.contentWindow.ABCDEFGHU();
-    };
+    // T23.contentWindow.ABCDEFGHU();
+    // T23.onload = function(){
+    //   T23.contentWindow.ABCDEFGHU();
+    // };
 
     // const headers = new HttpHeaders({
     //   'Content-Type': 'text/plain',
