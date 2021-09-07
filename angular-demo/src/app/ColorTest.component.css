@@ -4,3 +4,10 @@
     background-image: url('/image/FanMode/RPM_Icon.png');
     /* background-image: url('/app/GMMK3.png'); */
 }
+
+
+:host{
+width: 100%;
+height: 100%;
+background: gray;
+}

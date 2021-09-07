@@ -74,7 +74,7 @@
         value="mode_NormallyOn" class="ButtonStyle">
     <input type="button" id="AddSpace" (click)="setMode('NormallyOn',[0,0,255,1],true)" onkeydown=""
         value="mode_NormallyOnMulticolor" class="ButtonStyle">
-    <input type="button" id="AddSpace" (click)="setMode('AcidMode',[[0,0,255,1]],false)" onkeydown=""
+    <input type="button" id="AddSpace" (click)="setMode('AcidMode',[0,0,255,1],false)" onkeydown=""
         value="mode_AcidMode" class="ButtonStyle">
     <input type="button" id="AddSpace" (click)="setMode('Kamehemeha',[255,255,0,1],true)" onkeydown=""
         value="mode_Kamehemeha_rainbow" class="ButtonStyle">
@@ -194,7 +194,7 @@
 </div>
 
 
-<div *ngIf="this.CurrentPageName=='Built-ineffects'" [style.display]="Built_ineffect.getTarget().colors.length>0?'block': 'none'"
+<!-- <div *ngIf="this.CurrentPageName=='Built-ineffects'" [style.display]="Built_ineffect.getTarget().colors.length>0?'block': 'none'"
     id="color-picker-container" >
         <div id="Built_inColorPickingArea" class="PickingArea" [style.background-color]="Built_inColor.gradientBGcolor"
         style="display: none;">
@@ -210,4 +210,4 @@
         </div>
         
     
-    </div>
+    </div> -->
