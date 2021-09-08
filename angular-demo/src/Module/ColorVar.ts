@@ -1,8 +1,7 @@
 // HSL即色相、飽和度、亮度（英語：Hue, Saturation, Lightness）。
 // HSV即色相、飽和度、明度（英語：Hue, Saturation, Value），又稱HSB其中B即英語：Brightness。
 //backup:"-webkit-linear-gradient(left,#FFFFFF,red)";
-
-    //Louis Architecture => Hex=>SET RGB=>SET HSV
+//Louis Architecture => Hex=>SET RGB=>SET HSV
     var consolelogFlag=false;
     export class ColorModule{    
         name:any="";
@@ -11,19 +10,16 @@
         Saturation: number = 0;//飽和度 0~1
         Value: number = 0;//明度 0~1
         Lightness: number=0;//亮度 0~1
-        Red: number = 0;
-        Green: number = 0;
-        Blue: number = 0;
+        RGBA_value=[0,0,0,1];
         SBgColor:any="";
         VBgColor:any="";
         colorTicket=[[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1],[255, 32, 0, 1]];
         preDefineColor: any = ["#FF2000","#ff8000","#80ff00","#00ff00","#00ffff","#0000ff","#8000ff","#ff00ff","#ff0080","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"];//RGB
         currentRecordIndex=0;
         recordColorElement:any;
-        savePosition:any={
-            "precentS":0,
-            "precentL":0,
-    
+        savePosition={
+            precentS:1,
+            precentL:1,
         };
         disX =0;
         disY =0;
@@ -135,14 +131,23 @@
         CreateFakeArray(length=0){
             return  Array(length).fill(4);
         }
-
-
-
         toCssRGB(RGBA=[0,0,0,0]){
             return 'rgb('+RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ',' + RGBA[3] + ')';
         }
-
-
+        update_RGBA_value() {
+            for (let index = 0; index < 3; index++) {
+                let target = Number(this.RGBA_value[index]);
+                if (target > 255) {
+                    target = 255;
+                }
+                else if (target < 0) {
+                    target = 0;
+                }
+                this.RGBA_value[index]=target;
+            }
+            this.SetRGB([this.RGBA_value[0],this.RGBA_value[1],this.RGBA_value[2]]);
+            this.updateCircleDivPos();
+        }
         setDefault(){
             this.SetHex("#66CC33");
             
@@ -151,44 +156,42 @@
             this.SetRGB(styleColor);
             //this.customlog('onclickColorTicket',styleColor.style.backgroundColor);
         }
-
         onclickColorDefault(styleColor,index){
             this.currentRecordIndex=index;
             //styleColor=$event.target.style.backgroundColor
-            this.formatRGB(styleColor.style.backgroundColor);
+            var rgbArr = this.cssRgbToNumberArray(styleColor.style.backgroundColor);
+            this.SetRGB(rgbArr);
             this.customlog('onclickColorDefault',styleColor.style.backgroundColor);
-            this.updateCircleDivPos();
-            this.setGradientBGcolor();
-    
+            this.updateCircleDivPos();    
         }
         updateCircleDivPos(){
-            var circleDiv = document.getElementById(this.name+'Circle');
-            circleDiv.style.left=this.savePosition.precentS*this.Saturation+"px";
-            circleDiv.style.top=this.savePosition.precentL*(100-this.Lightness)+"px";
-    
+            try {
+                var circleDiv = document.getElementById(this.name+'Circle');
+                console.log('%c updateCircleDivPos', 'background: black; color: white', JSON.stringify(this));    
+                circleDiv.style.left=this.savePosition.precentS*this.Saturation+"px";
+                circleDiv.style.top=this.savePosition.precentL*(100-this.Lightness)+"px"
+            } catch (error) {
+                console.error('%c updateCircleDivPos', 'background: black; color: white', error);    
+            }
+
         }
 
         
-        formatRGB(InputData) {
-            this.customlog("formatRGB", InputData);
-            this.Hex = this.backGroundColorRgbToHex(InputData);
-            var rgbArr = this.ColorRgbToArray(InputData);
-            this.SetRGB(rgbArr);
-        }
+
         SetRGB(Arr) {
-            this.Red=Arr[0];
-            this.Green=Arr[1];
-            this.Blue=Arr[2];
+            this.RGBA_value[0]=Arr[0];
+            this.RGBA_value[1]=Arr[1];
+            this.RGBA_value[2]=Arr[2];
             var HSL=this.rgbTo_hsl(Arr);
             this.Hue=Math.round(HSL[0]);
             this.Saturation=Math.round(HSL[1]);
             this.Lightness=Math.round(HSL[2]);
             this.Hex= this.rgbToHex(Arr[0],Arr[1],Arr[2]);
-
-            var HSV_B=this.getRgb2HSV();  
-            this.Hue=HSV_B[0];
-            this.Saturation=HSV_B[1];
-            this.Value=HSV_B[2];
+            console.log('%c SetRGB', 'background: black; color: white', this);
+            // var HSV_B=this.rgb2HSV(r,g,b);;  
+            // this.Hue=HSV_B[0];
+            // this.Saturation=HSV_B[1];
+            // this.Value=HSV_B[2];
             this.setGradientBGcolor();
             this.showColorVarData();
         }
@@ -196,9 +199,7 @@
         showColorVarData() {
             var colorlog = {
                 Hex: this.Hex,
-                Red: this.Red,
-                Green: this.Green,
-                Blue: this.Blue,
+                RGBA_value:this.RGBA_value,
                 Hue: this.Hue,
                 Saturation: this.Saturation,   
                 Value:this.Value,
@@ -220,9 +221,9 @@
             this.customlog("Enter_hsv_Rgb_hexSet HSV>rgb>hex");
             var RGBResult =this.HSVtoRGB(this.Hue/360, this.Saturation/100, this.Value/100);
             this.Hex=  this.rgbToHex(RGBResult[0],RGBResult[1],RGBResult[2]);
-            this.Red=RGBResult[0];
-            this.Green=RGBResult[1];
-            this.Blue=RGBResult[2];
+            this.RGBA_value[0]=RGBResult[0];
+            this.RGBA_value[1]=RGBResult[1];
+            this.RGBA_value[2]=RGBResult[2];
 
             
             // this.SetHex(Hex);
@@ -232,9 +233,9 @@
             this.customlog("Enter_hsL_Rgb_hexSet HSV>rgb>hex");
             var RGBResult =this.hslToRGB(this.Hue, this.Saturation, this.Lightness);
             this.Hex=  this.rgbToHex(RGBResult[0],RGBResult[1],RGBResult[2]);
-            this.Red=RGBResult[0];
-            this.Green=RGBResult[1];
-            this.Blue=RGBResult[2];
+            this.RGBA_value[0]=RGBResult[0];
+            this.RGBA_value[1]=RGBResult[1];
+            this.RGBA_value[2]=RGBResult[2];
             this.setPreDefineColor();
             // this.SetHex(Hex);
         }
@@ -308,26 +309,14 @@
             var parentDiv = document.getElementById(this.name+'PickingArea');
             return parentDiv;
         }
-
-        getColorFormat_RGB(){
-            return  "rgb(" + this.Red + "," + this.Green + "," + this. Blue + ")";
-        }
         getRGB(){
-            return [Number(this.Red),Number(this.Green),Number(this.Blue)];
+            return JSON.parse(JSON.stringify(this.RGBA_value));
         }
-
         getRGBA(){
-            return [Number(this.Red),Number(this.Green),Number(this.Blue),1];
+            return JSON.parse(JSON.stringify(this.RGBA_value));
         }
 
-        getRgb2HSV() {
-            let r= this.Red;
-            let g= this.Green;
-            let b= this.Blue;
-            this.customlog("getRgb2HSV",r,g,b);
 
-            return this.rgb2HSV(r,g,b);
-        }
 
    
 
@@ -371,10 +360,17 @@
             }
         }
         
-        ColorRgbToArray(col) {
-            if (col.charAt(0) == 'r') {
+        cssRgbToNumberArray(col) {
+            try {
                 var colArr = col.replace('rgb(', '').replace(')', '').split(',');
-                return colArr;
+                colArr.forEach(function(item, index, targetArray) {
+                    //console.log('%c cssRgbToNumberArray', 'background: black; color: white', item,index,targetArray);
+                    targetArray[index] = parseInt(targetArray[index]);
+                });
+                return JSON.parse(JSON.stringify(colArr));
+            } catch (error) {
+                console.error('%c cssRgbToNumberArray', 'background: black; color: white', error);
+                return [255,255,255];
             }
         }
 

@@ -8,14 +8,26 @@
       </div>
       <input id="ColorSliderH" type="range" min="0" max="359" step="1" [(ngModel)]="LedColor.Hue"
          (ngModelChange)='LedColorhueChange()'>
-      <div id="color_quantityDiv"
-         style="width: 40%;height: 23px;position: absolute;left: 62%;top: 32%;display: flex;align-items: center;">
-         <!-- <div>{{i18nManager.getTarget('COLORS')}}</div>
-             <input class="color_quantity" type="number" max="20" min="1"
-                 [style.pointer-events]="M_Light_APMode.getTarget().colors.length>1?'auto':'none'"
-                 [(ngModel)]="M_Light_APMode.getTarget().color_quantity" (change)="setAppModeToServer('插色數量')"
-                 onkeyup="value=value.replace(/[^\d]/g,'');if(value>20){value=20};if(value<1){value=1}"> -->
+      <div id="color_RGBADiv">
+         <div id="RGBA_Red" class="RGBATextStyle">
+            R:
+            <input class="color_quantity" type="number" max="255" min="0"
+               [(ngModel)]="LedColor.RGBA_value[0]" (blur)="updateLedColorRGB()">
+         </div>
+         <div id="RGBA_Green" class="RGBATextStyle">
+            G:
+            <input class="color_quantity" type="number" max="255" min="0"
+               [(ngModel)]="LedColor.RGBA_value[1]" (blur)="updateLedColorRGB()"
+               onkeyup="value=value.replace(/[^\d]/g,'');if(value>255){value=255};if(value<1){value=0}">
+         </div>
+         <div id="RGBA_Blue" class="RGBATextStyle">
+            B:
+            <input class="color_quantity" type="number" max="255" min="0"
+               [(ngModel)]="LedColor.RGBA_value[2]" (blur)="updateLedColorRGB()"
+               onkeyup="value=value.replace(/[^\d]/g,'');if(value>255){value=255};if(value<1){value=0}">
+         </div>
       </div>
+
       <div class="colorBaseList">
          <div *ngFor="let item of M_Light_APMode.getTarget().colors ;let i = index" class="colorBase"
             (click)="LedColor.onclickColorDefault($event.target,i)" id="colorBase{{i}}"

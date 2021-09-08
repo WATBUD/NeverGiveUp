@@ -75,9 +75,16 @@ export class ColorTest implements OnInit {
 
 
    }
+   
+   updateLedColorRGB(){
+      this.LedColor.update_RGBA_value();
+      this.M_Light_APMode.getTarget().colors[this.LedColor.currentRecordIndex] = this.LedColor.Hex;
+      console.log('%c updateLedColorRGB', 'background: red; color: white', this.LedColor);
+   }
+
 
    updateColorBlock() {
-      //var target=LedColor;
+      //var target=LedColor;updateLedColorRGBupdateLedColorRGB
       switch (this.CurrentPageName) {
          case "LIGHTINGSETTING":
             this.LedColor.HSL_RGB_HexSet();

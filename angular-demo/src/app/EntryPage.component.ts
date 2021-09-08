@@ -14,6 +14,12 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['ColorTest'], {queryParams: {Device: {}}});
     this.router.navigate(['ColorTest'], {});
   }
+  ngAfterViewInit(){
+
+    // setTimeout(() => {
+    //   this.router.navigate(['ColorTest'], {});
+    // }, 3000);
+ }
 
 
 
