@@ -6,13 +6,13 @@ import {
 } from '../Module/TSImportManager';
 @Component({
    selector: 'app-ColorTest',
-   templateUrl: './ColorTest.component.html',
-   styleUrls: ['./ColorTest.component.css', '../css/Share.scss'],
+   templateUrl: './ColorTest.html',
+   styleUrls: ['./ColorTest.css', '../css/Share.scss'],
    // styles: [':host { display: block;border: 1px solid black; }']//:host custom component style 
 }
 )
 
-export class ColorTest implements OnInit {
+export class ColorTestComponent implements OnInit {
    newcomponent = "Entered in new component created";
    CurrentPageName = "LIGHTINGSETTING";
    LedColor = new ColorModule("LedColor");
