@@ -10,12 +10,14 @@
 			display: block;
 			margin: 0px;
 		}
+
 		div.container {
 			height: 820px;
 			border: 4px solid red;
 			display: table;
 			vertical-align: middle;
 		}
+
 		div.left {
 			width: 100%;
 			/* display: inline-block; */
@@ -52,10 +54,10 @@
 		}
 
 		.clip {
-            position: absolute;
-            /* background-color: blue; */
-            clip-path: polygon(100% 15%, 100% 15%, 78% 5%, 22% 5%, 0 18%, 0 18%, 22% 0, 78% 0);
-            width: 580px;
+			position: absolute;
+			/* background-color: blue; */
+			clip-path: polygon(100% 15%, 100% 15%, 78% 5%, 22% 5%, 0 18%, 0 18%, 22% 0, 78% 0);
+			width: 580px;
 			height: 500px;
 		}
 	</style>
@@ -65,147 +67,55 @@
 		function () {
 			self.location.reload();
 		}, 1000);
-
-
-
 </script>
 
 <body>
 	<input id="Close" type="button" value="Close" onclick="clearTimeout(conutdown);">
 	<!-- <input id="Auto" type="button" value="AutoRefresh" onclick="conutdownFn();"> -->
 	<div class="clip sliderFrame" style="position:absolute">
-        <!-- <img data-index="0" class="imgArr" 
-        style="position:absolute;width: 282px;height:57px;" src="../img/ColorSetText.png">
-		<img data-index="1" class="imgArr" style="position:absolute;left:800px;width: 158px;height:38px;" src="../img/HighSetText.png">
-		<img data-index="2" class="imgArr" style="position:absolute;width: 50px;height:50px; left:800px;"
-			src="../img/ScriptScrollbars.png">
-		<img id="leftBtn" style="position:absolute;left:0px;" src="../img/cursor.png"> -->
-		<!-- <img class="clip" id="rightBtn" style="position:absolute;right:0px;" src=""> -->
-
 	</div>
 	<div class="MaskFrameL">
-
 	</div>
 	<div class="MaskFrameR">
-        
 	</div>
 	<div class="container">
-
 	</div>
 	<button id="toggle">toggle</button>
 	<script>
-
-// var text="-webkit-linear-gradient(right,"+
-// 		t[0]+','+t[1]+','+t[2]+','+t[3]+','+t[4]+','+t[5]+','+t[6]+")";
-// 		console.log(text);
-// 		obj.style.background=text;
-        $(document).ready(function () {
-        var obj= document.getElementsByClassName("sliderFrame")[0];
-  
-		setInterval(function () {
-		let colorarray=['red','orange', 'yellow', 'green', 'blue', 'indigo', 'violet','black','#0000'];
-		
-		let t=randArr(colorarray);
-		console.log('t',t);
-		var text="-webkit-linear-gradient(right"
-        for (let index = 0; index < colorarray.length; index++) {
-			text+=','+t[index];
-		}
-		text+=")";
-		console.log(text);
-		obj.style.background=text;
-		}, 100);
-		function randArr(arr) {
-			for (var i = 0; i < arr.length; i++) {
-				var iRand = parseInt(arr.length * Math.random());
-				var temp = arr[i];
-				arr[i] = arr[iRand];
-				arr[iRand] = temp;
+		// var text="-webkit-linear-gradient(right,"+
+		// 		t[0]+','+t[1]+','+t[2]+','+t[3]+','+t[4]+','+t[5]+','+t[6]+")";
+		// 		console.log(text);
+		// 		obj.style.background=text;
+		$(document).ready(function () {
+			var obj = document.getElementsByClassName("sliderFrame")[0];
+			setInterval(function () {
+				let colorarray = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', '#0000'];
+				let t = randArr(colorarray);
+				console.log('t', t);
+				var text = "-webkit-linear-gradient(right"
+				for (let index = 0; index < colorarray.length; index++) {
+					text += ',' + t[index];
+				}
+				text += ")";
+				console.log(text);
+				obj.style.background = text;
+			}, 100);
+			function randArr(arr) {
+				for (var i = 0; i < arr.length; i++) {
+					var iRand = parseInt(arr.length * Math.random());
+					var temp = arr[i];
+					arr[i] = arr[iRand];
+					arr[iRand] = temp;
+				}
+				console.log('randArr', arr);
+				return arr;
 			}
-			console.log('randArr',arr);
-			return arr;
-		}
-	
-        // obj.style.background="-webkit-linear-gradient(right, red, orange)";
-			
-
-
-
-		
-		//obj.style.backgroundImage='-webkit-linear-gradient(30deg,blue,red)';
-		//obj.style.background='-webkit-linear-gradient(30deg,blue,red)';
-		// obj.style.background='-webkit-linear-gradient(right, red, orange, yellow, green, blue, indigo, violet)';
+			// obj.style.background="-webkit-linear-gradient(right, red, orange)";
+			//obj.style.backgroundImage='-webkit-linear-gradient(30deg,blue,red)';
+			//obj.style.background='-webkit-linear-gradient(30deg,blue,red)';
+			// obj.style.background='-webkit-linear-gradient(right, red, orange, yellow, green, blue, indigo, violet)';
 		});
-	
-		
-			//測試：
-		// var imgArrjs = document.getElementsByClassName('imgArr');
-		// var index = 0;
-		// var max = 3;
-		// var zoomMutiple=1.5;
-		// console.log(imgArrjs.length);
-		// $("#leftBtn").click(function () {
-		// 	if (index == 0) {
-
-		// 		alert("已經是第一個了");
-		// 	}
-		// 	else {
-		// 		// var len=$(document.getElementsByClassName('imgArr').length;
-		// 		var lObj = $(document.getElementsByClassName('imgArr')[index]);
-		// 		lObj.animate({ left: "-800px" }, {
-		// 			complete: function () {
-
-		// 			}
-		// 		}, 5000)
-		// 		var imgArrjq = $(document.getElementsByClassName('imgArr'));
-		// 		imgArrjq[index].style.width = (imgArrjq[index].clientWidth / zoomMutiple) + "px";
-		// 		imgArrjq[index].style.height = (imgArrjq[index].clientHeight / zoomMutiple) + "px";
-		// 		index -= 1;
-		// 		var indobj = $(document.getElementsByClassName('imgArr')[index]);
-		// 		indobj.animate({ left: 350 - (indobj.width()*zoomMutiple / 2) }, {
-		// 			complete: function () {
-		// 				indobj.width(this.width * zoomMutiple);
-		// 				indobj.height(this.height * zoomMutiple);
-		// 				//indobj.width(this.width * 2);
-		// 			}
-		// 		})
-		// 	}
-		// });
-		// $("#rightBtn").click(function () {
-		// 	if (index == 2) {
-
-		// 		alert("已經是最後一個了");
-		// 	}
-		// 	else {
-		// 		var lObj = $(document.getElementsByClassName('imgArr')[index]);
-		// 		lObj.animate({ left: "-800px" }, {
-		// 			complete: function () {
-		// 				//lObj.width(this.width * 2);
-		// 			}
-		// 		}, 5000)
-		// 		var imgArrjq = $(document.getElementsByClassName('imgArr'));
-		// 		imgArrjq[index].style.width = (imgArrjq[index].clientWidth / zoomMutiple) + "px";
-		// 		imgArrjq[index].style.height = (imgArrjq[index].clientHeight / zoomMutiple) + "px";
-		// 		index += 1;
-		// 		var indobj = $(document.getElementsByClassName('imgArr')[index]);
-		// 		console.log("indobj.width/2)", indobj.width());
-		// 		indobj.animate({ left: 350 - (indobj.width()*zoomMutiple / 2) }, {
-
-		// 			complete: function () {
-		// 				indobj.width(this.width * zoomMutiple);
-		// 				indobj.height(this.height * zoomMutiple);
-						
-						
-		// 			}
-		// 		})
-		// 	}
-		// });
-
-
-	
 	</script>
 </body>
 
 </html>
-
-
