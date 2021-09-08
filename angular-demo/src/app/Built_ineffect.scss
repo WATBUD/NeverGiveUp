@@ -1,7 +1,6 @@
 .Keyboard-content {
-    WIDTH: 100%;
-    HEIGHT: 100%;
-    // BACKGROUND: RED;
+  WIDTH: 800px;
+  HEIGHT: 400px;
 }
 .ButtonStyle {
     width: 100%;
@@ -27,5 +26,14 @@
     color: red;
     font-size: larger;
     font-weight: bold;
+}
+#TopFunction{
+  position: absolute;
+  display: flex;
+  width: auto;
+  height: 4vh;
+  /* justify-content: center; */
+  align-items: center;
+  margin-left: 23vw;
 }
     

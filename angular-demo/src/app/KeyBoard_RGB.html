@@ -1,4 +1,17 @@
-<div id="dropList" style="width: 15%;
+<div id="TopFunction">
+    <div class="ClassName" style="color: red;font-size: 1.3vw;">speed </div>
+    <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
+        [(ngModel)]="this.Built_ineffect.Built_inSelected.speed" (mouseup)="sliderChange()"
+        (ngModelChange)="lightSliderMove('PRESETS_RateSlider')" onkeydown="event.preventDefault()">
+
+    <div class="ClassName" style="color: red;font-size: 1.3vw;">brightness </div>
+    <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
+        [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
+        (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')" onkeydown="event.preventDefault()">
+    <input type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown="" value="GMMK_imgVisible"
+        class="ButtonStyle" style="width: 12.8vw;">
+</div>
+<div id="dropList" class="KeyboardPageScroll" style="width: 15vw;
     height: 100%;
     display: flex;
     flex-wrap: wrap;">
@@ -96,28 +109,11 @@
         value="mode_Shadow_disappear" class="ButtonStyle">
     <BR>
 </div>
-<div id="TopFunction" style="display: flex;
-    width: auto;
-    height: 4vh;
-    /* justify-content: center; */
-    align-items: center;">
-    <div class="ClassName" style="color: red;font-size: 1.3vw;">speed </div>
-    <input id="PRESETS_RateSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
-        [(ngModel)]="this.Built_ineffect.Built_inSelected.speed" (mouseup)="sliderChange()"
-        (ngModelChange)="lightSliderMove('PRESETS_RateSlider')" onkeydown="event.preventDefault()">
 
-    <div class="ClassName" style="color: red;font-size: 1.3vw;">brightness </div>
-    <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" style="width: 13vw;" step="5"
-        [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
-        (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')" onkeydown="event.preventDefault()">
-    <input type="button" id="AddSpace" (click)="GMMK_imgVisible()" onkeydown="" value="GMMK_imgVisible"
-        class="ButtonStyle">
-</div>
 <!-- background: linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,36,61,0.6) 80%), -->
-<div id="EventCanBoxSelectRange" style="
-          position: absolute;
-          left: 17%;
-          top: 20%;" class="Keyboard-content">
+<div id="EventCanBoxSelectRange" style="position: absolute;
+left: 23vw;
+top: 20%;" class="Keyboard-content">
     <div id="GMMK_0x320F0x5044" class="Content1">
         <div style="position: absolute; display: flex">
             <img id="GMMK_img" src="./app/GMMK3.png"

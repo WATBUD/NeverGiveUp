@@ -12,7 +12,8 @@ export class EntryPageComponent implements OnInit {
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
     //this.router.navigate(['ColorTest'], {queryParams: {Device: {}}});
-    this.router.navigate(['ColorTest'], {});
+    //this.router.navigate(['ColorTest'], {});
+    this.router.navigate(['KeyBoard_RGB'], {});
   }
   ngAfterViewInit(){
     // setTimeout(() => {
