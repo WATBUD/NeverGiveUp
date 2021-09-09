@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes  } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { EntryPageComponent } from './EntryPage';
+import { GNumpadDemoComponent } from './gnumpad-demo/gnumpad-demo.component';
 // import { AppRoutingModule } from './app-routing.module'; // CLI imports 
 // // app routes
 // import { routes } from './app.routes';
@@ -20,6 +21,7 @@ import { EntryPageComponent } from './EntryPage';
     AppComponent,
     ColorTestComponent,
     EntryPageComponent,
+    GNumpadDemoComponent,
   ],
   imports: [
     BrowserModule,

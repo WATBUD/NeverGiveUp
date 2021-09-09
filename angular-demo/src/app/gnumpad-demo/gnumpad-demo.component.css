@@ -1,0 +1,14 @@
+#NumKeyBindSourceArea::-webkit-scrollbar 
+{    
+    display: none;
+}
+
+
+.NumKeyBindSourceItem{
+    position: sticky;
+    flex-shrink: 0;
+    width: 160px;
+    height: 360px;
+    border: 2px solid rgb(242,16,16);
+
+}
