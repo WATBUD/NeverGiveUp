@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './KeyBoard_RGB';
 import { ColorTestComponent } from './ColorTest';
@@ -30,6 +30,9 @@ import { GNumpadDemoComponent } from './gnumpad-demo/gnumpad-demo.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [EntryPageComponent]
+  bootstrap: [EntryPageComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }
