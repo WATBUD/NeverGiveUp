@@ -26,7 +26,6 @@ export class EntryPageComponent implements OnInit {
   }
   ngAfterViewInit(){
     // setTimeout(() => {
-    //   this.router.navigate(['ColorTest'], {});
     // }, 3000);
  }
 

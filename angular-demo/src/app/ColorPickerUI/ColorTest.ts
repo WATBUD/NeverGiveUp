@@ -3,12 +3,12 @@ import {
    ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, KeyBoardManager, KeyBoardStyle, LedChainFramesManager,
    AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, FirewareManager, ImgPathList
    , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS,
-} from '../Module/TSImportManager';
+} from '../../Module/TSImportManager';
 import { Router } from '@angular/router';
 @Component({
    selector: 'app-ColorTest',
    templateUrl: './ColorTest.html',
-   styleUrls: ['./ColorTest.css', '../css/Share.scss'],
+   styleUrls: ['./ColorTest.css'],
    // styles: [':host { display: block;border: 1px solid black; }']//:host custom component style 
 }
 )
