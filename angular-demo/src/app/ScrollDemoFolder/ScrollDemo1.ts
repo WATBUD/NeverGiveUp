@@ -18,9 +18,15 @@ export class ScrollDemo1Component implements OnInit {
 
 
   ngOnInit() {
+
+    var SourceArray=8;
     for (let index = 0; index < 8; index++) {
       //const element = [index];
-      this.NumKeyBindSourceArray.push({ colorValue: this.LedColor.toCssRGB([255/(index+1),0,0,1]) });
+      this.NumKeyBindSourceArray.push({ 
+        colorValue: this.LedColor.toCssRGB([255/(index+1),0,0,1]) ,
+        BGcolorValue:this.LedColor.toCssRGB([255*(SourceArray-index+1)/SourceArray,192*(SourceArray-index+1)/SourceArray,203*(SourceArray-index+1)/SourceArray,1])
+      }
+    );
     }
     console.log('%c this.NumKeyBindSourceArray','color:rgb(255,75,255,1)',this.NumKeyBindSourceArray);
 

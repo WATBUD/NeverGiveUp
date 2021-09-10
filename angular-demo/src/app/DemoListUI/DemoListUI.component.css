@@ -1,0 +1,8 @@
+li:active {
+    color: red;
+}
+
+li{
+    color: blue;
+    margin: 10px 0;
+}
