@@ -3,14 +3,15 @@ import {
   ColorModule
 } from '../../Module/TSImportManager';
 @Component({
-  selector: 'app-gnumpad-demo',
-  templateUrl: './gnumpad-demo.component.html',
-  styleUrls: ['./gnumpad-demo.component.css'],
+  selector: 'app-ScrollDemo1',
+  templateUrl: './ScrollDemo1.html',
+  styleUrls: ['./ScrollDemo1.css'],
 })
-export class GNumpadDemoComponent implements OnInit {
+export class ScrollDemo1Component implements OnInit {
 
   constructor() { }
   NumKeyBindSourceArray = [];
+  
   ScrollIntoPos=0;
   ScrollLeftValue=0;
   LedColor = new ColorModule("LedColor");

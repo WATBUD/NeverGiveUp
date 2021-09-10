@@ -13,8 +13,7 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
     //this.router.navigate(['ColorTest'], {queryParams: {Device: {}}});
     //this.router.navigate(['ColorTest'], {});
-    //this.router.navigate(['gnumpad-demo'], {});
-    this.router.navigate(['KeyBoard_RGB'], {});
+    this.router.navigate(['ScrollDemo1'], {});
     // this.router.navigate(['KeyBoard_RGB'], {});
     // window.onresize = resize;
 

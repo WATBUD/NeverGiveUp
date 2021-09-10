@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ColorTestComponent } from './ColorTest';
-import { GNumpadDemoComponent } from './gnumpad-demo/gnumpad-demo.component';
+import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 
 import { AppComponent } from './KeyBoard_RGB';
 
@@ -10,7 +10,7 @@ const routes: Routes = [
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'KeyBoard_RGB', component: AppComponent },
   { path: 'ColorTest', component: ColorTestComponent },
-  { path: 'gnumpad-demo', component: GNumpadDemoComponent },
+  { path: 'ScrollDemo1', component: ScrollDemo1Component },
 ];
 
 @NgModule({

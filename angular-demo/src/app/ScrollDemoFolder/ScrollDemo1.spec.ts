@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GNumpadDemoComponent } from './gnumpad-demo.component';
+import { ScrollDemo1Component } from './ScrollDemo1';
 
-describe('GNumpadDemoComponent', () => {
-  let component: GNumpadDemoComponent;
-  let fixture: ComponentFixture<GNumpadDemoComponent>;
+describe('ScrollDemo1Component', () => {
+  let component: ScrollDemo1Component;
+  let fixture: ComponentFixture<ScrollDemo1Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GNumpadDemoComponent ]
+      declarations: [ ScrollDemo1Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GNumpadDemoComponent);
+    fixture = TestBed.createComponent(ScrollDemo1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
