@@ -15,7 +15,13 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['ColorTest'], {});
     //this.router.navigate(['gnumpad-demo'], {});
     this.router.navigate(['KeyBoard_RGB'], {});
+    // this.router.navigate(['KeyBoard_RGB'], {});
+    // window.onresize = resize;
 
+    // function resize()
+    // {
+    //  alert("检测到resize事件!");
+    // }
   }
   ngAfterViewInit(){
     // setTimeout(() => {
