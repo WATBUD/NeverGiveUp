@@ -10,6 +10,7 @@ import { RouterModule, Routes  } from '@angular/router';
 import { EntryPageComponent } from './EntryPage';
 import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
+import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'ColorTest', component: ColorTestComponent },
   { path: 'ScrollDemo1', component: ScrollDemo1Component },
   { path: 'DemoListUI', component: DemoListUIComponent },
+  { path: 'TableDemo1', component: TableDemo1Component },
 ];
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ const routes: Routes = [
     EntryPageComponent,
     ScrollDemo1Component,
     DemoListUIComponent,
+    TableDemo1Component,
   ],
   imports: [
     BrowserModule,

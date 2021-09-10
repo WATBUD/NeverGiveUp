@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule,Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 @Component({
   selector: 'app-entry-page',
   templateUrl: './EntryPage.html',
   styleUrls: ['./EntryPage.css']
 })
 export class EntryPageComponent implements OnInit {
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
     //this.router.config
-    console.log('%c this.router','color:rgb(255,75,255,1)',this.router);
+    console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
   }
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
@@ -23,12 +23,24 @@ export class EntryPageComponent implements OnInit {
     // {
     //  alert("检测到resize事件!");
     // }
+
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     // setTimeout(() => {
     // }, 3000);
- }
+    // document.onkeyup = null;
+    // document.addEventListener('keyup', (event) => {
+    //   console.log("KeyShortcut_event.keyCode", event.keyCode);
+    //   if (event.keyCode == 8 && this.router.url != "/DemoListUI") {//Backspace
+    //     this.router.navigate(['DemoListUI'], {});
+    //   }
+    // });
 
 
+    //   document.addEventListener('keydown', (event) => {
 
+    //  }
+
+  }
 }
+

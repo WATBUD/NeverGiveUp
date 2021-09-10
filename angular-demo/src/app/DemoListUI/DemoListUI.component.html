@@ -4,7 +4,11 @@
   </div> -->
 
   <ul  class="list-group">
-    <li routerLink="/ColorTest" routerLinkActive="active" >ColorTest</li>
+    <li *ngFor="let item of customRouteList ;let i = index" [style.background-color]="selectPageIndex==i?'rgb(0,128,128)':'rgb(255,255,255)'">
+    {{item.path}}
+    </li>
+    <!-- <li routerLink="/ColorTest" routerLinkActive="active">ColorTest</li>
     <li routerLink="/KeyBoard_RGB" routerLinkActive="active" >KeyBoard_RGB</li>
     <li routerLink="/ScrollDemo1" routerLinkActive="active">ScrollDemo1</li>
+    <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li> -->
   </ul>
