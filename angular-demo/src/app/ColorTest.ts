@@ -4,6 +4,7 @@ import {
    AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, FirewareManager, ImgPathList
    , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS,
 } from '../Module/TSImportManager';
+import { Router } from '@angular/router';
 @Component({
    selector: 'app-ColorTest',
    templateUrl: './ColorTest.html',
@@ -19,8 +20,9 @@ export class ColorTestComponent implements OnInit {
    M_Light_APMode = new APModeModule(1);
    Built_inColor=new ColorModule("Built_inColor");
 
-   constructor() {
+   constructor(private router: Router) {
 
+    //this.router.navigate(['KeyBoard_RGB'], {});
 
    }
    ngOnInit() {

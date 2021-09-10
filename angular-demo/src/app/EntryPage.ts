@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterModule,Router } from '@angular/router';
 @Component({
   selector: 'app-entry-page',
   templateUrl: './EntryPage.html',
@@ -7,14 +7,16 @@ import { Router } from '@angular/router';
 })
 export class EntryPageComponent implements OnInit {
   constructor(private router: Router) { 
-
+    //this.router.config
+    console.log('%c this.router','color:rgb(255,75,255,1)',this.router);
   }
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
     //this.router.navigate(['ColorTest'], {queryParams: {Device: {}}});
     //this.router.navigate(['ColorTest'], {});
-    this.router.navigate(['ScrollDemo1'], {});
-    // this.router.navigate(['KeyBoard_RGB'], {});
+    //this.router.navigate(['ScrollDemo1'], {});
+    //this.router.navigate(['KeyBoard_RGB'], {});
+    //this.router.navigate(['DemoListUI'], {});
     // window.onresize = resize;
 
     // function resize()
