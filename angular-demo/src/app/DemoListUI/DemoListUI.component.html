@@ -4,8 +4,9 @@
   </div> -->
 
   <ul  class="list-group">
-    <li *ngFor="let item of customRouteList ;let i = index" [style.background-color]="selectPageIndex==i?'rgb(0,128,128)':'rgb(255,255,255)'">
-    {{item.path}}
+    <li *ngFor="let item of customRouteList ;let i = index" [style.background-color]="selectPageIndex==i?'rgb(0,128,128)':'rgb(255,255,255)'"
+    (click)="this.router.navigate(['/'+item.path])">
+    {{item.path}} 
     </li>
     <!-- <li routerLink="/ColorTest" routerLinkActive="active">ColorTest</li>
     <li routerLink="/KeyBoard_RGB" routerLinkActive="active" >KeyBoard_RGB</li>

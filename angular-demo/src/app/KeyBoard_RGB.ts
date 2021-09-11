@@ -108,6 +108,7 @@ export class AppComponent implements OnInit {
     ngOnDestroy() {
         console.log('Keyboardpage Destory')
         //this.ModelPreview.ClosePreview();
+        document.removeEventListener('keydown', this.bindPassiveEffectEvent);
     }
     ngDoCheck() { }
 
@@ -459,7 +460,10 @@ export class AppComponent implements OnInit {
         }, 100);
         //this.M_Light_CS.mode_BreathingMulticolor();
         //this.setMode('AcidMode');
-        document.addEventListener('keydown', (event) => {
+        document.addEventListener('keydown', this.bindPassiveEffectEvent);
+    }
+     
+    bindPassiveEffectEvent=(event)=>{
             //console.log("KeyShortcut_event.keyCode", event.keyCode);
             var recordValue =AllFunctionMapping.find((x) => x.code == event.code)
             var index2=this.KeyBoardStyle.findKeyMappingIndex(recordValue.code);
@@ -474,8 +478,8 @@ export class AppComponent implements OnInit {
             }
             //this.Built_ineffect.Built_inSelected=obj;
             this.setPassiveEffect(obj);
-        });
     }
+
 }
 
 

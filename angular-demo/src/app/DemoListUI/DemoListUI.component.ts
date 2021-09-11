@@ -29,10 +29,13 @@ export class DemoListUIComponent implements OnInit {
   }
   colorPickerFnArrP1=[];
   ngAfterViewInit(): void {
-    this.colorPickerFnArrP1[1] = (event) => {
+    
+    //document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
+
+    this.colorPickerFnArrP1[1] = ((event) => {
       console.log("KeyShortcut_event.keyCode", event.keyCode);
       if (event.keyCode == 13) {//Enter
-        document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
+        //document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
         //document.onkeyup = null;
         this.router.navigate([this.customRouteList[this.selectPageIndex].path]);
       }
@@ -53,6 +56,7 @@ export class DemoListUIComponent implements OnInit {
         }
       }
       if (event.keyCode == 8 && this.router.url != "/DemoListUI") {//Backspace
+        document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
         this.router.navigate(['DemoListUI'], {});
       }
     });
