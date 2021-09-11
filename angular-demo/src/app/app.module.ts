@@ -11,6 +11,7 @@ import { EntryPageComponent } from './EntryPage';
 import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
 import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
+import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'ScrollDemo1', component: ScrollDemo1Component },
   { path: 'DemoListUI', component: DemoListUIComponent },
   { path: 'TableDemo1', component: TableDemo1Component },
+  { path: 'numpad-keyboard', component: NumpadKeyboardComponent },
 ];
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ const routes: Routes = [
     ScrollDemo1Component,
     DemoListUIComponent,
     TableDemo1Component,
+    NumpadKeyboardComponent,
   ],
   imports: [
     BrowserModule,

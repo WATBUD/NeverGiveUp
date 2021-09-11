@@ -27,6 +27,7 @@ export class DemoListUIComponent implements OnInit {
   }
   ngOnInit() {
   }
+  
   colorPickerFnArrP1=[];
   ngAfterViewInit(): void {
     
