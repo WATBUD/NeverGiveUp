@@ -1,3 +1,4 @@
+declare var require: any
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 @Component({
@@ -8,7 +9,7 @@ import { RouterModule, Router } from '@angular/router';
 export class EntryPageComponent implements OnInit {
   constructor(private router: Router) {
     //this.router.config
-    console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
+    console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router,i18n_File);
   }
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});

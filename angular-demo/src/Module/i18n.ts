@@ -1,7 +1,9 @@
 //1暫定為真值
 import { Injectable } from '@angular/core';
 declare var System;
-let i18n_File ={i18n_Localization:[]}
+let i18n_File = require("../i18n/i18n_Localization");
+
+//let i18n_File ={i18n_Localization:[]}
 //= System._nodeRequire('./i18n/i18n_Localization');
 // Simon:
 // 英文版本不显示微信微博

@@ -2,9 +2,7 @@
 import { Injectable } from '@angular/core';
 declare var System;
 //let i18n_File ='./i18n/i18n_Localization';
-
 import { i18n_Localization } from '../../assets/i18n/i18n_Localization'
-//exports.AllFunctionMapping = AllFunctionMapping
 let i18n_File ={
     'i18n_Localization':i18n_Localization,
 }
