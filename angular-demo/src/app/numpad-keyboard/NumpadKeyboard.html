@@ -14,11 +14,19 @@ style="z-index: 3;" />
 style="z-index: 3;" /> -->
 
 <div id="EventCanBoxSelectRange" class="Keyboard-content">
-  <div id="GMMK_0x320F0x5044" class="Content1">
-      <div id="canvasArea" style="width: 834px;height: 372px;display: flex">
-          <img src="./image/NumpadKeyboard/GMMK NumPad.png" style="position: absolute; z-index: 3;pointer-events: none; " />
-          <div id="keyAssignPrompt"
-              style="
+    <div id="GMMK_0x320F0x5044" class="Content1">
+        <div id="canvasArea" style="width: 834px;height: 372px;display: flex;    background: #ff000036;">
+            <img id="GMMK_img" src="./image/NumpadKeyboard/Side Light.png" style="z-index: 3;" />
+            <img src="./image/NumpadKeyboard/GMMK NumPad.png" style="    position: sticky;
+        pointer-events: none;
+        align-self: center;
+        margin-left: 2%;
+    margin-right: 2%;
+" />
+            <img id="GMMK_img" src="./image/NumpadKeyboard/Side Light.png" style="z-index: 3;" />
+
+
+            <div id="keyAssignPrompt" style="
                   position: absolute;
                   margin-top: -146px;
                   margin-left: -65px;
@@ -30,16 +38,10 @@ style="z-index: 3;" /> -->
                   align-items: flex-end;
                   background-image: url('./image/keybinding/Indicator.png');
                   z-index: 20;
-              "
-              [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'"
-          >
-              <div
-                  id="keyAssignPromptline"
-                  style="background-color: rgb(255, 255, 255); position: absolute; width: 1px; display: flex"
-              ></div>
-              <div
-                  id="KeyDefaultValue"
-                  style="
+              " [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
+                <div id="keyAssignPromptline"
+                    style="background-color: rgb(255, 255, 255); position: absolute; width: 1px; display: flex"></div>
+                <div id="KeyDefaultValue" style="
                       color: white;
                       margin-bottom: 84px;
                       width: 80%;
@@ -47,14 +49,13 @@ style="z-index: 3;" /> -->
                       overflow: hidden;
                       white-space: nowrap;
                       text-align: center;
-                  "
-              >
-                  {{ getDeviceDefaultKey() }}
-              </div>
-              <div id="SingleKeyClass" style="position: absolute; color: white; margin-top: -57px">
-                  {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
-              </div>
-              <div id="SingleKeyAssignValue" style="    position: absolute;
+                  ">
+                    {{ getDeviceDefaultKey() }}
+                </div>
+                <div id="SingleKeyClass" style="position: absolute; color: white; margin-top: -57px">
+                    {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
+                </div>
+                <div id="SingleKeyAssignValue" style="    position: absolute;
                                       color: white;
                                       margin-top: -25px;
                                       width: 50%;
@@ -63,37 +64,48 @@ style="z-index: 3;" /> -->
                                       white-space: nowrap;
                                       text-align: center;
                                       ">
-                  {{ switchChangAllkey() }}
-              </div>
-          </div>             
-          <div id="PERKEY_UI_section" style="position: absolute;
+                    {{ switchChangAllkey() }}
+                </div>
+            </div>
+            <div id="PERKEY_UI_section" style="position: absolute;
           display: flex;
           WIDTH: auto;
           HEIGHT: 100%;">
-              <div 
-                  *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="PERKEYBlockStyle"
-                  [ngStyle]="{'background':this.M_Light_PERKEY.getIndexRGBPerkeyCss(i)}"
-                  [attr.data-index]="i"></div>
-          </div>
-          <div id="KeyAssignBlock_section" style="position: absolute;
+                <div *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="PERKEYBlockStyle"
+                    [ngStyle]="{'background':this.M_Light_PERKEY.getIndexRGBPerkeyCss(i)}" [attr.data-index]="i"></div>
+            </div>
+            <div id="KeyAssignBlock_section" style="position: absolute;
           display: flex;
           WIDTH: auto;
           HEIGHT: 100%;">
-              <div id="KeyAssignBlock" [ngStyle]="{display: keybindingflag ? 'flex' : 'none'}"
-                  *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
-                  (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i" [style.background-color]="setkeyUIColor(i)" 
-                  class="KeyAssignUIStyle">
-                  <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}"
-                  [attr.id]="'KeyAssignHasValue'+i"
-                  class="KeyAssignHasValue">{{getAssignKeyTipStyle(i)}}</div>
-              </div>
-          </div>
-      </div>
-      <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center"
-      *ngIf="this.keybindingflag || this.lightingflag">
-      <img src="image/LayersIcon{{this.KeyBoardManager.getProfileLayerIndex()}}.png">
+                <div id="KeyAssignBlock" [ngStyle]="{display: keybindingflag ? 'flex' : 'none'}"
+                    *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
+                    (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i"
+                    [style.background-color]="setkeyUIColor(i)" class="KeyAssignUIStyle">
+                    <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}"
+                        [attr.id]="'KeyAssignHasValue'+i" class="KeyAssignHasValue">{{getAssignKeyTipStyle(i)}}</div>
+                </div>
+            </div>
+        </div>
+        <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center"
+            *ngIf="this.keybindingflag || this.lightingflag">
+            <img src="image/LayersIcon{{this.KeyBoardManager.getProfileLayerIndex()}}.png">
 
-      <div style="margin-top: 10px; color: rgb(68, 68, 67)">
-          Layers
-      </div>
-</div>
+            <div style="margin-top: 10px; color: rgb(68, 68, 67)">
+                Layers
+            </div>
+        </div>
+
+
+        <div class="triangleStyle" id="PERKEYAreaTip" style="
+        top: 148px;
+        right: 132px;
+        position: absolute;">
+    <div class="rectángulo" id="rectángulo" style="top: 28px;
+    left: -220px;
+    width: 350px;
+    height: 101px;
+    position: absolute;">
+        <div style="width: 94%;">
+            The pencil allows you to apply lighting to individual keys by clicking them or groups of keys using Quick Key Selection. The eraser allows you to remove lighting from keys in the same way.<br> Per key lighting applies over Preset effects.</div>
+    </div>
