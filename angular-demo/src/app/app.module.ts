@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { AppComponent } from './KeyBoard_RGB';
+import { AppComponent } from './KeyBoard_RGBFolder/KeyBoard_RGB';
 import { ColorTestComponent } from './ColorPickerUI/ColorTest';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes  } from '@angular/router';
+import { HttpModule } from '@angular/http';
 import { EntryPageComponent } from './EntryPage';
 import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(routes),

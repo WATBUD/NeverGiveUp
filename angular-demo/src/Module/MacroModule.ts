@@ -2,7 +2,6 @@ var SupportData = {KeyMapping:[]
 ,MouseMapping:[]
 
 }
-//System._nodeRequire('./backend/others/SupportData');
 export class MacroManager {
     radioOptions = 0;
     SupportData_KeyMapping = new Array()

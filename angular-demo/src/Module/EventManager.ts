@@ -1,7 +1,6 @@
 
 declare var System;
 import { Injectable } from '@angular/core';
-// let AllFunctionMapping = System._nodeRequire('./backend/others/SupportData').AllFunctionMapping
 
 @Injectable()
 export class EventManager{

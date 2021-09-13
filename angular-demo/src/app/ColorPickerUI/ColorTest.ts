@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
-   ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, KeyBoardManager, KeyBoardStyle, LedChainFramesManager,
-   AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, FirewareManager, ImgPathList
-   , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS,
+   ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, KeyBoardManager, LedChainFramesManager,
+   AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, ImgPathList
+   , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS,KeyAssignManager,
 } from '../../Module/TSImportManager';
 import { Router } from '@angular/router';
 @Component({
