@@ -78,8 +78,6 @@ export class AppComponent implements OnInit {
         private cdr: ChangeDetectorRef,
     ) {
         console.log('KeyboardComponent__ciphertext', AllFunctionMapping)
-
-        console.log('KeyboardComponent__ciphertext', System)
     }
     setkeyUIColor() {
 

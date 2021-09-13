@@ -1,3 +1,2 @@
-2021/09/13-17:26:52.804 32c0 Reusing MANIFEST C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Sync Data\LevelDB/MANIFEST-000001
-2021/09/13-17:26:52.804 32c0 Recovering log #3
-2021/09/13-17:26:52.804 32c0 Reusing old log C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Sync Data\LevelDB/000003.log 
+2021/09/13-17:49:05.529 39f8 Creating DB C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Sync Data\LevelDB since it was missing.
+2021/09/13-17:49:05.543 39f8 Reusing MANIFEST C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Sync Data\LevelDB/MANIFEST-000001

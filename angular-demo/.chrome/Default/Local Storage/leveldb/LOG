@@ -1,3 +1,2 @@
-2021/09/13-17:26:52.869 188 Reusing MANIFEST C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Local Storage\leveldb/MANIFEST-000001
-2021/09/13-17:26:52.870 188 Recovering log #3
-2021/09/13-17:26:52.870 188 Reusing old log C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Local Storage\leveldb/000003.log 
+2021/09/13-17:49:05.570 5578 Creating DB C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Local Storage\leveldb since it was missing.
+2021/09/13-17:49:05.573 5578 Reusing MANIFEST C:\Users\Louis\Desktop\Louis\NeverGiveUp\angular-demo\.chrome\Default\Local Storage\leveldb/MANIFEST-000001
