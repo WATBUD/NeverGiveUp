@@ -1,6 +1,7 @@
 //1暫定為真值
 import { Injectable } from '@angular/core';
 declare var System;
+declare var require: any
 let i18n_File = require("../i18n/i18n_Localization");
 
 //let i18n_File ={i18n_Localization:[]}
@@ -31,7 +32,7 @@ export class i18nManager {
 		} 
 		else{
             this.instance = new i18nManager();
-            console.log('%c i18nManager_getInstance_err','background: blue; color: red');
+            console.log('%c i18nManager_getInstance_err','background: blue; color: red',i18n_File);
             return this.instance;
 		}
 
