@@ -6,7 +6,7 @@ import { KeyBoardStyle } from './KeyBoardStyle'
 import { M_Light_CS } from './M_Light_CS'
 import { MatDialogRef } from '@angular/material'
 import { Built_ineffect,GloriousMode } from './Built_ineffect'
-let AllFunctionMapping = require('../../module/SupportData');
+let AllFunctionMapping = require('../../Module/SupportData');
 import {
     Component,
     OnInit,
