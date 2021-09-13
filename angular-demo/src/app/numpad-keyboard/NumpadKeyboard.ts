@@ -27,6 +27,8 @@ export class NumpadKeyboardComponent implements OnInit {
   deviceService;
   macroService=new MacroService();
   KeyBoardNotClickedYet;
+  keybindingflag=false;
+  lightingflag=false;
   constructor(private http:Http) { 
     this.deviceService=new DeviceService(this.http);
     console.log('NumpadKeyboardComponent', AllFunctionMapping);
