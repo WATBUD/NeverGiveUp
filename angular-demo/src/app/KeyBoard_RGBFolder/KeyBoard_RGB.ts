@@ -1,4 +1,4 @@
-declare var System
+declare var require: any;
 import { KeyAssignManager } from './KeyAssignManager'
 import { KeyBoardManager } from './KeyBoardManager'
 import { KeyBoardStyle } from './KeyBoardStyle'
@@ -6,8 +6,7 @@ import { KeyBoardStyle } from './KeyBoardStyle'
 import { M_Light_CS } from './M_Light_CS'
 import { MatDialogRef } from '@angular/material'
 import { Built_ineffect,GloriousMode } from './Built_ineffect'
-
-import { AllFunctionMapping } from '../../module/SupportData'
+let AllFunctionMapping = require('../../module/SupportData');
 import {
     Component,
     OnInit,

@@ -1,7 +1,7 @@
-declare var System
+declare var require: any;
 import { ElementRef,Injectable } from '@angular/core'
 import { KB61Prohibit } from './KeyBoardData'
-import { AllFunctionMapping } from '../../module/SupportData'
+let AllFunctionMapping = require('../../module/SupportData');
 export class KeyBoardManager {
     defaultName = '未配置'
     profileindex = 0;
