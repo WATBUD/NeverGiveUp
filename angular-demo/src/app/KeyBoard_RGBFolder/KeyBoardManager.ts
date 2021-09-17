@@ -7,7 +7,7 @@ export class KeyBoardManager {
     profileindex = 0;
     KeyBoardArray: any
     maxKayCapNumber: number
-    notClickedYet = true;
+    notClickedYet = false;
     profileLayers = [];
     profileLayerIndex = [0, 0, 0];
     layerMaxNumber = 3;

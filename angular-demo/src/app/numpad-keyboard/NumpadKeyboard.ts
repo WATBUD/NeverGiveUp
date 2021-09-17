@@ -29,6 +29,7 @@ export class NumpadKeyboardComponent implements OnInit {
   KeyBoardNotClickedYet;
   keybindingflag=false;
   lightingflag=false;
+  performanceflag=false;
   constructor(private http:Http) { 
     this.deviceService=new DeviceService(this.http);
     console.log('NumpadKeyboardComponent', AllFunctionMapping);
@@ -157,6 +158,33 @@ export class NumpadKeyboardComponent implements OnInit {
     }
 }
 
+
+    /**
+     * clcik Keyboard top bar
+     * @param flag 1:lighting 2:keybinding 3:performance
+     */
+    changeKeyboardTopbar(flag) {
+      this.lightingflag = false
+      this.keybindingflag = false
+      this.performanceflag = false
+      switch (flag) {
+          case 1:
+              this.lightingflag = !this.lightingflag;
+              break
+          case 2:
+              this.keybindingflag = !this.keybindingflag;
+              break
+          case 3:
+              this.performanceflag = !this.performanceflag;
+              break
+          default:
+              break
+      }
+      //this.Reinit()//from changeKeyboardTopbar
+      // this.reloadProfileData();//from changeKeyboardTopbar
+
+      // this.keyboardrightTitleStatus()
+  }
 
     /**
      * get File name exe
