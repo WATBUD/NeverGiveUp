@@ -1,0 +1,98 @@
+/**-----------------------------------------------------------------------------------------
+ * Author:G-SPY Louis
+ * KeyBoardStyle:KeyBoardStyle Class
+ * Processing KeyBoardStyle
+-----------------------------------------------------------------------------------------*/
+import { Injectable } from '@angular/core'
+@Injectable()
+export class KeyBoardStyle {
+    nowTargetIndex = 0
+    nowTargetKey = 'GMMK NUMPAD'
+    keyBoardList = {
+        'GMMK NUMPAD': {
+            ItemCss: [
+                "margin-top: 32px;margin-left: 92px;display: flex;",
+                "margin-top: 32px;margin-left: 154px;display: flex;",
+                "margin-top: 32px;margin-left: 216px;display: flex;",
+                "margin-top: 32px;margin-left: 279px;display: flex;",
+                "margin-top: 95px;margin-left: 92px;display: flex;",
+            ]
+            ,
+            hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+            ,
+            // keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9","NumpadAdd","Numpad4","Numpad5","Numpad6","Numpad1","Numpad2","Numpad3","Numpad0","NumpadDecimal","NumpadEnter"],
+            keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7"],
+            cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
+            BGImage: 'url(./image/Share/KB1.png)',
+            BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
+            centerBlockPoint:37,
+            qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
+            qigong_Step2_Range: [22, 23, 38, 52, 51, 36],
+            KeyTableArray: [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]],
+            imageMaxWidth: 765,
+            imageMaxHeight: 308,
+        },
+    }
+    /**
+     * getAssignTarget
+     * @param name string:keyBoard name
+    */
+    getAssignTarget(name) {
+        //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
+        return this.keyBoardList[name]
+    }
+
+    /**
+     * get nowTargetkeyBoard name
+    */
+    getTarget() {
+        //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
+        return this.keyBoardList[this.nowTargetKey]
+    }
+
+    /**
+     * get nowTargetkeyBoard keyMapping
+    */
+    getTargetDefaultKeyArray() {
+        return this.getTarget().keyMapping;
+    }
+
+    /**
+     * find KeyMappingIndex
+     * @param code string:Key name
+    */
+    findKeyMappingIndex(code = "") {
+        let targetIndex = this.getTargetDefaultKeyArray().findIndex((x) => x == code)
+        if (targetIndex == -1) {
+            console.log('findKeyMappingIndex=lostcode',code);
+        }
+        return targetIndex;
+    }
+
+    /**
+     * set keyBoardList cssText
+     * @param target Array:HTMLElements List
+    */
+    applyStyles(target) {
+        //console.log("applyStyles", this.getTarget().ItemCss,target);
+        this.getTarget().ItemCss.forEach((element, index) => {
+            //console.log("applyStyles_element", element);
+            if(target[index]){
+                //console.log("applyStyles_ItemCss_"+index, target[index].style.cssText);
+                target[index].style.cssText = element;
+            }
+            else{
+              console.log("applyStyles_ItemCss.forEach_Err",target[index],index);
+            }
+        });
+        this.getTarget().keyMapping.forEach((element, index) => {
+            if(target[index]){
+                target[index].setAttribute('keyMapping', element);
+                //console.log("applyStyles_keyMapping", index);
+            }
+            else{
+              console.log("applyStyles_keyMapping.forEach_Err","color:red",target[index],index);
+            }
+        });
+    }
+}

@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core'
 declare var require: any;
-let AllFunctionMapping = require('./SupportData');
+let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 @Injectable()
 export class KeyBoardManager {
     defaultName = '未配置'

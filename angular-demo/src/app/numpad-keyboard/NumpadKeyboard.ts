@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, KeyBoardStyle, LedChainFramesManager,
+  ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, LedChainFramesManager,
   AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, ImgPathList
   , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS, KeyAssignManager
 } from '../../Module/TSImportManager';
@@ -9,6 +9,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http'
 import { DeviceService } from './DeviceService';
 import { KeyBoardManager } from './KeyBoardManager';
 import { MacroService } from './MacroService';
+import { KeyBoardStyle } from './KeyBoardStyle';
 
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
@@ -16,7 +17,7 @@ let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 @Component({
   selector: 'app-NumpadKeyboard',
   templateUrl: './NumpadKeyboard.html',
-  styleUrls: ['./NumpadKeyboard.css']
+  styleUrls: ['./NumpadKeyboard.css','./KeyBoardStyle.scss']
 })
 export class NumpadKeyboardComponent implements OnInit {
   KeyBoardStyle = new KeyBoardStyle();
@@ -27,7 +28,7 @@ export class NumpadKeyboardComponent implements OnInit {
   deviceService;
   macroService=new MacroService();
   KeyBoardNotClickedYet;
-  keybindingflag=false;
+  keybindingflag=true;
   lightingflag=false;
   performanceflag=false;
   constructor(private http:Http) { 
@@ -38,6 +39,47 @@ export class NumpadKeyboardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit(){
+    this.keyBindPageRegisterEvent();
+
+  }
+  keyBindPageRegisterEvent() {
+    var KeyAssignUIStyleList = document.getElementsByClassName('KeyAssignUIStyle')
+    this.KeyBoardStyle.applyStyles(KeyAssignUIStyleList)
+    this.KeyBoardManager.setALLDefaultKeyArray(this.KeyBoardStyle.getTargetDefaultKeyArray());
+    //console.log("KeyAssignUIStyleList",KeyAssignUIStyleList);
+    for (let index = 0; index < KeyAssignUIStyleList.length; index++) {
+        let element = KeyAssignUIStyleList[index] as HTMLElement;
+        element.removeEventListener('mousedown', undefined);
+        if (this.keybindingflag == false) {
+            element.style.display = 'none';
+        }
+        var T = index.toString()
+        element.setAttribute('data-index', T)
+        element.addEventListener('mousedown', (e: MouseEvent) => {
+            if (this.KeyBoardManager.getTarget().checkNowModeTargetMatrixAssignKey(index, 'FN')) {
+                this.KeyBoardManager.notClickedYet = false;
+                //var keyAssignPrompt_UI = document.getElementById("keyAssignPrompt") as HTMLElement;
+                var keyAssignPromptline_UI = document.getElementById("keyAssignPromptline") as HTMLElement;
+                var keyAssignTarget=e.target as HTMLElement;
+                var Prompt_offset = ((keyAssignTarget.offsetTop + (keyAssignTarget.clientHeight / 2)));
+                //keyAssignPrompt_UI.style.marginTop = Prompt_offset + 'px'
+                keyAssignPromptline_UI.style.marginTop = Prompt_offset + 'px'
+                keyAssignPromptline_UI.style.marginLeft = -50 + 'px'
+                keyAssignPromptline_UI.style.width = (keyAssignTarget.offsetLeft)+40+'px'
+                this.KeyBoardManager.setAllProfileFieldData('recordAssignBtnIndex', index);
+                var target = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey();
+                this.KeyAssignManager.updateVariable(target);
+                // if (target.recordBindCodeType == "MacroFunction") {
+                //     this.macroService.setMacroTypeValue(target.macro_RepeatType);
+                //     this.macroService.setMacroSelectValue(target.macro_Data.value);
+                // }
+                console.log("KeyAssignUIStyleList__index", index, target);
+            }
+        })
+    }
+}
   /**
    * process setkeyUIColor Event
   */
@@ -185,7 +227,14 @@ export class NumpadKeyboardComponent implements OnInit {
 
       // this.keyboardrightTitleStatus()
   }
-
+      /**
+     * process changeProfileLayer Event
+    */
+   changeProfileLayer() {
+    this.KeyBoardManager.changeProfileLayer()
+    this.KeyAssignManager.resetDefaultVariable();
+    //this.reloadProfileData();//by changeProfileLayer
+    }
     /**
      * get File name exe
      * @param filename 

@@ -16,7 +16,6 @@ export class DemoListUIComponent implements OnInit {
         this.customRouteList.push(router.config[index]);
         //this.customRouteList['colorValue'] = 'rgb(255,255,255)';
       }
-
     }
     //this.router.config
     //varthis.router.config[0].path
