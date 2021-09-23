@@ -63,7 +63,7 @@ export class NumpadKeyboardComponent implements OnInit {
                 //var keyAssignPrompt_UI = document.getElementById("keyAssignPrompt") as HTMLElement;
                 var keyAssignPromptline_UI = document.getElementById("keyAssignPromptline") as HTMLElement;
                 var keyAssignTarget=e.target as HTMLElement;
-                var Prompt_offset = ((keyAssignTarget.offsetTop + (keyAssignTarget.clientHeight / 2)));
+                var Prompt_offset = ((keyAssignTarget.offsetTop + (keyAssignTarget.clientHeight / 2)))+2;
                 //keyAssignPrompt_UI.style.marginTop = Prompt_offset + 'px'
                 keyAssignPromptline_UI.style.marginTop = Prompt_offset + 'px'
                 keyAssignPromptline_UI.style.marginLeft = -50 + 'px'
