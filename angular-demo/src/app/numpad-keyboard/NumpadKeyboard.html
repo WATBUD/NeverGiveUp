@@ -1,134 +1,254 @@
-<!-- <p>
-  NumpadKeyboard works!
-</p> -->
+<div class="Keyboard">
+    <div class="Keyboard-left">
+        <div class="Keyboard-topbar">
 
-
-
-<!-- <img id="GMMK_img" src="/graphic/Side Light.png"
-style="z-index: 3;" />
-
-<img id="GMMK_img" src="/graphic/Side Light.png"
-style="z-index: 3;" />
-
-<img id="GMMK_img" src="/graphic/GMMK NumPad.png"
-style="z-index: 3;" /> -->
-<div class="topbar-group-item">
-    <div id="Openlighting" class="block">
-        <div class="topbar-item" [ngStyle]="{
-                'border-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
-            }" (click)="changeKeyboardTopbar(1)">
-            'Lighting'
+            <div class="topbar-group-item">
+                <div id="Openlighting" class="block">
+                    <div class="topbar-item" [ngStyle]="{
+                    'border-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
+                }" (click)="changeKeyboardTopbar(1)">
+                        'Lighting'
+                    </div>
+                    <div class="line"
+                        [ngStyle]="{ 'background-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : '' }">
+                    </div>
+                </div>
+                <div id="Openkeybinding" class="block">
+                    <div class="topbar-item" [ngStyle]="{
+                    'border-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
+                }" (click)="changeKeyboardTopbar(2)">
+                        'Keybinding'
+                    </div>
+                    <div class="line"
+                        [ngStyle]="{ 'background-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : '' }">
+                    </div>
+                </div>
+                <div id="OpenPerformance" class="block">
+                    <div class="topbar-item" [ngStyle]="{
+                    'border-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
+                }" (click)="changeKeyboardTopbar(3)">
+                        'Performance'
+                    </div>
+                    <div class="line"
+                        [ngStyle]="{ 'background-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : '' }">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="line" [ngStyle]="{ 'background-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : '' }">
+        <div id="EventCanBoxSelectRange" class="Keyboard-content">
+            <div id="GMMK_0x320F0x5044" class="Content1">
+                <div id="canvasArea" style="width: auto;height: 372px;display: flex;">
+                    <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
+                    <img id="GMMK_img" src="image/G_Project/GMMK NUMPAD.png" style="z-index: 3;" />
+                    <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
+                    <div id="keyAssignPromptline" style="background-color: rgb(255,0,0);
+                                                        position: absolute;
+                                                        width: 20px;
+                                                        height: 1px;
+                                                        z-index: 9999;
+                                                        margin-left: -200px;">
+                        <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
+                                                                    z-index: 20;
+                                                                    margin-left: -22px;
+                                                                    margin-top: -19px;
+                                                                      "
+                            [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'flex'">
+                            <div class="rectángulo" id="rectángulo" style="    top: -58px;
+                                                    left: -190px;
+                                                    width: 170px;
+                                                    height: 115px;
+                                                    position: absolute;;">
+                                <div id="KeyDefaultValue" style="color:white;width: 80%;text-overflow: ellipsis;
+                                overflow: hidden;white-space: nowrap;text-align: center;margin-top:-60px;">
+                                    {{ getDeviceDefaultKey()}}
+                                </div>
+                                <div id="SingleKeyClass" style="position: absolute;color: white;">
+                                    {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
+                                </div>
+                                <div id="SingleKeyAssignValue" style="position: absolute;
+                                                        color: white;
+                                                        margin-top: 56px;
+                                                        width: 50%;
+                                                        overflow: hidden;
+                                                        white-space: nowrap;
+                                                        text-align: center;">
+                                    {{ switchChangAllkey() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <img id="GMMK_img" src="/image/DarkAlert.jpg/" style="z-index: 3;" /> -->
+                    <div id="PERKEY_UI_section" style="position: absolute;
+                        display: flex;
+                        WIDTH: auto;
+                        HEIGHT: 100%;">
+                        <div *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
+                            class="PERKEYBlockStyle"
+                            [ngStyle]="{'background':this.M_Light_PERKEY.getIndexRGBPerkeyCss(i)}"
+                            [attr.data-index]="i"></div>
+                    </div>
+                    <div id="KeyAssignBlock_section" style="position: absolute;
+                        display: flex;
+                        WIDTH: auto;
+                        HEIGHT: 100%;">
+                        <div id="KeyAssignBlock" [ngStyle]="{display: keybindingflag ? 'flex' : 'none'}"
+                            *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
+                            (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i"
+                            [style.background-color]="setkeyUIColor(i)" class="KeyAssignUIStyle">
+                            <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}"
+                                [attr.id]="'KeyAssignHasValue'+i" class="KeyAssignHasValue">{{getAssignKeyTipStyle(i)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center"
+                        *ngIf="this.keybindingflag || this.lightingflag">
+                        <img src="image/G_Project/LayersIcon{{this.KeyBoardManager.getProfileLayerIndex()}}.png">
+
+                        <div style="margin-top: 10px; color: rgb(68, 68, 67)">
+                            Layers
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="Openkeybinding" class="block">
-        <div class="topbar-item" [ngStyle]="{
-                'border-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
-            }" (click)="changeKeyboardTopbar(2)">
-            'Keybinding'
-        </div>
-        <div class="line" [ngStyle]="{ 'background-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : '' }">
-        </div>
-    </div>
-    <div id="OpenPerformance" class="block">
-        <div class="topbar-item" [ngStyle]="{
-                'border-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
-            }" (click)="changeKeyboardTopbar(3)">
-            'Performance'
-        </div>
-        <div class="line" [ngStyle]="{ 'background-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : '' }">
+    <div [style.width]="this.lightingflag||this.keybindingflag||this.performanceflag?'400px':'0px'"
+        class="Keyboard-right" id="Keyboard-right">
+
+        <div class="right-content" *ngIf="this.keybindingflag">
+
+            <div class="list" style="margin-top: 10px">
+                <div class="sub-list" style="font-size: 14px; justify-content: center; letter-spacing: 1px">
+                    <div class="sub-list-item" [style.borderBottom]="
+                KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('SingleKey','KeyA')">
+                        SINGLEKEY
+                    </div>
+                </div>
+            </div>
+            <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="sub-list" style="font-size: 14px; justify-content: space-between; letter-spacing: 1px">
+                    <div class="sub-list-item" [style.borderBottom]="
+                KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('KEYBOARD','KEYBOARD_Fun_10')">
+                        KEYBOARDFUNCTION
+                    </div>
+                    <div class="sub-list-item"
+                        [style.borderBottom]="KeyAssignManager.recordBindCodeType == 'MOUSE' ? '1px #313131 solid' : ''"
+                        (click)="SetGroupFunction('MOUSE','MOUSE_Fun_14')">
+                        MOUSEFUNCTION
+                    </div>
+                </div>
+            </div>
+            <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="sub-list" style="font-size: 14px; justify-content: space-between; letter-spacing: 1px">
+                    <div class="sub-list-item" [style.borderBottom]="
+                KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('MacroFunction','MacroFunction')">
+                        MACRO
+                    </div>
+                    <div class="sub-list-item" [style.borderBottom]="
+                KeyAssignManager.recordBindCodeType == 'Multimedia' ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('Multimedia','Multimedia_Fun_0')">
+                        MULTIMEDIA
+                    </div>
+                    <div class="sub-list-item" [style.borderBottom]="KeyAssignManager.recordBindCodeType == 'Shortcuts' 
+            || KeyAssignManager.recordBindCodeType == 'LaunchWebsite'
+            || KeyAssignManager.recordBindCodeType == 'LaunchProgram'  ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('LaunchProgram','LaunchProgram')">
+                        SHORTCUTS
+                    </div>
+                </div>
+            </div>
+            <div class="list" style="margin-top: -10px; width: 60%; margin-left: 20%">
+                <div class="sub-list" style="font-size: 14px; justify-content: center; letter-spacing: 1px">
+                    <div class="sub-list-item" [style.borderBottom]="
+                KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
+            " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                        DISABLE
+                    </div>
+                </div>
+            </div>
+            <!-----------------------------------------------Single/Combination key ----------------------------------------------------------->
+            <div *ngIf="KeyAssignManager.recordBindCodeType == 'SingleKey'"
+                style="width: 90%; height: 70%; margin-left: 5%; margin-top: 20px">
+                <div class="list" style="
+                        margin-top: 15px;
+                        margin-left: 0%;
+                        width: 95%;
+                        background-color: rgb(234, 233, 227);
+                        padding: 10px;
+                    ">
+                    SELECTKEY
+                    <div class="SingleKey">
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px"
+                            *ngFor="let item of KeyboardKeyData">
+                            <label style="margin-right: 5px">
+                                <input type="radio" name="SingleKey" [attr.data-keyCode]="item.code"
+                                    [checked]="KeyAssignManager.recordBindCodeName == item.code"
+                                    (click)="KeyAssignManager.setNowCodeName(item.code, 'SingleKey')" />
+                                <span></span>
+                            </label>
+                            {{ item.value }}
+                        </div>
+                    </div>
+                </div>
+                <div id="ChooseModifierList" class="list" style="
+                        margin-top: 15px;
+                        margin-left: 0%;
+                        width: 95%;
+                        background-color: rgb(234, 233, 227);
+                        padding: 10px;
+                    ">
+                    <div class="sub-list" style="margin-top: 5px; font-family: MB, serif">
+                        CHOOSEMODIFIER
+                        <label style="margin-right: 5px">
+                            <input type="checkbox" [(ngModel)]="KeyAssignManager.combinationkeyEnable"
+                                (ngModelChange)="KeyAssignManager.setCombinationKeyEnable()" />
+                            <span></span>
+                        </label>
+                    </div>
+                    <div [ngStyle]="{
+                            'pointer-events': KeyAssignManager.combinationkeyEnable == true ? 'auto' : 'none'
+                        }">
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px">
+                            <label style="margin-right: 5px">
+                                <input type="checkbox" [(ngModel)]="KeyAssignManager.Shift" />
+                                <span></span>
+                            </label>
+                            Shift
+                        </div>
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px">
+                            <label style="margin-right: 5px">
+                                <input type="checkbox" [(ngModel)]="KeyAssignManager.Ctrl" />
+                                <span></span>
+                            </label>
+                            Ctrl
+                        </div>
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px">
+                            <label style="margin-right: 5px">
+                                <input type="checkbox" [(ngModel)]="KeyAssignManager.Alt" />
+                                <span></span>
+                            </label>
+                            Alt
+                        </div>
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px">
+                            <label style="margin-right: 5px">
+                                <input type="checkbox" [(ngModel)]="KeyAssignManager.Windows" />
+                                <span></span>
+                            </label>
+                            Windows
+                        </div>
+                        <div class="sub-list" style="margin-top: 5px; margin-left: -12px">
+                            <label style="margin-right: 5px">
+                                <input type="checkbox" [(ngModel)]="KeyAssignManager.hasFNStatus" />
+                                <span></span>
+                            </label>
+                            FN
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div id="EventCanBoxSelectRange" class="Keyboard-content">
-    <div id="GMMK_0x320F0x5044" class="Content1">
-        <div id="canvasArea" style="width: auto;height: 372px;display: flex;    background: #ff000036;">
-            <!-- <img id="GMMK_img" src="./ZZZ/GMMK3.png" style="z-index: 3;" /> -->
-            <!-- <img src="/graphic/GMMK NumPad.png" style="    position: sticky;
-                    pointer-events: none;
-                    align-self: center;
-                    margin-left: 2%;
-                margin-right: 2%;
-            " /> -->
-            <!-- <img id="GMMK_img" src="./G444.png" style="z-index: 3;" />
-            <img id="GMMK_img" src="./G7.png" style="z-index: 3;" /> -->
-            <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
-            <img id="GMMK_img" src="image/G_Project/GMMK NUMPAD.png" style="z-index: 3;" />
-            <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
-
-            <div id="keyAssignPromptline" style="background-color: rgb(255,0,0);
-                        position: absolute;
-                        width: 20px;
-                        height: 1px;
-                        z-index: 9999;
-                        margin-left: -200px;">
-                <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
-                                    z-index: 20;
-                                    margin-left: -22px;
-                                    margin-top: -19px;
-                                      " [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'flex'">
-                    <div class="rectángulo" id="rectángulo" style="    top: -58px;
-                    left: -190px;
-                    width: 170px;
-                    height: 115px;
-                    position: absolute;;">
-                        <div id="KeyDefaultValue" style="    color: white;
-                        width: 80%;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-align: center;
-                        margin-top: -60px;">
-                            {{ getDeviceDefaultKey() }}
-                        </div>
-                        <div id="SingleKeyClass" style="    position: absolute;
-                        color: white;">
-                            {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
-                        </div>
-                        <div id="SingleKeyAssignValue" style="position: absolute;
-                        color: white;
-                        margin-top: 56px;
-                        width: 50%;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-align: center;">
-                            {{ switchChangAllkey() }}
-                        </div>
-                    </div>
-            
-                </div>
-            </div>
-            <!-- <img id="GMMK_img" src="/image/DarkAlert.jpg/" style="z-index: 3;" /> -->
-
-
-
-            <div id="PERKEY_UI_section" style="position: absolute;
-            display: flex;
-            WIDTH: auto;
-            HEIGHT: 100%;">
-                <div *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="PERKEYBlockStyle"
-                    [ngStyle]="{'background':this.M_Light_PERKEY.getIndexRGBPerkeyCss(i)}" [attr.data-index]="i"></div>
-            </div>
-            <div id="KeyAssignBlock_section" style="position: absolute;
-            display: flex;
-            WIDTH: auto;
-            HEIGHT: 100%;">
-                <div id="KeyAssignBlock" [ngStyle]="{display: keybindingflag ? 'flex' : 'none'}"
-                    *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
-                    (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i"
-                    [style.background-color]="setkeyUIColor(i)" class="KeyAssignUIStyle">
-                    <div [ngClass]="{KeyAssignHasValue:this.KeyBoardManager.getTarget().getNowModeKeyMatrix()[i].changed}"
-                        [attr.id]="'KeyAssignHasValue'+i" class="KeyAssignHasValue">{{getAssignKeyTipStyle(i)}}
-                    </div>
-                </div>
-            </div>
-            <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center"
-                *ngIf="this.keybindingflag || this.lightingflag">
-                <img src="image/G_Project/LayersIcon{{this.KeyBoardManager.getProfileLayerIndex()}}.png">
-
-                <div style="margin-top: 10px; color: rgb(68, 68, 67)">
-                    Layers
-                </div>
-            </div>
-        </div>

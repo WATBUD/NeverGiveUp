@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-DemoListUI',
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
 export class DemoListUIComponent implements OnInit {
   selectPageIndex = 0;
   customRouteList = [];
-  constructor(private router: Router) {
+  //private titleService: Title=new Title();
+  constructor(private router: Router,private titleService: Title) {
 
     for (let index = 0; index < router.config.length; index++) {
       if (router.config[index].path != 'DemoListUI') {
@@ -29,7 +31,7 @@ export class DemoListUIComponent implements OnInit {
   
   colorPickerFnArrP1=[];
   ngAfterViewInit(): void {
-    
+
     //document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
 
     this.colorPickerFnArrP1[1] = ((event) => {
@@ -59,6 +61,7 @@ export class DemoListUIComponent implements OnInit {
         document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
         this.router.navigate(['DemoListUI'], {});
       }
+      this.titleService.setTitle(this.customRouteList[this.selectPageIndex].path);
     });
     //document.onkeyup = null;
     //document.removeEventListener('keyup', undefined);

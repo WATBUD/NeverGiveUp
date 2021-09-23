@@ -16,7 +16,6 @@ export class KeyBoardStyle {
                 "margin-top: 32px;margin-left: 216px;display: flex;",
                 "margin-top: 32px;margin-left: 279px;display: flex;",
                 "margin-top: 95px;margin-left: 92px;display: flex;",
-                "margin-top: 285px;margin-left: 367px;display: flex;",
                 "margin-top: 34px;margin-left: 367px;display: flex;border-radius: 31px;",
                 "margin-top: 230px;margin-left: 364px;border-radius: 28px;height: 32px;width: 63px;display: flex;",
             ]
@@ -24,7 +23,7 @@ export class KeyBoardStyle {
             hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
             ,
             // keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9","NumpadAdd","Numpad4","Numpad5","Numpad6","Numpad1","Numpad2","Numpad3","Numpad0","NumpadDecimal","NumpadEnter"],
-            keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9","NumpadAdd"],
+            keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9"],
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
