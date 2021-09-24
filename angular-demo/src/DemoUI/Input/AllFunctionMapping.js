@@ -146,4 +146,5 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"220","functionType":"Singlekey","value":"|","hid":49,"translate":"|","code":"Backslash"},
 {"keyCode":"226","functionType":"Singlekey","value":"\\","hid":49,"translate":"IntlBackslash","code":"IntlBackslash"},
 {"keyCode":"221","functionType":"Singlekey","value":"]","hid":48,"translate":"]","code":"BracketRight"},
-{"keyCode":"222","functionType":"Singlekey","value":"'","hid":52,"translate":"'","code":"Quote"}]
+{"keyCode":"222","functionType":"Singlekey","value":"'","hid":52,"translate":"'","code":"Quote"},
+{"keyCode":"Side Light","functionType":"KEYBOARD","value":"Side Light","hid":3,"translate":"Side Light","code":"Side Light"}]

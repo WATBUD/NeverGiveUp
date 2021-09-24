@@ -15,8 +15,8 @@ export class NativeComponent implements OnInit {
     Name:'Convert Excel File To JSON',
   },
   {
-    URL:'./DemoUI/Excel/Convert Excel File To JSON.html',
-    Name:'Convert Excel File To JSON',
+    URL:'./DemoUI/Input/KeyDownArrayGenerator.html',
+    Name:'KeyDownArrayGenerator',
   }];
   name = 'Set iframe source';
   //url: string = "https://angular.io/api/router/RouterLink";
@@ -31,7 +31,7 @@ export class NativeComponent implements OnInit {
 
   ngOnInit() {
     console.log('%c sanitizer','background: blue; color: red',this.sanitizer)
-    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.customURLList[0].URL);
+    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.customURLList[1].URL);
 
   }
 }
