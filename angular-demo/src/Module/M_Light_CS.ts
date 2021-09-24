@@ -651,11 +651,7 @@ export class M_Light_CS {
                 for (let rowindex = 0; rowindex < rowArray.length; rowindex++) {
                     var element = rowArray[rowindex];
                     var setRGB=colors[this.getRandom(0, colors.length - 1)];
-                    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
-                    for (let index2 = 0; index2 < 3; index2++) {
-                        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
-                    }
-                    target[rowArray[rowindex]].color = temp_colorData;  
+                    target[rowArray[rowindex]].color = this.getBrightnessRatio(setRGB);  
                 }
             }
             if (nowStep < InputArray.length-1) {
@@ -673,7 +669,13 @@ export class M_Light_CS {
         }, 150 * this.animationSpeed);
 
     }
-
+    getBrightnessRatio(setRGB=[]){
+        var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+        for (let index2 = 0; index2 < 3; index2++) {
+            temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+        }
+        return temp_colorData;
+    }
     mode_Retro_snake(colors = [[255,0,0,1]],InputArray=[]) {
         console.log('%c mode_Retro_snake_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);

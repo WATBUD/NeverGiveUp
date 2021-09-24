@@ -119,7 +119,7 @@ export class NumpadKeyboardComponent implements OnInit {
 */
   getDeviceDefaultKey() {
     var transText = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
-    console.log('getDeviceDefaultKey', this.currentDevice.deviceData.devicename);
+    //console.log('getDeviceDefaultKey', this.currentDevice.deviceData.devicename);
     var checkString = this.deviceService.getCurrentDevice();
     if (checkString == "GMMK PRO ISO" || checkString == "GMMK V2 65ISO" || checkString == "GMMK V2 96ISO") {
       if (transText == "|") {
