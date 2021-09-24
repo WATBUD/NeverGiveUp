@@ -1,3 +1,16 @@
 :host{
     width: 100%;
 }
+li:active {
+    color: red;
+}
+
+li{
+    color: blue;
+    margin: 10px 0;
+}
+
+li:hover {
+    background-color: yellow;
+}
+

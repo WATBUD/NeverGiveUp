@@ -31,6 +31,8 @@ input.KeyAssignUIStyle:focus {
 
 }
 .KeyAssignUIStyle{
+    justify-content: center;
+    align-items: end;
     position: absolute;
     z-index: 9997;
     width: 60px;

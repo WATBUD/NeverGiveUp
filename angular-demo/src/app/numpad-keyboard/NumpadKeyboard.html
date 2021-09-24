@@ -112,8 +112,10 @@
             </div>
         </div>
     </div>
-    <div [style.width]="this.lightingflag||this.keybindingflag||this.performanceflag?'400px':'0px'"
-        class="Keyboard-right" id="Keyboard-right">
+    <div [style.width]="this.lightingflag||this.keybindingflag||this.performanceflag?'400px':'0px'" class="Keyboard-right" id="Keyboard-right">
+        <img id="Keyboard-right-titile" src="image/Lighting-title.png" draggable="false" />
+        <img id="Keyboard-Close-RightContent" class="close" src="image/dialog/CloseIcon.png" draggable="false" (click)="closeRightContent()">
+        <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
 
         <div class="right-content" *ngIf="this.keybindingflag">
 
@@ -248,6 +250,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="right-footer">
+            <div
+                class="button"
+                (click)="ClickResetToDefault()"
+                style="font-size: 14px; background-color: transparent; text-decoration: underline; letter-spacing: 0px"
+            >
+                 ResettoDefault
+            </div>
+            <div class="button" (click)="keyBindSave()">
+                SAVE
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ import { DeviceService } from './DeviceService';
 import { KeyBoardManager } from './KeyBoardManager';
 import { MacroService } from './MacroService';
 import { KeyBoardStyle } from './KeyBoardStyle';
+import { Built_ineffect} from './Built_ineffect'
 
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
@@ -25,6 +26,7 @@ export class NumpadKeyboardComponent implements OnInit {
   KeyAssignManager = new KeyAssignManager();
   M_Light_PRESETS = new M_Light_CS(83);
   M_Light_PERKEY = new M_Light_CS(83);
+  Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
   deviceService;
   macroService = new MacroService();
@@ -129,6 +131,39 @@ export class NumpadKeyboardComponent implements OnInit {
     console.log('%c transText', 'background: blue; color: red', transText)
     return transText;
   }
+      /**
+     * process keyBindSave Event
+    */
+   keyBindSave() {
+    // if (this.lightingflag) {
+    //     //if(this.lightingPage == 'PRESETS'){
+    //     console.log('%c KB_ProfileImport', 'color:yellow', this.Built_ineffect.Built_inSelected);
+    //     this.KeyBoardManager.getTarget().light_PRESETS_Data = JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
+    //     //}
+    //     //if(this.lightingPage == 'PERKEY'){
+    //     this.PerKeyAreaCick(this.PerKeyArea);
+    //     console.log('%c M_Light_PERKEY.AllBlockColor', 'color:rgb(255,75,255,1)', this.M_Light_PERKEY.AllBlockColor);
+    //     this.LayoutManager.updateContentToDB(this.M_Light_PERKEY.AllBlockColor, this.PERKEY_lightData);
+    //     this.KeyBoardManager.getTarget().light_PERKEY_Data.value = this.LayoutManager.getMacroFromIdentifier().value;
+    //     //}
+    // }
+    if (this.keybindingflag) {
+        if (this.KeyAssignManager.recordBindCodeType != '') {
+            if (this.KeyAssignManager.recordBindCodeType == "MacroFunction") {
+                console.error('this.KeyAssignManager.recordBindCodeType=="MacroFunction"', this.macroService.nowMacroSelect);
+                this.KeyAssignManager.macro_Data = JSON.parse(JSON.stringify(this.macroService.getMacroFromIdentifier()));
+                this.KeyAssignManager.macro_RepeatType = this.macroService.get_RepeatType();
+            }
+            this.KeyBoardManager.getTarget().setAssignTargetData(this.KeyAssignManager);
+        }      
+    }
+    // if (this.performanceflag) {
+    //     this.KeyBoardManager.getTarget().pollingrate = this.pollingrateSelect.value;
+    //     this.KeyBoardManager.getTarget().inputLatency= this.inputLatencySelect.value;
+    // }
+    //this.setKeyMatrixToBackend();
+
+}
   /**
 * process switchChangAllkey Event
 */

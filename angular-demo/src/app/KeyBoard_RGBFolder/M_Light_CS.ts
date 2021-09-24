@@ -4019,9 +4019,6 @@ export class M_Light_CS {
             return this.toCssRGB(target[i].color);
         }
     }
-
-
-    
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     };
