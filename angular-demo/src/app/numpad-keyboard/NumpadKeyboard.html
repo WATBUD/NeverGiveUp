@@ -5,9 +5,9 @@
             <div class="topbar-group-item">
                 <div id="Openlighting" class="block">
                     <div class="topbar-item" [ngStyle]="{
-                    'border-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
-                }" (click)="changeKeyboardTopbar(1)">
-                        'Lighting'
+                                    'border-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
+                                }" (click)="changeKeyboardTopbar(1)">
+                        {{i18nManager.getTarget('Lighting')}}
                     </div>
                     <div class="line"
                         [ngStyle]="{ 'background-color': this.lightingflag === true ? 'rgb(253, 186, 59)' : '' }">
@@ -15,9 +15,8 @@
                 </div>
                 <div id="Openkeybinding" class="block">
                     <div class="topbar-item" [ngStyle]="{
-                    'border-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
-                }" (click)="changeKeyboardTopbar(2)">
-                        'Keybinding'
+                    'border-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}" (click)="changeKeyboardTopbar(2)">
+                        {{i18nManager.getTarget('Keybinding')}}
                     </div>
                     <div class="line"
                         [ngStyle]="{ 'background-color': this.keybindingflag === true ? 'rgb(253, 186, 59)' : '' }">
@@ -27,7 +26,7 @@
                     <div class="topbar-item" [ngStyle]="{
                     'border-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'
                 }" (click)="changeKeyboardTopbar(3)">
-                        'Performance'
+                        {{i18nManager.getTarget('Performance')}}
                     </div>
                     <div class="line"
                         [ngStyle]="{ 'background-color': this.performanceflag === true ? 'rgb(253, 186, 59)' : '' }">
@@ -112,9 +111,11 @@
             </div>
         </div>
     </div>
-    <div [style.width]="this.lightingflag||this.keybindingflag||this.performanceflag?'400px':'0px'" class="Keyboard-right" id="Keyboard-right">
+    <div [style.width]="this.lightingflag||this.keybindingflag||this.performanceflag?'400px':'0px'"
+        class="Keyboard-right" id="Keyboard-right">
         <img id="Keyboard-right-titile" src="image/Lighting-title.png" draggable="false" />
-        <img id="Keyboard-Close-RightContent" class="close" src="image/dialog/CloseIcon.png" draggable="false" (click)="closeRightContent()">
+        <img id="Keyboard-Close-RightContent" class="close" src="image/dialog/CloseIcon.png" draggable="false"
+            (click)="closeRightContent()">
         <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
 
         <div class="right-content" *ngIf="this.keybindingflag">
@@ -124,7 +125,7 @@
                     <div class="sub-list-item" [style.borderBottom]="
                 KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
             " (click)="SetGroupFunction('SingleKey','KeyA')">
-                        SINGLEKEY
+            {{i18nManager.getTarget('SINGLE KEY / COMBINATION KEY')}} 
                     </div>
                 </div>
             </div>
@@ -252,55 +253,55 @@
                 </div>
             </div>
         </div>
-                <!----------------------------------------------------------------Performace----------------------------------------------------------------------------->
-                <div class="right-content" *ngIf="this.performanceflag">
-                    <div class="list">
-                        <div class="sub-list" >
-                            PollingRate
-                            <app-commonselect style="z-index: 9997;" class="app-pollingrateselect" [componentId]="'app-pollingrateselect'"
-                                [inputoption]="PollingRateData" 
-                                [i18nManager]="this.i18nManager"
-                                [(ngModel)]="pollingrateSelect" (ngModelChange)="PollingRateSelect()">
-                            </app-commonselect>
-                            <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
-                                class="QuestionMark" style="right: 12%;">?</div>
-                            <div class="triangleStyle" *ngIf="QuestionMarkStatus=='performanceflagTip' || QuestionMarkStatus=='ALL'"
-                                id="performanceflagTip" style="
+        <!----------------------------------------------------------------Performace----------------------------------------------------------------------------->
+        <div class="right-content" *ngIf="this.performanceflag">
+            <div class="list">
+                <div class="sub-list">
+                    {{i18nManager.getTarget('PollingRate')}}
+                    <app-commonselect style="z-index: 9997;" class="app-pollingrateselect"
+                        [componentId]="'app-pollingrateselect'" [inputoption]="PollingRateData"
+                        [i18nManager]="this.i18nManager" [(ngModel)]="pollingrateSelect"
+                        (ngModelChange)="PollingRateSelect()">
+                    </app-commonselect>
+                    <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
+                        class="QuestionMark" style="right: 12%;">?</div>
+                    <div class="triangleStyle"
+                        *ngIf="QuestionMarkStatus=='performanceflagTip' || QuestionMarkStatus=='ALL'"
+                        id="performanceflagTip" style="
                                         top: 111px;
                                         right: 146px;
                                         position: absolute;">
-                                <div class="rectángulo" id="rectángulo" style="top: 28px;
+                        <div class="rectángulo" id="rectángulo" style="top: 28px;
                                 left: -198px;
                                 width: 354px;
                                 height: 93px;
                                 position: absolute;">
-                                    <div style="width: 91%;">
-                                        Polling Rate is how often your OS checks for input. This is a factor in determining the maximum
-                                        input latency of key presses. A high polling rate takes up more CPU resources than lower polling
-                                        rates.
-                                    </div>
-                                </div>
+                            <div style="width: 91%;">
+                                Polling Rate is how often your OS checks for input. This is a factor in determining the
+                                maximum
+                                input latency of key presses. A high polling rate takes up more CPU resources than lower
+                                polling
+                                rates.
                             </div>
-                        </div>
-                        <div class="sub-list">
-                            {{this.i18nManager.getTarget('input Latency')}}
-                            <app-commonselect class="app-inputLatencySelect" [componentId]="'app-inputLatencySelect'"
-                            [i18nManager]="this.i18nManager"
-                                [inputoption]="inputLatencyData" [(ngModel)]="inputLatencySelect" (ngModelChange)="InputLatencyOnSelect()">
-                            </app-commonselect>
                         </div>
                     </div>
                 </div>
+                <div class="sub-list">
+                    {{i18nManager.getTarget('input Latency')}}
+                    <app-commonselect class="app-inputLatencySelect" [componentId]="'app-inputLatencySelect'"
+                        [i18nManager]="this.i18nManager" [inputoption]="inputLatencyData"
+                        [(ngModel)]="inputLatencySelect" (ngModelChange)="InputLatencyOnSelect()">
+                    </app-commonselect>
+                </div>
+            </div>
+        </div>
         <div class="right-footer">
-            <div
-                class="button"
-                (click)="ClickResetToDefault()"
-                style="font-size: 14px; background-color: transparent; text-decoration: underline; letter-spacing: 0px"
-            >
-                 ResettoDefault
+            <div class="button" (click)="ClickResetToDefault()"
+                style="font-size: 14px; background-color: transparent; text-decoration: underline; letter-spacing: 0px">
+                {{i18nManager.getTarget('ResettoDefault')}}
             </div>
             <div class="button" (click)="keyBindSave()">
-                SAVE
+                {{i18nManager.getTarget('SAVE')}}
             </div>
         </div>
     </div>

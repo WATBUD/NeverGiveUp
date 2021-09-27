@@ -312,8 +312,21 @@ export class NumpadKeyboardComponent implements OnInit {
     //this.Reinit()//from changeKeyboardTopbar
     // this.reloadProfileData();//from changeKeyboardTopbar
 
-    // this.keyboardrightTitleStatus()
+    this.keyboardrightTitleStatus()
   }
+      /**
+     * Keyboard title status
+     */
+  keyboardrightTitleStatus() {
+      let elem = document.getElementById('Keyboard-right-titile') as HTMLImageElement;
+      document.getElementById('Keyboard-right').style.width = '400px'
+      if (this.lightingflag) elem.src = 'image/Lighting-title.png'
+      else if (this.keybindingflag) elem.src = 'image/Keybinding-title.png'
+      else if (this.performanceflag) elem.src = 'image/performance-title.png'
+      else document.getElementById('Keyboard-right').style.width = '0px'
+      //this.setRGBcolor();//by keyboardrightTitleStatus
+  }
+
   /**
  * process changeProfileLayer Event
 */
