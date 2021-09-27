@@ -14,6 +14,8 @@ import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
 import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
 import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 import { NativeComponent } from './native/native.component';
+import { CommonselectselectModule } from './commonselect/commonselect.module'
+
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -44,7 +46,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(routes),
-
+    CommonselectselectModule,
   ],
   providers: [],
   bootstrap: [EntryPageComponent],

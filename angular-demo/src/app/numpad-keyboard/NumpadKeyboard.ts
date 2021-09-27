@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, LedChainFramesManager,
-  AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, i18nManager, ImgPathList
+  AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, ImgPathList
   , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS, KeyAssignManager
 } from '../../Module/TSImportManager';
 
@@ -11,7 +11,7 @@ import { KeyBoardManager } from './KeyBoardManager';
 import { MacroService } from './MacroService';
 import { KeyBoardStyle } from './KeyBoardStyle';
 import { Built_ineffect} from './Built_ineffect'
-
+import { i18nManager} from './i18n'
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 let KeyMapping = require('./SupportData').KeyMapping;
@@ -29,6 +29,7 @@ export class NumpadKeyboardComponent implements OnInit {
   Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
   deviceService;
+  QuestionMarkStatus=""
   macroService = new MacroService();
   KeyBoardNotClickedYet;
   keybindingflag = true;
@@ -36,6 +37,20 @@ export class NumpadKeyboardComponent implements OnInit {
   performanceflag = false;
   KeyboardKeyData: any = KeyMapping;
   Shortcuts_WindowsMapping: any = Shortcuts_WindowsMapping;
+  pollingrateSelect: any
+  PollingRateData: any = [
+      { name: '125Hz', value: 125, translate: '125Hz' },
+      { name: '250Hz', value: 250, translate: '250Hz' },
+      { name: '500Hz', value: 500, translate: '500Hz' },
+      { name: '1000Hz', value: 1000, translate: '1000Hz' },
+  ]
+  inputLatencySelect: any;
+  inputLatencyData: any = [
+      { name: '2ms', value: 2, translate: '2ms' },
+      { name: '8ms', value: 8, translate: '8ms' },
+      { name: '16ms', value: 16, translate: '16ms' },
+  ]
+  i18nManager=i18nManager.getInstance();
   constructor(private http: Http, private cdr: ChangeDetectorRef) {
     this.deviceService = new DeviceService(this.http);
     console.log('NumpadKeyboardComponent', AllFunctionMapping);
@@ -128,7 +143,7 @@ export class NumpadKeyboardComponent implements OnInit {
         transText = "#"
       }
     }
-    console.log('%c transText', 'background: blue; color: red', transText)
+    //console.log('%c transText', 'background: blue; color: red', transText)
     return transText;
   }
       /**
@@ -238,7 +253,11 @@ export class NumpadKeyboardComponent implements OnInit {
       return result;
     }
   }
-
+    /**
+     * select polling rate
+     */
+    PollingRateSelect() { }
+    /**
   /**
    * process SetGroupFunction Event
    * @param type string:BindCodeType

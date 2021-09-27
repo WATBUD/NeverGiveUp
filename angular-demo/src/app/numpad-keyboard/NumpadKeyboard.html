@@ -252,6 +252,45 @@
                 </div>
             </div>
         </div>
+                <!----------------------------------------------------------------Performace----------------------------------------------------------------------------->
+                <div class="right-content" *ngIf="this.performanceflag">
+                    <div class="list">
+                        <div class="sub-list" >
+                            PollingRate
+                            <app-commonselect style="z-index: 9997;" class="app-pollingrateselect" [componentId]="'app-pollingrateselect'"
+                                [inputoption]="PollingRateData" 
+                                [i18nManager]="this.i18nManager"
+                                [(ngModel)]="pollingrateSelect" (ngModelChange)="PollingRateSelect()">
+                            </app-commonselect>
+                            <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
+                                class="QuestionMark" style="right: 12%;">?</div>
+                            <div class="triangleStyle" *ngIf="QuestionMarkStatus=='performanceflagTip' || QuestionMarkStatus=='ALL'"
+                                id="performanceflagTip" style="
+                                        top: 111px;
+                                        right: 146px;
+                                        position: absolute;">
+                                <div class="rectángulo" id="rectángulo" style="top: 28px;
+                                left: -198px;
+                                width: 354px;
+                                height: 93px;
+                                position: absolute;">
+                                    <div style="width: 91%;">
+                                        Polling Rate is how often your OS checks for input. This is a factor in determining the maximum
+                                        input latency of key presses. A high polling rate takes up more CPU resources than lower polling
+                                        rates.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-list">
+                            {{this.i18nManager.getTarget('input Latency')}}
+                            <app-commonselect class="app-inputLatencySelect" [componentId]="'app-inputLatencySelect'"
+                            [i18nManager]="this.i18nManager"
+                                [inputoption]="inputLatencyData" [(ngModel)]="inputLatencySelect" (ngModelChange)="InputLatencyOnSelect()">
+                            </app-commonselect>
+                        </div>
+                    </div>
+                </div>
         <div class="right-footer">
             <div
                 class="button"
