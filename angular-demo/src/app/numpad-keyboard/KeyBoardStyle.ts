@@ -20,10 +20,17 @@ export class KeyBoardStyle {
                 "margin-top: 230px;margin-left: 364px;border-radius: 28px;height: 32px;width: 63px;display: flex;",
             ]
             ,
+            coordinates:[],
+            // item_Data:[{
+            //     coordinates:[],
+            //     keyMapping:"",
+            // }]
+            // ,
+
             hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
             ,
             // keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9","NumpadAdd","Numpad4","Numpad5","Numpad6","Numpad1","Numpad2","Numpad3","Numpad0","NumpadDecimal","NumpadEnter"],
-            keyMapping:["Side Light","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","ScrollWheel","Side Light","Side Light","Numpad7","Numpad8","Numpad9","NumpadAdd","ScrollWheel","Side Light","Side Light","Numpad4","Numpad5","Numpad6","Side Light","Side Light","Numpad1","Numpad2","Numpad3","NumpadEnter","Side Light","Side Light","Numpad0","NumpadDecimal","Side Light"],
+            keyMapping:["Side Light","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","ScrollWheel","Side Light","Side Light","Side Light","Numpad7","Numpad8","Numpad9","NumpadAdd","ScrollWheel","Side Light","Side Light","Side Light","Side Light","Numpad4","Numpad5","Numpad6","Side Light","Side Light","Side Light","Numpad1","Numpad2","Numpad3","NumpadEnter","Side Light","Side Light","Numpad0","NumpadDecimal","Side Light"],
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
