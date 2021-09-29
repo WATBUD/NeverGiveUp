@@ -119,9 +119,9 @@
         <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
 
         <div class="right-content" *ngIf="this.keybindingflag">
-
+            <ng-container *ngIf="getNowKeyBindClassUI('Num Lock')">
             <div class="list" style="margin-top: 10px">
-                <div class="sub-list" style="font-size: 14px; justify-content: center; letter-spacing: 1px">
+                <div class="KeybindingClassArea_item" >
                     <div class="sub-list-item" [style.borderBottom]="
                 KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
             " (click)="SetGroupFunction('SingleKey','KeyA')">
@@ -130,21 +130,21 @@
                 </div>
             </div>
             <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
-                <div class="sub-list" style="font-size: 14px; justify-content: space-between; letter-spacing: 1px">
+                <div class="KeybindingClassArea_item">
                     <div class="sub-list-item" [style.borderBottom]="
                 KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
             " (click)="SetGroupFunction('KEYBOARD','KEYBOARD_Fun_10')">
-                        KEYBOARDFUNCTION
+                        KEYBOARD FUNCTION
                     </div>
                     <div class="sub-list-item"
                         [style.borderBottom]="KeyAssignManager.recordBindCodeType == 'MOUSE' ? '1px #313131 solid' : ''"
                         (click)="SetGroupFunction('MOUSE','MOUSE_Fun_14')">
-                        MOUSEFUNCTION
+                        MOUSE FUNCTION
                     </div>
                 </div>
             </div>
             <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
-                <div class="sub-list" style="font-size: 14px; justify-content: space-between; letter-spacing: 1px">
+                <div class="KeybindingClassArea_item">
                     <div class="sub-list-item" [style.borderBottom]="
                 KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
             " (click)="SetGroupFunction('MacroFunction','MacroFunction')">
@@ -163,15 +163,96 @@
                     </div>
                 </div>
             </div>
-            <div class="list" style="margin-top: -10px; width: 60%; margin-left: 20%">
-                <div class="sub-list" style="font-size: 14px; justify-content: center; letter-spacing: 1px">
+            <div class="list" style="margin-top: -10px">
+                <div class="KeybindingClassArea_item" >
                     <div class="sub-list-item" [style.borderBottom]="
-                KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
-            " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                            KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
+                        " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                        SOUND CONTROL
+                    </div>
+                    <div class="sub-list-item" [style.borderBottom]="
+                                KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
+                            " (click)="SetGroupFunction('Disable','Disable_Fun35')">
                         DISABLE
                     </div>
                 </div>
             </div>
+            </ng-container>
+            <ng-container *ngIf="getNowKeyBindClassUI('Slider')">
+                <div class="list" style="margin-top: 20px;">
+                    <div class="KeybindingClassArea_item" >
+                        <div class="sub-list-item" [style.borderBottom]="
+                                KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
+                            " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                            SOUND CONTROL
+                        </div>
+                        <div class="sub-list-item" [style.borderBottom]="
+                                    KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
+                                " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                            DISABLE
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="getNowKeyBindClassUI('ROTARY ENCODER')">
+                <div class="list" style="margin-top: 10px">
+                    <div class="KeybindingClassArea_item" >
+                        <div class="sub-list-item" [style.borderBottom]="
+                    KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
+                " (click)="SetGroupFunction('SingleKey','KeyA')">
+                {{i18nManager.getTarget('SINGLE KEY / COMBINATION KEY')}} 
+                        </div>
+                    </div>
+                </div>
+                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                    <div class="KeybindingClassArea_item">
+                        <div class="sub-list-item" [style.borderBottom]="
+                    KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
+                " (click)="SetGroupFunction('KEYBOARD','KEYBOARD_Fun_10')">
+                            KEYBOARD FUNCTION
+                        </div>
+                        <div class="sub-list-item"
+                            [style.borderBottom]="KeyAssignManager.recordBindCodeType == 'MOUSE' ? '1px #313131 solid' : ''"
+                            (click)="SetGroupFunction('MOUSE','MOUSE_Fun_14')">
+                            MOUSE FUNCTION
+                        </div>
+                    </div>
+                </div>
+                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                    <div class="KeybindingClassArea_item">
+                        <div class="sub-list-item" [style.borderBottom]="
+                    KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
+                " (click)="SetGroupFunction('MacroFunction','MacroFunction')">
+                            MACRO
+                        </div>
+                        <div class="sub-list-item" [style.borderBottom]="
+                    KeyAssignManager.recordBindCodeType == 'Multimedia' ? '1px #313131 solid' : ''
+                " (click)="SetGroupFunction('Multimedia','Multimedia_Fun_0')">
+                            MULTIMEDIA
+                        </div>
+                        <div class="sub-list-item" [style.borderBottom]="KeyAssignManager.recordBindCodeType == 'Shortcuts' 
+                || KeyAssignManager.recordBindCodeType == 'LaunchWebsite'
+                || KeyAssignManager.recordBindCodeType == 'LaunchProgram'  ? '1px #313131 solid' : ''
+                " (click)="SetGroupFunction('LaunchProgram','LaunchProgram')">
+                            SHORTCUTS
+                        </div>
+                    </div>
+                </div>
+                <div class="list" style="margin-top: -10px">
+                    <div class="KeybindingClassArea_item" >
+                        <div class="sub-list-item" [style.borderBottom]="
+                                KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
+                            " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                            SOUND CONTROL
+                        </div>
+                        <div class="sub-list-item" [style.borderBottom]="
+                                    KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
+                                " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                            DISABLE
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
             <!-----------------------------------------------Single/Combination key ----------------------------------------------------------->
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'SingleKey'"
                 style="width: 90%; height: 70%; margin-left: 5%; margin-top: 20px">

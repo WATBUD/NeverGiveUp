@@ -101,6 +101,21 @@ export class NumpadKeyboardComponent implements OnInit {
     }
   }
   /**
+   * process NowKeyBindClassUI
+  */
+  getNowKeyBindClassUI(searchName="") {
+    var defaultValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
+    console.log('%c getNowKeyBindClassUI_searchName','background: blue; color: red',defaultValue)
+    if(defaultValue==searchName){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+
+  /**
    * process setkeyUIColor Event
   */
   setkeyUIColor(i) {
