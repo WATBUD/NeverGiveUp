@@ -25,6 +25,7 @@
 
     <button type="button" onclick="copyEvent('log')" class="ButtonStyle">Copy</button>
     <!-- <button type="button" onclick="copy_RemoveDoubleQuotes()" class="ButtonStyle">Copy_RemoveDoubleQuotes</button> -->
+    <input type="button" id="AddDuplicateCoordinates" value="AddDuplicateCoordinates" class="ButtonStyle">
     <!-- <input type="button" id="GeneratorArrayText" value="GeneratorArrayText" class="ButtonStyle"> -->
     <input name="ClearMessage" type="button" id="ClearMessage" value="ClearMessage" class="ButtonStyle">
   </div>
@@ -69,12 +70,12 @@
 
 <script>
   var totalArr = [];
-  var nowCoordinates = [0,0];
+  var nowCoordinates = [-1,0];
   document.getElementById('ClearMessage').addEventListener('click', (event) => {
     console.log('%c ClearMessage', 'background: blue; color: red', event);
     log.innerText = '';
     totalArr = [];
-    nowCoordinates = [0,0];
+    nowCoordinates = [-1,0];
     show_LogUIText();
   });
   //input.addEventListener('input', updateValue);
@@ -95,6 +96,12 @@
   //     this.show_LogUIText();
   //   }
   // }
+  function copy_RemoveDoubleQuotes() {
+    log.innerText=(log.innerText).replace(/"/g, '');
+    console.log('copy_RemoveDoubleQuotes');
+    window.getSelection().selectAllChildren(log);
+    document.execCommand("Copy");
+  }
     document.addEventListener('keyup', function keyup_event(event) {
       console.log('%c keyup_event', 'background: blue; color: red', event);
       if (event.code == "Enter") {
@@ -102,19 +109,29 @@
         nowCoordinates[0]=0;
       }
       else {
-        totalArr.push([nowCoordinates[0], nowCoordinates[1]]);
         nowCoordinates[0] += 1;
+        totalArr.push([nowCoordinates[0], nowCoordinates[1]]);
       }
       //totalKeydownArr.push(String(targetValue[switchShowType]));
       show_LogUIText();
     });
     document.addEventListener('keydown', function keydown_event(event) {
       console.log('%c keydown_event', 'background: blue; color: red', event);
-      if (event.code == "Enter") {
+      if (event.code == "Enter" || event.code == "NumpadEnter") {
         event.preventDefault();
         return false;
       }
     });
+    document.getElementById('AddDuplicateCoordinates').addEventListener('click', (event) => {
+    console.log('%c AddDuplicateCoordinates', 'background: blue; color: red', event);
+    totalArr.push([nowCoordinates[0], nowCoordinates[1]]);
+    //nowCoordinates[0] += 1;
+    show_LogUIText();
+    });
+
+
+
+
   function show_LogUIText() {
     log.innerText = JSON.stringify(totalArr);
     document.getElementById('arrayNumber').innerHTML = "目前陣列數量:" + totalArr.length
