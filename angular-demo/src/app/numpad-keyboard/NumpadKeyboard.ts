@@ -19,7 +19,7 @@ let Shortcuts_WindowsMapping = require('./SupportData').KeyMapping;
 @Component({
   selector: 'app-NumpadKeyboard',
   templateUrl: './NumpadKeyboard.html',
-  styleUrls: ['./NumpadKeyboard.css', './KeyBoardStyle.scss', './Keybinding.scss']
+  styleUrls: ['./NumpadKeyboard.css', './KeyBoardStyle.scss', './Keybinding.scss','LightIngStyle.scss']
 })
 export class NumpadKeyboardComponent implements OnInit {
   KeyBoardStyle = new KeyBoardStyle();
@@ -30,6 +30,12 @@ export class NumpadKeyboardComponent implements OnInit {
   KeyBoardManager = new KeyBoardManager(83);
   deviceService;
   QuestionMarkStatus=""
+  PerKeyArea = "";
+  PerKey_NUMBERS_Visible=true;
+  BrightnessFlag: any
+  selectionStatus = true;
+  PERKEY_lightData;
+  lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
   keybindingflag = true;
@@ -62,6 +68,7 @@ export class NumpadKeyboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.keyBindPageRegisterEvent();
+    this.lightPageRegister();
 
   }
   keyBindPageRegisterEvent() {
@@ -100,6 +107,37 @@ export class NumpadKeyboardComponent implements OnInit {
       })
     }
   }
+    /**
+     * process lightPage Event
+    */
+   lightPageRegister() {
+    //var RGBCBSList = this.elementRef.nativeElement.querySelectorAll('.RGBColorBlockStyle')
+    //console.log('RGBCBSList', RGBCBSList)
+    var RGBList = document.getElementsByClassName('RGBColorBlockStyle') as HTMLCollectionOf<HTMLElement>;
+    this.KeyBoardStyle.applyStyles(RGBList);
+    var RGBList2 = document.getElementsByClassName('PERKEYBlockStyle') as HTMLCollectionOf<HTMLElement>;
+    this.KeyBoardStyle.applyStyles(RGBList2);
+    for (let index = 0; index < RGBList2.length; index++) {
+        let element = RGBList2[index];
+        element.removeEventListener('mousedown', undefined);
+        element.addEventListener('mousedown', (e: MouseEvent) => {
+            if (this.lightingPage == 'PERKEY') {
+                this.M_Light_PERKEY.setPerkey(index, this.selectionStatus, this.PERKEY_lightData.colorPickerValue, this.PERKEY_lightData.breathing);
+                this.PERKEY_lightData.sideLightSync = false;
+                this.PerKeyArea = element.getAttribute("keymapping");
+                this.M_Light_PERKEY.settingPerkeyName = this.PerKeyArea;
+                console.log('lightPageRegister_element', e);
+            }
+        })
+    }
+    //this.M_Light_PRESETS.setCoordinateData(RGBList);
+    //this.M_Light_PERKEY.setCoordinateData(RGBList2);
+    this.M_Light_PRESETS.setCoordinateData(this.KeyBoardStyle.getTarget());
+    this.M_Light_PERKEY.setCoordinateData(this.KeyBoardStyle.getTarget());
+}
+
+
+
   /**
    * process NowKeyBindClassUI
   */

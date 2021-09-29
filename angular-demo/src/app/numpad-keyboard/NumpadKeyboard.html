@@ -37,14 +37,21 @@
         <div id="EventCanBoxSelectRange" class="Keyboard-content">
             <div id="GMMK_0x320F0x5044" class="Content1">
                 <div id="canvasArea" style="width: auto;height: 372px;display: flex;">
-                    <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
-                    <img id="GMMK_img" src="image/G_Project/GMMK NUMPAD.png" style="z-index: 3;" />
-                    <img id="GMMK_img" src="image/G_Project/Side Light.png" style="z-index: 3;" />
+                    <div id="GMMK_img_section" style="
+                    display: flex;
+                    WIDTH: auto;
+                    HEIGHT: 100%;z-index: 6668;
+    pointer-events: none;
+    user-select: none;">
+                    <img id="GMMK_img" src="image/G_Project/Side Light.png" />
+                    <img id="GMMK_img" src="image/G_Project/GMMK NUMPAD.png"  />
+                    <img id="GMMK_img" src="image/G_Project/Side Light.png"/>
+                    </div>
                     <div id="keyAssignPromptline" style="background-color: rgb(255,0,0);
                                                         position: absolute;
                                                         width: 20px;
                                                         height: 1px;
-                                                        z-index: 9999;
+                                                        z-index: 6669;
                                                         margin-left: -200px;">
                         <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
                                                                     z-index: 20;
@@ -76,11 +83,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <img id="GMMK_img" src="/image/DarkAlert.jpg/" style="z-index: 3;" /> -->
+                    <div id="PRESETS_UI_section" style="position: absolute;
+                    display: flex;
+                    WIDTH: auto;
+                    HEIGHT: 100%;z-index: 6666;">
+                        <div 
+                            *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index" class="RGBColorBlockStyle"
+                            [ngStyle]="{'background':this.M_Light_PRESETS.getIndexRGBCss(i)}"
+                            [attr.data-index]="i"></div>
+                    </div>
                     <div id="PERKEY_UI_section" style="position: absolute;
                         display: flex;
                         WIDTH: auto;
-                        HEIGHT: 100%;">
+                        HEIGHT: 100%;z-index: 6667;">
                         <div *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
                             class="PERKEYBlockStyle"
                             [ngStyle]="{'background':this.M_Light_PERKEY.getIndexRGBPerkeyCss(i)}"
@@ -89,7 +104,8 @@
                     <div id="KeyAssignBlock_section" style="position: absolute;
                         display: flex;
                         WIDTH: auto;
-                        HEIGHT: 100%;">
+                        HEIGHT: 100%;
+                        z-index: 6669;">
                         <div id="KeyAssignBlock" [ngStyle]="{display: keybindingflag ? 'flex' : 'none'}"
                             *ngFor="let item of KeyBoardStyle.getTarget().keyMapping; let i = index"
                             (mouseover)="this.KeyBoardManager.getTarget().keyHoverIndex = i"

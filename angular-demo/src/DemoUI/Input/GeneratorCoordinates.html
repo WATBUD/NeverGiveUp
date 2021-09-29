@@ -28,6 +28,8 @@
     <input type="button" id="AddDuplicateCoordinates" value="AddDuplicateCoordinates" class="ButtonStyle">
     <!-- <input type="button" id="GeneratorArrayText" value="GeneratorArrayText" class="ButtonStyle"> -->
     <input name="ClearMessage" type="button" id="ClearMessage" value="ClearMessage" class="ButtonStyle">
+    <input type="button" id="recovery" onclick="recoveryPrevious();" onkeydown="" value="Recovery" class="ButtonStyle">
+
   </div>
   <div id="arrayNumber" style="width: 100%;height: 23px;color: red;"> </div>
 
@@ -78,24 +80,12 @@
     nowCoordinates = [-1,0];
     show_LogUIText();
   });
-  //input.addEventListener('input', updateValue);
-
-  // // document.getElementById('GeneratorArrayText').addEventListener('click', (event) => {
-  // //   ArrayMaxNumberChange();
-  // // });
-   
-  // function ArrayMaxNumberChange() {
-  //   var AMN = document.getElementById('ArrayMaxNumber');
-  //   if (AMN != null) {
-  //     console.log('%c GeneratorArrayText', 'background: black; color: blue', AMN.value);
-  //     console.dir(AMN);
-  //     totalArr = []
-  //     while (totalArr.length < AMN.value) {
-  //       totalArr.push("");
-  //     }
-  //     this.show_LogUIText();
-  //   }
-  // }
+  function recoveryPrevious() {
+    //totalKeydownArr.splice(totalKeydownArr.length);
+    console.log('%c recoveryPrevious', 'background: blue; color: red');
+    totalArr.pop();
+    show_LogUIText();
+  }
   function copy_RemoveDoubleQuotes() {
     log.innerText=(log.innerText).replace(/"/g, '');
     console.log('copy_RemoveDoubleQuotes');
@@ -107,6 +97,7 @@
       if (event.code == "Enter") {
         nowCoordinates[1]+= 1;
         nowCoordinates[0]=0;
+        totalArr.push([nowCoordinates[0], nowCoordinates[1]]);
       }
       else {
         nowCoordinates[0] += 1;
