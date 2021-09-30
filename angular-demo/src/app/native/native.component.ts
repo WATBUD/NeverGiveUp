@@ -17,6 +17,10 @@ export class NativeComponent implements OnInit {
   {
     URL:'./DemoUI/Input/KeyDownArrayGenerator.html',
     Name:'KeyDownArrayGenerator',
+  },
+  {
+    URL:'./DemoUI/Input/GeneratorArrayText.html',
+    Name:'GeneratorArrayText',
   }];
   name = 'Set iframe source';
   //url: string = "https://angular.io/api/router/RouterLink";

@@ -48,11 +48,11 @@
                     margin-right: 20px;" src="image/G_Project/GMMK NUMPAD.png"  />
                     <img id="GMMK_img" src="image/G_Project/Side Light.png"/>
                     </div>
-                    <div id="keyAssignPromptline" style="background-color: rgb(255,0,0);
+                    <div id="keyAssignPromptline" style="background-color: rgb(255,255,255);
                                                         position: absolute;
                                                         width: 20px;
                                                         height: 1px;
-                                                        z-index: 6669;
+                                                        z-index: 7000;
                                                         margin-left: -200px;">
                         <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
                                                                     z-index: 20;
@@ -133,6 +133,374 @@
         <img id="Keyboard-right-titile" src="image/Lighting-title.png" draggable="false" />
         <img id="Keyboard-Close-RightContent" class="close" src="image/dialog/CloseIcon.png" draggable="false"
             (click)="closeRightContent()">
+                <!----------------------------------------------------------------lighting----------------------------------------------------------------------------->
+                <div class="right-content" *ngIf="this.lightingflag">
+                    <div
+                        id="PageTitleButton"
+                        class="sub-list"
+                        style="
+                            font-size: 14px;
+                            justify-content: space-between;
+                            display: flex;
+                            width: 80%;
+                            margin-left: 10%;
+                            margin-top: 6%;
+                            cursor: pointer;
+                        ">
+                        <div
+                            class="sub-list-item"
+                            [style.borderBottom]="lightingPage == 'PRESETS' ? '1px #313131 solid' : ''"
+                            style="height: 2.3vh;
+                            margin-left: 60px;"
+                            (click)="SetLightingGroup('PRESETS')"
+                        >
+                            PRESETS
+                        </div>
+                        <div
+                            class="sub-list-item"
+                            [style.borderBottom]="lightingPage == 'PERKEY' ? '1px #313131 solid' : ''"
+                            style="height: 2.3vh;margin-right: 60px;"
+                            (click)="SetLightingGroup('PERKEY')"
+                        >
+                            PERKEY 
+                        </div>
+                    </div>
+                    <div id="PRESETSAreaUI" *ngIf="lightingPage == 'PRESETS'">
+                        <div data-code="Syncacrosskeyboard" class="list">
+                            <div class="sub-list" style="margin-bottom: 20px">
+                                Syncacrosskeyboard
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        [(ngModel)]="SyncCrossKeyboardCheckValue"
+                                        (ngModelChange)="SyncCrossKeyboardCheckChange()"
+                                    />
+                                    <span></span>
+                                </label>
+                            </div>
+                            <div class="sub-list" style="margin-bottom: 20px;white-space: nowrap;">
+                                Indicate caps lock on with blinking side lights
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        [(ngModel)]="this.KeyBoardManager.sideLightSwitch"
+                                    />
+                                    <span></span>
+                                </label>
+                            </div>                   
+                        </div>
+                        <div data-code="lightSelected_UI" class="list">
+                            EFFECT
+                            <div class="sub-list">
+                                <app-commonselect class="app-lightingeffectselect" [componentId]="'app-lightingeffectselect'"
+                                    [inputoption]="this.Built_ineffect.ListData" [i18nManager]="this.i18nManager"
+                                    [(ngModel)]="this.Built_ineffect.Built_inSelected" (ngModelChange)="Built_inSelectedChange()">
+                                </app-commonselect>
+                                <!-- <div (mouseover)="QuestionMarkStatus='PRESETSAreaTip'" (mouseleave)="QuestionMarkStatus=''"
+                                    *ngIf="this.getAppService.getAppSetting().tooltip" class="QuestionMark">?
+                                    <div class="triangleStyle" *ngIf="QuestionMarkStatus=='PRESETSAreaTip' || QuestionMarkStatus=='ALL'"
+                                        id="PRESETSAreaTip" style="margin-top: 17px;position: absolute;">
+                                        <div class="rectángulo" id="rectángulo" style="top: 31px;
+                                                            left: -225px;
+                                                            width: 362px;
+                                                            height: 67px;
+                                                            position: absolute;
+                                                            font-size: 12px;
+                                                            line-height: 16px;">
+                                            <div style="width: 92%;">
+                                                Select a preset lighting effect to apply to the entire keyboard.<br> Preset effects apply underneath
+                                                any
+                                                Per Key settings.</div>
+                                        </div>
+                            
+                                    </div>
+                                </div> -->
+                            
+                            </div>
+                           
+                            <div *ngIf="this.Built_ineffect.Built_inSelected.Multicolor_Enable" class="sub-list">
+                                RGB(Fixed)
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        [(ngModel)]="this.Built_ineffect.Built_inSelected.Multicolor"
+                                        (ngModelChange)="multicolor_Change()"
+                                    />
+                                    <span></span>
+                                </label>
+                            </div>
+        
+                        </div>
+        
+                        <div [style.display]="this.Built_ineffect.Built_inSelected.rate_Enable? 'flex' : 'none'"
+                        id="RateContent" class="list" >
+                            <div class="sub-list">
+                                <img src="image/lighting/RateIcon.png" />
+                                Rate
+                            </div>
+                            <div class="sub-list">
+                                <input
+                                    id="PRESETS_RateSlider"
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    class="slider"
+                                    step="5"
+                                    [(ngModel)]="this.Built_ineffect.Built_inSelected.speed"
+                                    (mouseup)="sliderChange()"
+                                    [ngStyle]="{'background': lightSliderMove('PRESETS_RateSlider')}"
+                                    onkeydown="event.preventDefault()"
+                                />
+                                <div>{{ this.Built_ineffect.Built_inSelected.speed }}%</div>
+                            </div>
+                        </div>
+                        <div [style.display]="this.Built_ineffect.Built_inSelected.brightness_Enable? 'flex' : 'none'"
+                        id="BrightnessContent">
+                            <div class="list">
+                                <div class="sub-list">
+                                    <img src="image/lighting/BrightnessIcon.png" draggable="false" />
+                                    Brightness
+                                </div>
+                                <div class="sub-list" *ngIf="!BrightnessFlag">
+                                    <input id="PRESETS_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+                                        [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness"
+                                        (mouseup)="sliderChange()"
+                                        [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSlider')}"
+                                        onkeydown="event.preventDefault()" />
+                                    <div>{{ this.Built_ineffect.Built_inSelected.brightness }}%</div>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <!-- [style.display]="this.Built_ineffect.Built_inSelected.color_Enable? 'flex' : 'none'" -->
+                        <div *ngIf="this.Built_ineffect.Built_inSelected.color_Enable"
+                         id="ColorContent" class="list" style="font-family: MM, serif">
+                         color
+                            <div class="sub-list">
+                                <ng-color-box
+                                    class="colorpicker"
+                                    id="mouse-colorpicker"
+                                    [(ngModel)]="colordata"
+                                    (ngModelChange)="colorPickerChange($event)"
+                                    [startHex]="startcolor"
+                                ></ng-color-box>
+                                <div class="color-content">
+                                    <div class="color-detail">
+                                        <div class="color-title">
+                                            Red
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.Built_ineffect.Built_inSelected.colorPickerValue[0]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                    <div class="color-detail" style="margin-top: 20px">
+                                        <div class="color-title">
+                                            Green
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.Built_ineffect.Built_inSelected.colorPickerValue[1]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                    <div class="color-detail" style="margin-top: 20px">
+                                        <div class="color-title">
+                                            Blue
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.Built_ineffect.Built_inSelected.colorPickerValue[2]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="PERKEYAreaUI" *ngIf="lightingPage == 'PERKEY'">
+                        <div (mouseover)="QuestionMarkStatus='PERKEYAreaTip'" 
+                        (mouseleave)="QuestionMarkStatus=''" class="QuestionMark" *ngIf="this.getAppService.getAppSetting().tooltip" style="right: 145px;position: absolute;top: 154px;">?</div>
+                        <div class="triangleStyle" *ngIf="QuestionMarkStatus=='PERKEYAreaTip' || QuestionMarkStatus=='ALL'" id="PERKEYAreaTip" style="
+                            top: 148px;
+                            right: 132px;
+                            position: absolute;">
+                        <div class="rectángulo" id="rectángulo" style="top: 28px;
+                        left: -220px;
+                        width: 350px;
+                        height: 101px;
+                        position: absolute;">
+                            <div style="width: 94%;">
+                                The pencil allows you to apply lighting to individual keys by clicking them or groups of keys using Quick Key Selection. The eraser allows you to remove lighting from keys in the same way.<br> Per key lighting applies over Preset effects.</div>
+                        </div>
+                        </div>
+                        <div id="Text_key" class="list">
+                            <div class="sub-list">
+                                KEY
+                                <div style="font-size: 14px;
+                                width: auto;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 20px;
+                                border: 1px solid #313131;
+                                border-radius: 6px;
+                                border-color: #fdba3b;
+                                padding: 9px;
+                                margin-left: 7px;
+                                letter-spacing: 2px;">{{this.M_Light_PERKEY.settingPerkeyName}}
+                                </div>
+                                <img (click)="switchSelectionStatus(true)" 
+                                style="right: 80px; position: absolute"
+                                [style.border]="selectionStatus?'#fdba3b 2px solid':''"
+                                    src="image/lighting/Edit Icon.png" />
+                                <img (click)="switchSelectionStatus(false)" 
+                                style="right: 47px; position: absolute"
+                                [style.border]="!selectionStatus?'#fdba3b 2px solid':''"
+        
+                                    src="image/lighting/Erase Icon.png" />
+                            </div>
+                        </div>
+                        <div id="lightDropList" class="list">
+                            EFFECT
+                            <app-commonselect style="height: 40px;
+                            width: 200px;
+                            margin-left: -10px;
+                            font-family: MM, serif;
+                            letter-spacing: 0px;
+                            font-size: 13px;
+                            z-index: 30;"
+                                class="PERKEYA_EffectSelect"
+                                [componentId]="'PERKEYA_EffectSelect'"
+                                [inputoption]="lighting_PERKEY_Effect"
+                                [(ngModel)]="lighting_PERKEY_SelectEffect"
+                                (ngModelChange)="PERKEY_SelectChange()"
+                            ></app-commonselect>
+                        </div>
+        
+                        <div id='html_LayoutSelect' class="list">
+                            LAYOUT
+                            <app-commonselect
+                                class="app-LayoutSelectUI"
+                                [componentId]="'app-LayoutSelectUI'"
+                                [inputoption]="this.LayoutManager.layoutSelectData"
+                                [(ngModel)]="this.LayoutManager.nowlayoutSelect"
+                                (ngModelChange)="this.onLayoutSelectChange()"
+                                style="width: 200px;
+                                font-family: MM, serif;
+                                font-size: 13px;
+                                letter-spacing: 0px;
+                                height: 32px;
+                                margin-left: -8px;
+                                z-index: 30;
+                                "
+                            >
+                            </app-commonselect>
+                        </div>
+                        <div id='html_LayoutName' class="list">
+                            NAMEYOURLAYOUT
+                            <input
+                                class="nowMacroName"
+                                id="setMacroName"
+                                [(ngModel)]='this.LayoutManager.nowEditName'
+                                (blur)="this.LayoutManager.NameInputBlur()"
+                                min="0"
+                                max="255"
+                                placeholder="Macro Name Here"
+                            />
+                        </div>
+        
+                        <div id="PERKEY_BREATHING" class="list" style="flex-direction: row;">
+                            <div class="sub-list" style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
+                                BREATHING
+                            </div>
+                            <label>
+                                <input type="checkbox" [(ngModel)]='this.PERKEY_lightData.breathing' (ngModelChange)="PerKeyBreathingChange()">
+                                <span></span>
+                            </label>
+                        </div>
+        
+                        <div id="PERKEY_Brightness">
+                            <div class="list">
+                                <div class="sub-list">
+                                    <img src="image/lighting/BrightnessIcon.png" />
+                                    Brightness
+                                </div>
+                                <div class="sub-list">
+                                    <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+                                        [(ngModel)]="this.PERKEY_lightData.brightness" (mouseup)="sliderChange()" 
+                                        [ngStyle]="{'background': PERKEY_BrightnessSlider_Background()}"
+                                        (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')"
+                                        onkeydown="event.preventDefault()" />
+                                    <div>{{ this.PERKEY_lightData.brightness }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ColorContent" class="list" style="font-family: MM, serif">
+                            color
+                            <div class="sub-list">
+                                <ng-color-box
+                                    class="colorpicker"
+                                    id="mouse-colorpicker"
+                                    [(ngModel)]="colordata"
+                                    (ngModelChange)="colorPickerChange($event)"
+                                    [startHex]="startcolor"
+                                ></ng-color-box>
+                                <div class="color-content">
+                                    <div class="color-detail">
+                                        <div class="color-title">
+                                            Red
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.PERKEY_lightData.colorPickerValue[0]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                    <div class="color-detail" style="margin-top: 20px">
+                                        <div class="color-title">
+                                            Green
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.PERKEY_lightData.colorPickerValue[1]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                    <div class="color-detail" style="margin-top: 20px">
+                                        <div class="color-title">
+                                            Blue
+                                        </div>
+                                        <input
+                                            maxlength="3"
+                                            [(ngModel)]="this.PERKEY_lightData.colorPickerValue[2]"
+                                            min="0"
+                                            max="255"
+                                            (change)="setRGBcolor()"
+                                            onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
         <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
 
         <div class="right-content" *ngIf="this.keybindingflag">

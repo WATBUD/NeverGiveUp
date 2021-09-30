@@ -357,7 +357,7 @@ export class M_Light_CS {
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
 
         var repeatCount = 0;
-        var StartPoint = this.getNowBlock(50).coordinateData;
+        var StartPoint = this.getStartPoint();
         var mode_step = 0;
         var step = 60;
         var nowStep = 0;
@@ -427,6 +427,9 @@ export class M_Light_CS {
                 //repeatCount=0;            
             }              
         }, 50*this.animationSpeed)
+    }
+    getStartPoint(){
+      return this.getNowBlock(this.centerBlockPoint).coordinateData;
     }
     setAnimationSpeed(){
         //this.acceleration

@@ -15,7 +15,7 @@ import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
 import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 import { NativeComponent } from './native/native.component';
 import { CommonselectselectModule } from './commonselect/commonselect.module'
-
+import { NgColorModule } from 'ng-color';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -47,6 +47,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes),
     CommonselectselectModule,
+    NgColorModule
   ],
   providers: [],
   bootstrap: [EntryPageComponent],

@@ -24,7 +24,7 @@ export class KeyBoardStyle {
                 "margin-top: 86px;margin-left: 158px;",
                 "margin-top: 85px;margin-left: 213px;",
                 "margin-top: 85px;margin-left: 269px;height: 111px;",
-                "margin-top: 206px;margin-left: 345px;border-radius: 28px;height: 32px;width: 63px;display: flex;",
+                "margin-top: 206px;margin-left: 345px;border-radius: 28px;height: 32px;width: 59px;display: flex;",
                 "margin-top: 65px;margin-left: 446px;height: 42px;",
                 "margin-top: 106px;margin-left: 446px;height: 42px;",
                 "margin-top: 150px;height: 42px;",
@@ -47,25 +47,18 @@ export class KeyBoardStyle {
             ]
             ,
             coordinates:[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[0,1],[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[6,1],[0,2],[0,2],[1,2],[2,2],[3,2],[4,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3],[5,3],[0,4],[1,4],[2,4],[3,4]],
-            // item_Data:[{
-            //     coordinates:[],
-            //     keyMapping:"",
-            // }]
-            // ,
-
-            hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+            hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
             ,
-            // keyMapping:["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Numpad7","Numpad8","Numpad9","NumpadAdd","Numpad4","Numpad5","Numpad6","Numpad1","Numpad2","Numpad3","Numpad0","NumpadDecimal","NumpadEnter"],
             keyMapping:["Side Light","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Rotary Encoder","Side Light","Side Light","Side Light","Numpad7","Numpad8","Numpad9","NumpadAdd","slider","Side Light","Side Light","Side Light","Numpad4","Numpad5","Numpad6","Side Light","Side Light","Side Light","Numpad1","Numpad2","Numpad3","NumpadEnter","Side Light","Side Light","Side Light","Numpad0","NumpadDecimal","Side Light"],
             cssText: 'position: absolute;height: 100%;width: 100%;pointer-events: none;',
             BGImage: 'url(./image/Share/KB1.png)',
             BGImageKeyerEffects: 'url(./image/Share/KB1KeyerEffects.png)',
-            centerBlockPoint:37,
+            centerBlockPoint:18,
             qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
             qigong_Step2_Range: [22, 23, 38, 52, 51, 36],
             KeyTableArray: [[0, 14], [15, 29], [30, 44], [45, 58], [59, 72], [73, 82]],
-            imageMaxWidth: 765,
-            imageMaxHeight: 308,
+            imageMaxWidth: 512,
+            imageMaxHeight: 333,
         },
     }
     /**
