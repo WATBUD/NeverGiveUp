@@ -7,7 +7,7 @@ import { IMAGE } from '../../shared/hsl/hsl-image';
 
 @Component({
     selector: 'app-hsl',
-    templateUrl: './components/support/ngcolor/circle-color-picker/circle-hsl/circle-hsl.component.html',
+    templateUrl: './circle-hsl.component.html',
     styles: [
         `
         :host {

@@ -7,7 +7,7 @@ import { IMAGE } from './circle-hue-image';
 
 @Component({
     selector: 'app-hue',
-    templateUrl: './components/support/ngcolor/circle-color-picker/circle-hue/circle-hue.component.html',
+    templateUrl: './circle-hue.component.html',
     styles: [
         `
         :host {

@@ -7,7 +7,7 @@ import { IMAGE } from '../../shared/hsl/hsl-image';
 
 @Component({
     selector: 'app-hsl',
-    templateUrl: './components/support/ngcolor/box-color-picker/box-hsl/box-hsl.component.html',
+    templateUrl: './box-hsl.component.html',
     styles: [
         `
         :host {

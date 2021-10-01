@@ -9,8 +9,8 @@ import { SaturationLightness } from '../shared/hsl/saturation-lightness';
 
 @Component({
     selector: 'ng-color-circle',
-    styleUrls: ['./components/support/ngcolor/circle-color-picker/circle-color-picker.component.css'],
-    templateUrl: './components/support/ngcolor/circle-color-picker/circle-color-picker.component.html',
+    styleUrls: ['./circle-color-picker.component.scss'],
+    templateUrl: './circle-color-picker.component.html',
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

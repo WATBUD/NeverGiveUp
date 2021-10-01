@@ -4,7 +4,7 @@ import { Vector } from '../../vector';
 
 @Component({
     selector: 'app-cursor',
-    templateUrl: './components/support/ngcolor/circle-color-picker/cursor/circle-cursor.component.html',
+    templateUrl: './circle-cursor.component.html',
     styles: [
         `
         .cursor {

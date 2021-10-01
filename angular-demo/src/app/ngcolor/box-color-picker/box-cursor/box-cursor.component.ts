@@ -4,8 +4,8 @@ import { Vector } from '../../vector';
 
 @Component({
     selector: 'app-cursor',
-    templateUrl: './components/support/ngcolor/box-color-picker/box-cursor/box-cursor.component.html',
-    styleUrls: ['./components/support/ngcolor/box-color-picker/box-cursor/box-cursor.component.css'],
+    templateUrl: './box-cursor.component.html',
+    styleUrls: ['./box-cursor.component.scss'],
 })
 export class BoxCursorComponent {
     @Input() public position: Vector;

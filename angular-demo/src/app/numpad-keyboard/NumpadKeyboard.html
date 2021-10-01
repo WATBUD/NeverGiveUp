@@ -59,7 +59,7 @@
                                                                     margin-left: -22px;
                                                                     margin-top: -19px;
                                                                       "
-                            [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'flex'">
+                            [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
                             <div class="rectángulo" id="rectángulo" style="    top: -58px;
                                                     left: -190px;
                                                     width: 170px;
@@ -382,6 +382,7 @@
                             z-index: 30;"
                                 class="PERKEYA_EffectSelect"
                                 [componentId]="'PERKEYA_EffectSelect'"
+                                [i18nManager]="this.i18nManager"
                                 [inputoption]="lighting_PERKEY_Effect"
                                 [(ngModel)]="lighting_PERKEY_SelectEffect"
                                 (ngModelChange)="PERKEY_SelectChange()"
@@ -393,6 +394,7 @@
                             <app-commonselect
                                 class="app-LayoutSelectUI"
                                 [componentId]="'app-LayoutSelectUI'"
+                                [i18nManager]="this.i18nManager"
                                 [inputoption]="this.LayoutManager.layoutSelectData"
                                 [(ngModel)]="this.LayoutManager.nowlayoutSelect"
                                 (ngModelChange)="this.onLayoutSelectChange()"

@@ -9,7 +9,7 @@ import { SaturationLightness } from '../shared/hsl/saturation-lightness';
 
 @Component({
     selector: 'ng-color-box, ng-color-basic, ng-color-basic-preview',
-    styleUrls: ['./box-color-picker.component.css'],
+    styleUrls: ['./box-color-picker.component.scss'],
     templateUrl: './box-color-picker.component.html',
     providers: [
         {
@@ -38,6 +38,8 @@ export class BoxColorPickerComponent implements ControlValueAccessor, OnInit {
     }
 
     public ngOnInit(): void {
+        console.log('%c ngOnInit', 'color:rgb(255,75,255,1)');
+
         const hsl = this.colorUtility.calculateHslFromHex(this.startHex || 'ff0000');
         this.setHsl(hsl);
         this.calculateColor(0);
@@ -61,6 +63,8 @@ export class BoxColorPickerComponent implements ControlValueAccessor, OnInit {
         // if(this.startHex.includes('rgb'))
         //      rgb
         // )
+        console.log('%c ngOnChanges', 'color:rgb(255,75,255,1)');
+
         const hsl = this.colorUtility.calculateHslFromHex(this.startHex || 'ff0000');
         this.resultHue = hsl.hue;
         this.setHsl(hsl);
@@ -68,6 +72,8 @@ export class BoxColorPickerComponent implements ControlValueAccessor, OnInit {
     }
 
     public writeValue(obj: ColorOutput): void {
+        console.log('%c writeValue', 'color:rgb(255,75,255,1)');
+
         try{
             if (!obj) {
                 return;

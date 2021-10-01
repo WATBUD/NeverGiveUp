@@ -7,7 +7,7 @@ import { IMAGE } from './box-hue-image';
 
 @Component({
     selector: 'app-hue',
-    templateUrl: './components/support/ngcolor/box-color-picker/box-hue/box-hue.component.html',
+    templateUrl: './box-hue.component.html',
     // styles: [
     //     `
     //     :host {

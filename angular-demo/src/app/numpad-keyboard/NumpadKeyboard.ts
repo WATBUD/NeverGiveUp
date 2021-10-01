@@ -10,9 +10,11 @@ import { DeviceService } from './DeviceService';
 import { KeyBoardManager } from './KeyBoardManager';
 import { MacroService } from './MacroService';
 import { KeyBoardStyle } from './KeyBoardStyle';
-import { Built_ineffect} from './Built_ineffect'
-import { i18nManager} from './i18n'
-import { ColorOutput } from '../ngcolor/color-output'
+import { Built_ineffect,GloriousMode} from './Built_ineffect';
+import { i18nManager} from './i18n';
+import { ColorOutput } from '../ngcolor/color-output';
+import { GetAppService} from './GetAppService';
+import { LayoutManager} from './LayoutManager';
 
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
@@ -30,6 +32,7 @@ export class NumpadKeyboardComponent implements OnInit {
   M_Light_PERKEY = new M_Light_CS(83);
   Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
+  LayoutManager = LayoutManager.getInstance();
   deviceService;
   QuestionMarkStatus=""
   PerKeyArea = "";
@@ -39,6 +42,8 @@ export class NumpadKeyboardComponent implements OnInit {
   selectionStatus = true;
   startcolor: any;
   ColorModule=new ColorModule();
+  colordata: ColorOutput;
+  getAppService=new GetAppService();
   PERKEY_lightData;
   lightingPage = 'PRESETS';
   macroService = new MacroService();
@@ -46,8 +51,13 @@ export class NumpadKeyboardComponent implements OnInit {
   keybindingflag = true;
   lightingflag = false;
   performanceflag = false;
+
   KeyboardKeyData: any = KeyMapping;
   Shortcuts_WindowsMapping: any = Shortcuts_WindowsMapping;
+  lighting_PERKEY_Effect: any = [
+    { name: 'Color Layout Editor', value: 0, translate: 'Color Layout Editor' },
+]
+lighting_PERKEY_SelectEffect: any
   pollingrateSelect: any
   PollingRateData: any = [
       { name: '125Hz', value: 125, translate: '125Hz' },
@@ -69,6 +79,7 @@ export class NumpadKeyboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -77,9 +88,12 @@ export class NumpadKeyboardComponent implements OnInit {
     this.M_Light_PRESETS = new M_Light_CS(T_length);
     this.M_Light_PERKEY = new M_Light_CS(T_length)
     this.KeyBoardManager = new KeyBoardManager(T_length);
-    //this.LayoutManager.setLayoutDevice(T_length, deviceObj);
+    var deviceObj={
+      SN: "0x320F0x504B",
+      devicename: "GMMK NUMPAD"
+    }
+    this.LayoutManager.setLayoutDevice(T_length, deviceObj);
     //this.LayoutManager = new LayoutManager(T_length, deviceObj.devicename);
-
     var temp_data = this.KeyBoardStyle.getTarget();
     console.log('%c KeyBoardStyle.getTarget', 'color:rgb(255,75,255,1)', temp_data);
     this.M_Light_PRESETS.qigong_Step1_Range = temp_data.qigong_Step1_Range;
@@ -92,14 +106,56 @@ export class NumpadKeyboardComponent implements OnInit {
     this.M_Light_PERKEY.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PERKEY.imageMaxHeight = temp_data.imageMaxHeight;
     this.M_Light_PERKEY.mode_BreatheSeparatelyBlack();
+    this.KeyBoardManager.setAllProfileFieldData('light_PRESETS_Data', new GloriousMode());
+    this.PERKEY_lightData = this.default_LightData();
+    this.LayoutManager.defaultData = this.default_LightData();
     this.keyBindPageRegisterEvent();
     this.lightPageRegister();
     document.addEventListener("keyup",(evemt2)=>{
       var obj={
           BlockIndex:24,
       }
+     var T_1=this.KeyBoardStyle.getTarget().keyMapping;
+     let index = T_1.findIndex((x) => x == evemt2.code);
+      //this.KeyBoardStyle.getTarget().keyMapping;
+      console.log('%c T_1', 'color:rgb(255,77,255)', T_1,index,evemt2);
+
+      if (index != -1) {
+        obj.BlockIndex=index;
+      }
+      
       this.setPassiveEffect(obj);
+
+      //this.KeyBoardStyle.sss();
+      //this.startcolor="FF0000";
+      
     });
+  }
+      /**
+    * process default_LightData Event
+    */
+   default_LightData(defaultcolor = [255, 0, 0, 1]) {
+    var T = {
+        speed: 50,
+        brightness: 50,
+        clearStatus: false,
+        colorHex: '#0000',
+        colorPickerValue: defaultcolor,
+        breathing: false,
+        sideLightSync: false,
+        sideLightColor: [0, 0, 0, 0],
+        brightness_Enable: false,
+        rate_Enable: false,
+        color_Enable: false,
+    }
+    return T;
+}
+  ngAfterViewChecked() {
+    // let show = this.isShowExpand();
+    // if (show != this.show) { // check if it change, tell CD update view
+    //   this.show = show;
+      this.cdr.detectChanges();
+    //}
   }
   keyBindPageRegisterEvent() {
     var KeyAssignUIStyleList = document.getElementsByClassName('KeyAssignUIStyle')
@@ -114,8 +170,11 @@ export class NumpadKeyboardComponent implements OnInit {
       }
       var T = index.toString()
       element.setAttribute('data-index', T)
+      if (this.KeyBoardStyle.getTargetDefaultKeyArray()[index]=='Side Light') {
+        console.log('%c this.KeyBoardStyle.getTargetDefaultKeyArray()[index]', 'color:rgb(0,0,255)', this.KeyBoardStyle.getTargetDefaultKeyArray()[index]);
+        continue;
+      }
       element.addEventListener('mousedown', (e: MouseEvent) => {
-        if (this.KeyBoardManager.getTarget().checkNowModeTargetMatrixAssignKey(index, 'Side Light')) {
           this.KeyBoardManager.notClickedYet = false;
           //var keyAssignPrompt_UI = document.getElementById("keyAssignPrompt") as HTMLElement;
           var keyAssignPromptline_UI = document.getElementById("keyAssignPromptline") as HTMLElement;
@@ -133,10 +192,16 @@ export class NumpadKeyboardComponent implements OnInit {
           //     this.macroService.setMacroSelectValue(target.macro_Data.value);
           // }
           console.log("KeyAssignUIStyleList__index", index, target);
-        }
       })
     }
   }
+      /**
+     * process LightingGroup Event
+    */
+   SetLightingGroup(pageName) {
+    this.lightingPage = pageName;
+    this.setRGBcolor();//by SetLightingGroup
+}
       /**
      * process PassiveEffect Event
      * @param obj object:PassiveEffectData
@@ -195,7 +260,12 @@ export class NumpadKeyboardComponent implements OnInit {
     for (let index = 0; index < RGBList2.length; index++) {
         let element = RGBList2[index];
         element.removeEventListener('mousedown', undefined);
+        if (this.KeyBoardStyle.getTargetDefaultKeyArray()[index]=='Side Light') {
+          console.log('%c this.KeyBoardStyle.getTargetDefaultKeyArray()[index]', 'color:rgb(0,0,255)', this.KeyBoardStyle.getTargetDefaultKeyArray()[index]);
+          continue;
+        }
         element.addEventListener('mousedown', (e: MouseEvent) => {
+          
             if (this.lightingPage == 'PERKEY') {
                 this.M_Light_PERKEY.setPerkey(index, this.selectionStatus, this.PERKEY_lightData.colorPickerValue, this.PERKEY_lightData.breathing);
                 this.PERKEY_lightData.sideLightSync = false;
@@ -207,25 +277,25 @@ export class NumpadKeyboardComponent implements OnInit {
     }
     this.M_Light_PRESETS.setCoordinateData(RGBList);
     this.M_Light_PERKEY.setCoordinateData(RGBList2);
-    for (let index = 0; index < RGBList.length; index++) {
-      let element = RGBList[index];
-      //element.setAttribute('data-index', String(index));
-      //element.setAttribute('coordinate', String(element));     
-      var obj = {
-          "clientHeight": element.clientHeight,
-          "clientWidth": element.clientWidth,
-          "offsetLeft": element.offsetLeft,
-          "offsetTop": element.offsetTop,
-          "scroll": element.scroll,
-          "top_Left": [element.offsetLeft, element.offsetTop],
-          "top_Right": [element.offsetLeft + element.clientWidth, element.offsetTop],
-          "bottom_Left": [element.offsetLeft, element.offsetTop + element.clientHeight],
-          "bottom_Right": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
-          "center_Point": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
-      }
+  //   for (let index = 0; index < RGBList.length; index++) {
+  //     let element = RGBList[index];
+  //     //element.setAttribute('data-index', String(index));
+  //     //element.setAttribute('coordinate', String(element));     
+  //     var obj = {
+  //         "clientHeight": element.clientHeight,
+  //         "clientWidth": element.clientWidth,
+  //         "offsetLeft": element.offsetLeft,
+  //         "offsetTop": element.offsetTop,
+  //         "scroll": element.scroll,
+  //         "top_Left": [element.offsetLeft, element.offsetTop],
+  //         "top_Right": [element.offsetLeft + element.clientWidth, element.offsetTop],
+  //         "bottom_Left": [element.offsetLeft, element.offsetTop + element.clientHeight],
+  //         "bottom_Right": [element.offsetLeft + element.clientWidth, element.offsetTop + element.clientHeight],
+  //         "center_Point": [element.offsetLeft + (element.clientWidth/2), element.offsetTop + (element.clientHeight/2)],
+  //     }
       
-      this.M_Light_PRESETS.AllBlockColor[index].center_Point = this.KeyBoardStyle.getTarget().coordinates[index];
-  }
+  //     this.M_Light_PRESETS.AllBlockColor[index].center_Point = this.KeyBoardStyle.getTarget().coordinates[index];
+  // }
     //this.M_Light_PRESETS.setCoordinateData(this.KeyBoardStyle.getTarget());
     //this.M_Light_PERKEY.setCoordinateData(this.KeyBoardStyle.getTarget());
 }
@@ -274,7 +344,7 @@ export class NumpadKeyboardComponent implements OnInit {
   */
   getNowKeyBindClassUI(searchName="") {
     var defaultValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
-    console.log('%c getNowKeyBindClassUI_searchName','background: blue; color: red',defaultValue)
+    //console.log('%c getNowKeyBindClassUI_searchName','background: blue; color: red',defaultValue)
     if(defaultValue==searchName){
       return true;
     }
@@ -325,8 +395,8 @@ export class NumpadKeyboardComponent implements OnInit {
           let ColortObj = this.ColorModule.rgbToHex(rgbArr[0], rgbArr[1], rgbArr[2]);
           target.colorHex = ColortObj,
           this.startcolor = 'FFFFFF';
+          this.cdr.detectChanges();
           this.startcolor = ColortObj.split('#')[1]//#0000=>00000
-          //this.cdr.detectChanges();
           console.log('ColortObj', ColortObj,this.startcolor);
           if (this.lightingPage == 'PERKEY') {
               this.PerKeyAreaCick(this.PerKeyArea);
@@ -445,7 +515,7 @@ PRESETS_SelectedChange() {
     T_CS.onSetModeRefresh();
     switch (target.PointEffectName) {
         case 'GloriousMode':
-            T_CS.mode_ConicRipple(inputColor, true);
+            T_CS.mode_ConicRipple(inputColor, true,this.M_Light_PRESETS.centerBlockPoint);
             break;
         case 'SpiralingWave':
             T_CS.mode_Spiral(inputColor, target.Multicolor, 0);
@@ -544,6 +614,9 @@ PRESETS_SelectedChange() {
       return 'rgba(255, 255, 255, 0.65)';
     }
     else {
+      if (this.KeyBoardStyle.getTargetDefaultKeyArray()[i]=='Side Light') {
+        return '#0000';
+      }
       if (this.KeyBoardManager.getTarget().keyHoverIndex == i) {
         return 'rgba(253, 186, 59, 0.65)';
       }
@@ -571,16 +644,25 @@ PRESETS_SelectedChange() {
 * process getDeviceDefaultKey Event
 */
   getDeviceDefaultKey() {
+
     var transText = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
+
     //console.log('getDeviceDefaultKey', this.currentDevice.deviceData.devicename);
-    var checkString = this.deviceService.getCurrentDevice();
-    if (checkString == "GMMK PRO ISO" || checkString == "GMMK V2 65ISO" || checkString == "GMMK V2 96ISO") {
-      if (transText == "|") {
-        transText = "#"
-      }
-    }
-    //console.log('%c transText', 'background: blue; color: red', transText)
+    // var checkString = this.deviceService.getCurrentDevice();
+    // if (checkString == "GMMK PRO ISO" || checkString == "GMMK V2 65ISO" || checkString == "GMMK V2 96ISO") {
+    //   if (transText == "|") {
+    //     transText = "#"
+    //   }
+    // }
+    // if(transText!=null){
+    //   transText="";
+    // }
     return transText;
+    // try {
+    //   return transText;
+    // } catch (error) {
+    //   return "ss";
+    // }
   }
       /**
      * process keyBindSave Event
@@ -780,5 +862,26 @@ PRESETS_SelectedChange() {
     return filename;
   }
 
+    /**
+     * process PERKEY_BrightnessSlider Event
+    */
+   PERKEY_BrightnessSlider_Background() {
+    var value = this.PERKEY_lightData.brightness;
+    return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+}
+    /**
+     * process onLayoutSelectChange Event
+    */
+   onLayoutSelectChange() {
+    this.LayoutManager.setSelectChange();
+    //console.log('%c onLayoutSelectChange_nowlayoutSelect','background: blue; color: red',JSON.stringify(this.LayoutManager.getMacroFromIdentifier()));
+    console.log('%c onLayoutSelectChange', 'background: blue; color: red', JSON.stringify(this.LayoutManager.getMacroFromIdentifier()));
+    var target = this.LayoutManager.getMacroFromIdentifier().content;
 
+    if (target != undefined) {
+        this.M_Light_PERKEY.replaceAllBlockColor(target.AllBlockColor);
+        this.PERKEY_lightData = target.lightData;
+        this.setRGBcolor();//by onLayoutSelectChange
+    }
+}
 }
