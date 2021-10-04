@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, LedChainFramesManager,
   AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, ImgPathList
-  , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, M_Light_CS, KeyAssignManager
+  , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, KeyAssignManager
 } from '../../Module/TSImportManager';
 
 import { Http, Response, Headers, RequestOptions } from '@angular/http'
@@ -15,7 +15,7 @@ import { i18nManager} from './i18n';
 import { ColorOutput } from '../ngcolor/color-output';
 import { GetAppService} from './GetAppService';
 import { LayoutManager} from './LayoutManager';
-
+import { M_Light_Numpad} from './M_Light_Numpad';
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 let KeyMapping = require('./SupportData').KeyMapping;
@@ -28,8 +28,8 @@ let Shortcuts_WindowsMapping = require('./SupportData').KeyMapping;
 export class NumpadKeyboardComponent implements OnInit {
   KeyBoardStyle = new KeyBoardStyle();
   KeyAssignManager = new KeyAssignManager();
-  M_Light_PRESETS = new M_Light_CS(83);
-  M_Light_PERKEY = new M_Light_CS(83);
+  M_Light_PRESETS = new M_Light_Numpad(83);
+  M_Light_PERKEY = new M_Light_Numpad(83);
   Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
   LayoutManager = LayoutManager.getInstance();
@@ -85,8 +85,8 @@ lighting_PERKEY_SelectEffect: any
   ngAfterViewInit() {
 
     var T_length = this.KeyBoardStyle.getTarget().keyMapping.length;
-    this.M_Light_PRESETS = new M_Light_CS(T_length);
-    this.M_Light_PERKEY = new M_Light_CS(T_length)
+    this.M_Light_PRESETS = new M_Light_Numpad(T_length);
+    this.M_Light_PERKEY = new M_Light_Numpad(T_length)
     this.KeyBoardManager = new KeyBoardManager(T_length);
     var deviceObj={
       SN: "0x320F0x504B",
@@ -102,7 +102,7 @@ lighting_PERKEY_SelectEffect: any
     this.M_Light_PRESETS.setKeyTableArray(temp_data.KeyTableArray);
     this.M_Light_PRESETS.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PRESETS.imageMaxHeight = temp_data.imageMaxHeight;
-
+    this.M_Light_PRESETS.qigong_Special1_Step= temp_data.qigong_Special1_Step;
     this.M_Light_PERKEY.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PERKEY.imageMaxHeight = temp_data.imageMaxHeight;
     this.M_Light_PERKEY.mode_BreatheSeparatelyBlack();
@@ -565,7 +565,7 @@ PRESETS_SelectedChange() {
             }
             break;
         case 'Kamehemeha':
-            T_CS.mode_Kamehemeha(inputColor, target.Multicolor)
+            T_CS.mode_qigong_Special1_Step(inputColor, target.Multicolor)
             break;
         case 'Pingpong':
             T_CS.mode_Pingpong(inputColor, target.Multicolor);
@@ -605,6 +605,13 @@ PRESETS_SelectedChange() {
         default:
             break;
     }
+}
+    /**
+     * process multicolor_Change Event
+    */
+   multicolor_Change() {
+    this.Built_ineffect.Built_inSelected.color_Enable = !this.Built_ineffect.Built_inSelected.Multicolor;
+    this.PRESETS_SelectedChange();//by multicolor_Change();
 }
   /**
    * process setkeyUIColor Event
