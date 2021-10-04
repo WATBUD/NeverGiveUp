@@ -67,7 +67,7 @@ export class KeyBoardStyle {
             1,"Numpad4","Numpad5","Numpad6",1,
             "Side Light","Side Light","Numpad1","Numpad2",3,1,1,1,
             "Side Light",3,2,1],
-            snowing_Special1:[
+            55:[
                 "Side Light",1,999,1,999,"Rotary Encoder","Side Light",
                 1,"Side Light","Numpad7",2,"Numpad9",2,"slider","Side Light","Side Light",
                 2,999,3, 999,"Side Light",
@@ -113,7 +113,6 @@ export class KeyBoardStyle {
         }
         return targetIndex;
     }
-
     /**
      * set keyBoardList cssText
      * @param target Array:HTMLElements List
