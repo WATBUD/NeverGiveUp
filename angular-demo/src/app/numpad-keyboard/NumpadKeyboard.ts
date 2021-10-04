@@ -529,7 +529,8 @@ export class NumpadKeyboardComponent implements OnInit {
     T_CS.onSetModeRefresh();
     switch (target.PointEffectName) {
       case 'GloriousMode':
-        T_CS.mode_ConicRipple(inputColor, true, this.M_Light_PRESETS.centerBlockPoint);
+        //T_CS.mode_ConicRipple(inputColor, true, this.M_Light_PRESETS.centerBlockPoint);\
+        T_CS.mode_Fake_ConicRipple(inputColor, true);
         break;
       case 'SpiralingWave':
         T_CS.mode_Spiral(inputColor, target.Multicolor, 0);

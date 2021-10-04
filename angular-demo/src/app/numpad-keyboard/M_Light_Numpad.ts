@@ -16,8 +16,8 @@ export class M_Light_Numpad {
     };
     animationSpeed=1;
     currentBlockIndex=0;
-    minKeyWidth=43;
-    minKeyHeight=41;
+    minKeyWidth=42;
+    minKeyHeight=51;
     settingPerkeyName=''
     imageMaxWidth=0;
     imageMaxHeight=0;
@@ -1098,6 +1098,110 @@ export class M_Light_Numpad {
         }, 700*this.animationSpeed)
         //clearInterval(this.repeater);
     }
+    mode_Fake_ConicRipple(colors = [[255,0,0,1]], isRainbow = true,blockIndex=23) {
+        console.log('%c mode_Fake_ConicRipple','color:rgb(255,75,255,1)',colors,isRainbow);
+        clearInterval(this.repeater);
+        var repeatCount = 0;
+        var StartPoint = this.getNowBlock(blockIndex).coordinateData;
+        var mode_step = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var fakeArr=this.fakeCoordinates;
+        var setRGB;
+        if (isRainbow) {
+            setRGB = this.getGradientArr_RGB();
+        }
+        else {
+            setRGB = colors[this.getRandom(0, colors.length - 1)];
+        }
+        var currentMaxWidth=0;
+        for (let index = 0; index < fakeArr.length; index++) {
+
+            if(fakeArr[index][0]>currentMaxWidth){
+                currentMaxWidth=fakeArr[index][0];
+            }
+        }
+        var T_center_Point=fakeArr[18];
+        //[this.imageMaxWidth/2,this.imageMaxHeight/2]
+        var diameter=currentMaxWidth;
+        console.log('%c mode_Fake_ConicRipple','color:rgb(255,75,255,1)',diameter);
+
+        //-T_center_Point[0];//StartPoint.center_Point[0]
+        //var diameter=this.minKeyWidth*setRGB.length;//StartPoint.center_Point[0]
+        //var diameter=this.imageMaxHeight-T_center_Point[1];//StartPoint.center_Point[0]
+        var target = this.AllBlockColor;
+        var direction=0;
+        var averagearr=[];
+         for (let d_index = 0; d_index < setRGB.length; d_index++) {
+            //average.push(diameter/setRGB.length);
+            //var averageNow=Math.round(diameter/setRGB.length*d_index);
+            var averagePrevious=diameter/setRGB.length*d_index;
+            var averageNext=averagePrevious+(diameter/setRGB.length);
+             for (let index = 0; index < target.length; index++) {
+                 var element = target[index];
+                 //var dis = this.distanceCalculation(T_center_Point[0], T_center_Point[1], element.coordinateData.center_Point[0], element.coordinateData.center_Point[1]);
+                 var dis = this.distanceCalculation(T_center_Point[0], T_center_Point[1], fakeArr[index][0], fakeArr[index][1])///[1]);
+                 if (mode_step == 0) {
+                     //console.log('mode_step', mode_step)
+                     //console.log('%c mode_RippleGraff_dis.compareResult','color:rgb(255,75,255,1)',dis,compareResult,compareResultMax);
+                     if (dis >= averagePrevious && dis <= averageNext) {
+                         //if (averagearr.some((x) => x.recordIndex == index) == false) {
+                             averagearr.push(
+                                 {
+                                     color: setRGB[d_index],
+                                     colorIndex: d_index,
+                                     // nowStep:0,
+                                     // totalstep:30,
+                                     recordIndex: index,
+                                    //  averagePrevious: averagePrevious,
+                                    //  averageNext: averageNext,
+                                    //  repeatTime: this.getRandom(5, 25),
+                                 }
+                             )
+                         //}
+                     }
+                 }
+             }
+         }
+
+         console.log('%c mode_ConccRipple_averagearr','color:rgb(255,75,255,1)',averagearr);
+         this.repeater = setInterval(() => {
+           for (let index = 0; index < averagearr.length; index++) {
+               const element = averagearr[index];
+               if (direction == 1) {
+                   if (element.colorIndex < setRGB.length - 1) {
+                       element.colorIndex += 1;
+                   }
+                   else {
+                       element.colorIndex = 0;
+                   }
+               }
+               else {
+                   if (element.colorIndex > 0) {
+                       element.colorIndex -= 1;
+                   }
+                   else {
+                       element.colorIndex = setRGB.length - 1;
+                   }
+               }
+            //     element.color=setRGB[Math.abs(element.colorIndex-(setRGB.length-1))];
+            //    }
+            //    else{
+            //     element.color=setRGB[element.colorIndex];
+            //    }
+               var temp_colorData = JSON.parse(JSON.stringify(setRGB[element.colorIndex]));
+               for (let index = 0; index < 3; index++) {
+                   temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
+               }
+               target[element.recordIndex].color = temp_colorData;
+           }
+           //clearInterval(this.repeater);
+
+        }, 170*this.animationSpeed)
+        //clearInterval(this.repeater);
+    }
+
+
+    
     mode_Conical_Diffusion() {
         console.log('%c mode_Conical_Diffusion','color:rgb(255,75,255,1)');
         clearInterval(this.repeater);
@@ -3753,7 +3857,7 @@ export class M_Light_Numpad {
             else{
                 repeatCount=0;
             }
-        },500*this.animationSpeed)
+        },125*this.animationSpeed)
         //clearInterval(this.repeater);
     }
  
@@ -3818,7 +3922,106 @@ export class M_Light_Numpad {
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            if (Ysdis <= 10) {
+            if (Ysdis <= 30) {
+                horizontalList[index]={
+                    color:colors[this.getRandom(0,colors.length-1)],
+                    nowPos:0,
+                    nowstep:0,
+                    repeatCount:0,
+                    repeatTime:this.getRandom(15,20),
+                }
+            }
+        }
+        console.log('horizontalList',Object.keys(horizontalList))
+        this.repeater=setInterval(()=>{
+            var LIndex=this.currentBlockIndex-repeatCount;
+            var RIndex=this.currentBlockIndex+repeatCount;
+            var resultL = horizontalList[LIndex];
+            //horizontalList.find((x) => x == this.currentBlockIndex-repeatCount);
+            var resultR = horizontalList[RIndex];
+            //horizontalList.find((x) => x == this.currentBlockIndex+repeatCount);
+            if (step_End) {
+                var tempColors = colors;
+                var nextColor=[0,0,0,1];
+                var arr = Object.keys(horizontalList);
+                for (let index = 0; index < arr.length; index++) {
+                    var index_num = parseInt(arr[index])
+                    var temp_block = horizontalList[index_num]
+                    if (temp_block.nowStep + 1 <= totalStep) {
+                        temp_block.nowStep += 1;
+                    }
+                    else {
+                        temp_block.nowStep = 0;
+                        temp_block.repeatCount += 1;
+                    }
+                    var temp_C = temp_block.color;
+                    var temp_colorData = [0, 0, 0, 1];
+                    for (let index = 0; index < 3; index++) {
+                        temp_colorData[index]= (temp_C[index] * (totalStep - temp_block.nowStep) + nextColor[index] * temp_block.nowStep) / totalStep;
+                        temp_colorData[index]=temp_colorData[index]*this.lightData.brightness/100;
+                    }
+                    if(temp_block.repeatCount!=2){
+                        target[index_num].color = temp_colorData;
+                    }
+                }
+                //totalRepeatCount+=1
+                if(horizontalList[arr[0]].repeatCount==2){
+                    step_End = false;
+                    clearInterval(this.repeater);
+                }
+                return;
+            }  
+            if (resultL == undefined && resultR == undefined) {
+                repeatCount=0;
+                step_End=true;
+            }
+            else{
+                console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',this.lightData.brightness);
+                if (resultL != undefined) {
+                    var temp_color=JSON.parse(JSON.stringify(horizontalList[LIndex].color));
+                    for (let index = 0; index < 3; index++) {
+                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
+                    }
+
+                    target[LIndex].color = temp_color;
+                }
+                if (resultR != undefined) {
+                    var temp_color=JSON.parse(JSON.stringify(horizontalList[RIndex].color));
+                    for (let index = 0; index < 3; index++) {
+                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
+                    }
+                    target[RIndex].color = temp_color;                
+                };
+                repeatCount+=1;
+            }
+        },35*this.animationSpeed)
+    }
+    mode_withoutTraceFakeCoordinates(colors = [[255,0,0,1]], isRainbow = false,blockIndex=37){
+        //colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
+        console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',colors, isRainbow);
+        if (isRainbow) {
+            colors =this.rainbow7Color();
+        }
+        clearInterval(this.repeater);
+        this.currentBlockIndex=blockIndex;
+        var repeatCount=0;
+        var StartPoint = this.getNowBlock().coordinateData;
+        this.setAllBlockColor([0,0,0,1]);
+        var totalStep=10;
+        var horizontalList={
+        };
+        var target = this.AllBlockColor;
+        var randomValue=this.getRandom(0,colors.length-1);
+        var step_End=false;
+        //this.mode_reset();
+        //var c_temp=colors[this.getRandom(0,colors.length-1)];
+        horizontalList[this.currentBlockIndex]={
+               color:colors[this.getRandom(0,colors.length-1)]
+        }
+        for (let index = 0; index < target.length; index++) {
+            const element = target[index];
+            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
+            if (Ysdis <= 30) {
                 horizontalList[index]={
                     color:colors[this.getRandom(0,colors.length-1)],
                     nowPos:0,
