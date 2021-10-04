@@ -46,7 +46,7 @@ export class KeyBoardStyle {
                 "margin-top: 274px;margin-left: 446px;height: 42px;width: 51px;",
             ]
             ,
-            coordinates:[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[0,1],[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[6,1],[0,2],[0,2],[1,2],[2,2],[3,2],[4,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3],[5,3],[0,4],[1,4],[2,4],[3,4]],
+            fakeCoordinates:[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[0,1],[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[6,1],[0,2],[0,2],[1,2],[2,2],[3,2],[4,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3],[5,3],[0,4],[1,4],[2,4],[3,4]],
             hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
             ,
             keyMapping:[
@@ -67,7 +67,13 @@ export class KeyBoardStyle {
             1,"Numpad4","Numpad5","Numpad6",1,
             "Side Light","Side Light","Numpad1","Numpad2",3,1,1,1,
             "Side Light",3,2,1],
-            KeyTableArray: [[0, 6], [7, 13], [30, 44], [45, 58], [59, 72], [73, 82]],
+            snowing_Special1:[
+                "Side Light",1,999,1,999,"Rotary Encoder","Side Light",
+                1,"Side Light","Numpad7",2,"Numpad9",2,"slider","Side Light","Side Light",
+                2,999,3, 999,"Side Light",
+                "Side Light","Side Light",3,"Numpad2",4,4,3,3,
+                "Side Light",4,"NumpadDecimal",4],
+            KeyTableArray: [[0, 6], [7, 16], [17, 20], [20, 28], [29, 32]],
             imageMaxWidth: 512,
             imageMaxHeight: 333,
         },

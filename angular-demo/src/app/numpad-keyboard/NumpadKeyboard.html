@@ -53,13 +53,13 @@
                                                         width: 20px;
                                                         height: 1px;
                                                         z-index: 7000;
-                                                        margin-left: -200px;">
+                                                        margin-left: -200px;"
+                                                        [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
                         <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
                                                                     z-index: 20;
                                                                     margin-left: -22px;
                                                                     margin-top: -19px;
-                                                                      "
-                            [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
+                                                                      ">
                             <div class="rectángulo" id="rectángulo" style="    top: -58px;
                                                     left: -190px;
                                                     width: 170px;

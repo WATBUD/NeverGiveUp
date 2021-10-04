@@ -102,9 +102,12 @@ lighting_PERKEY_SelectEffect: any
     this.M_Light_PRESETS.setKeyTableArray(temp_data.KeyTableArray);
     this.M_Light_PRESETS.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PRESETS.imageMaxHeight = temp_data.imageMaxHeight;
+    this.M_Light_PRESETS.fakeCoordinates=temp_data.fakeCoordinates;
+    this.M_Light_PRESETS.snowing_Special1= temp_data.snowing_Special1;
     this.M_Light_PRESETS.qigong_Special1_Step= temp_data.qigong_Special1_Step;
     this.M_Light_PERKEY.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PERKEY.imageMaxHeight = temp_data.imageMaxHeight;
+    
     this.M_Light_PERKEY.mode_BreatheSeparatelyBlack();
     this.KeyBoardManager.setAllProfileFieldData('light_PRESETS_Data', new GloriousMode());
     this.PERKEY_lightData = this.default_LightData();
@@ -540,13 +543,14 @@ PRESETS_SelectedChange() {
             }
             break;
         case 'Matrix2':
-            T_CS.mode_Matrix2(inputColor, target.Multicolor);
+            T_CS.mode_Starlight(inputColor, target.Multicolor,1);
+            //T_CS.mode_Matrix2(inputColor, target.Multicolorzzzzcz,0.5);
             break;
         case 'Matrix3':
-            T_CS.mode_Matrix3(inputColor, target.Multicolor);
+            T_CS.mode_Matrix3(inputColor, target.Multicolor,1);
             break;
         case 'Rainbow':
-            T_CS.mode_Rainbow();
+            T_CS.mode_Rainbow([],true,80, 150);
             break;
         case 'HeartbeatSensor':
             if (target.Multicolor) {
@@ -558,10 +562,11 @@ PRESETS_SelectedChange() {
             break;
         case 'DigitTimes':
             if (target.Multicolor) {
-                T_CS.mode_DigitTimes([[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]]);
+              T_CS.mode_snowing_Special1([[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]]);
+                //T_CS.mode_DigitTimes([[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]]);
             }
             else {
-                T_CS.mode_DigitTimes(inputColor);
+                T_CS.mode_snowing_Special1(inputColor);
             }
             break;
         case 'Kamehemeha':
@@ -580,7 +585,8 @@ PRESETS_SelectedChange() {
             T_CS.mode_Starlight(inputColor);
             break;
         case 'Snowing':
-            T_CS.mode_Snowing(inputColor, target.Multicolor);
+             T_CS.mode_snowing_Special1(inputColor, target.Multicolor);
+            //T_CS.mode_Snowing(inputColor, target.Multicolor);
             break;
         case 'WaveSync':
             T_CS.mode_WaveSync(inputColor, true, 20);

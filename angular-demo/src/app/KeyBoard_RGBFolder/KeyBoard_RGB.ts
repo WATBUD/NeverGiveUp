@@ -6,7 +6,7 @@ import { KeyBoardStyle } from './KeyBoardStyle'
 import { M_Light_CS } from './M_Light_CS'
 import { MatDialogRef } from '@angular/material'
 import { Built_ineffect,GloriousMode } from './Built_ineffect'
-let AllFunctionMapping = require('../../Module/SupportData');
+let AllFunctionMapping = require('../../Module/SupportData').AllFunctionMapping;
 import {
     Component,
     OnInit,
@@ -291,7 +291,7 @@ export class AppComponent implements OnInit {
                 T_CS.mode_Matrix3(inputColor,target.Multicolor);
                 break;
             case 'Rainbow':
-                T_CS.mode_Rainbow();
+                T_CS.mode_Rainbow([],true,35, 150);
                 break;
             case 'HeartbeatSensor':
                 if(target.Multicolor){

@@ -28,8 +28,10 @@ export class M_Light_CS {
     KeyTableArray=[];
     qigong_Step2_Range=[22,23, 38,52,51 ,36];
     qigong_Step1_Range=[0,15,30,58,71,82];
+    qigong_Special1_Step=[];
     BreathTempArray=[];
     centerBlockPoint=37;
+    fakeCoordinates=[];
     break_DimensionalArray=[];
     max_X_Number=26;
     max_Y_Number=8;
@@ -351,13 +353,44 @@ export class M_Light_CS {
         // }, 50*this.animationSpeed)
         //clearInterval(this.repeater);
     }
+    mode_qigong_Special1_Step(colors = [[255,0,0,1]],isRainbow=false){
+        clearInterval(this.repeater);
+        if(isRainbow){
+            colors = this.rainbow7Color();
+        }
+        var mode_step="qigong1";
+        var repeatCount = 1;
+        var target = this.AllBlockColor;
+
+        this.setAllBlockColor([0, 0, 0, 1]);
+        console.log('%c mode_qigong_Special1_Step','color:rgb(255,75,255,1)',colors);
+        this.repeater = setInterval(() => {
+            //this.mode_reset();  
+            //this.setAllBlockColor([0, 0, 0, 1]);
+            if (repeatCount <= 3) {
+                var temp_colorData = JSON.parse(JSON.stringify(colors[this.getRandom(0, colors.length - 1)]));
+                temp_colorData = this.getBrightnessRatio(temp_colorData);
+                for (let index = 0; index < this.qigong_Special1_Step.length; index++) {
+                    var checkdata = this.qigong_Special1_Step[index];
+                    if (checkdata == repeatCount) {
+                        //checkdata.+=1;
+                        target[index].color = temp_colorData;
+                    }
+                }
+                repeatCount += 1;
+            }
+            else{
+                this.mode_Kamehemeha2(colors,isRainbow=false);              
+            }
+        }, 55*this.animationSpeed)
+    }
     mode_AcidMode(colors=[]){
         clearInterval(this.repeater);
         //colors = this.rainbow7Color();
         colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
 
         var repeatCount = 0;
-        var StartPoint = this.getNowBlock(50).coordinateData;
+        var StartPoint = this.getStartPoint();
         var mode_step = 0;
         var step = 60;
         var nowStep = 0;
@@ -427,6 +460,9 @@ export class M_Light_CS {
                 //repeatCount=0;            
             }              
         }, 50*this.animationSpeed)
+    }
+    getStartPoint(){
+      return this.getNowBlock(this.centerBlockPoint).coordinateData;
     }
     setAnimationSpeed(){
         //this.acceleration
@@ -651,11 +687,7 @@ export class M_Light_CS {
                 for (let rowindex = 0; rowindex < rowArray.length; rowindex++) {
                     var element = rowArray[rowindex];
                     var setRGB=colors[this.getRandom(0, colors.length - 1)];
-                    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
-                    for (let index2 = 0; index2 < 3; index2++) {
-                        temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
-                    }
-                    target[rowArray[rowindex]].color = temp_colorData;  
+                    target[rowArray[rowindex]].color = this.getBrightnessRatio(setRGB);  
                 }
             }
             if (nowStep < InputArray.length-1) {
@@ -673,7 +705,13 @@ export class M_Light_CS {
         }, 150 * this.animationSpeed);
 
     }
-
+    getBrightnessRatio(setRGB=[]){
+        var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+        for (let index2 = 0; index2 < 3; index2++) {
+            temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+        }
+        return temp_colorData;
+    }
     mode_Retro_snake(colors = [[255,0,0,1]],InputArray=[]) {
         console.log('%c mode_Retro_snake_enter','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
@@ -773,6 +811,7 @@ export class M_Light_CS {
                 this.setAllBlockColor([0, 0, 0, 1]);
                 if(this.lightData.PointEffectName=="Kamehemeha"){
                     this.mode_Kamehemeha(colors,isRainbow);
+                    //this.mode_qigong_Special1_Step(colors,isRainbow);
                 }
             }
             if (this.minKeyWidth * repeatCount < this.imageMaxWidth) {
@@ -1830,7 +1869,7 @@ export class M_Light_CS {
         }, 100)
     }
 
-    SyncBack2(colors = [[255,0,0,1]], isRainbow = true){
+    mode_WaveSyncBack2(colors = [[255,0,0,1]], isRainbow = true){
         console.log('%c mode_WaveSyncBack2','color:rgb(255,75,255,1)',colors,this.repeater);
         clearInterval(this.repeater);
         this.currentBlockIndex=0;
@@ -2699,45 +2738,45 @@ export class M_Light_CS {
         }, 100)
 
     }
-    mode_WaveCustom(colors = [[255,0,0,1]], multicolor = true,bandwidth=20,BaseSpeed=140){
-        console.log('%c mode_WaveSync_enter','color:rgb(255,75,255,1)',colors,this.repeater);
+
+
+    mode_Rainbow(colors = [[255, 0, 0, 1]], isRainbow = true, bandwidth = 20, BaseSpeed = 140) {
+        console.log('%c mode_Rainbow_enter', 'color:rgb(255,75,255,1)', colors, this.repeater);
         clearInterval(this.repeater);
-        this.currentBlockIndex=0;
-        //var intervalCount=0;
-        //var StartPoint = this.getNowBlock(0).coordinateData;
-        if (!multicolor) {
-            var maxPercent=55;
-            var currentPercent=55;
-            var tempColorArray=[];
-            var inputColor_T=colors[0];
-            while (currentPercent>25) {
-                currentPercent-=5;
-                var tempColor=[0,0,0,1];
-                tempColor[0]=inputColor_T[0]*currentPercent/maxPercent;
-                tempColor[1]=inputColor_T[1]*currentPercent/maxPercent;
-                tempColor[2]=inputColor_T[2]*currentPercent/maxPercent;
+        this.currentBlockIndex = 0;
+        if (isRainbow) {
+            //colors =this.rainbow7Color();
+            colors = [[255, 0, 0, 1], [255, 165, 0, 1], [255, 255, 0, 1], [0, 255, 0, 1], [0, 127, 255, 1], [0, 0, 255, 1], [139, 0, 255, 1]];
+        }
+        else {
+            var maxPercent = 55;
+            var currentPercent = 55;
+            var tempColorArray = [];
+            var inputColor_T = colors[0];
+            //console.log('%c inputColor_T','color:rgb(255,75,255,1)',inputColor_T);
+            while (currentPercent > 25) {
+                currentPercent -= 5;
+                var tempColor = [0, 0, 0, 1];
+                tempColor[0] = inputColor_T[0] * currentPercent / maxPercent;
+                tempColor[1] = inputColor_T[1] * currentPercent / maxPercent;
+                tempColor[2] = inputColor_T[2] * currentPercent / maxPercent;
                 //console.log('%c currentPercent>0','color:rgb(255,75,255,1)',tempColor);
                 tempColorArray.push(tempColor);
             }
-            colors=tempColorArray;
-            //console.log('%c tempColorArray','color:rgb(255,75,255,1)',tempColorArray);
+            colors = tempColorArray;
         }
-        //console.log('%c colors','color:rgb(255,75,255,1)',colors);
-        var setRGB=colors[this.getRandom(0, colors.length - 1)];
-        var spacing=-5;
-        var nowColor=0;        
         this.setAllBlockColor([0, 0, 0, 1]);
-        var angle=40;
+        var angle = -270;
         var theta = Math.PI * angle / 180;//弧度
-		var dx =  Math.cos(theta);
+        var dx = Math.cos(theta);
         var dy = -Math.sin(theta);
         if (Math.abs(dx) < 1e-5) dx = 0;
-		if (Math.abs(dy) < 1e-5) dy = 0;
-        var position=0;
-        var color_number=colors.length;
-        var target = this.AllBlockColor;       
-        var handleAllList=[];
-        position+=5;
+        if (Math.abs(dy) < 1e-5) dy = 0;
+        var position = 0;
+        var color_number = colors.length;
+        var target = this.AllBlockColor;
+        var handleAllList = [];
+        position += 5;
         //console.log('%c getColor','color:rgb(255,75,255,1)',result,this.use_scales,loop,this.colors,scales);
         this.repeater = setInterval(() => {
             //position+=5;
@@ -2748,7 +2787,7 @@ export class M_Light_CS {
                 //var y=sinx + cosx;
                 //var y=sinx + cosx;
                 var OffsetValue = element.coordinateData.center_Point[0] * dx + element.coordinateData.center_Point[1] * dy;  //x*cos+y*sin=P(x,y)theta
-                var scale = (OffsetValue - position) / bandwidth / color_number;      
+                var scale = (OffsetValue - position) / bandwidth / color_number;
                 var defaultscales = [
                     0, 0.2, 0.4, 0.6, 0.8
                 ];
@@ -2763,13 +2802,12 @@ export class M_Light_CS {
                 var lower_scale = 0;
                 var upper_index = colors.length;
                 var upper_scale = 1;
-                for (let i=0; i<color_number; ++i){
+                for (let i = 0; i < color_number; ++i) {
                     if (scales[i] <= scale) {
                         if (scales[i] >= lower_scale)
-                        //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
-                            lower_scale = scales[lower_index = i];
                             //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
-
+                            lower_scale = scales[lower_index = i];
+                        //console.log('%c lower_index','color:rgb(255,75,255,1)',lower_index);
                     } else {
                         if (scales[i] < upper_scale)
                             upper_scale = scales[upper_index = i];
@@ -2778,70 +2816,72 @@ export class M_Light_CS {
                 //console.log('%c lower_scale','color:rgb(255,75,255,1)',upper_scale);
                 //console.log('%c upper_scale','color:rgb(255,75,255,1)',upper_scale);
                 //element.color = JSON.parse(JSON.stringify(colors[nowColor]));
-                var temp_colorData =JSON.parse(JSON.stringify(colors[lower_index]));
+                var temp_colorData = JSON.parse(JSON.stringify(colors[lower_index]));
                 for (let index = 0; index < 3; index++) {
-                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
-                } 
-                element.color = temp_colorData;   
+                    temp_colorData[index] = temp_colorData[index] * this.lightData.brightness / 100;
+                }
+                element.color = temp_colorData;
             }
-        }, BaseSpeed*this.animationSpeed)
+
+        }, BaseSpeed * this.animationSpeed)
     }
-    mode_Rainbow(){
-        console.log('%c Enter_mode_Rainbow','color:rgb(255,77,255)');
+    mode_RainbowHardCode() {
+        console.log('%c Enter_mode_Rainbow', 'color:rgb(255,77,255)');
         clearInterval(this.repeater);
-       this.currentBlockIndex=0;
-       var StartPoint = this.getNowBlock(0).coordinateData;
-       this.setAllBlockColor([0,0,0,1]);
-       var H_spacing=Math.trunc(this.imageMaxHeight/StartPoint.clientHeight);
-       var w_range=Math.trunc(this.imageMaxWidth/this.minKeyWidth);
-       var repeatCountList=[];
-       var times=0;
-       var setColors=this.rainbow7Color();
-      var target = this.twoDimensionalArray;
-       for (let index = 0; index < this.max_X_Number; index++) {
-           //this.twoDimensionalArray[index][0].color=[0,0,255,1];
-           for (let index2 = 0; index2 < setColors.length; index2++) {
-               repeatCountList.push({
-                   nowPos:index2,
-                   color: setColors[index2],
-                   pos: [index,index2],
-                   backupPos:[index,index2],
-                   step: 5,
-                   nowStep: 0,
-               });
-           }
-       }
-       this.repeater=setInterval(()=>{
-           this.resetTwoDimensionalArray();
-           for (let i2 = 0; i2 < repeatCountList.length; i2++) {
-               var T = repeatCountList[i2];   
-               if (T.nowStep + 1 < T.step) {
-                T.nowStep+=1;
-               }
-               else{
-                T.nowStep=0;
-                T.nowPos+=1;
-               }
-               var temp_C=setColors[T.nowPos];
-               var nextColor=[];
-               if (T.nowPos + 1 < setColors.length-1) {
-                   //T.nowPos+=1;
-                   nextColor = setColors[T.nowPos+1];
-               }
-               else {
-                   T.nowPos = 0;
-                   nextColor = setColors[T.nowPos];
-               }
-               var temp_colorData = [0, 0, 0, 1];
-               for (let index2 = 0; index2 < 3; index2++) {
-                   temp_colorData[index2]= (temp_C[index2]*(T.step-T.nowStep)+nextColor[index2]*T.nowStep)/T.step;
-                   temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness/100;
-               }
-               this.twoDimensionalArray[T.pos[0]][T.pos[1]].color=temp_colorData;              
-           }
-           this.showTwoDimensionalArray();
-       },50*this.animationSpeed);
-   }
+        this.currentBlockIndex = 0;
+        var StartPoint = this.getNowBlock(0).coordinateData;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var H_spacing = Math.trunc(this.imageMaxHeight / StartPoint.clientHeight);
+        var w_range = Math.trunc(this.imageMaxWidth / this.minKeyWidth);
+        var repeatCountList = [];
+        var times = 0;
+        var setColors = this.rainbow7Color();
+        var target = this.twoDimensionalArray;
+        for (let index = 0; index < this.max_X_Number; index++) {
+            //this.twoDimensionalArray[index][0].color=[0,0,255,1];
+            for (let index2 = 0; index2 < setColors.length; index2++) {
+                repeatCountList.push({
+                    nowPos: index2,
+                    color: setColors[index2],
+                    pos: [index, index2],
+                    backupPos: [index, index2],
+                    step: 5,
+                    nowStep: 0,
+                });
+            }
+        }
+        this.repeater = setInterval(() => {
+            this.resetTwoDimensionalArray();
+            for (let i2 = 0; i2 < repeatCountList.length; i2++) {
+                var T = repeatCountList[i2];
+                if (T.nowStep + 1 < T.step) {
+                    T.nowStep += 1;
+                }
+                else {
+                    T.nowStep = 0;
+                    T.nowPos += 1;
+                }
+                var temp_C = setColors[T.nowPos];
+                var nextColor = [];
+                if (T.nowPos + 1 < setColors.length - 1) {
+                    //T.nowPos+=1;
+                    nextColor = setColors[T.nowPos + 1];
+                }
+                else {
+                    T.nowPos = 0;
+                    nextColor = setColors[T.nowPos];
+                }
+                var temp_colorData = [0, 0, 0, 1];
+                for (let index2 = 0; index2 < 3; index2++) {
+                    temp_colorData[index2] = (temp_C[index2] * (T.step - T.nowStep) + nextColor[index2] * T.nowStep) / T.step;
+                    temp_colorData[index2] = temp_colorData[index2] * this.lightData.brightness / 100;
+                }
+                this.twoDimensionalArray[T.pos[0]][T.pos[1]].color = temp_colorData;
+            }
+            this.showTwoDimensionalArray();
+        }, 50 * this.animationSpeed);
+    }
+
     mode_Cooking(colors = [[255,0,0,1]], isRainbow = true){
          clearInterval(this.repeater);
         this.currentBlockIndex=0;
@@ -3753,7 +3793,6 @@ export class M_Light_CS {
         }
     }
 
-
     setAllBlockAlpha(alpha=0) {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -3766,6 +3805,7 @@ export class M_Light_CS {
             }
         }
     }
+
     mode_reset() {
         var target = this.AllBlockColor;
         for (let index = 0; index < target.length; index++) {
@@ -3773,6 +3813,7 @@ export class M_Light_CS {
             element.color = [0,0,0,0];
         }
     }
+
     mode_FastRunWithoutTrace(colors = [[255,0,0,1]], isRainbow = false,blockIndex=37){
         //colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
         console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',colors, isRainbow);
@@ -3872,6 +3913,7 @@ export class M_Light_CS {
             }
         },35*this.animationSpeed)
     }
+
     mode_PassWithoutTrace(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
         //this.setAllBlockColor([0,0,0,1]);
@@ -3922,11 +3964,13 @@ export class M_Light_CS {
             target[index].color = temp_colorData;   
         }, 50*this.animationSpeed)
     }
+
     rainbow7Color(){
 
        return [[255,0,0,1],[255, 165, 0,1],[255, 255, 0,1],[0, 255, 0 ,1],[0, 127, 255,1],[0, 0, 255,1],[139, 0, 255,1]];
 
     }
+    
     PointRotation(PointA, PointB) {
         // var Dx = Math.abs(PointB[0] - PointA[0]);
         // var Dy = Math.abs(PointB[1] - PointA[1]);
@@ -4019,6 +4063,9 @@ export class M_Light_CS {
             return this.toCssRGB(target[i].color);
         }
     }
+
+
+    
     getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     };
