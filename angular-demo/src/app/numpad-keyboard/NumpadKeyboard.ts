@@ -50,6 +50,7 @@ export class NumpadKeyboardComponent implements OnInit {
   colordata: ColorOutput;
   getAppService = new GetAppService();
   PERKEY_lightData=this.default_LightData();
+  SoundVolume_lightData=this.default_LightData();
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
@@ -110,10 +111,14 @@ export class NumpadKeyboardComponent implements OnInit {
     this.M_Light_PRESETS.fakeCoordinates = temp_data.fakeCoordinates;
     this.M_Light_PRESETS.snowing_Special1 = temp_data.snowing_Special1;
     this.M_Light_PRESETS.qigong_Special1_Step = temp_data.qigong_Special1_Step;
+
     this.M_Light_PERKEY.imageMaxWidth = temp_data.imageMaxWidth;
     this.M_Light_PERKEY.imageMaxHeight = temp_data.imageMaxHeight;
-
     this.M_Light_PERKEY.mode_BreatheSeparatelyBlack();
+    this.M_Light_Keybinding.imageMaxWidth = temp_data.imageMaxWidth;
+    this.M_Light_Keybinding.imageMaxHeight = temp_data.imageMaxHeight;
+    this.M_Light_Keybinding.mode_BreatheSeparatelyBlack();
+
     this.KeyBoardManager.setAllProfileFieldData('light_PRESETS_Data', new GloriousMode());
     this.PERKEY_lightData = this.default_LightData();
     this.LayoutManager.defaultData = this.default_LightData();
@@ -349,6 +354,18 @@ export class NumpadKeyboardComponent implements OnInit {
       }
       this.PerKeyAreaCick(this.PerKeyArea);
     }
+    if (this.keybindingflag == true) {
+      var target = this.SoundVolume_lightData;
+      target.colorPickerValue = JSON.parse(JSON.stringify(RGB_Arr));
+      target.colorHex = this.M_Light_Keybinding.rgbToHex(target[0], target[1], target[2]);
+
+      // if (this.PerKeyArea == "PerKey_SIDELIGHT" || this.PerKeyArea == "PerKey_ALL") {
+      //   this.PERKEY_lightData.sideLightColor = JSON.parse(JSON.stringify(RGB_Arr));
+      // }
+      this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor=JSON.parse(JSON.stringify(RGB_Arr));
+      //this.SoundVolume_lightData.colorPickerValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor;
+      this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
+    }
   }
 
   /**
@@ -386,7 +403,12 @@ export class NumpadKeyboardComponent implements OnInit {
     console.log('Built_inSelectedChange', this.Built_ineffect.Built_inSelected);
     this.setRGBcolor();//by Built_inSelectedChange;
   }
+    /**
+    * process default_LightData Event
+    */
+   PerKeyBreathingChange() {
 
+  }
   /**
    * RGB input
    */
@@ -399,6 +421,9 @@ export class NumpadKeyboardComponent implements OnInit {
       }
       if (this.lightingPage == 'PERKEY') {
         target = this.PERKEY_lightData;
+      }
+      if (this.lightingPage == 'PERKEY') {
+        target = this.per;
       }
       var rgbArr = target.colorPickerValue;
       console.log('setRGBcolor_Target', JSON.parse(JSON.stringify(target)));
@@ -532,7 +557,31 @@ export class NumpadKeyboardComponent implements OnInit {
       this.M_Light_PERKEY.setGroupArrayColor(obj2);
     }
   }
+  /**
+   * process PerKeyAreaCick Event
+   * @param GroupName string:PerKeyAreaGroupName
+  */
+ SoundVolume_AreaCick(index) {
+  console.log('%c SoundVolume_AreaCick', 'background: blue; color: red', index);
+  var setArr=[];
+  setArr.push(index);
+ // var flag = this.PerKeyArea;
+  var target = this.SoundVolume_lightData;
+    // if (flag == "PerKey_ALL" || flag == "PerKey_SIDELIGHT") {
+    //   target.sideLightSync = true;
+    //   target.sideLightColor = JSON.parse(JSON.stringify(target.colorPickerValue));
+    // }
+    var obj = {
+      groupArray: setArr,
+      isAll: false,
+      assignColor: [],
+      clearStatus: true,
+      colorPickerValue: target.colorPickerValue,
+      breathing: target.breathing
+    }
+    this.M_Light_Keybinding.setGroupArrayColor(obj);
 
+}
   /**
    * process NowLightMode Event
   */
