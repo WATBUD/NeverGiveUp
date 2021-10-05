@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   ColorModule, MacroScriptContent, MacroManager, Wave, APModeModule, LedChainFramesManager,
   AssociateManager, EffectCenter, KeyShortcut, AlertDevice, EventManager, ImgPathList
-  , count_boolean, CreateFakeArray, SharesFunction, ProgressBar, KeyAssignManager
+  , count_boolean, CreateFakeArray, SharesFunction, ProgressBar
 } from '../../Module/TSImportManager';
 
 import { Http, Response, Headers, RequestOptions } from '@angular/http'
@@ -16,6 +16,7 @@ import { ColorOutput } from '../ngcolor/color-output';
 import { GetAppService } from './GetAppService';
 import { LayoutManager } from './LayoutManager';
 import { M_Light_Numpad } from './M_Light_Numpad';
+import { KeyAssignManager } from './KeyAssignManager';
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 let KeyMapping = require('./SupportData').KeyMapping;
@@ -30,6 +31,10 @@ export class NumpadKeyboardComponent implements OnInit {
   KeyAssignManager = new KeyAssignManager();
   M_Light_PRESETS = new M_Light_Numpad(83);
   M_Light_PERKEY = new M_Light_Numpad(83);
+  M_Light_Keybinding = new M_Light_Numpad(83);
+  PERKEY_BrightnessSlider
+
+
   Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
   LayoutManager = LayoutManager.getInstance();
@@ -44,7 +49,7 @@ export class NumpadKeyboardComponent implements OnInit {
   ColorModule = new ColorModule();
   colordata: ColorOutput;
   getAppService = new GetAppService();
-  PERKEY_lightData;
+  PERKEY_lightData=this.default_LightData();
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
@@ -272,6 +277,11 @@ export class NumpadKeyboardComponent implements OnInit {
     this.KeyBoardStyle.applyStyles(RGBList);
     var RGBList2 = document.getElementsByClassName('PERKEYBlockStyle') as HTMLCollectionOf<HTMLElement>;
     this.KeyBoardStyle.applyStyles(RGBList2);
+    var RGBList3 = document.getElementsByClassName('SoundVolumeBlockStyle') as HTMLCollectionOf<HTMLElement>;
+    this.KeyBoardStyle.applyStyles(RGBList3);
+
+
+
     for (let index = 0; index < RGBList2.length; index++) {
       let element = RGBList2[index];
       element.removeEventListener('mousedown', undefined);
@@ -292,6 +302,8 @@ export class NumpadKeyboardComponent implements OnInit {
     }
     this.M_Light_PRESETS.setCoordinateData(RGBList);
     this.M_Light_PERKEY.setCoordinateData(RGBList2);
+    this.M_Light_Keybinding.setCoordinateData(RGBList3);
+
     //   for (let index = 0; index < RGBList.length; index++) {
     //     let element = RGBList[index];
     //     //element.setAttribute('data-index', String(index));
@@ -445,7 +457,7 @@ export class NumpadKeyboardComponent implements OnInit {
         this.M_Light_PERKEY.settingPerkeyName = 'WASD';
         break;
       case 'PerKey_NUMBERS':
-        searchArr = ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"]
+        searchArr = ["Numpad0","Numpad1","Numpad2","Numpad3","Numpad4","Numpad5","Numpad6","Numpad7","Numpad8","Numpad9","NumpadDecimal"]
         this.M_Light_PERKEY.settingPerkeyName = 'NUMBERS';
         break;
       case 'PerKey_FKEYS':
@@ -453,7 +465,7 @@ export class NumpadKeyboardComponent implements OnInit {
         this.M_Light_PERKEY.settingPerkeyName = 'FKEYS';
         break;
       case 'PerKey_MODIFIERS':
-        searchArr = ["ControlLeft", "ShiftLeft", "AltLeft", "ControlRight", "ShiftRight", "AltRight", "MetaLeft", "MetaRight"];
+        searchArr = ["NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","NumpadAdd","NumpadEnter"];
         this.M_Light_PERKEY.settingPerkeyName = 'MODIFIERS';
         break;
       case 'PerKey_ARROWKEYS':
@@ -461,6 +473,7 @@ export class NumpadKeyboardComponent implements OnInit {
         this.M_Light_PERKEY.settingPerkeyName = 'ARROWKEYS';
         break;
       case 'PerKey_SIDELIGHT':
+        searchArr = ["Side Light"]
         this.M_Light_PERKEY.settingPerkeyName = 'SIDE LIGHT';
         break;
       case 'PerKey_ALL':
@@ -478,6 +491,11 @@ export class NumpadKeyboardComponent implements OnInit {
       if (index2 != -1) {
         setArr.push(index2);
       }
+    }
+    if(this.PerKeyArea=="PerKey_SIDELIGHT"){
+      setArr=[0,7,8,16,21,22,29,
+      6,14,15,20,27,28,32];
+
     }
     console.log('%c PerKeyAreaCick_setArr', 'background: blue; color: red', setArr, this.PerKeyArea);
     var flag = this.PerKeyArea;
