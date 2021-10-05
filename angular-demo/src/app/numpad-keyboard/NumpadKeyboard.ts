@@ -243,7 +243,8 @@ export class NumpadKeyboardComponent implements OnInit {
         target_cs.mode_PassWithoutTrace(inputColor, index);
         break;
       case 'FastRunWithoutTrace'://一排
-        target_cs.mode_FastRunWithoutTrace(inputColor, target.Multicolor, index);
+        //target_cs.mode_FastRunWithoutTrace(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
+        target_cs.mode_withoutTraceFakeCoordinates(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
         break;
       case 'Cross'://十字
         target_cs.mode_Cross(inputColor, false, index);

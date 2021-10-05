@@ -416,7 +416,7 @@ export class M_Light_Numpad {
             else{
                 repeatCount=0;
             }
-        }, 400*this.animationSpeed)
+        }, 600*this.animationSpeed)
     }
     mode_AcidMode(colors=[]){
         clearInterval(this.repeater);
@@ -3922,7 +3922,7 @@ export class M_Light_Numpad {
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
             var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            if (Ysdis <= 30) {
+            if (Ysdis <= 30) { 
                 horizontalList[index]={
                     color:colors[this.getRandom(0,colors.length-1)],
                     nowPos:0,
@@ -3978,34 +3978,27 @@ export class M_Light_Numpad {
             else{
                 console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',this.lightData.brightness);
                 if (resultL != undefined) {
-                    var temp_color=JSON.parse(JSON.stringify(horizontalList[LIndex].color));
-                    for (let index = 0; index < 3; index++) {
-                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
-                    }
-
-                    target[LIndex].color = temp_color;
+                    target[LIndex].color = this.getBrightnessRatio(horizontalList[LIndex].color);
                 }
                 if (resultR != undefined) {
-                    var temp_color=JSON.parse(JSON.stringify(horizontalList[RIndex].color));
-                    for (let index = 0; index < 3; index++) {
-                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
-                    }
-                    target[RIndex].color = temp_color;                
+                    target[RIndex].color =  this.getBrightnessRatio(horizontalList[RIndex].color);              
                 };
                 repeatCount+=1;
             }
         },35*this.animationSpeed)
     }
-    mode_withoutTraceFakeCoordinates(colors = [[255,0,0,1]], isRainbow = false,blockIndex=37){
+    mode_withoutTraceFakeCoordinates(colors = [[255,0,0,1]], isRainbow = false,blockIndex=37,tempArr=[]){
         //colors =[[255,0,0,1],[0,255,0,1],[0,0,255,1]];
-        console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',colors, isRainbow);
+        console.log('%c mode_withoutTraceFakeCoordinates','color:rgb(255,77,255)',colors, isRainbow);
+        console.log('%c tempArr','color:rgb(255,77,255)',tempArr);
+
         if (isRainbow) {
             colors =this.rainbow7Color();
         }
         clearInterval(this.repeater);
         this.currentBlockIndex=blockIndex;
         var repeatCount=0;
-        var StartPoint = this.getNowBlock().coordinateData;
+        var StartPoint = tempArr[blockIndex];
         this.setAllBlockColor([0,0,0,1]);
         var totalStep=10;
         var horizontalList={
@@ -4013,21 +4006,20 @@ export class M_Light_Numpad {
         var target = this.AllBlockColor;
         var randomValue=this.getRandom(0,colors.length-1);
         var step_End=false;
-        //this.mode_reset();
+        //this.mode_reset();s
         //var c_temp=colors[this.getRandom(0,colors.length-1)];
         horizontalList[this.currentBlockIndex]={
                color:colors[this.getRandom(0,colors.length-1)]
         }
         for (let index = 0; index < target.length; index++) {
             const element = target[index];
-            var Ysdis=Math.abs(StartPoint.top_Left[1]-element.coordinateData.top_Left[1]);
-            if (Ysdis <= 30) {
+            //var Ysdis=Math.abs(StartPoint[1]-tempArr[index][1]);
+            if (StartPoint[1] == tempArr[index][1]) {
+                console.log('%c StartPoint[arr[0]]','color:rgb(255,77,255)',StartPoint,tempArr[index]);
                 horizontalList[index]={
                     color:colors[this.getRandom(0,colors.length-1)],
-                    nowPos:0,
                     nowstep:0,
                     repeatCount:0,
-                    repeatTime:this.getRandom(15,20),
                 }
             }
         }
@@ -4059,12 +4051,16 @@ export class M_Light_Numpad {
                         temp_colorData[index]= (temp_C[index] * (totalStep - temp_block.nowStep) + nextColor[index] * temp_block.nowStep) / totalStep;
                         temp_colorData[index]=temp_colorData[index]*this.lightData.brightness/100;
                     }
+
                     if(temp_block.repeatCount!=2){
                         target[index_num].color = temp_colorData;
                     }
                 }
                 //totalRepeatCount+=1
+                console.log('%c horizontalList[arr[0]]','color:rgb(255,77,255)',horizontalList[arr[0]]);
+
                 if(horizontalList[arr[0]].repeatCount==2){
+
                     step_End = false;
                     clearInterval(this.repeater);
                 }
@@ -4075,21 +4071,13 @@ export class M_Light_Numpad {
                 step_End=true;
             }
             else{
-                console.log('%c mode_FastRunWithoutTrace','color:rgb(255,77,255)',this.lightData.brightness);
                 if (resultL != undefined) {
-                    var temp_color=JSON.parse(JSON.stringify(horizontalList[LIndex].color));
-                    for (let index = 0; index < 3; index++) {
-                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
-                    }
-
-                    target[LIndex].color = temp_color;
+                    console.log('%c target[LIndex]','color:rgb(255,77,255)',horizontalList[LIndex].color);
+                    target[LIndex].color = this.getBrightnessRatio(horizontalList[LIndex].color);
                 }
                 if (resultR != undefined) {
-                    var temp_color=JSON.parse(JSON.stringify(horizontalList[RIndex].color));
-                    for (let index = 0; index < 3; index++) {
-                        temp_color[index]=temp_color[index]*this.lightData.brightness/100;    
-                    }
-                    target[RIndex].color = temp_color;                
+                    console.log('%c target[RIndex]','color:rgb(255,77,255)',horizontalList[RIndex].color);
+                    target[RIndex].color =  this.getBrightnessRatio(horizontalList[RIndex].color);              
                 };
                 repeatCount+=1;
             }
