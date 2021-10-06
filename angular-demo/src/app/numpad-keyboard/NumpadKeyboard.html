@@ -1142,18 +1142,6 @@
                             lighting applies over Preset effects.</div>
                     </div>
                 </div>
-                <div id="lightDropList" class="list">
-                    EFFECT
-                    <app-commonselect style="height: 40px;
-                                    width: 200px;
-                                    margin-left: -10px;
-                                    font-family: MM, serif;
-                                    letter-spacing: 0px;
-                                    font-size: 13px;
-                                    z-index: 30;" class="PERKEYA_EffectSelect" [componentId]="'PERKEYA_EffectSelect'"
-                        [i18nManager]="this.i18nManager" [inputoption]="lighting_PERKEY_Effect"
-                        [(ngModel)]="lighting_PERKEY_SelectEffect" (ngModelChange)="PERKEY_SelectChange()"></app-commonselect>
-                </div>
                 <div id='html_LayoutSelect' class="list">
                     LAYOUT
                     <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
@@ -1168,16 +1156,18 @@
                                         ">
                     </app-commonselect>
                 </div>
-                <div id="Keybinding_BREATHING" class="list" style="flex-direction: row;">
-                    <div class="sub-list"
-                        style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
-                        GLOW WHEN ACTIVE
-                    </div>
-                    <label>
-                        <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.breathing'
-                            (ngModelChange)="PerKeyBreathingChange()">
-                        <span></span>
-                    </label>
+                <div class="list" style="width: fit-content;">
+                    <div style="border: 1px solid rgb(253, 186, 59);
+                                    width: auto;
+                                    height: 27px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    padding-left: 5px;
+                                    padding-right: 5px;
+                                    border-radius: 3px;
+                                " class="">Application Volume</div>
+                    <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"></div>
                 </div>
                 <div id="PERKEY_Brightness">
                     <div class="list">
@@ -1191,6 +1181,54 @@
                         </div>
                     </div>
                 </div>
+                <div id="Keybinding_BREATHING" class="list" style="flex-direction: row;">
+                    <div class="sub-list"
+                        style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
+                        GLOW WHEN ACTIVE
+                    </div>
+                    <label>
+                        <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.breathing'
+                            (ngModelChange)="PerKeyBreathingChange()">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="list" style="width: fit-content;">
+                    EFFECT
+                </div>    
+                <div class="list" style="width: fit-content;flex-direction: row;">
+                    <div (click)="this.SoundVolume_lightData.breathing=true;" style="width: fit-content;margin-right: 15px;" class="">
+                        <div [ngStyle]="{ 'border-color': this.SoundVolume_lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                            style="border: 1px solid;
+                                                                        width: auto;
+                                                                        height: 27px;
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                        padding-left: 5px;
+                                                                        padding-right: 5px;
+                                                                        border-radius: 3px;
+                                                                    " class="">Breathing</div>
+                        <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
+                            [ngStyle]="{ 'border': this.SoundVolume_lightData.breathing==true ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
+                        </div>
+                    </div>
+                    <div (click)="this.SoundVolume_lightData.breathing=false;" style="width: fit-content;" >
+                        <div [ngStyle]="{ 'border-color': this.SoundVolume_lightData.breathing==false ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                         style="border: 1px solid;
+                        width: auto;
+                        height: 27px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        border-radius: 3px;" class="">Solid Color</div>
+                        <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
+                            [ngStyle]="{ 'border': this.SoundVolume_lightData.breathing==false ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
+                        </div>
+                    </div>
+                </div>
+
                 <div id="ColorContent" class="list" style="font-family: MM, serif">
                     color
                     <div class="sub-list">
