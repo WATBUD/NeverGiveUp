@@ -377,6 +377,7 @@ export class KeyBoard {
             recordBindCodeName: this.defaultName,
             shortcutsWindowsEnable: false,
             soundVolume: false,
+            gLowWhenActive:false,
             soundEffect: "Breathing",
             soundColor: [255,0,0,1],
             ApplicationPath: "",
