@@ -56,7 +56,7 @@ export class NumpadKeyboardComponent implements OnInit {
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
-  keybindingflag = true;
+  keybindingflag = false;
   lightingflag = false;
   performanceflag = false;
 
