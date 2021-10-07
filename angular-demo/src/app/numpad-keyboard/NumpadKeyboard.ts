@@ -54,7 +54,7 @@ export class NumpadKeyboardComponent implements OnInit {
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
-  keybindingflag = true;
+  keybindingflag = false;
   lightingflag = false;
   performanceflag = false;
 
@@ -163,6 +163,29 @@ export class NumpadKeyboardComponent implements OnInit {
     }
     return T;
   }
+
+  /**
+* process default_LightData Event
+*/
+  default_SoundVolume_lightData(defaultcolor = [255, 0, 0, 1]) {
+    var T = {
+      speed: 50,
+      brightness: 50,
+      clearStatus: false,
+      colorHex: '#0000',
+      colorPickerValue: defaultcolor,
+      breathing: false,
+      sideLightSync: false,
+      sideLightColor: [0, 0, 0, 0],
+      brightness_Enable: false,
+      rate_Enable: false,
+      color_Enable: false,
+    }
+    return T;
+  }
+
+
+
   ngAfterViewChecked() {
     // let show = this.isShowExpand();
     // if (show != this.show) { // check if it change, tell CD update view
@@ -422,9 +445,9 @@ export class NumpadKeyboardComponent implements OnInit {
       if (this.lightingPage == 'PERKEY') {
         target = this.PERKEY_lightData;
       }
-      if (this.lightingPage == 'PERKEY') {
-        target = this.per;
-      }
+      // if (this.lightingPage == 'PERKEY') {
+      //   target = this.per;
+      // }
       var rgbArr = target.colorPickerValue;
       console.log('setRGBcolor_Target', JSON.parse(JSON.stringify(target)));
       for (let index = 0; index < 3; index++) {

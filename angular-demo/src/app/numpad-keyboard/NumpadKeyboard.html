@@ -1143,7 +1143,7 @@
                     </div>
                 </div>
                 <div id='html_LayoutSelect' class="list">
-                    LAYOUT
+                    AUDIO SOURCE
                     <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
                         [i18nManager]="this.i18nManager" [inputoption]="this.LayoutManager.layoutSelectData"
                         [(ngModel)]="this.LayoutManager.nowlayoutSelect" (ngModelChange)="this.onLayoutSelectChange()" style="width: 200px;
@@ -1187,15 +1187,15 @@
                         GLOW WHEN ACTIVE
                     </div>
                     <label>
-                        <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.breathing'
+                        <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.clearStatus'
                             (ngModelChange)="PerKeyBreathingChange()">
                         <span></span>
                     </label>
                 </div>
-                <div class="list" style="width: fit-content;">
+                <div *ngIf="this.SoundVolume_lightData.clearStatus" class="list" style="width: fit-content;">
                     EFFECT
                 </div>    
-                <div class="list" style="width: fit-content;flex-direction: row;">
+                <div *ngIf="this.SoundVolume_lightData.clearStatus" class="list" style="width: fit-content;flex-direction: row;">
                     <div (click)="this.SoundVolume_lightData.breathing=true;" style="width: fit-content;margin-right: 15px;" class="">
                         <div [ngStyle]="{ 'border-color': this.SoundVolume_lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
                             style="border: 1px solid;
@@ -1229,7 +1229,7 @@
                     </div>
                 </div>
 
-                <div id="ColorContent" class="list" style="font-family: MM, serif">
+                <div *ngIf="this.SoundVolume_lightData.clearStatus" id="ColorContent" class="list" style="font-family: MM, serif">
                     color
                     <div class="sub-list">
                         <ng-color-box class="colorpicker" id="mouse-colorpicker" [(ngModel)]="colordata"
