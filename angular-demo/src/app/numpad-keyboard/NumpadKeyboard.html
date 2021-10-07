@@ -55,7 +55,7 @@
                                                         z-index: 7000;
                                                         margin-left: -200px;"
                                                         [style.display]="keybindingflag && !this.KeyBoardManager.notClickedYet ? 'flex' : 'none'">
-                        <div id="keyAssignPrompt" class="triangleStyle" style="position: absolute;
+                        <div id="keyAssignPrompt" style="position: absolute;
                                                                     z-index: 20;
                                                                     margin-left: -22px;
                                                                     margin-top: -19px;
@@ -1123,39 +1123,6 @@
             </div>
         
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'SOUND CONTROL'">
-                <div (mouseover)="QuestionMarkStatus='PERKEYAreaTip'" (mouseleave)="QuestionMarkStatus=''" class="QuestionMark"
-                    *ngIf="this.getAppService.getAppSetting().tooltip" style="right: 145px;position: absolute;top: 154px;">?
-                </div>
-                <div class="triangleStyle" *ngIf="QuestionMarkStatus=='PERKEYAreaTip' || QuestionMarkStatus=='ALL'"
-                    id="PERKEYAreaTip" style="
-                                    top: 148px;
-                                    right: 132px;
-                                    position: absolute;">
-                    <div class="rectángulo" id="rectángulo" style="top: 28px;
-                                left: -220px;
-                                width: 350px;
-                                height: 101px;
-                                position: absolute;">
-                        <div style="width: 94%;">
-                            The pencil allows you to apply lighting to individual keys by clicking them or groups of keys using
-                            Quick Key Selection. The eraser allows you to remove lighting from keys in the same way.<br> Per key
-                            lighting applies over Preset effects.</div>
-                    </div>
-                </div>
-                <div id='html_LayoutSelect' class="list">
-                    AUDIO SOURCE
-                    <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
-                        [i18nManager]="this.i18nManager" [inputoption]="this.LayoutManager.layoutSelectData"
-                        [(ngModel)]="this.LayoutManager.nowlayoutSelect" (ngModelChange)="this.onLayoutSelectChange()" style="width: 200px;
-                                        font-family: MM, serif;
-                                        font-size: 13px;
-                                        letter-spacing: 0px;
-                                        height: 32px;
-                                        margin-left: -8px;
-                                        z-index: 30;
-                                        ">
-                    </app-commonselect>
-                </div>
                 <div class="list" style="width: fit-content;">
                     <div style="border: 1px solid rgb(253, 186, 59);
                                     width: auto;
@@ -1169,15 +1136,71 @@
                                 " class="">Application Volume</div>
                     <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"></div>
                 </div>
-                <div id="PERKEY_Brightness">
+                <div id='html_SourceSelect' style="flex-direction: row;" class="list">
+                    AUDIO SOURCE: 
+                    <div style="background: rgb(49,49,49);
+                                position: absolute;
+                                width: 160px;
+                                height: 182px;
+                                margin-top: 30px;
+                                border-radius: 8px;
+                                color: white;
+                                ">
+                        <div class="SelectTemplate" 
+                        style="width: 92%;
+                        height: 87%;
+                        margin-top: 14px;
+                        border-radius: 8px;
+                        display: grid;">
+                            <div *ngFor="let item of M_SoundVolume.audioSouceList let i = index"
+                             class="audioSouceItem">
+                                                                        {{item.bindProgramName}}
+
+
+
+                            </div>
+                        
+                        
+                        </div>
+                    </div>
+                    <div style="
+                    display: flex;
+                    color: black;
+                    align-items: center;
+                    /* background: yellow; */
+                    "><div  class="checkedText" id="checkedText">Discord</div>
+                    <div id="Down_Arrow" style="
+                            transform: rotate(-92deg);
+                            border-top: 5px solid #903d3d00;
+                            border-right: 5px solid black;
+                            border-bottom: 5px solid #8f7c6500;
+                            pointer-events: none;
+                            margin-left: 10px;
+                            ">
+                    </div>
+                </div>
+                    
+                    <!-- <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
+                        [i18nManager]="this.i18nManager" [inputoption]="this.LayoutManager.layoutSelectData"
+                        [(ngModel)]="this.LayoutManager.nowlayoutSelect" (ngModelChange)="this.onLayoutSelectChange()" style="width: 200px;
+                                        font-family: MM, serif;
+                                        font-size: 13px;
+                                        letter-spacing: 0px;
+                                        height: 32px;
+                                        margin-left: -8px;
+                                        z-index: 30;
+                                        ">
+                    </app-commonselect> -->
+                </div>
+                <div id="SoundVolume_lightData">         
                     <div class="list">
-                        <div class="sub-list">
+                        Source Volume
+                        <div class="sub-list" style="margin-top: 10px;">     
                             <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
-                                [(ngModel)]="this.M_Light_Keybinding.brightness" (mouseup)="sliderChange()"
-                                [ngStyle]="{'background': PERKEY_BrightnessSlider_Background()}"
-                                (ngModelChange)="lightSliderMove('PERKEY_BrightnessSlider')"
+                                [(ngModel)]="this.SoundVolume_lightData.brightness" (mouseup)="sliderChange()"
+                                [ngStyle]="{'background': SoundVolume_lightData_Background()}"
                                 onkeydown="event.preventDefault()" />
-                            <div>{{ this.PERKEY_lightData.brightness }}%</div>
+                            <div>{{ this.SoundVolume_lightData.brightness }}%</div>
                         </div>
                     </div>
                 </div>
@@ -1188,7 +1211,7 @@
                     </div>
                     <label>
                         <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.clearStatus'
-                            (ngModelChange)="PerKeyBreathingChange()">
+                            (ngModelChange)="soundVolume_BreathingChange()">
                         <span></span>
                     </label>
                 </div>

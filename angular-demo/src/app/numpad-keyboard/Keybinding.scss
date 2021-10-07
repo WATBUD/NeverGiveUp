@@ -658,3 +658,24 @@
     font-size: 14px;
     justify-content: space-evenly;
 }
+
+#keyAssignPrompt{
+    border-color: #0000 #0000 #0000 #313131;
+    border-style: solid;
+    border-width: 20px 20px 20px 20px;
+    z-index: 9999;
+    position: absolute;
+    z-index: 20;
+    margin-left: -22px;
+    margin-top: -19px;
+}
+
+
+
+.audioSouceItem{display: flex;
+    width: 119px;
+    height: 32px;
+    white-space: nowrap;
+    margin-left: 10%;
+    line-height: 23px;
+}

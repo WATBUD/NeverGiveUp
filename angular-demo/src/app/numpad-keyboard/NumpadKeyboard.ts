@@ -17,6 +17,10 @@ import { GetAppService } from './GetAppService';
 import { LayoutManager } from './LayoutManager';
 import { M_Light_Numpad } from './M_Light_Numpad';
 import { KeyAssignManager } from './KeyAssignManager';
+import { M_SoundVolume } from './M_SoundVolume';
+
+
+
 declare var require: any;
 let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
 let KeyMapping = require('./SupportData').KeyMapping;
@@ -24,7 +28,7 @@ let Shortcuts_WindowsMapping = require('./SupportData').KeyMapping;
 @Component({
   selector: 'app-NumpadKeyboard',
   templateUrl: './NumpadKeyboard.html',
-  styleUrls: ['./NumpadKeyboard.css', './KeyBoardStyle.scss', './Keybinding.scss', 'LightIngStyle.scss']
+  styleUrls: ['./NumpadKeyboard.css', './KeyBoardStyle.scss', './Keybinding.scss', 'LightIngStyle.scss','./DropListStyle.scss']
 })
 export class NumpadKeyboardComponent implements OnInit {
   KeyBoardStyle = new KeyBoardStyle();
@@ -32,9 +36,7 @@ export class NumpadKeyboardComponent implements OnInit {
   M_Light_PRESETS = new M_Light_Numpad(83);
   M_Light_PERKEY = new M_Light_Numpad(83);
   M_Light_Keybinding = new M_Light_Numpad(83);
-  PERKEY_BrightnessSlider
-
-
+  M_SoundVolume= new M_SoundVolume();
   Built_ineffect = new Built_ineffect();
   KeyBoardManager = new KeyBoardManager(83);
   LayoutManager = LayoutManager.getInstance();
@@ -54,7 +56,7 @@ export class NumpadKeyboardComponent implements OnInit {
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
-  keybindingflag = false;
+  keybindingflag = true;
   lightingflag = false;
   performanceflag = false;
 
@@ -387,8 +389,8 @@ export class NumpadKeyboardComponent implements OnInit {
       // }
       this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor=JSON.parse(JSON.stringify(RGB_Arr));
       //this.SoundVolume_lightData.colorPickerValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor;
-      this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
-    }
+        this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
+      }
   }
 
   /**
@@ -432,6 +434,14 @@ export class NumpadKeyboardComponent implements OnInit {
    PerKeyBreathingChange() {
 
   }
+  /**
+    * process default_LightData Event
+    */
+   soundVolume_BreathingChange() {
+    this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
+  }
+
+
   /**
    * RGB input
    */
@@ -585,6 +595,9 @@ export class NumpadKeyboardComponent implements OnInit {
    * @param GroupName string:PerKeyAreaGroupName
   */
  SoundVolume_AreaCick(index) {
+  if(this.KeyBoardManager.notClickedYet==true){
+    return;
+  }
   console.log('%c SoundVolume_AreaCick', 'background: blue; color: red', index);
   var setArr=[];
   setArr.push(index);
@@ -594,14 +607,21 @@ export class NumpadKeyboardComponent implements OnInit {
     //   target.sideLightSync = true;
     //   target.sideLightColor = JSON.parse(JSON.stringify(target.colorPickerValue));
     // }
+    var singleColor=[];
+    if (target.clearStatus==false) {
+      singleColor=[0,0,0,0];
+    }
+    else{
+      singleColor=target.colorPickerValue;
+    }
     var obj = {
       groupArray: setArr,
       isAll: false,
-      assignColor: [],
-      clearStatus: true,
-      colorPickerValue: target.colorPickerValue,
+      clearStatus: target.clearStatus,
+      colorPickerValue: singleColor,
       breathing: target.breathing
     }
+    
     this.M_Light_Keybinding.setGroupArrayColor(obj);
 
 }
@@ -985,6 +1005,16 @@ export class NumpadKeyboardComponent implements OnInit {
     var value = this.PERKEY_lightData.brightness;
     return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
   }
+  /**
+   * process PERKEY_BrightnessSlider Event
+  */
+  SoundVolume_lightData_Background() {
+    var value = this.SoundVolume_lightData.brightness;
+    return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+  }
+
+
+
   /**
    * process onLayoutSelectChange Event
   */

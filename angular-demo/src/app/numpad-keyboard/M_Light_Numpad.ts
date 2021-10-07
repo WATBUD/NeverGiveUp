@@ -169,15 +169,15 @@ export class M_Light_Numpad {
                 obj.groupArray.push(i);
             }
         }
-        if(obj.assignColor.length<1){
-            //console.log('setGroupArrayColor_assignColor', assignColor)
-            obj.assignColor=JSON.parse(JSON.stringify(obj.colorPickerValue));
-        }
+        // if(obj.assignColor.length<1){
+        //     //console.log('setGroupArrayColor_assignColor', assignColor)
+        //     obj.assignColor=JSON.parse(JSON.stringify(obj.colorPickerValue));
+        // }
         var target=this.AllBlockColor;
         obj.groupArray.forEach(function(value, index, array){//array=GroupArray
-            target[value].color = obj.assignColor;
-            target[value].breathing=obj.breathing;
+            target[value].color = JSON.parse(JSON.stringify(obj.colorPickerValue));
             target[value].clearStatus=obj.clearStatus;
+            target[value].breathing=obj.breathing;
         });
     }
     subBlockIndex(){
