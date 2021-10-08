@@ -567,7 +567,6 @@ export class NumpadKeyboardComponent implements OnInit {
       var obj = {
         groupArray: setArr,
         isAll: flag == "PerKey_ALL",
-        assignColor: [],
         clearStatus: clearStatus,
         colorPickerValue: target.colorPickerValue,
         breathing: target.breathing
@@ -582,9 +581,8 @@ export class NumpadKeyboardComponent implements OnInit {
       var obj2 = {
         groupArray: setArr,
         isAll: flag == "PerKey_ALL",
-        assignColor: [0, 0, 0, 0],
         clearStatus: clearStatus,
-        colorPickerValue: target.colorPickerValue,
+        colorPickerValue: [0, 0, 0, 0],
         breathing: target.breathing
       }
       this.M_Light_PERKEY.setGroupArrayColor(obj2);
