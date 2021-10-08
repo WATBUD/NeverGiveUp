@@ -5,7 +5,8 @@
 -----------------------------------------------------------------------------------------*/
 export class M_SoundVolume {
     nowTargetIndex = 0;
-    nowTargetKey = 'GMMK NUMPAD';
+    nowTargetKey = 'ZZZ';
+    showListflag=false;
     audioSouceList = [
         {
             bindProgramName: "Discord",
@@ -24,9 +25,7 @@ export class M_SoundVolume {
             audioSouceValue: "80",
         }
     ]
-
-
-
+    //soundVolume_lightData
     keyBoardList = {
         'GMMK NUMPAD': {
             ItemCss: [
@@ -128,7 +127,7 @@ export class M_SoundVolume {
     */
     getAssignTarget(name) {
         //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
-        return this.keyBoardList[name]
+        return this.keyBoardList[name];
     }
 
     /**
@@ -136,7 +135,7 @@ export class M_SoundVolume {
     */
     getTarget() {
         //console.log("keyBoardList",this.keyBoardList,this.nowTargetKey);
-        return this.keyBoardList[this.nowTargetKey]
+        return this.keyBoardList[this.nowTargetKey];
     }
 
     /**
@@ -147,40 +146,17 @@ export class M_SoundVolume {
     }
 
     /**
-     * find KeyMappingIndex
-     * @param code string:Key name
+     * getTargetBindProgramName
     */
-    findKeyMappingIndex(code = "") {
-        let targetIndex = this.getTargetDefaultKeyArray().findIndex((x) => x == code)
-        if (targetIndex == -1) {
-            console.log('findKeyMappingIndex=lostcode', code);
+    getTargetBindProgramName() {
+        let targetData = this.audioSouceList.find((x) => x.bindProgramName ==this.nowTargetKey);
+
+        if (targetData == undefined) {
+            console.log('%c getTargetBindProgramName=lostcode', 'color:rgb(255,75,255,1)');
+            return "No Source";
+
         }
-        return targetIndex;
+        return targetData.bindProgramName;
     }
-    /**
-     * set keyBoardList cssText
-     * @param target Array:HTMLElements List
-    */
-    applyStyles(target) {
-        //console.log("applyStyles", this.getTarget().ItemCss,target);
-        this.getTarget().ItemCss.forEach((element, index) => {
-            //console.log("applyStyles_element", element);
-            if (target[index]) {
-                //console.log("applyStyles_ItemCss_"+index, target[index].style.cssText);
-                target[index].style.cssText = element;
-            }
-            else {
-                console.log("applyStyles_ItemCss.forEach_Err", target[index], index);
-            }
-        });
-        this.getTarget().keyMapping.forEach((element, index) => {
-            if (target[index]) {
-                target[index].setAttribute('keyMapping', element);
-                //console.log("applyStyles_keyMapping", index);
-            }
-            else {
-                console.log("applyStyles_keyMapping.forEach_Err", "color:red", target[index], index);
-            }
-        });
-    }
+
 }

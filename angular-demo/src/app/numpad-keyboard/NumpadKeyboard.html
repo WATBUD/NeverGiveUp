@@ -1136,9 +1136,9 @@
                                 " class="">Application Volume</div>
                     <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"></div>
                 </div>
-                <div id='html_SourceSelect' style="flex-direction: row;" class="list">
+                <div id='html_SourceSelect' style="flex-direction: row;user-select: none;" class="list">
                     AUDIO SOURCE: 
-                    <div style="background: rgb(49,49,49);
+                    <div *ngIf="M_SoundVolume.showListflag"  style="background: rgb(49,49,49);
                                 position: absolute;
                                 width: 160px;
                                 height: 182px;
@@ -1146,21 +1146,17 @@
                                 border-radius: 8px;
                                 color: white;
                                 ">
-                        <div class="SelectTemplate" 
+                        <div  class="SelectTemplate" 
                         style="width: 92%;
                         height: 87%;
                         margin-top: 14px;
                         border-radius: 8px;
                         display: grid;">
                             <div *ngFor="let item of M_SoundVolume.audioSouceList let i = index"
-                             class="audioSouceItem">
-                                                                        {{item.bindProgramName}}
-
-
-
-                            </div>
-                        
-                        
+                             class="audioSouceItem"
+                             (click)="M_SoundVolume.nowTargetKey=item.bindProgramName;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;">
+                             {{item.bindProgramName}}
+                            </div>          
                         </div>
                     </div>
                     <div style="
@@ -1168,7 +1164,8 @@
                     color: black;
                     align-items: center;
                     /* background: yellow; */
-                    "><div  class="checkedText" id="checkedText">Discord</div>
+                    " (click)="M_SoundVolume.showListflag=!M_SoundVolume.showListflag">
+                    <div  class="checkedText" id="checkedText">{{M_SoundVolume.getTargetBindProgramName()}}</div>
                     <div id="Down_Arrow" style="
                             transform: rotate(-92deg);
                             border-top: 5px solid #903d3d00;
