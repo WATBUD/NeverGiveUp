@@ -41,6 +41,22 @@ export class KeyBoardManager {
         }
     }
     
+    setALLGlobalValueAssignField(field="",value) {
+        if(value==undefined){
+            console.log('%c setALLKeyboardAssignField_lost', 'color:rgb(255,0,0)');
+            console.log('field', field);
+            console.log('value', value);
+            return;
+        }
+        console.log('setALLDefaultKeyArray', this.profileLayers);
+        var KBMarr = this.KeyBoardArray
+        for (let index = 0; index < KBMarr.length; index++) {
+            KBMarr[index].setGlobalValueAssignField(field="",value);
+            for (let index2 = 0; index2 < this.layerMaxNumber; index2++) {
+                this.profileLayers[index][index2].setGlobalValueAssignField(field="",value);
+            }
+        }
+    }
     
 
 
@@ -161,6 +177,8 @@ export class KeyBoard {
     winLock = false
     hibernateTimeArr: any = [1, 3, 5, 10]
     hibernateTime: any = 3
+    lockSidelightsFlag=false;
+    batteryLevelIndicator=false;
     defaultName = "Default";
     pollingrate = 125;
     recordAssignBtnIndex: any = 0
@@ -407,6 +425,18 @@ export class KeyBoard {
         target.changed = true;
 
     }
+    
+    setGlobalValueAssignField(field="",value){
+        var target = this;
+        //console.log('setAssignTargetData:', data, 'ManagerTarget:', target);
+        var arrKeys = Object.keys(this);
+        if (target[field] != undefined) {
+            target[field] = value;
+        }
+    }    
+
+
+    
     getNowModeTargetKeyPressStatus() {
         if (this.getNowModeTargetMatrixKey().openLongTimePress) {
             if (this.getNowModeTargetMatrixKey().LongTime_Instant_Status) {

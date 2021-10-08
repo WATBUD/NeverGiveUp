@@ -52,12 +52,11 @@ export class NumpadKeyboardComponent implements OnInit {
   colordata: ColorOutput;
   getAppService = new GetAppService();
   PERKEY_lightData=this.default_LightData();
-  SoundVolume_lightData=this.default_LightData();
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
   keybindingflag = false;
-  lightingflag = false;
+  lightingflag = true;
   performanceflag = false;
 
   KeyboardKeyData: any = KeyMapping;
@@ -166,25 +165,7 @@ export class NumpadKeyboardComponent implements OnInit {
     return T;
   }
 
-  /**
-* process default_LightData Event
-*/
-  default_SoundVolume_lightData(defaultcolor = [255, 0, 0, 1]) {
-    var T = {
-      speed: 50,
-      brightness: 50,
-      clearStatus: false,
-      colorHex: '#0000',
-      colorPickerValue: defaultcolor,
-      breathing: false,
-      sideLightSync: false,
-      sideLightColor: [0, 0, 0, 0],
-      brightness_Enable: false,
-      rate_Enable: false,
-      color_Enable: false,
-    }
-    return T;
-  }
+
 
 
 
@@ -380,17 +361,17 @@ export class NumpadKeyboardComponent implements OnInit {
       this.PerKeyAreaCick(this.PerKeyArea);
     }
     if (this.keybindingflag == true) {
-      var target = this.SoundVolume_lightData;
+      let target = this.M_SoundVolume.lightData;
       target.colorPickerValue = JSON.parse(JSON.stringify(RGB_Arr));
       target.colorHex = this.M_Light_Keybinding.rgbToHex(target[0], target[1], target[2]);
 
       // if (this.PerKeyArea == "PerKey_SIDELIGHT" || this.PerKeyArea == "PerKey_ALL") {
       //   this.PERKEY_lightData.sideLightColor = JSON.parse(JSON.stringify(RGB_Arr));
       // }
-      this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor=JSON.parse(JSON.stringify(RGB_Arr));
-      //this.SoundVolume_lightData.colorPickerValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor;
-        this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
-      }
+      this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor = JSON.parse(JSON.stringify(RGB_Arr));
+      //this.M_SoundVolume.lightData.colorPickerValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor;
+      this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
+    }
   }
 
   /**
@@ -429,13 +410,13 @@ export class NumpadKeyboardComponent implements OnInit {
     this.setRGBcolor();//by Built_inSelectedChange;
   }
     /**
-    * process default_LightData Event
+    * process PerKeyBreathingChange Event
     */
    PerKeyBreathingChange() {
 
   }
   /**
-    * process default_LightData Event
+    * process soundVolume_BreathingChange Event
     */
    soundVolume_BreathingChange() {
     this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
@@ -600,7 +581,7 @@ export class NumpadKeyboardComponent implements OnInit {
   var setArr=[];
   setArr.push(index);
  // var flag = this.PerKeyArea;
-  var target = this.SoundVolume_lightData;
+  var target = this.M_SoundVolume.lightData;
     // if (flag == "PerKey_ALL" || flag == "PerKey_SIDELIGHT") {
     //   target.sideLightSync = true;
     //   target.sideLightColor = JSON.parse(JSON.stringify(target.colorPickerValue));
@@ -854,7 +835,8 @@ export class NumpadKeyboardComponent implements OnInit {
           }
           else {
             return '';
-          }
+        }
+
       }
       //console.log('AllFunctionMapping_index', index);
       var combinationkey = ""
@@ -903,6 +885,9 @@ export class NumpadKeyboardComponent implements OnInit {
       var trans = AllFunctionMapping[index].translate;
       var result = combinationkey + trans;
       return result;
+    }
+    else{
+      return this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeName;
     }
   }
   /**
@@ -1007,7 +992,7 @@ export class NumpadKeyboardComponent implements OnInit {
    * process PERKEY_BrightnessSlider Event
   */
   SoundVolume_lightData_Background() {
-    var value = this.SoundVolume_lightData.brightness;
+    var value = this.M_SoundVolume.lightData.brightness;
     return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
   }
 

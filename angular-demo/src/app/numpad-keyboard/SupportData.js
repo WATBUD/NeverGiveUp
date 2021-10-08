@@ -174,7 +174,7 @@ var AllFunctionMapping =[{"keyCode":"Multimedia_Fun_0","functionType":"Multimedi
 {"keyCode":"Shortcuts_Fun_34","functionType":"Shortcuts","value":"WWW Search","hid":14,"translate":"WWW Search","code":"Shortcuts_Fun_34"},
 {"keyCode":"Side Light","functionType":"SideLight","value":"Side Light","hid":14,"translate":"Side Light","code":"Side Light"},
 {"keyCode":"slider","functionType":"slider","value":"SLIDER","hid":14,"translate":"slider","code":"slider"},
-{"keyCode":"Rotary Encoder","functionType":"RotaryEncoder","value":"Rotary Encoder","hid":14,"translate":"Rotary Encoder","code":"Rotary Encoder"},
+{"keyCode":"ROTARY ENCODER","functionType":"RotaryEncoder","value":"ROTARY ENCODER","hid":14,"translate":"ROTARY ENCODER","code":"ROTARY ENCODER"},
 
 {"keyCode":"MacroFunction","functionType":"MacroFunction","value":"MacroFunction","hid":1923,"translate":"MacroFunction","code":"MacroFunction"},
 {"keyCode":"ScrollWheel","functionType":"ScrollWheel","value":"Volume","hid":1922,"translate":"ScrollWheel","code":"ScrollWheel"},

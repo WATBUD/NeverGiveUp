@@ -60,7 +60,7 @@ export class KeyBoardStyle {
             hasValueStyle:["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
             ,
             keyMapping:[
-                "Side Light","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","Rotary Encoder","Side Light",
+                "Side Light","NumLock","NumpadDivide","NumpadMultiply","NumpadSubtract","ROTARY ENCODER","Side Light",
                 "Side Light","Side Light","Numpad7","Numpad8","Numpad9","NumpadAdd","slider","Side Light","Side Light",
                 "Side Light","Numpad4","Numpad5","Numpad6","Side Light",
                 "Side Light","Side Light","Numpad1","Numpad2","Numpad3","NumpadEnter","Side Light","Side Light",
@@ -72,13 +72,13 @@ export class KeyBoardStyle {
             qigong_Step1_Range: [0, 15, 30, 58, 71, 82],
             qigong_Step2_Range: [11, 19, 25, 24,23,17,9, 10],
             qigong_Special1_Step:[
-            1,2,3,"NumpadMultiply","NumpadSubtract","Rotary Encoder","Side Light",
+            1,2,3,"NumpadMultiply","NumpadSubtract","ROTARY ENCODER","Side Light",
             1,1,2,3,"Numpad9","NumpadAdd","slider","Side Light","Side Light",
             1,"Numpad4","Numpad5","Numpad6",1,
             "Side Light","Side Light","Numpad1","Numpad2",3,1,1,1,
             "Side Light",3,2,1],
             snowing_Special1:[                
-                "Side Light",1,999,1,999,"Rotary Encoder","Side Light",
+                "Side Light",1,999,1,999,"ROTARY ENCODER","Side Light",
                 1,"Side Light","Numpad7",2,"Numpad9",2,"slider","Side Light","Side Light",
                 2,999,3, 999,"Side Light",
                 "Side Light","Side Light",3,"Numpad2",4,4,3,3,

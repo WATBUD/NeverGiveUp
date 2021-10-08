@@ -1,4 +1,4 @@
-<div class="Keyboard">
+<div style="user-select: auto;" class="Keyboard">
     <div class="Keyboard-left">
         <div class="Keyboard-topbar">
 
@@ -40,9 +40,7 @@
                     <div id="GMMK_img_section" style="
                                         WIDTH: auto;
                                         HEIGHT: 100%;z-index: 6668;
-                        pointer-events: none;
-                        
-                        user-select: none;">
+                        pointer-events: none;">
                     <img id="GMMK_img" src="image/G_Project/Side Light.png" />
                     <img id="GMMK_img" style="    margin-left: 20px;
                     margin-right: 20px;" src="image/G_Project/GMMK NUMPAD.png"  />
@@ -228,25 +226,26 @@
             </div>
             <div id="PRESETSAreaUI" *ngIf="lightingPage == 'PRESETS'">
                 <div data-code="Syncacrosskeyboard" class="list">
-                    <div class="sub-list" style="margin-bottom: 20px">
-                        Syncacrosskeyboard
+                    <div class="sub-list" >
+                        Indicate Num Lock on with blinking side lights
                         <label>
-                            <input type="checkbox" [(ngModel)]="SyncCrossKeyboardCheckValue"
-                                (ngModelChange)="SyncCrossKeyboardCheckChange()" />
+                            <input type="checkbox" [(ngModel)]="this.KeyBoardManager.getTarget().lockSidelightsFlag"
+                                (ngModelChange)="this.KeyBoardManager.setALLGlobalValueAssignField('lockSidelightsFlag',this.KeyBoardManager.getTarget().lockSidelightsFlag)" />
                             <span></span>
                         </label>
                     </div>
-                    <div class="sub-list" style="margin-bottom: 20px;white-space: nowrap;">
-                        Indicate caps lock on with blinking side lights
+                    <div class="sub-list" style="white-space: nowrap;">
+                        Battery level indicator
                         <label>
-                            <input type="checkbox" [(ngModel)]="this.KeyBoardManager.sideLightSwitch" />
+                            <input type="checkbox" [(ngModel)]="this.KeyBoardManager.getTarget().batteryLevelIndicator"
+                            (ngModelChange)="this.KeyBoardManager.setALLGlobalValueAssignField('batteryLevelIndicator',this.KeyBoardManager.getTarget().batteryLevelIndicator)" />
                             <span></span>
                         </label>
                     </div>
                 </div>
-                <div data-code="lightSelected_UI" class="list">
+                <div style="margin-top: 40px;" data-code="lightSelected_UI" class="list">
                     EFFECT
-                    <div class="sub-list">
+                    <div style="margin-top: 0;" class="sub-list">
                         <app-commonselect class="app-lightingeffectselect" [componentId]="'app-lightingeffectselect'"
                             [inputoption]="this.Built_ineffect.ListData" [i18nManager]="this.i18nManager"
                             [(ngModel)]="this.Built_ineffect.Built_inSelected" (ngModelChange)="Built_inSelectedChange()">
@@ -302,10 +301,28 @@
                     id="BrightnessContent">
                     <div class="list">
                         <div class="sub-list">
-                            <img src="image/lighting/BrightnessIcon.png" draggable="false" />
-                            Brightness
+                            <!-- <img src="image/lighting/BrightnessIcon.png" draggable="false" /> -->
+                            Separate Wired / Wireless Brightness
+                            <label>
+                                <input type="checkbox" [(ngModel)]="SyncCrossKeyboardCheckValue"
+                                    (ngModelChange)="SyncCrossKeyboardCheckChange()" />
+                                <span></span>
+                            </label>
                         </div>
                         <div class="sub-list" *ngIf="!BrightnessFlag">
+                            Wired
+                        </div>
+                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                            
+                            <input id="PRESETS_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+                                [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
+                                [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSlider')}"
+                                onkeydown="event.preventDefault()" />
+                            <div>{{ this.Built_ineffect.Built_inSelected.brightness }}%</div>
+                        </div>
+                        Wired
+                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                            
                             <input id="PRESETS_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
                                 [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
                                 [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSlider')}"
@@ -494,8 +511,8 @@
         <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
     
         <div class="right-content" *ngIf="this.keybindingflag">
-            <ng-container *ngIf="getNowKeyBindClassUI('Num Lock')">
-                <div class="list" style="margin-top: 10px">
+            <ng-container *ngIf="!getNowKeyBindClassUI('SLIDER') && !getNowKeyBindClassUI('ROTARY ENCODER')">
+                <div class="list" style="margin-top: 20px">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                             KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
@@ -504,7 +521,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="list" style=" width: 85%; margin-left: 7.5%">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                             KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
@@ -518,7 +535,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="list" style=" width: 85%; margin-left: 7.5%">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                             KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
@@ -538,11 +555,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px">
+                <div class="list" >
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                         KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
-                                    " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                                    " (click)="SetGroupFunction('SOUND CONTROL','SOUND CONTROL')">
                             SOUND CONTROL
                         </div>
                         <div class="sub-list-item" [style.borderBottom]="
@@ -553,12 +570,12 @@
                     </div>
                 </div>
             </ng-container>
-            <ng-container *ngIf="getNowKeyBindClassUI('Slider')">
+            <ng-container *ngIf="getNowKeyBindClassUI('SLIDER')">
                 <div class="list" style="margin-top: 20px;">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                             KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
-                                        " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                                        " (click)="SetGroupFunction('SOUND CONTROL','SOUND CONTROL')">
                             SOUND CONTROL
                         </div>
                         <div class="sub-list-item" [style.borderBottom]="
@@ -570,7 +587,7 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="getNowKeyBindClassUI('ROTARY ENCODER')">
-                <div class="list" style="margin-top: 10px">
+                <div class="list" >
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'SingleKey' ? '1px #313131 solid' : ''
@@ -579,7 +596,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="list" style="width: 85%; margin-left: 7.5%">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
@@ -593,7 +610,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px; width: 85%; margin-left: 7.5%">
+                <div class="list" style="width: 85%; margin-left: 7.5%">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
@@ -613,13 +630,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="margin-top: -10px">
+                <div class="list" >
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
-                                            KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
-                                        " (click)="SetGroupFunction('SOUND CONTROL','Disable_Fun35')">
+                                            KeyAssignManager.recordBindCodeType == 'SENSITIVITY' ? '1px #313131 solid' : ''
+                                        " (click)="SetGroupFunction('SENSITIVITY','SENSITIVITY')">
+                            SENSITIVITY
+                        </div>
+                        <div class="sub-list-item" [style.borderBottom]="
+                                                KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
+                                            " (click)="SetGroupFunction('SOUND CONTROL','SOUND CONTROL')">
                             SOUND CONTROL
                         </div>
+                    </div>
+                </div>
+                <div class="list" >
+                    <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                                 KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
                                             " (click)="SetGroupFunction('Disable','Disable_Fun35')">
@@ -1123,7 +1149,7 @@
             </div>
         
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'SOUND CONTROL'">
-                <div class="list" style="width: fit-content;">
+                <div class="list" style="margin-top: 20px;width: fit-content;">
                     <div style="border: 1px solid rgb(253, 186, 59);
                                     width: auto;
                                     height: 27px;
@@ -1136,7 +1162,7 @@
                                 " class="">Application Volume</div>
                     <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"></div>
                 </div>
-                <div id='html_SourceSelect' style="flex-direction: row;user-select: none;" class="list">
+                <div id='html_SourceSelect' style="margin-top: 20px;flex-direction: row;" class="list">
                     AUDIO SOURCE: 
                     <div *ngIf="M_SoundVolume.showListflag"  style="background: rgb(49,49,49);
                                 position: absolute;
@@ -1154,7 +1180,8 @@
                         display: grid;">
                             <div *ngFor="let item of M_SoundVolume.audioSouceList let i = index"
                              class="audioSouceItem"
-                             (click)="M_SoundVolume.nowTargetKey=item.bindProgramName;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;">
+                             (click)="M_SoundVolume.nowTargetKey=item.bindProgramName;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;
+                             KeyAssignManager.setNowCodeName(M_SoundVolume.nowTargetKey,'SOUND CONTROL');">
                              {{item.bindProgramName}}
                             </div>          
                         </div>
@@ -1194,30 +1221,30 @@
                         Source Volume
                         <div class="sub-list" style="margin-top: 10px;">     
                             <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
-                                [(ngModel)]="this.SoundVolume_lightData.brightness" (mouseup)="sliderChange()"
-                                [ngStyle]="{'background': SoundVolume_lightData_Background()}"
+                                [(ngModel)]="this.M_SoundVolume.lightData.brightness" (mouseup)="sliderChange()"
+                                [ngStyle]="{'background': M_SoundVolume.lightData_Background()}"
                                 onkeydown="event.preventDefault()" />
-                            <div>{{ this.SoundVolume_lightData.brightness }}%</div>
+                            <div>{{ this.M_SoundVolume.lightData.brightness }}%</div>
                         </div>
                     </div>
                 </div>
-                <div id="Keybinding_BREATHING" class="list" style="flex-direction: row;">
+                <div id="Keybinding_BREATHING" class="list" style="margin-top: 40px;flex-direction: row;">
                     <div class="sub-list"
                         style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
                         GLOW WHEN ACTIVE
                     </div>
                     <label>
-                        <input type="checkbox" [(ngModel)]='this.SoundVolume_lightData.clearStatus'
+                        <input type="checkbox" [(ngModel)]='this.M_SoundVolume.lightData.clearStatus'
                             (ngModelChange)="soundVolume_BreathingChange()">
                         <span></span>
                     </label>
                 </div>
-                <div *ngIf="this.SoundVolume_lightData.clearStatus" class="list" style="width: fit-content;">
+                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;">
                     EFFECT
                 </div>    
-                <div *ngIf="this.SoundVolume_lightData.clearStatus" class="list" style="width: fit-content;flex-direction: row;">
-                    <div (click)="this.SoundVolume_lightData.breathing=true;" style="width: fit-content;margin-right: 15px;" class="">
-                        <div [ngStyle]="{ 'border-color': this.SoundVolume_lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;flex-direction: row;">
+                    <div (click)="this.M_SoundVolume.lightData.breathing=true;" style="width: fit-content;margin-right: 15px;" class="">
+                        <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
                             style="border: 1px solid;
                                                                         width: auto;
                                                                         height: 27px;
@@ -1229,11 +1256,11 @@
                                                                         border-radius: 3px;
                                                                     " class="">Breathing</div>
                         <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
-                            [ngStyle]="{ 'border': this.SoundVolume_lightData.breathing==true ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
+                            [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==true ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
                         </div>
                     </div>
-                    <div (click)="this.SoundVolume_lightData.breathing=false;" style="width: fit-content;" >
-                        <div [ngStyle]="{ 'border-color': this.SoundVolume_lightData.breathing==false ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                    <div (click)="this.M_SoundVolume.lightData.breathing=false;" style="width: fit-content;" >
+                        <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==false ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
                          style="border: 1px solid;
                         width: auto;
                         height: 27px;
@@ -1244,12 +1271,12 @@
                         padding-right: 5px;
                         border-radius: 3px;" class="">Solid Color</div>
                         <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
-                            [ngStyle]="{ 'border': this.SoundVolume_lightData.breathing==false ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
+                            [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==false ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
                         </div>
                     </div>
                 </div>
 
-                <div *ngIf="this.SoundVolume_lightData.clearStatus" id="ColorContent" class="list" style="font-family: MM, serif">
+                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" id="ColorContent" class="list" style="font-family: MM, serif">
                     color
                     <div class="sub-list">
                         <ng-color-box class="colorpicker" id="mouse-colorpicker" [(ngModel)]="colordata"

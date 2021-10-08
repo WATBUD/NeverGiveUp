@@ -49,7 +49,27 @@ export class KeyBoardManager {
             }
         }
     }
-    
+   /**
+     * setALLGlobalValueAssignField
+     * @param field any:field;
+     * @param value any:value;
+    */
+    setALLGlobalValueAssignField(field,value) {
+        if(value==undefined||field==undefined){
+            console.log('%c setALLKeyboardAssignField_lost', 'color:rgb(255,0,0)');
+            console.log('field', field);
+            console.log('value', value);
+            return;
+        }
+        console.log('setALLDefaultKeyArray', this.profileLayers);
+        var KBMarr = this.KeyBoardArray
+        for (let index = 0; index < KBMarr.length; index++) {
+            KBMarr[index].setGlobalValueAssignField(field,value);
+            for (let index2 = 0; index2 < this.layerMaxNumber; index2++) {
+                this.profileLayers[index][index2].setGlobalValueAssignField(field,value);
+            }
+        }
+    }
     /**
      * getNowProfileLayersData
     */
@@ -150,6 +170,8 @@ export class KeyBoard {
     light_PERKEY_Data={
         value:1
     }
+    lockSidelightsFlag=false;
+    batteryLevelIndicator=false;
     recordAssignBtnIndex: any = 0
     assignText: any = '設定按鍵:Y'
     maxKayCapNumber: any
@@ -307,22 +329,40 @@ export class KeyBoard {
         console.log("%c getMacroList","color:red",macrolist);
         return macrolist;
     }
+   /**
+     * setGlobalValueAssignField
+     * @param field any:field;
+     * @param value any:value;
+    */
+    setGlobalValueAssignField(field,value){
+        var target = this;
+        console.log('setGlobalValueAssignField:', field, value,target[field]);
+        //var arrKeys = Object.keys(this);
+        if (target[field] != undefined) {
+            target[field] = value;
+        }
+    }    
 
     /**
      * setAssignTargetData
      * @param data obj:data
     */
-    setAssignTargetData(data) { 
-        var target = this.getNowModeTargetMatrixKey()
-        console.log('setAssignTargetData:', data, 'ManagerTarget:', target);
-        var arrKeys = Object.keys(data);
-        for (let index = 0; index < arrKeys.length; index++) {
-            if (target[arrKeys[index]] != undefined) {
-                target[arrKeys[index]] = data[arrKeys[index]];
-            }
+   setAssignTargetData(data) { 
+    var target = this.getNowModeTargetMatrixKey()
+    console.log('setAssignTargetData:', data, 'ManagerTarget:', target);
+    var arrKeys = Object.keys(data);
+    for (let index = 0; index < arrKeys.length; index++) {
+        if (target[arrKeys[index]] != undefined) {
+            target[arrKeys[index]] = data[arrKeys[index]];
         }
-        target.changed = true;
     }
+    target.changed = true;
+}
+
+
+
+
+
 
         /**
      * reset_AllKey

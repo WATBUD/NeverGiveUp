@@ -17,7 +17,7 @@ export class KeyAssignManager {
     combinationkeyEnable = false;
     shortcutsWindowsEnable=false;
     recordBindCodeName = "";
-    recordBindCodeType = "SOUND CONTROL";
+    recordBindCodeType = "ROTARY ENCODER";
     /**
        @param CodeName string:recordBindCodeName
        @param CodeNameType string:recordBindCodeType
