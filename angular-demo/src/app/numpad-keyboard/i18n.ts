@@ -1,8 +1,6 @@
 //1暫定為真值
 import { Injectable } from '@angular/core';
 declare var require;
-//let i18n_File = System._nodeRequire('./i18n/i18n_Localization');
-//let i18n_File = require("./i18n_Localization");
 import { i18n_Localization } from './i18n_Localization';
 let i18n_File=i18n_Localization;
 var lostList=[];
