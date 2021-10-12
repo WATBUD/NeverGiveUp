@@ -5,13 +5,8 @@
 -----------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core'
 declare var require: any;
-import { KeyMapping,SupportData,AllFunctionMapping } from './SupportData'
-
+import { AllFunctionMapping } from './SupportData'
 //let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
-
-
-
-
 @Injectable()
 export class KeyBoardManager {
     defaultName = '未配置'
@@ -254,19 +249,7 @@ export class KeyBoard {
         return N != '' || N2 != '' || N3 != '' || N4 != '' ? true : false
     }
 
-    /**
-     * checkKeyAssignHasData
-     * @param from string:Print Source
-    */
-    checkKeyAssignHasData(from = '') {
-        var KeyAssignUIStyleList = document.querySelectorAll('.KeyAssignUIStyle')
-        //var KeyAssignUIStyleList= this.elementRef.nativeElement.querySelectorAll(".KeyAssignUIStyle");
-        for (let index = 0; index < KeyAssignUIStyleList.length; index++) {
-            var Result = this.HasSet(index)
-            let element = KeyAssignUIStyleList[index] as HTMLElement;
-            Result ? (element.style.border = '2px solid #ffc757') : (element.style.border = '');
-        }
-    }
+
 
     /**
      * setTargetDefaultKeyArray
