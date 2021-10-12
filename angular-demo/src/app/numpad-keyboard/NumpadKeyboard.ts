@@ -22,9 +22,10 @@ import { M_SoundVolume } from './M_SoundVolume';
 
 
 declare var require: any;
-let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
-let KeyMapping = require('./SupportData').KeyMapping;
-let Shortcuts_WindowsMapping = require('./SupportData').KeyMapping;
+import { KeyMapping,AllFunctionMapping,Shortcuts_WindowsMapping } from './SupportData'
+//let KeyMapping = require('./SupportData').KeyMapping;
+//let Shortcuts_WindowsMapping = Shortcuts_WindowsMapping;
+
 @Component({
   selector: 'app-NumpadKeyboard',
   templateUrl: './NumpadKeyboard.html',
@@ -55,8 +56,8 @@ export class NumpadKeyboardComponent implements OnInit {
   lightingPage = 'PRESETS';
   macroService = new MacroService();
   KeyBoardNotClickedYet;
-  keybindingflag = false;
-  lightingflag = true;
+  keybindingflag = true;
+  lightingflag = false;
   performanceflag = false;
 
   KeyboardKeyData: any = KeyMapping;
@@ -206,6 +207,7 @@ export class NumpadKeyboardComponent implements OnInit {
         this.KeyBoardManager.setAllProfileFieldData('recordAssignBtnIndex', index);
         var target = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey();
         this.KeyAssignManager.updateVariable(target);
+        this.M_SoundVolume.bindTarget=target.d_SoundVolume.bindTarget;
         // if (target.recordBindCodeType == "MacroFunction") {
         //     this.macroService.setMacroTypeValue(target.macro_RepeatType);
         //     this.macroService.setMacroSelectValue(target.macro_Data.value);
@@ -379,15 +381,17 @@ export class NumpadKeyboardComponent implements OnInit {
   */
   lightSliderMove(TargetName) {
     var showValue;
-    if (TargetName == 'PRESETS_BrightnessSlider') {
+    if (TargetName == 'PRESETS_BrightnessSliderWired') {
       showValue = this.Built_ineffect.Built_inSelected.brightness;
     }
-    if (TargetName == 'PRESETS_RateSlider') {
+    else if (TargetName == 'PRESETS_BrightnessSliderWireless') {
+      showValue = this.Built_ineffect.Built_inSelected.wirelessBrightness;
+    }
+    else if (TargetName == 'PRESETS_RateSlider') {
       showValue = this.Built_ineffect.Built_inSelected.speed;
     }
     //console.log('lightSliderMove',TargetName,showValue);
     return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + showValue + '%,#313131 ' + showValue + '%, #313131 100%)'
-
   }
   /**
    * process NowKeyBindClassUI
@@ -604,6 +608,15 @@ export class NumpadKeyboardComponent implements OnInit {
     this.M_Light_Keybinding.setGroupArrayColor(obj);
 
 }
+
+  /**
+       * process sensitivity_Background Event
+      */
+  sensitivity_Background() {
+    var value = this.KeyAssignManager.sensitivity;
+    return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+  }
+
   /**
    * process NowLightMode Event
   */
@@ -798,9 +811,13 @@ export class NumpadKeyboardComponent implements OnInit {
     if (this.keybindingflag) {
       if (this.KeyAssignManager.recordBindCodeType != '') {
         if (this.KeyAssignManager.recordBindCodeType == "MacroFunction") {
-          console.error('this.KeyAssignManager.recordBindCodeType=="MacroFunction"', this.macroService.nowMacroSelect);
+          console.log('this.KeyAssignManager.recordBindCodeType=="MacroFunction"', this.macroService.nowMacroSelect);
           this.KeyAssignManager.macro_Data = JSON.parse(JSON.stringify(this.macroService.getMacroFromIdentifier()));
           this.KeyAssignManager.macro_RepeatType = this.macroService.get_RepeatType();
+        }
+        if (this.KeyAssignManager.recordBindCodeType == "SOUND CONTROL") {
+          this.KeyAssignManager.d_SoundVolume = JSON.parse(JSON.stringify(this.M_SoundVolume.getSetValueData()));
+          
         }
         this.KeyBoardManager.getTarget().setAssignTargetData(this.KeyAssignManager);
       }
@@ -981,20 +998,14 @@ export class NumpadKeyboardComponent implements OnInit {
     return filename;
   }
 
+
   /**
    * process PERKEY_BrightnessSlider Event
   */
-  PERKEY_BrightnessSlider_Background() {
-    var value = this.PERKEY_lightData.brightness;
-    return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
-  }
-  /**
-   * process PERKEY_BrightnessSlider Event
-  */
-  SoundVolume_lightData_Background() {
-    var value = this.M_SoundVolume.lightData.brightness;
-    return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
-  }
+ PERKEY_BrightnessSlider_Background() {
+  var value = this.PERKEY_lightData.brightness;
+  return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+}
 
 
 

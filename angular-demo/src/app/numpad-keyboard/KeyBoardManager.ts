@@ -5,7 +5,13 @@
 -----------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core'
 declare var require: any;
-let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
+import { KeyMapping,SupportData,AllFunctionMapping } from './SupportData'
+
+//let AllFunctionMapping = require('./SupportData').AllFunctionMapping;
+
+
+
+
 @Injectable()
 export class KeyBoardManager {
     defaultName = '未配置'
@@ -416,10 +422,24 @@ export class KeyBoard {
             recordBindCodeType: '',
             recordBindCodeName: this.defaultName,
             shortcutsWindowsEnable: false,
-            soundVolume: false,
-            gLowWhenActive:false,
-            soundEffect: "Breathing",
-            soundColor: [255,0,0,1],
+            sensitivity:0,
+            d_SoundVolume: {
+                bindTarget: {
+                    bindProgramName: "",
+                    audioSouceValue: 40,
+                },
+                lightData: {
+                    speed: 50,
+                    brightness: 50,
+                    clearStatus: false,
+                    colorHex: '#0000',
+                    colorPickerValue: [0, 0, 0, 1],
+                    breathing: false,
+                    brightness_Enable: false,
+                    rate_Enable: false,
+                    color_Enable: false,
+                }
+            },
             ApplicationPath: "",
             WebsitePath: "",
             combinationkeyEnable: false,

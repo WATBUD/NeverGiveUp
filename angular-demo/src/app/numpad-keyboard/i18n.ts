@@ -2,12 +2,9 @@
 import { Injectable } from '@angular/core';
 declare var require;
 //let i18n_File = System._nodeRequire('./i18n/i18n_Localization');
-let i18n_File = require("./i18n_Localization");
-// Simon:
-// 英文版本不显示微信微博
-// Simon:
-// 中文版本不显示FB,IG,推特
-//FB IG Mail 论坛 官网 推特 微信 微博
+//let i18n_File = require("./i18n_Localization");
+import { i18n_Localization } from './i18n_Localization';
+let i18n_File=i18n_Localization;
 var lostList=[];
 @Injectable()
 export class i18nManager {
@@ -73,8 +70,8 @@ export class i18nManager {
 
 
     getTarget(keyName){
-        if(i18n_File.i18n_Localization[keyName]!=undefined){
-        var T=i18n_File.i18n_Localization[keyName][this.geti18nType()];
+        if(i18n_File[keyName]!=undefined){
+        var T=i18n_File[keyName][this.geti18nType()];
         //console.log('i18n_Localization[keyName]',keyName,this.onUsingLangindex,T,this.langList);
         return T;
         }

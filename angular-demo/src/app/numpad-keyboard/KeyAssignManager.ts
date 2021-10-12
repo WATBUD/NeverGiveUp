@@ -16,8 +16,13 @@ export class KeyAssignManager {
     macro_RepeatType=0;
     combinationkeyEnable = false;
     shortcutsWindowsEnable=false;
+    sensitivity=0;
+    d_SoundVolume={
+
+    }
     recordBindCodeName = "";
-    recordBindCodeType = "ROTARY ENCODER";
+    recordBindCodeType = "";
+    //ROTARY ENCODER
     /**
        @param CodeName string:recordBindCodeName
        @param CodeNameType string:recordBindCodeType

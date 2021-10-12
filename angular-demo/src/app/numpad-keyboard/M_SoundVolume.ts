@@ -5,24 +5,27 @@
 -----------------------------------------------------------------------------------------*/
 export class M_SoundVolume {
     nowTargetIndex = 0;
-    nowTargetKey = 'ZZZ';
+    bindTarget = {
+        bindProgramName: "Discord",
+        audioSouceValue: 20,
+    };
     showListflag = false;
     audioSouceList = [
         {
             bindProgramName: "Discord",
-            audioSouceValue: "20",
+            audioSouceValue: 20,
         },
         {
             bindProgramName: "Spotify",
-            audioSouceValue: "40",
+            audioSouceValue: 40,
         },
         {
             bindProgramName: "System Volume",
-            audioSouceValue: "60",
+            audioSouceValue: 60,
         },
         {
             bindProgramName: "Chrome",
-            audioSouceValue: "80",
+            audioSouceValue: 80,
         }
     ]
     lightData = this.default_lightData();
@@ -37,7 +40,7 @@ export class M_SoundVolume {
     default_Data() {
         var T = {
             bindProgramName: "Chrome",
-            audioSouceValue: "80",
+            audioSouceValue: 80,
         }
         return T;
     }
@@ -61,20 +64,42 @@ export class M_SoundVolume {
         return T;
     }
 
-    /**
-     * process PERKEY_BrightnessSlider Event
-    */
-    lightData_Background() {
-        var value = this.lightData.brightness;
-        return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+    getSetValueData() {
+        var obj = {
+            lightData: this.lightData,
+            bindTarget: this.bindTarget,
+        }
+        return obj;
     }
 
+    /**
+        * process getBindTarget
+       */
+    getBindTarget() {
+        let targetData = this.audioSouceList.find((x) => x.bindProgramName == this.bindTarget.bindProgramName);
+        if (targetData == undefined) {
+            //console.log('%c getTargetBindProgramName=lostcode', 'color:rgb(255,75,255,1)');
+            return this.default_Data();
+        }
+        return targetData;
+    }
+    setBindTarget(obj) {
+        this.bindTarget.bindProgramName = obj.bindProgramName;
+        this.bindTarget.audioSouceValue = obj.audioSouceValue;
+    }
+    /**
+     * process lightData_Background Event
+    */
+    lightData_Background() {
+        var value = this.bindTarget.audioSouceValue;
+        return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
+    }
 
     /**
      * process getTargetBindProgramName
     */
     getTargetBindProgramName() {
-        let targetData = this.audioSouceList.find((x) => x.bindProgramName == this.nowTargetKey);
+        let targetData = this.audioSouceList.find((x) => x.bindProgramName == this.bindTarget.bindProgramName);
 
         if (targetData == undefined) {
             //console.log('%c getTargetBindProgramName=lostcode', 'color:rgb(255,75,255,1)');

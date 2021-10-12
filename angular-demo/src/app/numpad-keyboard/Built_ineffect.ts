@@ -18,7 +18,7 @@ export class ModeParameter {
     color_Enable=true;
     rate_Enable=true;
     PointEffectName;
-
+    wirelessBrightness=0;
 
     colors= ["#ff0000","#ff8000","#80ff00","#00ff00","#00ffff","#0000ff","#8000ff","#ff00ff","#ff0080","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"];
     ParameterNumberList=[

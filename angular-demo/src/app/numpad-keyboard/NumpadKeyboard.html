@@ -304,7 +304,7 @@
                             <!-- <img src="image/lighting/BrightnessIcon.png" draggable="false" /> -->
                             Separate Wired / Wireless Brightness
                             <label>
-                                <input type="checkbox" [(ngModel)]="SyncCrossKeyboardCheckValue"
+                                <input type="checkbox" [(ngModel)]="BrightnessFlag"
                                     (ngModelChange)="SyncCrossKeyboardCheckChange()" />
                                 <span></span>
                             </label>
@@ -312,22 +312,23 @@
                         <div class="sub-list" *ngIf="!BrightnessFlag">
                             Wired
                         </div>
-                        <div class="sub-list" *ngIf="!BrightnessFlag">
-                            
-                            <input id="PRESETS_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+                        <div class="sub-list" >
+                            <input id="PRESETS_BrightnessSliderWired" type="range" min="0" max="100" class="slider" step="5"
                                 [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
-                                [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSlider')}"
+                                [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSliderWired')}"
                                 onkeydown="event.preventDefault()" />
                             <div>{{ this.Built_ineffect.Built_inSelected.brightness }}%</div>
                         </div>
-                        Wired
+                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                            Wireless
+                        </div>
                         <div class="sub-list" *ngIf="!BrightnessFlag">
                             
-                            <input id="PRESETS_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
-                                [(ngModel)]="this.Built_ineffect.Built_inSelected.brightness" (mouseup)="sliderChange()"
-                                [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSlider')}"
+                            <input id="PRESETS_BrightnessSliderWireless" type="range" min="0" max="100" class="slider" step="5"
+                                [(ngModel)]="this.Built_ineffect.Built_inSelected.wirelessBrightness" (mouseup)="sliderChange()"
+                                [ngStyle]="{'background': lightSliderMove('PRESETS_BrightnessSliderWireless')}"
                                 onkeydown="event.preventDefault()" />
-                            <div>{{ this.Built_ineffect.Built_inSelected.brightness }}%</div>
+                            <div>{{ this.Built_ineffect.Built_inSelected.wirelessBrightness }}%</div>
                         </div>
                     </div>
     
@@ -1180,8 +1181,8 @@
                         display: grid;">
                             <div *ngFor="let item of M_SoundVolume.audioSouceList let i = index"
                              class="audioSouceItem"
-                             (click)="M_SoundVolume.nowTargetKey=item.bindProgramName;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;
-                             KeyAssignManager.setNowCodeName(M_SoundVolume.nowTargetKey,'SOUND CONTROL');">
+                             (click)="M_SoundVolume.bindTarget=item;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;
+                             KeyAssignManager.setNowCodeName(M_SoundVolume.bindTarget.bindProgramName,'SOUND CONTROL');">
                              {{item.bindProgramName}}
                             </div>          
                         </div>
@@ -1221,10 +1222,10 @@
                         Source Volume
                         <div class="sub-list" style="margin-top: 10px;">     
                             <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
-                                [(ngModel)]="this.M_SoundVolume.lightData.brightness" (mouseup)="sliderChange()"
+                                [(ngModel)]="this.M_SoundVolume.bindTarget.audioSouceValue" (mouseup)="M_SoundVolume.lightData_Background()"
                                 [ngStyle]="{'background': M_SoundVolume.lightData_Background()}"
                                 onkeydown="event.preventDefault()" />
-                            <div>{{ this.M_SoundVolume.lightData.brightness }}%</div>
+                            <div>{{ this.M_SoundVolume.bindTarget.audioSouceValue }}%</div>
                         </div>
                     </div>
                 </div>
@@ -1306,6 +1307,21 @@
                                     (change)="setRGBcolor()"
                                     onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="KeyAssignManager.recordBindCodeType == 'SENSITIVITY'">
+
+                <div id="SoundVolume_lightData">         
+                    <div style="font-size: 10px;"  class="list">
+                        SENSITIVITY
+                        <div class="sub-list" style="margin-top: 10px;">     
+                            <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
+                                [(ngModel)]="this.KeyAssignManager.sensitivity" (mouseup)="sensitivity_Background()"
+                                [ngStyle]="{'background': sensitivity_Background()}"
+                                onkeydown="event.preventDefault()" />
+                            <div>{{ this.KeyAssignManager.sensitivity }}%</div>
                         </div>
                     </div>
                 </div>
