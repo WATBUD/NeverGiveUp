@@ -14,7 +14,7 @@ import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
 import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
 import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 import { NativeComponent } from './native/native.component';
-import { CommonselectselectModule } from './commonselect/commonselect.module'
+import { M_NumpadSelectModule } from './M_NumpadSelect/M_NumpadSelect.module';
 import { NgColorModule } from './ngcolor/color-picker.module';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
@@ -46,7 +46,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    CommonselectselectModule,
+    M_NumpadSelectModule,
     NgColorModule
   ],
   providers: [],

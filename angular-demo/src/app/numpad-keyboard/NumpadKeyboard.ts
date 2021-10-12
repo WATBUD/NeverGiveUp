@@ -18,14 +18,8 @@ import { LayoutManager } from './LayoutManager';
 import { M_Light_Numpad } from './M_Light_Numpad';
 import { KeyAssignManager } from './KeyAssignManager';
 import { M_SoundVolume } from './M_SoundVolume';
-
-
-
 declare var require: any;
 import { KeyMapping,AllFunctionMapping,Shortcuts_WindowsMapping } from './SupportData'
-//let KeyMapping = require('./SupportData').KeyMapping;
-//let Shortcuts_WindowsMapping = Shortcuts_WindowsMapping;
-
 @Component({
   selector: 'app-NumpadKeyboard',
   templateUrl: './NumpadKeyboard.html',
@@ -234,46 +228,7 @@ export class NumpadKeyboardComponent implements OnInit {
     this.selectionStatus = status;
   }
 
-  /**
- * process PassiveEffect Event
- * @param obj object:PassiveEffectData
-*/
-  setPassiveEffect(obj) {
-    var target_cs = this.M_Light_PRESETS;
-    var target = JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
-    var inputColor = [target.colorPickerValue];
-    if (inputColor == undefined) {
-      console.log('%c setPassiveEffects_undefined', 'color:rgb(255,77,255)', target_cs.lightData);
-      return;
-    }
-    this.M_Light_PRESETS.lightData = target;
-    var index = this.M_Light_PRESETS.currentBlockIndex = obj.BlockIndex;
-    console.log('%c setPassiveEffects', 'color:rgb(255,77,255)', index);
-    switch (target.PointEffectName) {
-      case 'RippleGraff'://彩色擴散
-        target_cs.mode_RippleGraff(inputColor, target.Multicolor, index);
-        break;
-      case 'PassWithoutTrace'://單點
-        if (target.Multicolor) {
-          var colors = [[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]];
-          inputColor = [colors[this.M_Light_PRESETS.getRandom(0, colors.length - 1)]];
-        }
-        target_cs.mode_PassWithoutTrace(inputColor, index);
-        break;
-      case 'FastRunWithoutTrace'://一排
-        //target_cs.mode_FastRunWithoutTrace(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
-        target_cs.mode_withoutTraceFakeCoordinates(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
-        break;
-      case 'Cross'://十字
-        target_cs.mode_Cross(inputColor, false, index);
-        break;
-      case 'Blossom'://綻放
-        target_cs.mode_Blossom(inputColor, false, index);
-        break;
-      default:
-        break;
-    }
-  }
+
   /**
 * register sliderChange Event
 */
@@ -292,9 +247,6 @@ export class NumpadKeyboardComponent implements OnInit {
     this.KeyBoardStyle.applyStyles(RGBList2);
     var RGBList3 = document.getElementsByClassName('SoundVolumeBlockStyle') as HTMLCollectionOf<HTMLElement>;
     this.KeyBoardStyle.applyStyles(RGBList3);
-
-
-
     for (let index = 0; index < RGBList2.length; index++) {
       let element = RGBList2[index];
       element.removeEventListener('mousedown', undefined);
@@ -366,12 +318,7 @@ export class NumpadKeyboardComponent implements OnInit {
       let target = this.M_SoundVolume.lightData;
       target.colorPickerValue = JSON.parse(JSON.stringify(RGB_Arr));
       target.colorHex = this.M_Light_Keybinding.rgbToHex(target[0], target[1], target[2]);
-
-      // if (this.PerKeyArea == "PerKey_SIDELIGHT" || this.PerKeyArea == "PerKey_ALL") {
-      //   this.PERKEY_lightData.sideLightColor = JSON.parse(JSON.stringify(RGB_Arr));
-      // }
-      this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor = JSON.parse(JSON.stringify(RGB_Arr));
-      //this.M_SoundVolume.lightData.colorPickerValue=this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().soundColor;
+      this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().d_SoundVolume.lightData.colorPickerValue = JSON.parse(JSON.stringify(RGB_Arr));
       this.SoundVolume_AreaCick(this.KeyBoardManager.getTarget().recordAssignBtnIndex);
     }
   }
@@ -393,19 +340,7 @@ export class NumpadKeyboardComponent implements OnInit {
     //console.log('lightSliderMove',TargetName,showValue);
     return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + showValue + '%,#313131 ' + showValue + '%, #313131 100%)'
   }
-  /**
-   * process NowKeyBindClassUI
-  */
-  getNowKeyBindClassUI(searchName = "") {
-    var defaultValue = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
-    //console.log('%c getNowKeyBindClassUI_searchName','background: blue; color: red',defaultValue)
-    if (defaultValue == searchName) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
+
   /**
    * process Built_inSelectedChange Event
   */
@@ -792,43 +727,7 @@ export class NumpadKeyboardComponent implements OnInit {
     //   return "ss";
     // }
   }
-  /**
- * process keyBindSave Event
-*/
-  keyBindSave() {
-    // if (this.lightingflag) {
-    //     //if(this.lightingPage == 'PRESETS'){
-    //     console.log('%c KB_ProfileImport', 'color:yellow', this.Built_ineffect.Built_inSelected);
-    //     this.KeyBoardManager.getTarget().light_PRESETS_Data = JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
-    //     //}
-    //     //if(this.lightingPage == 'PERKEY'){
-    //     this.PerKeyAreaCick(this.PerKeyArea);
-    //     console.log('%c M_Light_PERKEY.AllBlockColor', 'color:rgb(255,75,255,1)', this.M_Light_PERKEY.AllBlockColor);
-    //     this.LayoutManager.updateContentToDB(this.M_Light_PERKEY.AllBlockColor, this.PERKEY_lightData);
-    //     this.KeyBoardManager.getTarget().light_PERKEY_Data.value = this.LayoutManager.getMacroFromIdentifier().value;
-    //     //}
-    // }
-    if (this.keybindingflag) {
-      if (this.KeyAssignManager.recordBindCodeType != '') {
-        if (this.KeyAssignManager.recordBindCodeType == "MacroFunction") {
-          console.log('this.KeyAssignManager.recordBindCodeType=="MacroFunction"', this.macroService.nowMacroSelect);
-          this.KeyAssignManager.macro_Data = JSON.parse(JSON.stringify(this.macroService.getMacroFromIdentifier()));
-          this.KeyAssignManager.macro_RepeatType = this.macroService.get_RepeatType();
-        }
-        if (this.KeyAssignManager.recordBindCodeType == "SOUND CONTROL") {
-          this.KeyAssignManager.d_SoundVolume = JSON.parse(JSON.stringify(this.M_SoundVolume.getSetValueData()));
-          
-        }
-        this.KeyBoardManager.getTarget().setAssignTargetData(this.KeyAssignManager);
-      }
-    }
-    // if (this.performanceflag) {
-    //     this.KeyBoardManager.getTarget().pollingrate = this.pollingrateSelect.value;
-    //     this.KeyBoardManager.getTarget().inputLatency= this.inputLatencySelect.value;
-    // }
-    //this.setKeyMatrixToBackend();
 
-  }
   /**
 * process switchChangAllkey Event
 */
@@ -980,7 +879,6 @@ export class NumpadKeyboardComponent implements OnInit {
     else document.getElementById('Keyboard-right').style.width = '0px'
     //this.setRGBcolor();//by keyboardrightTitleStatus
   }
-
   /**
  * process changeProfileLayer Event
 */
@@ -997,8 +895,6 @@ export class NumpadKeyboardComponent implements OnInit {
 
     return filename;
   }
-
-
   /**
    * process PERKEY_BrightnessSlider Event
   */
@@ -1006,8 +902,6 @@ export class NumpadKeyboardComponent implements OnInit {
   var value = this.PERKEY_lightData.brightness;
   return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
 }
-
-
 
   /**
    * process onLayoutSelectChange Event
@@ -1024,4 +918,102 @@ export class NumpadKeyboardComponent implements OnInit {
       this.setRGBcolor();//by onLayoutSelectChange
     }
   }
+
+/*****************************NEW　*******************************/
+
+  /**
+ * process keyBindSave Event
+*/
+keyBindSave() {
+  // if (this.lightingflag) {
+  //     //if(this.lightingPage == 'PRESETS'){
+  //     console.log('%c KB_ProfileImport', 'color:yellow', this.Built_ineffect.Built_inSelected);
+  //     this.KeyBoardManager.getTarget().light_PRESETS_Data = JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
+  //     //}
+  //     //if(this.lightingPage == 'PERKEY'){
+  //     this.PerKeyAreaCick(this.PerKeyArea);
+  //     console.log('%c M_Light_PERKEY.AllBlockColor', 'color:rgb(255,75,255,1)', this.M_Light_PERKEY.AllBlockColor);
+  //     this.LayoutManager.updateContentToDB(this.M_Light_PERKEY.AllBlockColor, this.PERKEY_lightData);
+  //     this.KeyBoardManager.getTarget().light_PERKEY_Data.value = this.LayoutManager.getMacroFromIdentifier().value;
+  //     //}
+  // }
+  if (this.keybindingflag) {
+    if (this.KeyAssignManager.recordBindCodeType != '') {
+      if (this.KeyAssignManager.recordBindCodeType == "MacroFunction") {
+        console.log('this.KeyAssignManager.recordBindCodeType=="MacroFunction"', this.macroService.nowMacroSelect);
+        this.KeyAssignManager.macro_Data = JSON.parse(JSON.stringify(this.macroService.getMacroFromIdentifier()));
+        this.KeyAssignManager.macro_RepeatType = this.macroService.get_RepeatType();
+      }
+      if (this.KeyAssignManager.recordBindCodeType == "SOUND CONTROL") {
+        this.KeyAssignManager.d_SoundVolume = JSON.parse(JSON.stringify(this.M_SoundVolume.getSetValueData()));
+        
+      }
+      this.KeyBoardManager.getTarget().setAssignTargetData(this.KeyAssignManager);
+    }
+  }
+  // if (this.performanceflag) {
+  //     this.KeyBoardManager.getTarget().pollingrate = this.pollingrateSelect.value;
+  //     this.KeyBoardManager.getTarget().inputLatency= this.inputLatencySelect.value;
+  // }
+  //this.setKeyMatrixToBackend();
+
 }
+
+  /**
+   * process NowKeyBindClassUI
+  */
+ getNowKeyBindClassUI(searchName = "") {
+  var defaultValue = this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().defaultValue;
+  //console.log('%c getNowKeyBindClassUI_searchName','background: blue; color: red',defaultValue)
+  if (defaultValue == searchName) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+  /**
+ * process PassiveEffect Event
+ * @param obj object:PassiveEffectData
+*/
+setPassiveEffect(obj) {
+  var target_cs = this.M_Light_PRESETS;
+  var target = JSON.parse(JSON.stringify(this.Built_ineffect.Built_inSelected));
+  var inputColor = [target.colorPickerValue];
+  if (inputColor == undefined) {
+    console.log('%c setPassiveEffects_undefined', 'color:rgb(255,77,255)', target_cs.lightData);
+    return;
+  }
+  this.M_Light_PRESETS.lightData = target;
+  var index = this.M_Light_PRESETS.currentBlockIndex = obj.BlockIndex;
+  console.log('%c setPassiveEffects', 'color:rgb(255,77,255)', index);
+  switch (target.PointEffectName) {
+    case 'RippleGraff'://彩色擴散
+      target_cs.mode_RippleGraff(inputColor, target.Multicolor, index);
+      break;
+    case 'PassWithoutTrace'://單點
+      if (target.Multicolor) {
+        var colors = [[255, 0, 0, 1], [0, 255, 0, 1], [0, 0, 255, 1]];
+        inputColor = [colors[this.M_Light_PRESETS.getRandom(0, colors.length - 1)]];
+      }
+      target_cs.mode_PassWithoutTrace(inputColor, index);
+      break;
+    case 'FastRunWithoutTrace'://一排
+      //target_cs.mode_FastRunWithoutTrace(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
+      target_cs.mode_withoutTraceFakeCoordinates(inputColor, target.Multicolor, index,this.KeyBoardStyle.getTarget().withoutTraceFakeCoordinates);
+      break;
+    case 'Cross'://十字
+      target_cs.mode_Cross(inputColor, false, index);
+      break;
+    case 'Blossom'://綻放
+      target_cs.mode_Blossom(inputColor, false, index);
+      break;
+    default:
+      break;
+  }
+}
+
+
+}
+
+

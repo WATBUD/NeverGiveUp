@@ -246,10 +246,10 @@
                 <div style="margin-top: 40px;" data-code="lightSelected_UI" class="list">
                     EFFECT
                     <div style="margin-top: 0;" class="sub-list">
-                        <app-commonselect class="app-lightingeffectselect" [componentId]="'app-lightingeffectselect'"
+                        <app-M_NumpadSelect class="app-lightingeffectselect" [componentId]="'app-lightingeffectselect'"
                             [inputoption]="this.Built_ineffect.ListData" [i18nManager]="this.i18nManager"
                             [(ngModel)]="this.Built_ineffect.Built_inSelected" (ngModelChange)="Built_inSelectedChange()">
-                        </app-commonselect>
+                        </app-M_NumpadSelect>
                         <!-- <div (mouseover)="QuestionMarkStatus='PRESETSAreaTip'" (mouseleave)="QuestionMarkStatus=''"
                                         *ngIf="this.getAppService.getAppSetting().tooltip" class="QuestionMark">?
                                         <div class="triangleStyle" *ngIf="QuestionMarkStatus=='PRESETSAreaTip' || QuestionMarkStatus=='ALL'"
@@ -413,7 +413,7 @@
                 </div>
                 <div id="lightDropList" class="list">
                     EFFECT
-                    <app-commonselect style="height: 40px;
+                    <app-M_NumpadSelect style="height: 40px;
                                 width: 200px;
                                 margin-left: -10px;
                                 font-family: MM, serif;
@@ -422,12 +422,12 @@
                                 z-index: 30;" class="PERKEYA_EffectSelect" [componentId]="'PERKEYA_EffectSelect'"
                         [i18nManager]="this.i18nManager" [inputoption]="lighting_PERKEY_Effect"
                         [(ngModel)]="lighting_PERKEY_SelectEffect" (ngModelChange)="PERKEY_SelectChange()">
-                    </app-commonselect>
+                    </app-M_NumpadSelect>
                 </div>
     
                 <div id='html_LayoutSelect' class="list">
                     LAYOUT
-                    <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
+                    <app-M_NumpadSelect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
                         [i18nManager]="this.i18nManager" [inputoption]="this.LayoutManager.layoutSelectData"
                         [(ngModel)]="this.LayoutManager.nowlayoutSelect" (ngModelChange)="this.onLayoutSelectChange()"
                         style="width: 200px;
@@ -438,7 +438,7 @@
                                     margin-left: -8px;
                                     z-index: 30;
                                     ">
-                    </app-commonselect>
+                    </app-M_NumpadSelect>
                 </div>
                 <div id='html_LayoutName' class="list">
                     NAMEYOURLAYOUT
@@ -738,7 +738,7 @@
             <div data-Area='MacroGroupArea' *ngIf="KeyAssignManager.recordBindCodeType == 'MacroFunction_clo'">
                 <div id='html_SELECTMACRO' class="list">
                     {{i18nManager.getTarget('SELECTMACRO')}}
-                    <app-commonselect class="app-macroSelectUI" [componentId]="'app-macroSelectUI'"
+                    <app-M_NumpadSelect class="app-macroSelectUI" [componentId]="'app-macroSelectUI'"
                         [inputoption]="this.macroService.macroSelectData" [i18nManager]="this.i18nManager"
                         [(ngModel)]="this.macroService.nowMacroSelect"
                         (ngModelChange)="this.macroService.setMacroSelectChange()" style="width: 200px;
@@ -749,7 +749,7 @@
                                                             margin-left: -8px;
                                                             z-index: 30;
                                                             ">
-                    </app-commonselect>
+                    </app-M_NumpadSelect>
                 </div>
                 <div id='html_NAMEYOURMACRO' class="list">
                     {{i18nManager.getTarget('NAMEYOURMACRO')}}
@@ -758,7 +758,7 @@
                 </div>
                 <div id='html_SELECTTYPEOFMACRO' class="list" data-Code='app-macrotypeselect'>
                     {{i18nManager.getTarget('SELECTTYPEOFMACRO')}}
-                    <app-commonselect class="app-macrotypeselect" [componentId]="'app-macrotypeselect'"
+                    <app-M_NumpadSelect class="app-macrotypeselect" [componentId]="'app-macrotypeselect'"
                         [inputoption]="this.macroService.macroTypeSelectData" [i18nManager]="this.i18nManager"
                         [(ngModel)]="this.macroService.macrotypeSelect"
                         (ngModelChange)="this.macroService.macrotypeSelectChange()" style="width: 190px;
@@ -768,7 +768,7 @@
                                                             font-size: 13px;
                                                             letter-spacing: 0px;
                                                             ">
-                    </app-commonselect>
+                    </app-M_NumpadSelect>
                 </div>
                 <div id='html_RecordMacro' class="list">
                     <div class="sub-list" style="
@@ -1205,7 +1205,7 @@
                     </div>
                 </div>
                     
-                    <!-- <app-commonselect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
+                    <!-- <app-M_NumpadSelect class="app-LayoutSelectUI" [componentId]="'app-LayoutSelectUI'"
                         [i18nManager]="this.i18nManager" [inputoption]="this.LayoutManager.layoutSelectData"
                         [(ngModel)]="this.LayoutManager.nowlayoutSelect" (ngModelChange)="this.onLayoutSelectChange()" style="width: 200px;
                                         font-family: MM, serif;
@@ -1215,7 +1215,7 @@
                                         margin-left: -8px;
                                         z-index: 30;
                                         ">
-                    </app-commonselect> -->
+                    </app-M_NumpadSelect> -->
                 </div>
                 <div id="SoundVolume_lightData">         
                     <div class="list">
@@ -1333,11 +1333,11 @@
             <div class="list">
                 <div class="sub-list">
                     {{i18nManager.getTarget('PollingRate')}}
-                    <app-commonselect style="z-index: 9997;" class="app-pollingrateselect"
+                    <app-M_NumpadSelect style="z-index: 9997;" class="app-pollingrateselect"
                         [componentId]="'app-pollingrateselect'" [inputoption]="PollingRateData"
                         [i18nManager]="this.i18nManager" [(ngModel)]="pollingrateSelect"
                         (ngModelChange)="PollingRateSelect()">
-                    </app-commonselect>
+                    </app-M_NumpadSelect>
                     <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
                         class="QuestionMark" style="right: 12%;">?</div>
                     <div class="triangleStyle" *ngIf="QuestionMarkStatus=='performanceflagTip' || QuestionMarkStatus=='ALL'"

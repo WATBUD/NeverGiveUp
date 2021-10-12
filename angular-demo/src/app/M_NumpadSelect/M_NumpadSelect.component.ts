@@ -3,19 +3,19 @@ ChangeDetectorRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 //import { i18nManager } from '../numpad-keyboard/i18n';
 @Component({
-    selector: 'app-commonselect',
-    templateUrl : './commonselect.component.html',
-    styleUrls: ['./commonselect.component.scss'],
+    selector: 'app-M_NumpadSelect',
+    templateUrl : './M_NumpadSelect.component.html',
+    styleUrls: ['./M_NumpadSelect.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CommonselectselectComponent),
+            useExisting: forwardRef(() => M_NumpadSelectComponent),
             multi: true,
         },
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class CommonselectselectComponent implements OnInit,ControlValueAccessor{
+export class M_NumpadSelectComponent implements OnInit,ControlValueAccessor{
     @Input()
     inputoption:any;
     @Input()
@@ -49,7 +49,7 @@ export class CommonselectselectComponent implements OnInit,ControlValueAccessor{
     }
     showEvent;
     ngOnInit(){
-        console.log('CommonselectselectComponent_ngOnInit',this.inputoption,this.componentId)
+        console.log('M_NumpadSelectComponent_ngOnInit',this.inputoption,this.componentId)
         try {
         } catch(e) {
             console.log(e)

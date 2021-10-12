@@ -5,7 +5,7 @@ import { Injectable, ApplicationRef } from '@angular/core'
 import { CommonService } from './CommonService'
 import { AppSettingService} from './AppSettingService';
 declare var require: any;
-import { KeyMapping,SupportData,AllFunctionMapping } from './SupportData'
+import { KeyMapping,AllFunctionMapping } from './SupportData'
 let AppDB = require('./AppDB');
 @Injectable()
 export class MacroService {
