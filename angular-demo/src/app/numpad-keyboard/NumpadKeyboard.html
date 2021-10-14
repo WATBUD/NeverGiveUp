@@ -71,12 +71,13 @@
                                     {{ this.KeyBoardManager.getTarget().getNowModeTargetMatrixKey().recordBindCodeType }}
                                 </div>
                                 <div id="SingleKeyAssignValue" style="position: absolute;
-                                                        color: white;
-                                                        margin-top: 56px;
-                                                        width: 50%;
-                                                        overflow: hidden;
-                                                        white-space: nowrap;
-                                                        text-align: center;">
+                                color: rgb(255, 255, 255);
+                                margin-top: 30px;
+                                width: 80%;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                text-align: center;">
                                     {{ switchChangAllkey() }}
                                 </div>
                             </div>
@@ -128,14 +129,15 @@
                             </div>
                         </div>
                     </div>
-                    <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center"
+                    
+                </div>
+                <div id="LayersIconUI" (click)="changeProfileLayer()" style="align-self: center; text-align: center;margin-left: 50px;"
                         *ngIf="this.keybindingflag || this.lightingflag">
                         <img src="image/G_Project/LayersIcon{{this.KeyBoardManager.getProfileLayerIndex()}}.png">
 
                         <div style="margin-top: 10px; color: rgb(68, 68, 67)">
                             Layers
                         </div>
-                    </div>
                 </div>
             </div>
             <div id="PerKeyBottomBTN" class="KeyboardUIFooter-item" *ngIf="lightingflag && lightingPage == 'PERKEY'">
@@ -309,7 +311,7 @@
                                 <span></span>
                             </label>
                         </div>
-                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                        <div class="sub-list" *ngIf="BrightnessFlag">
                             Wired
                         </div>
                         <div class="sub-list" >
@@ -319,10 +321,10 @@
                                 onkeydown="event.preventDefault()" />
                             <div>{{ this.Built_ineffect.Built_inSelected.brightness }}%</div>
                         </div>
-                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                        <div class="sub-list" *ngIf="BrightnessFlag">
                             Wireless
                         </div>
-                        <div class="sub-list" *ngIf="!BrightnessFlag">
+                        <div class="sub-list" *ngIf="BrightnessFlag">
                             
                             <input id="PRESETS_BrightnessSliderWireless" type="range" min="0" max="100" class="slider" step="5"
                                 [(ngModel)]="this.Built_ineffect.Built_inSelected.wirelessBrightness" (mouseup)="sliderChange()"
@@ -370,9 +372,9 @@
                 </div>
             </div>
             <div id="PERKEYAreaUI" *ngIf="lightingPage == 'PERKEY'">
-                <div (mouseover)="QuestionMarkStatus='PERKEYAreaTip'" (mouseleave)="QuestionMarkStatus=''"
+                <!-- <div (mouseover)="QuestionMarkStatus='PERKEYAreaTip'" (mouseleave)="QuestionMarkStatus=''"
                     class="QuestionMark" *ngIf="this.getAppService.getAppSetting().tooltip"
-                    style="right: 145px;position: absolute;top: 154px;">?</div>
+                    style="right: 145px;position: absolute;top: 154px;">?</div> -->
                 <div class="triangleStyle" *ngIf="QuestionMarkStatus=='PERKEYAreaTip' || QuestionMarkStatus=='ALL'"
                     id="PERKEYAreaTip" style="
                                 top: 148px;
@@ -1338,8 +1340,8 @@
                         [i18nManager]="this.i18nManager" [(ngModel)]="pollingrateSelect"
                         (ngModelChange)="PollingRateSelect()">
                     </app-M_NumpadSelect>
-                    <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
-                        class="QuestionMark" style="right: 12%;">?</div>
+                    <!-- <div (mouseover)="QuestionMarkStatus='performanceflagTip'" (mouseleave)="QuestionMarkStatus=''"
+                        class="QuestionMark" style="right: 12%;">?</div> -->
                     <div class="triangleStyle" *ngIf="QuestionMarkStatus=='performanceflagTip' || QuestionMarkStatus=='ALL'"
                         id="performanceflagTip" style="
                                             top: 111px;

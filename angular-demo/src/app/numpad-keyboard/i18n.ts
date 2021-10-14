@@ -15,6 +15,7 @@ export class i18nManager {
     langList=['EN','CH','CN'];
     constructor(){
         i18nManager.instance=this;
+        console.log('%c i18n_File','background: blue; color: red',i18n_File);
     }
 
     static instance=undefined;
