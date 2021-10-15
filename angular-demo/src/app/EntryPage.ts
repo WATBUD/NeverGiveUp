@@ -2,16 +2,16 @@ declare var require: any
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 let i18n_File = require("../i18n/i18n_Localization");
-import {
-  i18nManager
-} from '../Module/TSImportManager';
+import {i18nManager } from '../Module/TSImportManager';
+import {CentralControl} from '../Module/CentralControl';
 @Component({
   selector: 'app-entry-page',
   templateUrl: './EntryPage.html',
-  styleUrls: ['./EntryPage.css']
+  styleUrls: ['./EntryPage.css','./NavUI.css']
 })
 export class EntryPageComponent implements OnInit {
   i18nManager=i18nManager.getInstance();
+  CentralControl=CentralControl.getInstance();
   constructor(private router: Router) {
     //this.router.config
     console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
@@ -25,6 +25,11 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['KeyBoard_RGB'], {});
     //this.router.navigate(['DemoListUI'], {});
     // window.onresize = resize;
+    console.log('%c this.router', 'color:rgb(255,75,255,1)', String(this.router.url));
+
+    // if (this.router.url == "/") {//Backspace
+    //   this.router.navigate(['DemoListUI'], {});
+    // }
 
     // function resize()
     // {

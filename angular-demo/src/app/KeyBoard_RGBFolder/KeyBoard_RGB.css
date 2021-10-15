@@ -5,7 +5,7 @@
     opacity: 0.8;
     background-image:  linear-gradient(#cd1ef9 1px, transparent 1px), linear-gradient(to right, #cd1ef9 1px, #45c1a6 1px);
     background-size: 20px 20px;
-    
+    margin-top: 3vh;
 }
 
 .KeyboardPageScroll{

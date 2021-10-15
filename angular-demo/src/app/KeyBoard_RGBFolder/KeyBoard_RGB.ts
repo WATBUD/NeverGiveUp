@@ -6,6 +6,7 @@ import { KeyBoardStyle } from './KeyBoardStyle'
 import { M_Light_CS } from './M_Light_CS'
 import { MatDialogRef } from '@angular/material'
 import { Built_ineffect,GloriousMode } from './Built_ineffect'
+import {CentralControl} from '../../Module/CentralControl';
 let AllFunctionMapping = require('../../Module/SupportData').AllFunctionMapping;
 import {
     Component,
@@ -73,6 +74,7 @@ export class AppComponent implements OnInit {
     ]
     buttonNum: number = 0
     currentDevice: any
+    CentralControl=CentralControl.getInstance();
     constructor(
         //private macroService: MacroService,
         private cdr: ChangeDetectorRef,

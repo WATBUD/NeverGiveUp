@@ -18,6 +18,7 @@ import { LayoutManager } from './LayoutManager';
 import { M_Light_Numpad } from './M_Light_Numpad';
 import { KeyAssignManager } from './KeyAssignManager';
 import { M_SoundVolume } from './M_SoundVolume';
+import {CentralControl} from '../../Module/CentralControl';
 declare var require: any;
 import { KeyMapping,AllFunctionMapping,Shortcuts_WindowsMapping } from './SupportData'
 @Component({
@@ -26,6 +27,7 @@ import { KeyMapping,AllFunctionMapping,Shortcuts_WindowsMapping } from './Suppor
   styleUrls: ['./NumpadKeyboard.css', './KeyBoardStyle.scss', './Keybinding.scss', 'LightIngStyle.scss','./DropListStyle.scss']
 })
 export class NumpadKeyboardComponent implements OnInit {
+  CentralControl=CentralControl.getInstance();
   KeyBoardStyle = new KeyBoardStyle();
   KeyAssignManager = new KeyAssignManager();
   M_Light_PRESETS = new M_Light_Numpad(83);
@@ -81,6 +83,7 @@ export class NumpadKeyboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.CentralControl.NavVisible=false;
 
   }
 

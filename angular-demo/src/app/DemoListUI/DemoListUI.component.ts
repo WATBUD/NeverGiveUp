@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-
+import {CentralControl} from '../../Module/CentralControl';
 @Component({
   selector: 'app-DemoListUI',
   templateUrl: './DemoListUI.component.html',
@@ -10,6 +10,8 @@ import { Title } from '@angular/platform-browser';
 export class DemoListUIComponent implements OnInit {
   selectPageIndex = 0;
   customRouteList = [];
+  CentralControl=CentralControl.getInstance();
+
   //private titleService: Title=new Title();
   constructor(private router: Router,private titleService: Title) {
 
@@ -24,6 +26,7 @@ export class DemoListUIComponent implements OnInit {
     //this.router.navigate([this.router.config[this.selectPageIndex].path]);
     console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router, this.router.config[0].path);
     //console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router, this.router.config[0].path);
+    this.CentralControl.NavVisible=true;
 
   }
   ngOnInit() {
