@@ -83,6 +83,12 @@ export class KeyBoardStyle {
                 2,999,3, 999,"Side Light",
                 "Side Light","Side Light",3,"Numpad2",4,4,3,3,
                 "Side Light",4,"NumpadDecimal",4],
+            fixedColor:[
+                    "Side Light",[0,255,255,1],"NumpadDivide","NumpadMultiply","NumpadSubtract","ROTARY ENCODER","Side Light",
+                    "Side Light","Side Light","Numpad7",[0,255,255,1],"Numpad9","NumpadAdd","slider","Side Light","Side Light",
+                    "Side Light","Numpad4","Numpad5",[0,255,255,1],"Side Light",
+                    "Side Light","Side Light","Numpad1","Numpad2","Numpad3","NumpadEnter","Side Light","Side Light",
+                    "Side Light","Numpad0","NumpadDecimal","Side Light"],    
             KeyTableArray: [[0, 6], [7, 16], [17, 20], [20, 28], [29, 32]],
             imageMaxWidth: 512,
             imageMaxHeight: 333,
