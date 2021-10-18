@@ -739,6 +739,7 @@ export class M_Light_Numpad {
         }, 150 * this.animationSpeed);
 
     }
+
     getBrightnessRatio(setRGB=[]){
         var temp_colorData = JSON.parse(JSON.stringify(setRGB));
         for (let index2 = 0; index2 < 3; index2++) {
@@ -2743,7 +2744,61 @@ export class M_Light_Numpad {
     
 
     }
+    mode_fixedColor(InputArray = [[]],isBreath=false) {
+        console.log('%c mode_fixedColor_enter', 'color:rgb(255,75,255,1)', InputArray,isBreath);
+        clearInterval(this.repeater);
+        var nowStep = 0;
+        this.setAllBlockColor([0, 0, 0, 1]);
+        var tempTarget = JSON.parse(JSON.stringify(this.AllBlockColor));
+        var target = this.AllBlockColor;
 
+        try {
+            for (let index = 0; index < tempTarget.length; index++) {
+                var setRGB = InputArray[index];
+                //target[index]colors[this.getRandom(0, colors.length - 1)];
+                tempTarget[index].color = setRGB;
+            }
+        } catch (error) {
+            console.error('%c target_error', 'color:rgb(255,75,255,1)', tempTarget);
+        }
+        console.log('%c target', 'color:rgb(255,75,255,1)', tempTarget);
+
+        var totalStep = 255;
+        var nowStep = 0;
+        var repeatCount = 0;
+        var nowColor = [];
+        var newColor = [];
+        if(!isBreath){
+        return;
+        }
+        this.repeater = setInterval(() => {
+            if (nowStep < totalStep) {
+                nowStep += 5;
+            }
+            else {
+                nowStep = 0;
+                repeatCount += 1;
+            }
+            for (let index = 0; index < target.length; index++) {
+                let listItem = tempTarget[index];
+                if (repeatCount % 2 == 0) {
+                    nowColor = JSON.parse(JSON.stringify(listItem.color));
+                    newColor = [0, 0, 0, 1];
+                }
+                else {
+                    nowColor = [0, 0, 0, 1];
+                    newColor = JSON.parse(JSON.stringify(listItem.color));
+                }
+                var t_data = [0, 0, 0, 1];
+                for (let i_step = 0; i_step < 3; i_step++) {
+                    t_data[i_step] = Math.floor((nowColor[i_step] * (totalStep - nowStep) + newColor[i_step] * nowStep) / totalStep);
+                }
+                target[index].color = this.getBrightnessRatio(t_data);
+                //continue;
+            }
+            console.log('%c mode_fixedColor', 'color:rgb(255,77,255)', t_data, nowColor, newColor, nowStep, totalStep);
+        }, 150 * this.animationSpeed);
+    }
 
     mode_Wave1(colors = [[0,0,255,1]], isRainbow = true){
         clearInterval(this.repeater);
@@ -4107,7 +4162,7 @@ export class M_Light_Numpad {
             target[index].color = temp_colorData;   
         }, 50*this.animationSpeed)
     }
-
+    
     mode_Shadow_disappear(colors=[[0,0,255,1]],index=20) {
         clearInterval(this.repeater);
         var randomColor=colors[this.getRandom(0,colors.length-1)];

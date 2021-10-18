@@ -581,16 +581,16 @@ export class NumpadKeyboardComponent implements OnInit {
         break;
       case 'Breathing':
         if (target.Multicolor) {
-          T_CS.mode_BreathingMulticolor(inputColor, true);
-        }
+          T_CS.mode_fixedColor(this.KeyBoardStyle.getTarget().fixedColor,true);
+      }
         else {
           T_CS.mode_CycleBreath(inputColor, false);
         }
         break;
       case 'NormallyOn':
         if (target.Multicolor) {
-          T_CS.mode_NormallyOnMulticolor(inputColor);
-        }
+          T_CS.mode_fixedColor(this.KeyBoardStyle.getTarget().fixedColor,false);
+         }
         else {
           T_CS.mode_NormallyOn(inputColor);
         }
