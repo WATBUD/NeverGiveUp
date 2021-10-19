@@ -17,7 +17,7 @@ export class GetAppService{
         } else {
             //console.log("new ImgPathList Class");
             this.instance = new GetAppService();
-            console.log('%c ImgPathList_getInstance_err','background: blue; color: red');
+            console.log('%c ImgPathList_getInstance','background: blue; color: red');
             return this.instance;
         }
     }

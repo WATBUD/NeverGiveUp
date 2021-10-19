@@ -14,7 +14,7 @@ export class SharesFunction{
             return this.instance;
         } else {
             this.instance = new SharesFunction();
-            console.log('%c SharesFunction_getInstance_err','background: blue; color: red');
+            console.log('%c SharesFunction_getInstance','background: blue; color: red');
             return this.instance;
         }
     }

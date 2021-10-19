@@ -13,7 +13,7 @@ export class ImgPathList{
         } else {
             //console.log("new ImgPathList Class");
             this.instance = new ImgPathList();
-            console.log('%c ImgPathList_getInstance_err','background: blue; color: red');
+            console.log('%c ImgPathList_getInstance','background: blue; color: red');
             return this.instance;
         }
     }

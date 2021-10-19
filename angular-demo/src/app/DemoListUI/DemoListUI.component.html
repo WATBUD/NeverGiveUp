@@ -1,15 +1,41 @@
-
-  <!-- <div *ngFor="let item of this.router.config; let i = index" class="NumKeyBindSourceItem">
+<!-- <div *ngFor="let item of this.router.config; let i = index" class="NumKeyBindSourceItem">
     <div style="position: absolute;left: 15%;user-select: none;" data-keyTitle="Key">{{item}}</div>
   </div> -->
+    <!-- <li *ngFor="let item of customRouteList ;let i = index" [style.background-color]="selectPageIndex==i?'rgb(153,255,255)':'rgb(255,255,255)'"
+      (click)="this.router.navigate(['/'+item.path])">
+      {{item.path}} 
+      </li> -->
 
-  <ul  class="list-group">
-    <li *ngFor="let item of customRouteList ;let i = index" [style.background-color]="selectPageIndex==i?'rgb(153,255,255)':'rgb(255,255,255)'"
-    (click)="this.router.navigate(['/'+item.path])">
-    {{item.path}} 
-    </li>
-    <!-- <li routerLink="/ColorPickerDemo1" routerLinkActive="active">ColorPickerDemo1</li>
-    <li routerLink="/KeyBoard_RGB" routerLinkActive="active" >KeyBoard_RGB</li>
-    <li routerLink="/ScrollDemo1" routerLinkActive="active">ScrollDemo1</li>
-    <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li> -->
+<div class="list-group">
+  <input id="toggle" class="btn-toggle" type="checkbox" checked>
+  <label class="toggleBtn" for="toggle">Keyboard Sample Demo</label>
+  <ul>
+    <li routerLink="/KeyBoard_RGB" routerLinkActive="active">KeyBoard_RGB</li>
+    <li routerLink="/numpad-keyboard" routerLinkActive="active">numpad-keyboard</li>
   </ul>
+</div>
+<div class="list-group">
+  <input id="toggle2" class="btn-toggle" type="checkbox" checked>
+  <label class="toggleBtn" for="toggle2">Practice example</label>
+  <ul>
+    <li routerLink="/ScrollDemo1" routerLinkActive="active">ScrollDemo1</li>
+    <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li>
+  </ul>
+</div>
+<div class="list-group">
+  <input id="toggle3" class="btn-toggle" type="checkbox" checked>
+  <label class="toggleBtn" for="toggle3">Homemade Tools</label>
+  <ul>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'Convert Excel File To JSON' }">Convert Excel File To JSON</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'KeyDownArrayGenerator' }">KeyDownArrayGenerator</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'GeneratorArrayText' }">GeneratorArrayText</li>
+  </ul>
+</div>
+<!-- <button class="btn-toggle">
+  Home
+</button> -->
+
+<!-- <ol>
+    　<li>星期一</li>
+    　<li>星期二</li>
+  </ol> -->

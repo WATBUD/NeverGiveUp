@@ -18,7 +18,7 @@ export class CommonService{
             return this.instance;
 		} 
 		else{
-			console.log('%c CommonService_getInstance_err','background: blue; color: red');
+			console.log('%c CommonService_getInstance','background: blue; color: red');
 		}
     }
 

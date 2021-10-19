@@ -31,7 +31,7 @@ export class i18nManager {
 		} 
 		else{
             this.instance = new i18nManager();
-            console.log('%c i18nManager_getInstance_err','background: blue; color: red',i18n_File);
+            console.log('%c i18nManager_getInstance','background: blue; color: red',i18n_File);
             return this.instance;
 		}
 

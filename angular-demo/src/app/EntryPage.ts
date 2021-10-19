@@ -14,8 +14,10 @@ export class EntryPageComponent implements OnInit {
   CentralControl=CentralControl.getInstance();
   constructor(private router: Router) {
     //this.router.config
-    console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
-    console.log('%c this.i18nManager', 'color:rgb(255,75,255,1)', this.i18nManager,i18n_File);
+    console.log('%c Enter EntryPageComponent constructor', 'color:rgb(255,0,0,1)');
+
+    // console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
+    // console.log('%c this.i18nManager', 'color:rgb(255,75,255,1)', this.i18nManager,i18n_File);
   }
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
@@ -25,7 +27,7 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['KeyBoard_RGB'], {});
     //this.router.navigate(['DemoListUI'], {});
     // window.onresize = resize;
-    console.log('%c this.router', 'color:rgb(255,75,255,1)', String(this.router.url));
+    //console.log('%c this.router', 'color:rgb(255,75,255,1)', String(this.router.url));
 
     // if (this.router.url == "/") {//Backspace
     //   this.router.navigate(['DemoListUI'], {});
