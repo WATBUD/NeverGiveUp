@@ -20,6 +20,11 @@ import { NgColorModule } from './ngcolor/color-picker.module';
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'DemoListUI',
+    pathMatch: 'full',
+  },
   { path: 'KeyBoard_RGB', component: AppComponent },
   { path: 'ColorPickerDemo1', component: ColorPickerDemo1Component },
   { path: 'ScrollDemo1', component: ScrollDemo1Component },

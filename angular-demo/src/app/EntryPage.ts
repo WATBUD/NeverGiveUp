@@ -1,6 +1,6 @@
 declare var require: any
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router,ActivatedRoute } from '@angular/router';
 let i18n_File = require("../i18n/i18n_Localization");
 import {i18nManager } from '../Module/TSImportManager';
 import {CentralControl} from '../Module/CentralControl';
@@ -12,7 +12,7 @@ import {CentralControl} from '../Module/CentralControl';
 export class EntryPageComponent implements OnInit {
   i18nManager=i18nManager.getInstance();
   CentralControl=CentralControl.getInstance();
-  constructor(private router: Router) {
+  constructor(private router: Router,private activatedRoute: Router) {
     //this.router.config
     console.log('%c Enter EntryPageComponent constructor', 'color:rgb(255,0,0,1)');
 
@@ -27,7 +27,7 @@ export class EntryPageComponent implements OnInit {
     //this.router.navigate(['KeyBoard_RGB'], {});
     //this.router.navigate(['DemoListUI'], {});
     // window.onresize = resize;
-    //console.log('%c this.router', 'color:rgb(255,75,255,1)', String(this.router.url));
+    console.log('%c this.router', 'color:rgb(255,75,255,1)', String(this.router.url));
 
     // if (this.router.url == "/") {//Backspace
     //   this.router.navigate(['DemoListUI'], {});
@@ -49,8 +49,8 @@ export class EntryPageComponent implements OnInit {
     //     this.router.navigate(['DemoListUI'], {});
     //   }
     // });
-
-
+    console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
+    console.log('%c this.activatedRoute', 'color:rgb(255,75,255,1)', this.activatedRoute);
     //   document.addEventListener('keydown', (event) => {
 
     //  }
