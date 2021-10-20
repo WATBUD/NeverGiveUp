@@ -83,7 +83,7 @@ export class M_NumpadSelectComponent implements OnInit,ControlValueAccessor{
         //this.translate.get(SearchName)['value'];
         if(translate!=undefined){
             //console.log('%c getTranslate','color:red', SearchName);
-            return SearchName;
+            return translate;
         }
         else{
             console.log('%c getTranslate_miss','color:red', SearchName);
@@ -100,8 +100,6 @@ export class M_NumpadSelectComponent implements OnInit,ControlValueAccessor{
                 else {
                     return target.name;
                 }
-
-
             }
         }
     }
