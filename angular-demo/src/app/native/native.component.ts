@@ -33,8 +33,10 @@ export class NativeComponent implements OnInit {
     this.sub = this.route.queryParams.subscribe(params => {
       
       //this.page = +params['page'] || 0;
+      console.log('%c params[page]','background: blue; color: red',params['page'])
+
       try {
-        var target=this.customURLList.find(params['page']);
+        var target=this.customURLList.find((x)=>x.Name==params['page']);
         if(target!=undefined){
           this.setURLContext(target.URL);
         }
@@ -53,8 +55,8 @@ export class NativeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('%c sanitizer','background: blue; color: red',this.sanitizer)
-    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.customURLList[1].URL);
+    // console.log('%c sanitizer','background: blue; color: red',this.sanitizer)
+    // this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.customURLList[1].URL);
 
   }
 }
