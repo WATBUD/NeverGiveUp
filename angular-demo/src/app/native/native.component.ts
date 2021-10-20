@@ -23,7 +23,20 @@ export class NativeComponent implements OnInit {
   {
     URL:'./DemoUI/Input/GeneratorArrayText.html',
     Name:'GeneratorArrayText',
-  }];
+  },
+  {
+    URL:'./DemoUI/ScrollBarDemo/GetScrollEvent.html',
+    Name:'GetScrollEvent',
+  },
+  {
+    URL:'./DemoUI/Input/CompositionEvents.html',
+    Name:'CompositionEvents',
+  },
+];
+
+
+
+
   name = 'Set iframe source';
   sub;
   //url: string = "https://angular.io/api/router/RouterLink";

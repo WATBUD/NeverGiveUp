@@ -37,7 +37,7 @@ export class EntryPageComponent implements OnInit {
     // {
     //  alert("检测到resize事件!");
     // }
-
+    this.CentralControl.NavVisible=true;
   }
   ngAfterViewInit() {
     // setTimeout(() => {

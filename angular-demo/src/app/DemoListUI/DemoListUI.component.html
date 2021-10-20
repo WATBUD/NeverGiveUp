@@ -19,7 +19,10 @@
   <label class="toggleBtn" for="toggle2">Practice example</label>
   <ul>
     <li routerLink="/ScrollDemo1" routerLinkActive="active">ScrollDemo1</li>
-    <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li>
+    <!-- <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li> -->
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'GetScrollEvent' }">GetScrollEvent</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'CompositionEvents' }">CompositionEvents</li>
+
   </ul>
 </div>
 <div class="list-group">
