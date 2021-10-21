@@ -48,7 +48,10 @@ export class NativeComponent implements OnInit {
     URL:'./DemoUI/Animate/LoadingAnimation2.html',
     Name:'LoadingAnimation2',
   },
-
+  {
+    URL:'./DemoUI/Animate/Progress_Bar_Rectangle.html',
+    Name:'Progress_Bar_Rectangle',
+  },
 ];
 
 

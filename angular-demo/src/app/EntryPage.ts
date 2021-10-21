@@ -20,6 +20,7 @@ export class EntryPageComponent implements OnInit {
     // console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
     // console.log('%c this.i18nManager', 'color:rgb(255,75,255,1)', this.i18nManager,i18n_File);
   }
+  colorPickerFnArrP1=[];
   ngOnInit() {
     //this.router.navigate(['keyboardNumPad'], {queryParams: {Device: JSON.stringify(obj)}});
     //this.router.navigate(['ColorPickerDemo1'], {queryParams: {Device: {}}});
@@ -39,7 +40,16 @@ export class EntryPageComponent implements OnInit {
     //  alert("检测到resize事件!");
     // }
     this.CentralControl.NavVisible=true;
-    
+    this.colorPickerFnArrP1[1] = ((event) => {
+    //document.addEventListener('keyup', (event) => {
+      console.log("KeyShortcut_event.keyCode", event.keyCode);
+      //this.router.url != "/DemoListUI"
+      if (event.keyCode == 8) {//Backspace
+        //this.router.navigate(['DemoListUI'], {});
+        this.goBack();
+      }
+    });
+    document.addEventListener('keyup', this.colorPickerFnArrP1[1]);
   }
   goBack(): void {
     this.location.back();
@@ -48,14 +58,7 @@ export class EntryPageComponent implements OnInit {
     // setTimeout(() => {
     // }, 3000);
     // document.onkeyup = null;
-    document.addEventListener('keyup', (event) => {
-      console.log("KeyShortcut_event.keyCode", event.keyCode);
-      //this.router.url != "/DemoListUI"
-      if (event.keyCode == 8 ) {//Backspace
-        //this.router.navigate(['DemoListUI'], {});
-        this.goBack();
-      }
-    });
+
     
     console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
     console.log('%c this.activatedRoute', 'color:rgb(255,75,255,1)', this.activatedRoute);
@@ -64,5 +67,11 @@ export class EntryPageComponent implements OnInit {
     //  }
 
   }
+  ngOndestroy(){
+    document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
+
+  }
+
+  
 }
 

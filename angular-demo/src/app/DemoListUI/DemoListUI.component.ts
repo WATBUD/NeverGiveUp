@@ -90,7 +90,7 @@ export class DemoListUIComponent implements OnInit {
     //document.removeEventListener('keyup', undefined);
     console.log('%c DemoListUI.addEventListener', 'color:rgb(255,75,255,1)');
 
-    document.addEventListener('keyup', this.colorPickerFnArrP1[1]);
+    //document.addEventListener('keyup', this.colorPickerFnArrP1[1]);
 
     // document.onkeyup = null;
     // document.removeEventListener("mousemove", myFunction);
