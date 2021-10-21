@@ -4,6 +4,7 @@ import { RouterModule, Router,ActivatedRoute } from '@angular/router';
 let i18n_File = require("../i18n/i18n_Localization");
 import {i18nManager } from '../Module/TSImportManager';
 import {CentralControl} from '../Module/CentralControl';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-entry-page',
   templateUrl: './EntryPage.html',
@@ -12,7 +13,7 @@ import {CentralControl} from '../Module/CentralControl';
 export class EntryPageComponent implements OnInit {
   i18nManager=i18nManager.getInstance();
   CentralControl=CentralControl.getInstance();
-  constructor(private router: Router,private activatedRoute: Router) {
+  constructor(private router: Router,private activatedRoute: Router,private location: Location) {
     //this.router.config
     console.log('%c Enter EntryPageComponent constructor', 'color:rgb(255,0,0,1)');
 
@@ -38,17 +39,24 @@ export class EntryPageComponent implements OnInit {
     //  alert("检测到resize事件!");
     // }
     this.CentralControl.NavVisible=true;
+    
+  }
+  goBack(): void {
+    this.location.back();
   }
   ngAfterViewInit() {
     // setTimeout(() => {
     // }, 3000);
     // document.onkeyup = null;
-    // document.addEventListener('keyup', (event) => {
-    //   console.log("KeyShortcut_event.keyCode", event.keyCode);
-    //   if (event.keyCode == 8 && this.router.url != "/DemoListUI") {//Backspace
-    //     this.router.navigate(['DemoListUI'], {});
-    //   }
-    // });
+    document.addEventListener('keyup', (event) => {
+      console.log("KeyShortcut_event.keyCode", event.keyCode);
+      //this.router.url != "/DemoListUI"
+      if (event.keyCode == 8 ) {//Backspace
+        //this.router.navigate(['DemoListUI'], {});
+        this.goBack();
+      }
+    });
+    
     console.log('%c this.router', 'color:rgb(255,75,255,1)', this.router);
     console.log('%c this.activatedRoute', 'color:rgb(255,75,255,1)', this.activatedRoute);
     //   document.addEventListener('keydown', (event) => {

@@ -4,17 +4,7 @@
         <meta charset="utf-8" /> 
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <script src="../jquery.js"></script>
-        <base href="./">
-        <title>HtmlCssLoader2</title>        
-         <script>
-            // System.import('App').catch(function (err) { console.error(err); });   
-            // document.ondragover = document.ondrop = function(e) {
-            //     e.preventDefault();
-            //     return false;
-            // };       
-        </script> 
-  
+        <title>LoadingAnimation1</title>        
         <style>  
             body {  
                 width:100%; 
@@ -94,29 +84,10 @@
         </style>  
     </head>
     <script>
-            var conutdown = setTimeout(
-                function () {
-                    self.location.reload();
-                }, 1000);
     </script>
-
     <body>   
-        <input id="Close" style="position: absolute;background-color: yellow;z-index: 3;"
-        type="button" 
-        value="Close" onclick="clearTimeout(conutdown);">
         <div id="loading">
-
             <div class="loadingImage"></div>
         </div>    
-
-
-        <div id="ss" class="ball-pulse-sync">
-
-            
-        </div>   
-        
-
-
-
     </body>
 </html>

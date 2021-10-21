@@ -80,11 +80,11 @@ export class DemoListUIComponent implements OnInit {
       //     this.selectPageIndex = 0;
       //   }
       // }
-      if (event.keyCode == 8 && this.router.url != "/DemoListUI") {//Backspace
-        document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
-        this.router.navigate(['DemoListUI'], {});
-      }
-      this.titleService.setTitle(this.customRouteList[this.selectPageIndex].path);
+      // if (event.keyCode == 8 && this.router.url != "/DemoListUI") {//Backspace
+      //   document.removeEventListener('keyup', this.colorPickerFnArrP1[1]);
+      //   this.router.navigate(['DemoListUI'], {});
+      // }
+      //this.titleService.setTitle(this.customRouteList[this.selectPageIndex].path);
     });
     //document.onkeyup = null;
     //document.removeEventListener('keyup', undefined);

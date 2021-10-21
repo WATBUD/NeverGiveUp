@@ -36,8 +36,19 @@ export class NativeComponent implements OnInit {
     URL:'./DemoUI/Animate/Shooting Star.html',
     Name:'Shooting Star',
   },
+  {
+    URL:'./DemoUI/Animate/CircleRorateLoading.html',
+    Name:'CircleRorateLoading',
+  },
+  {
+    URL:'./DemoUI/Animate/LoadingAnimation1.html',
+    Name:'LoadingAnimation1',
+  },
+  {
+    URL:'./DemoUI/Animate/LoadingAnimation2.html',
+    Name:'LoadingAnimation2',
+  },
 
-  
 ];
 
 
