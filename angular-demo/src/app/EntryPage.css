@@ -17,3 +17,24 @@
    display: flex;
    height: 100%;
 }
+.hue-rotate{
+   background-image: url(/image/Share/BackGround_1.png);
+    background-size: 100% 100%;
+    /* filter: hue-rotate(
+   208deg); */
+   /* animation 參數設定 */
+   animation-name: MoveToRight;    /*動畫名稱，需與 keyframe 名稱對應*/
+   animation-duration: 10s;    /*動畫持續時間，單位為秒*/
+   animation-delay: 0s;    /*動畫延遲開始時間*/
+   animation-iteration-count: infinite;    /*動畫次數，infinite 為無限次*/  
+}
+@keyframes MoveToRight {
+   0% { filter: hue-rotate(0deg);
+   }
+   /* 25% { filter: hue-rotate(100deg);}
+   50% { filter: hue-rotate(150deg);}
+   75% { filter: hue-rotate(200deg); } */
+   100% { filter: hue-rotate(360deg); }
+}
+
+

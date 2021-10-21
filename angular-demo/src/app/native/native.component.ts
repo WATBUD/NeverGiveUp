@@ -32,6 +32,12 @@ export class NativeComponent implements OnInit {
     URL:'./DemoUI/Input/CompositionEvents.html',
     Name:'CompositionEvents',
   },
+  {
+    URL:'./DemoUI/Animate/Shooting Star.html',
+    Name:'Shooting Star',
+  },
+
+  
 ];
 
 
