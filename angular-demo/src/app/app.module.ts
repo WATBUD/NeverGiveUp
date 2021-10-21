@@ -16,6 +16,7 @@ import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 import { NativeComponent } from './native/native.component';
 import { M_NumpadSelectModule } from './M_NumpadSelect/M_NumpadSelect.module';
 import { NgColorModule } from './ngcolor/color-picker.module';
+import { BlackHoleComponent } from './black-hole/black-hole.component';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'TableDemo1', component: TableDemo1Component },
   { path: 'numpad-keyboard', component: NumpadKeyboardComponent },
   { path: 'native', component: NativeComponent },
-
+  { path: 'black-hole', component: BlackHoleComponent },
+  
 ];
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ const routes: Routes = [
     TableDemo1Component,
     NumpadKeyboardComponent,
     NativeComponent,
+    BlackHoleComponent,
   ],
   imports: [
     BrowserModule,
