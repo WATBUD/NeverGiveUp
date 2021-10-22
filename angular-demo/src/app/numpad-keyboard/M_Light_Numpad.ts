@@ -824,7 +824,7 @@ export class M_Light_Numpad {
 
                 }
                 else {
-                    var temp_colorData = JSON.parse(JSON.stringify(setRGB));
+                    var temp_colorData = JSON.parse(JSON.stringify(element.color));
                     for (let index = 0; index < 3; index++) {
                         temp_colorData[index] = (temp_colorData[index] * (totalstep - nowStep) + 0 * nowStep) / totalstep;
                         temp_colorData[index] = temp_colorData[index] * this.lightData.brightness/100;
@@ -857,7 +857,7 @@ export class M_Light_Numpad {
 
                 //this.setAllBlockColor([0,0,0,1]);
             }
-        }, 50**this.animationSpeed)
+        }, 30*this.animationSpeed)
         //clearInterval(this.repeater);
     }
 
@@ -2757,6 +2757,7 @@ export class M_Light_Numpad {
                 var setRGB = InputArray[index];
                 //target[index]colors[this.getRandom(0, colors.length - 1)];
                 tempTarget[index].color = setRGB;
+                target[index].color = setRGB;
             }
         } catch (error) {
             console.error('%c target_error', 'color:rgb(255,75,255,1)', tempTarget);
