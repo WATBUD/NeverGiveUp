@@ -514,7 +514,7 @@
         <!----------------------------------------------------------------Keybinding----------------------------------------------------------------------------->
     
         <div class="right-content" *ngIf="this.keybindingflag">
-            <ng-container *ngIf="!getNowKeyBindClassUI('SLIDER') && !getNowKeyBindClassUI('ROTARY ENCODER')">
+            <ng-container *ngIf="!getNowKeyBindClassUI('slider') && !getNowKeyBindClassUI('ROTARY ENCODER')">
                 <div class="list" style="margin-top: 20px">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
@@ -524,7 +524,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style=" width: 85%; margin-left: 7.5%">
+                <div class="list" style="width: 100%;margin-left: 0%;">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                             KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
@@ -567,23 +567,22 @@
                         </div>
                         <div class="sub-list-item" [style.borderBottom]="
                                             KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
-                                        " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                                        " (click)="SetGroupFunction('Disable','Disable')">
                             DISABLE
                         </div>
                     </div>
                 </div>
             </ng-container>
-            <ng-container *ngIf="getNowKeyBindClassUI('SLIDER')">
+            <ng-container *ngIf="getNowKeyBindClassUI('slider')">
                 <div class="list" style="margin-top: 20px;">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
-                                            KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''
-                                        " (click)="SetGroupFunction('SOUND CONTROL','SOUND CONTROL')">
+                            KeyAssignManager.recordBindCodeType == 'SOUND CONTROL' ? '1px #313131 solid' : ''" (click)="SetGroupFunction('SOUND CONTROL','SOUND CONTROL')">
                             SOUND CONTROL
                         </div>
                         <div class="sub-list-item" [style.borderBottom]="
                                                 KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
-                                            " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                                            " (click)="SetGroupFunction('Disable','Disable')">
                             DISABLE
                         </div>
                     </div>
@@ -599,7 +598,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="list" style="width: 85%; margin-left: 7.5%">
+                <div class="list" style="width: 100%;margin-left: 0%;">
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'KEYBOARD' ? '1px #313131 solid' : ''
@@ -617,8 +616,11 @@
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'MacroFunction' ? '1px #313131 solid' : ''
-                            " (click)="SetGroupFunction('MacroFunction','MacroFunction')">
-                            MACRO
+                            " (click)="SetGroupFunction('MacroFunction','MacroFunction')"
+                            [ngStyle]="{
+                                'pointer-events': 'auto'
+                            }">
+                            MACRO 
                         </div>
                         <div class="sub-list-item" [style.borderBottom]="
                                 KeyAssignManager.recordBindCodeType == 'Multimedia' ? '1px #313131 solid' : ''
@@ -651,7 +653,7 @@
                     <div class="KeybindingClassArea_item">
                         <div class="sub-list-item" [style.borderBottom]="
                                                 KeyAssignManager.recordBindCodeType == 'Disable' ? '1px #313131 solid' : ''
-                                            " (click)="SetGroupFunction('Disable','Disable_Fun35')">
+                                            " (click)="SetGroupFunction('Disable','Disable')">
                             DISABLE
                         </div>
                     </div>
@@ -688,7 +690,7 @@
                                                 padding: 10px;
                                             ">
                     <div class="sub-list" style="margin-top: 5px; font-family: MB, serif">
-                        CHOOSEMODIFIER
+                        {{i18nManager.getTarget('CHOOSEMODIFIER')}}
                         <label style="margin-right: 5px">
                             <input type="checkbox" [(ngModel)]="KeyAssignManager.combinationkeyEnable"
                                 (ngModelChange)="KeyAssignManager.setCombinationKeyEnable()" />
@@ -737,7 +739,7 @@
                 </div>
             </div>
             <!-----------------------------------------------Macro----------------------------------------------------------->
-            <div data-Area='MacroGroupArea' *ngIf="KeyAssignManager.recordBindCodeType == 'MacroFunction_clo'">
+            <!-- <div data-Area='MacroGroupArea' *ngIf="KeyAssignManager.recordBindCodeType == 'MacroFunction'">
                 <div id='html_SELECTMACRO' class="list">
                     {{i18nManager.getTarget('SELECTMACRO')}}
                     <app-M_NumpadSelect class="app-macroSelectUI" [componentId]="'app-macroSelectUI'"
@@ -789,7 +791,7 @@
                     </div>
                 </div>
                 <div id='html_IMPORTMACRO' class="list" style="flex-direction: row; font-size: 14px">
-                    <img src="image/G_Project/keybinding/ImportMacro.png"
+                    <img src="image/keybinding/ImportMacro.png"
                         style="width: 20px; height: 20px; margin-right: 20px; cursor: pointer"
                         (click)="macroService.importMacro()" draggable="false" />
                     <div (click)="macroService.importMacro()" style="cursor: pointer;">
@@ -797,7 +799,7 @@
                     </div>
                 </div>
                 <div id='html_EXPORTMACRO' class="list" style="flex-direction: row; font-size: 14px; margin-top: 15px">
-                    <img src="image/G_Project/keybinding/ExportMacro.png"
+                    <img src="image/keybinding/ExportMacro.png"
                         style="width: 20px; height: 20px; margin-right: 20px; cursor: pointer"
                         (click)="macroService.exportMacro()" draggable="false" />
                     <div (click)="macroService.exportMacro()" style="cursor: pointer;">
@@ -805,12 +807,12 @@
                     </div>
                 </div>
                 <div id='html_DELETEMACRO' class="list" style="flex-direction: row; font-size: 14px; margin-top: 15px">
-                    <img src="image/G_Project/keybinding/DeleteMacro.png"
+                    <img src="image/keybinding/DeleteMacro.png"
                         style="width: 16px; height: 20px; margin-right: 24px; cursor: pointer" (click)="KB_deleteMacro()"
                         draggable="false" />
                     <div (click)="KB_deleteMacro()" style="cursor: pointer;">{{i18nManager.getTarget('DELETEMACRO')}} </div>
                 </div>
-            </div>
+            </div> -->
             <!-----------------------------------------------Keyboard Function----------------------------------------------------------->
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'KEYBOARD'" style="
                                                         width: 90%;
@@ -1146,11 +1148,10 @@
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'Disable'">
                 <div class="list" style="width: 90%; height: 80px; margin-left: 5%; background-color: rgb(234, 233, 227)">
                     <div class="sub-list" style="margin-left: 6%; margin-right: 6%">
-                        {{i18nManager.getTarget('Disabled')}}
+                        This button has been disabled. Select one of the other options above to bind an action to it.
                     </div>
                 </div>
             </div>
-        
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'SOUND CONTROL'">
                 <div class="list" style="margin-top: 20px;width: fit-content;">
                     <div style="border: 1px solid rgb(253, 186, 59);
@@ -1184,9 +1185,9 @@
                             <div *ngFor="let item of M_SoundVolume.audioSouceList let i = index"
                              class="audioSouceItem"
                              (click)="M_SoundVolume.bindTarget=item;M_SoundVolume.showListflag=!M_SoundVolume.showListflag;
-                             KeyAssignManager.setNowCodeName(M_SoundVolume.bindTarget.bindProgramName,'SOUND CONTROL');">
-                             {{item.bindProgramName}}
-                            </div>          
+                             KeyAssignManager.setNowCodeName(M_SoundVolume.bindTarget.filename,'SOUND CONTROL');">
+                             {{item.filename}}
+                            </div>
                         </div>
                     </div>
                     <div style="
@@ -1195,7 +1196,7 @@
                     align-items: center;
                     /* background: yellow; */
                     " (click)="M_SoundVolume.showListflag=!M_SoundVolume.showListflag">
-                    <div  class="checkedText" id="checkedText">{{M_SoundVolume.getTargetBindProgramName()}}</div>
+                    <div  class="checkedText" id="checkedText">{{M_SoundVolume.getTargetFileName()}}</div>
                     <div id="Down_Arrow" style="
                             transform: rotate(-92deg);
                             border-top: 5px solid #903d3d00;
@@ -1224,94 +1225,97 @@
                         Source Volume
                         <div class="sub-list" style="margin-top: 10px;">     
                             <input id="PERKEY_BrightnessSlider" type="range" min="0" max="100" class="slider" step="5"
-                                [(ngModel)]="this.M_SoundVolume.bindTarget.audioSouceValue" (mouseup)="M_SoundVolume.lightData_Background()"
+                                [(ngModel)]="this.M_SoundVolume.bindTarget.percent" (mouseup)="M_SoundVolume.lightData_Background()"
                                 [ngStyle]="{'background': M_SoundVolume.lightData_Background()}"
                                 onkeydown="event.preventDefault()" />
-                            <div>{{ this.M_SoundVolume.bindTarget.audioSouceValue }}%</div>
-                        </div>
-                    </div>
-                </div>
-                <div id="Keybinding_BREATHING" class="list" style="margin-top: 40px;flex-direction: row;">
-                    <div class="sub-list"
-                        style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
-                        GLOW WHEN ACTIVE
-                    </div>
-                    <label>
-                        <input type="checkbox" [(ngModel)]='this.M_SoundVolume.lightData.clearStatus'
-                            (ngModelChange)="soundVolume_BreathingChange()">
-                        <span></span>
-                    </label>
-                </div>
-                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;">
-                    EFFECT
-                </div>    
-                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;flex-direction: row;">
-                    <div (click)="this.M_SoundVolume.lightData.breathing=true;" style="width: fit-content;margin-right: 15px;" class="">
-                        <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
-                            style="border: 1px solid;
-                                                                        width: auto;
-                                                                        height: 27px;
-                                                                        display: flex;
-                                                                        justify-content: center;
-                                                                        align-items: center;
-                                                                        padding-left: 5px;
-                                                                        padding-right: 5px;
-                                                                        border-radius: 3px;
-                                                                    " class="">Breathing</div>
-                        <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
-                            [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==true ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
-                        </div>
-                    </div>
-                    <div (click)="this.M_SoundVolume.lightData.breathing=false;" style="width: fit-content;" >
-                        <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==false ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
-                         style="border: 1px solid;
-                        width: auto;
-                        height: 27px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding-left: 5px;
-                        padding-right: 5px;
-                        border-radius: 3px;" class="">Solid Color</div>
-                        <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
-                            [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==false ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
+                            <div>{{ this.M_SoundVolume.bindTarget.percent }}%</div>
                         </div>
                     </div>
                 </div>
 
-                <div *ngIf="this.M_SoundVolume.lightData.clearStatus" id="ColorContent" class="list" style="font-family: MM, serif">
-                    color
-                    <div class="sub-list">
-                        <ng-color-box class="colorpicker" id="mouse-colorpicker" [(ngModel)]="colordata"
-                            (ngModelChange)="colorPickerChange($event)" [startHex]="startcolor"></ng-color-box>
-                        <div class="color-content">
-                            <div class="color-detail">
-                                <div class="color-title">
-                                    Red
-                                </div>
-                                <input maxlength="3" [(ngModel)]="this.PERKEY_lightData.colorPickerValue[0]" min="0" max="255"
-                                    (change)="setRGBcolor()"
-                                    onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
+                    <div [ngStyle]="{ visibility:(!getNowKeyBindClassUI('slider') && !getNowKeyBindClassUI('ROTARY ENCODER')) ? 'visible': 'hidden'}" id="Keybinding_BREATHING" class="list" style="margin-top: 40px;flex-direction: row;">
+                        <div class="sub-list" style="font-family: MB, serif; font-size: 15px; margin-top: 0px; letter-spacing: 2px;">
+                            GLOW WHEN ACTIVE
+                        </div>
+                        <label>
+                            <input type="checkbox" [(ngModel)]='this.M_SoundVolume.lightData.clearStatus'
+                                (ngModelChange)="soundVolume_BreathingChange()">
+                            <span></span>
+                        </label>
+                    </div>
+                    <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;">
+                        EFFECT
+                    </div>
+                    <div *ngIf="this.M_SoundVolume.lightData.clearStatus" class="list" style="width: fit-content;flex-direction: row;">
+                        <div (click)="this.M_SoundVolume.lightData.breathing=true;" style="width: fit-content;margin-right: 15px;"
+                            class="">
+                            <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==true ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                                style="border: 1px solid;
+                                                                                        width: auto;
+                                                                                        height: 27px;
+                                                                                        display: flex;
+                                                                                        justify-content: center;
+                                                                                        align-items: center;
+                                                                                        padding-left: 5px;
+                                                                                        padding-right: 5px;
+                                                                                        border-radius: 3px;
+                                                                                    " class="">Breathing</div>
+                            <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
+                                [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==true ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
                             </div>
-                            <div class="color-detail" style="margin-top: 20px">
-                                <div class="color-title">
-                                    Green
-                                </div>
-                                <input maxlength="3" [(ngModel)]="this.PERKEY_lightData.colorPickerValue[1]" min="0" max="255"
-                                    (change)="setRGBcolor()"
-                                    onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
-                            </div>
-                            <div class="color-detail" style="margin-top: 20px">
-                                <div class="color-title">
-                                    Blue
-                                </div>
-                                <input maxlength="3" [(ngModel)]="this.PERKEY_lightData.colorPickerValue[2]" min="0" max="255"
-                                    (change)="setRGBcolor()"
-                                    onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
+                        </div>
+                        <div (click)="this.M_SoundVolume.lightData.breathing=false;" style="width: fit-content;">
+                            <div [ngStyle]="{ 'border-color': this.M_SoundVolume.lightData.breathing==false ? 'rgb(253, 186, 59)' : 'rgb(49, 49, 49)'}"
+                                style="border: 1px solid;
+                                        width: auto;
+                                        height: 27px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        padding-left: 5px;
+                                        padding-right: 5px;
+                                        border-radius: 3px;" class="">Solid Color</div>
+                            <div style="border: 1px solid rgb(253, 186, 59);margin-top: 6px;"
+                                [ngStyle]="{ 'border': this.M_SoundVolume.lightData.breathing==false ? '1px solid rgb(253, 186, 59)' :'0px solid rgb(49, 49, 49)'}">
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    <div [ngStyle]="{display: this.M_SoundVolume.lightData.clearStatus ? 'block' : 'none'}" id="ColorContent"
+                        class="list" style="font-family: MM, serif">
+                        color
+                        <div class="sub-list">
+                            <ng-color-box class="colorpicker" id="mouse-colorpicker" [(ngModel)]="colordata"
+                                (ngModelChange)="colorPickerChange($event)" [startHex]="startcolor"></ng-color-box>
+                            <div class="color-content">
+                                <div class="color-detail">
+                                    <div class="color-title">
+                                        Red
+                                    </div>
+                                    <input maxlength="3" [(ngModel)]="this.M_SoundVolume.lightData.colorPickerValue[0]" min="0"
+                                        max="255" (change)="setRGBcolor()"
+                                        onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
+                                </div>
+                                <div class="color-detail" style="margin-top: 20px">
+                                    <div class="color-title">
+                                        Green
+                                    </div>
+                                    <input maxlength="3" [(ngModel)]="this.M_SoundVolume.lightData.colorPickerValue[1]" min="0"
+                                        max="255" (change)="setRGBcolor()"
+                                        onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
+                                </div>
+                                <div class="color-detail" style="margin-top: 20px">
+                                    <div class="color-title">
+                                        Blue
+                                    </div>
+                                    <input maxlength="3" [(ngModel)]="this.M_SoundVolume.lightData.colorPickerValue[2]" min="0"
+                                        max="255" (change)="setRGBcolor()"
+                                        onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+      
             </div>
             <div *ngIf="KeyAssignManager.recordBindCodeType == 'SENSITIVITY'">
 

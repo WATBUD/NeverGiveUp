@@ -173,7 +173,7 @@ export class KeyBoard {
     }
     lockSidelightsFlag=false;
     batteryLevelIndicator=false;
-    recordAssignBtnIndex: any = 0
+    recordAssignBtnIndex: any = 1;
     assignText: any = '設定按鍵:Y'
     maxKayCapNumber: any
     assignedKeyboardKeys: any = [[]] //61KEY
@@ -408,8 +408,10 @@ export class KeyBoard {
             sensitivity:0,
             d_SoundVolume: {
                 bindTarget: {
-                    bindProgramName: "",
-                    audioSouceValue: 40,
+                    filename: "default",
+                    filepath: "",
+                    percent: 0,
+                    processid: 12812,
                 },
                 lightData: {
                     speed: 50,

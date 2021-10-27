@@ -844,32 +844,107 @@ export class NumpadKeyboardComponent implements OnInit {
       console.error('SetGroupFunction error', e)
     }
   }
-  /**
-   * clcik Keyboard top bar
-   * @param flag 1:lighting 2:keybinding 3:performance
-   */
-  changeKeyboardTopbar(flag) {
-    this.lightingflag = false
-    this.keybindingflag = false
-    this.performanceflag = false
-    switch (flag) {
-      case 1:
-        this.lightingflag = !this.lightingflag;
-        break
-      case 2:
-        this.keybindingflag = !this.keybindingflag;
-        break
-      case 3:
-        this.performanceflag = !this.performanceflag;
-        break
-      default:
-        break
-    }
-    //this.Reinit()//from changeKeyboardTopbar
-    // this.reloadProfileData();//from changeKeyboardTopbar
-
-    this.keyboardrightTitleStatus()
+/**
+     * clcik Keyboard top bar
+     * @param flag 1:lighting 2:keybinding 3:performance
+     */
+    changeKeyboardTopbar(flag) {
+      switch (flag) {
+          case 1:
+              if(!this.lightingflag){
+                  this.keybindingflag = false;
+                  this.performanceflag = false;
+                  this.lightingflag = true;
+              }
+              else{
+                  this.keybindingflag = false;
+                  this.performanceflag = false;
+                  return;
+              }
+              break;
+          case 2:
+              if(!this.keybindingflag){
+                  this.keybindingflag = true;
+                  this.performanceflag = false;
+                  this.lightingflag = false;
+              }
+              else{
+                  return;
+              }
+              
+              break;
+          case 3:
+              if(!this.performanceflag)
+              {
+                  this.keybindingflag = false;
+                  this.performanceflag = true;
+                  this.lightingflag = false;
+                  
+              }
+              else{
+                  return;
+              }
+              break;
+          default:
+              break;
+      }
+      //this.Reinit()//from changeKeyboardTopbar
+      this.reloadProfileData();//from changeKeyboardTopbar
+      this.keyboardrightTitleStatus()
   }
+   /**
+     * process reloadProfileData Event
+    */
+   reloadProfileData() {
+    console.log('%c reloadProfileData', 'background: blue; color: red', this.lightingflag);
+    this.KeyBoardManager.notClickedYet = true;
+    var temp_Data = JSON.parse(JSON.stringify(this.KeyBoardManager.getTarget().light_PRESETS_Data));
+    var arr = Object.keys(temp_Data);
+    var Target = this.Built_ineffect.ListData.find((x) => x.translate == temp_Data.translate);
+    for (let index = 0; index < arr.length; index++) {
+        var field = arr[index];
+        if (Target[field] != undefined) {
+            Target[field] = temp_Data[field];
+        }
+    }
+    this.light_Keybinding_Show();
+    //this.M_Light_Keybinding.replaceAllBlockColor();
+
+    this.Built_ineffect.Built_inSelected = temp_Data;
+    console.log('%c reloadProfileData_this.Built_ineffect.Built_inSelected', 'background: blue; color: red', this.Built_ineffect.Built_inSelected);
+    this.process_LayoutData();
+    this.setRGBcolor();//by reloadProfileData
+    this.PerKeyArea="";
+    this.PerKeyAreaCick(this.PerKeyArea);//by reloadProfileData();
+    this.PRESETS_SelectedChange();//by reloadProfileData
+}
+light_Keybinding_Show(){
+  var target_k=this.KeyBoardManager.getTarget().getNowModeKeyMatrix();
+  for (let index = 0; index < target_k.length; index++) {
+      let field = target_k[index].d_SoundVolume.lightData;
+      if (field != undefined) {
+          this.M_Light_Keybinding.AllBlockColor[index].breathing=field.breathing;
+          this.M_Light_Keybinding.AllBlockColor[index].clearStatus=field.clearStatus;
+          if(field.clearStatus){
+              this.M_Light_Keybinding.AllBlockColor[index].color=field.colorPickerValue;
+          }
+          else{
+              this.M_Light_Keybinding.AllBlockColor[index].color=[0,0,0,0];
+          }
+      }
+  }
+}
+/**
+     * process process_LayoutData Event
+    */
+   process_LayoutData() {
+    if (this.LayoutManager.setCompareSelectValue(this.KeyBoardManager.getTarget().light_PERKEY_Data.value)) {
+        var target = this.LayoutManager.nowlayoutSelect.content;
+        console.log('%cprocess_LayoutData', 'background: blue; color: red', target);
+        this.PERKEY_lightData = JSON.parse(JSON.stringify(target.lightData));
+        this.M_Light_PERKEY.replaceAllBlockColor(target.AllBlockColor);
+    }
+}
   /**
  * Keyboard title status
  */

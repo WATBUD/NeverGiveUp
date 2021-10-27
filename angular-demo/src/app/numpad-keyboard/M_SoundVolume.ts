@@ -6,27 +6,13 @@
 export class M_SoundVolume {
     nowTargetIndex = 0;
     bindTarget = {
-        bindProgramName: "Discord",
-        audioSouceValue: 20,
-    };
+        filename: "default",
+        filepath: "",
+        percent: 0,
+        processid: 12812,
+    }
     showListflag = false;
     audioSouceList = [
-        {
-            bindProgramName: "Discord",
-            audioSouceValue: 20,
-        },
-        {
-            bindProgramName: "Spotify",
-            audioSouceValue: 40,
-        },
-        {
-            bindProgramName: "System Volume",
-            audioSouceValue: 60,
-        },
-        {
-            bindProgramName: "Chrome",
-            audioSouceValue: 80,
-        }
     ]
     lightData = this.default_lightData();
 
@@ -39,8 +25,10 @@ export class M_SoundVolume {
     }
     default_Data() {
         var T = {
-            bindProgramName: "Chrome",
-            audioSouceValue: 80,
+            filename: "Chrome",
+            filepath: "",
+            percent: 0,
+            processid: 12812,
         }
         return T;
     }
@@ -72,40 +60,57 @@ export class M_SoundVolume {
         return obj;
     }
 
+
+    setAudioSouceList(data){
+        // var audioSessionObj=[
+
+        // ];
+        // for (let index = 0; index < data; index++) {
+
+        //     const element = data[index];
+        //     audioSessionObj.push({
+        //         filename:element.filename,
+        //         percent:element.percent,
+        //     });
+        // }
+        this.audioSouceList=data;
+    }
+
+
     /**
         * process getBindTarget
        */
     getBindTarget() {
-        let targetData = this.audioSouceList.find((x) => x.bindProgramName == this.bindTarget.bindProgramName);
+        let targetData = this.audioSouceList.find((x) => x.filename == this.bindTarget.filename);
         if (targetData == undefined) {
-            //console.log('%c getTargetBindProgramName=lostcode', 'color:rgb(255,75,255,1)');
+            //console.log('%c getTargetFileName=lostcode', 'color:rgb(255,75,255,1)');
             return this.default_Data();
         }
         return targetData;
     }
     setBindTarget(obj) {
-        this.bindTarget.bindProgramName = obj.bindProgramName;
-        this.bindTarget.audioSouceValue = obj.audioSouceValue;
+        this.bindTarget.filename = obj.filename;
+        this.bindTarget.percent = obj.percent;
     }
     /**
      * process lightData_Background Event
     */
     lightData_Background() {
-        var value = this.bindTarget.audioSouceValue;
+        var value = this.bindTarget.percent;
         return '-webkit-linear-gradient(left ,#FDBA3B 0%,#FDBA3B ' + value + '%,#313131 ' + value + '%, #313131 100%)';
     }
 
     /**
-     * process getTargetBindProgramName
+     * process getTargetFileName
     */
-    getTargetBindProgramName() {
-        let targetData = this.audioSouceList.find((x) => x.bindProgramName == this.bindTarget.bindProgramName);
+    getTargetFileName() {
+        let targetData = this.audioSouceList.find((x) => x.filename == this.bindTarget.filename);
 
         if (targetData == undefined) {
-            //console.log('%c getTargetBindProgramName=lostcode', 'color:rgb(255,75,255,1)');
+            //console.log('%c getTargetFileName=lostcode', 'color:rgb(255,75,255,1)');
             return "No Source";
         }
-        return targetData.bindProgramName;
+        return targetData.filename;
     }
 
 }
