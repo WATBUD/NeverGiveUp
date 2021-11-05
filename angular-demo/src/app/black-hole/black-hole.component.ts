@@ -14,9 +14,7 @@ export class BlackHoleComponent implements OnInit {
       //const element = array[index];
       this.triArray.push(1);
     }
-
-
-   }
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './KeyBoard_RGBFolder/KeyBoard_RGB';
@@ -7,7 +6,12 @@ import { ColorPickerDemo1Component } from './ColorPickerUI/ColorPickerDemo1';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes  } from '@angular/router';
+
+
+//----------------httpImport--------------//
 import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule,HttpClient } from '@angular/common/http';
 import { EntryPageComponent } from './EntryPage';
 import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
@@ -17,6 +21,7 @@ import { NativeComponent } from './native/native.component';
 import { M_NumpadSelectModule } from './M_NumpadSelect/M_NumpadSelect.module';
 import { NgColorModule } from './ngcolor/color-picker.module';
 import { BlackHoleComponent } from './black-hole/black-hole.component';
+import { HTTPRequestComponent } from './httprequest/httprequest.component';
 // let routerModule = RouterModule.forRoot(routes);
 // routerModule = RouterModule.forRoot(routes, {useHash: true});
 const routes: Routes = [
@@ -34,6 +39,7 @@ const routes: Routes = [
   { path: 'numpad-keyboard', component: NumpadKeyboardComponent },
   { path: 'native', component: NativeComponent },
   { path: 'black-hole', component: BlackHoleComponent },
+  { path: 'httprequest', component: HTTPRequestComponent },
   
 ];
 @NgModule({
@@ -47,10 +53,12 @@ const routes: Routes = [
     NumpadKeyboardComponent,
     NativeComponent,
     BlackHoleComponent,
+    HTTPRequestComponent,
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(routes),

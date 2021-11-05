@@ -1,10 +1,27 @@
 I need to borrow NUM from you 我需要跟你借NUM
+
 I have something to look for you 我有事找你
-When we click the button, the area on the right 當我們點擊按鍵,右邊的區域
+
+When we click the button, the area on the right When we click the button, the area on the right will change
 
 When we reset to default, this area will remember the user settings and will not be cleared 當我們reset to default,這區域會記住使用者設定,不會清空
 
-We have other projects for you to see 我們有別的專案給你看看
+I have other projects to show you 我有別的專案給你看
+
+So we can see here 所以我們可以看到這邊
+
+My hearing is not good 我聽力不好
+
+I am sorry I did not say clearly
+
+Could you say that again   可以請你再說一次嗎？
+
+sorry, could you speak up please? 抱歉，可以請你大聲點嗎？
+
+I still didn’t get that. 我還是沒有聽懂
+
+I'm sorry,my English is not very good 很抱歉，我的英文不好
+
 
 
 
