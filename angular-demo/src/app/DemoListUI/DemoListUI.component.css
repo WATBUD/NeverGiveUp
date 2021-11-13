@@ -49,14 +49,17 @@ li{
     top:-16px;
 } */
 
-.btn-toggle:checked ~ ul{
+.btn-toggle ul{
+    /* display: none; */
+    width: 400px;
+    /* transition: all 6s linear; */
+}
+.btn-toggle:checked ul{
     display: block;
-    transition: all 3s linear;
+    width: 200px;
+    /* transition: all 6s linear; */
 }
-.btn-toggle ~ ul{
-    display: none;
-    transition: all 3s linear;
-}
+
 /* .btn-toggle::after{
     display: block;
     content: '';
@@ -76,7 +79,7 @@ li{
     align-items: center;
     justify-content: center;
     user-select: none;
-    transition: all 0.4s linear;
+    transition: all 4s linear;
 }
 .btn-toggle + .toggleBtn::after{
     display: block;
