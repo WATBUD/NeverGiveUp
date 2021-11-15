@@ -19,14 +19,6 @@ export class DemoListUIComponent implements OnInit {
   {
       URL:'./DemoUI/Excel/Convert Excel File To JSON.html',
       Name:'Convert Excel File To JSON',
-  },
-  {
-      URL:'./DemoUI/Input/KeyDownArrayGenerator.html',
-      Name:'KeyDownArrayGenerator',
-  },
-  {
-      URL:'./DemoUI/Input/GeneratorArrayText.html',
-      Name:'GeneratorArrayText',
   }];
 
 
