@@ -6,7 +6,7 @@
       {{item.path}} 
       </li> -->
 
-<div class="list-group">
+<div id="Keyboard Sample Demo" class="list-group">
   <input id="toggle" class="btn-toggle" type="checkbox" checked>
   <label class="toggleBtn" for="toggle">Keyboard Sample Demo</label>
   <ul>
@@ -14,7 +14,7 @@
     <li routerLink="/numpad-keyboard" routerLinkActive="active">numpad-keyboard</li>
   </ul>
 </div>
-<div class="list-group">
+<div id="Practice Example" class="list-group">
   <input id="toggle2" class="btn-toggle" type="checkbox" checked>
   <label class="toggleBtn" for="toggle2">Practice Example</label>
   <ul>
@@ -36,7 +36,7 @@
 
   </ul>
 </div>
-<div class="list-group">
+<div id="Homemade Tools" class="list-group">
   <input id="toggle3" class="btn-toggle" type="checkbox" checked>
   <label class="toggleBtn" for="toggle3">Homemade Tools</label>
   <ul>
@@ -46,6 +46,34 @@
     <li [routerLink]="['/native']" [queryParams]="{ page: 'GeneratorSlopeEquation' }">GeneratorSlopeEquation</li>
   </ul>
 </div>
+
+<div id="Animation Example" class="list-group">
+  <input id="toggle4" class="btn-toggle" type="checkbox" checked>
+  <label class="toggleBtn" for="toggle4">Animation Example</label>
+  <ul>
+    <li routerLink="/ScrollDemo1" routerLinkActive="active">ScrollDemo1</li>
+    <!-- <li routerLink="/TableDemo1" routerLinkActive="active">TableDemo1</li> -->
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'GetScrollEvent' }">GetScrollEvent</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'CompositionEvents' }">CompositionEvents</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'Shooting Star' }">Shooting Star</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'CircleRorateLoading' }">CircleRorateLoading</li>
+  
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'LoadingAnimation1' }">LoadingAnimation1</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'LoadingAnimation2' }">LoadingAnimation2</li>
+    <li routerLink="/black-hole" routerLinkActive="active">black-hole</li>
+    <li routerLink="/httprequest" routerLinkActive="active">httprequest</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'Progress_Bar_Rectangle' }">Progress_Bar_Rectangle</li>
+    <li [routerLink]="['/native']" [queryParams]="{ page: 'ButtonRippleEffect' }">ButtonRippleEffect</li>
+
+
+
+  </ul>
+</div>
+
+
+
+
+
 <!-- <button class="btn-toggle">
   Home
 </button> -->
