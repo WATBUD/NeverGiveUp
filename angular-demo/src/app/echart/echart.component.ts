@@ -36,6 +36,7 @@ export class EchartComponent implements OnInit {
 	}
 
 	draw(pointList): void {
+		//var pointList=pointList;
 		var chartDom = document.getElementById('main');
 		var myChart = echarts.init(chartDom);
 		var option;
@@ -81,7 +82,7 @@ export class EchartComponent implements OnInit {
 			},
 			series: [
 				{
-					id: 'a',
+					id: 'series_id',
 					data: pointList,
 					type: 'line',
 					symbol: 'circle',
@@ -177,80 +178,64 @@ export class EchartComponent implements OnInit {
 		}
 
 		function onPointDragging(dataIndex, event) {
-			pointList[dataIndex] = myChart.convertFromPixel('grid', this.position);
-			console.log('%c onPointDragging', 'background: blue; color: red', pointList,dataIndex, this.position)
-			console.log('%c pointList[dataIndex]', 'background: blue; color: red', pointList[dataIndex])
-
-			myChart.setOption({
-				series: [{
-					id: 'a',
-					data: pointList
-				}]
-			});
-		}
-
-		function onPointDragging2(dataIndex, dx, dy) {
-			if(dataIndex == 0 || dataIndex == 6)
+			var relativeCoordinates = myChart.convertFromPixel('grid', this.position);
+			relativeCoordinates=[Math.round(relativeCoordinates[0]),Math.round(relativeCoordinates[1])]
+			if(dataIndex==0||dataIndex==10){
+			updatePosition();
 				return;
-			let postObj = []
-			pointList.map(function (item, dataIndex) {
-				let position = myChart.convertToPixel('grid', item);
-				postObj.push(position)
-			});
-			pointList[dataIndex] = myChart.convertFromPixel('grid', this.position);
-			if(pointList[dataIndex][0] <= pointList[dataIndex - 1][0]) {
-				pointList[dataIndex][0] = pointList[dataIndex - 1][0] + 1;
-				this.position[0] =  myChart.convertToPixel('grid', pointList[dataIndex])[0];
 			}
-			else if(pointList[dataIndex][0] >= pointList[dataIndex + 1][0]) {
-				pointList[dataIndex][0] = pointList[dataIndex + 1][0] - 1;
-				this.position[0] =  myChart.convertToPixel('grid', pointList[dataIndex])[0];
+			if(relativeCoordinates[1]>99||relativeCoordinates[1]<0){
+			updatePosition();
+				return;
+			}
+			//pointList[dataIndex]=[2,2];
+			//pointList[dataIndex][0]=44;
+			var nowPoint=pointList[dataIndex];
+			var previousPoint=pointList[dataIndex-1];
+			if(relativeCoordinates[1]<=previousPoint[1]){
+				updatePosition();
+				return;
 			}
 
-			if(pointList[dataIndex][1] < 0) {
-				pointList[dataIndex][1] = 0
-				this.position[1] = postObj[0][1]
-			} else if(pointList[dataIndex][1] > 100) {
-				pointList[dataIndex][1] = 100
-				this.position[1] = postObj[6][1]
+
+
+
+			if(nowPoint[1]>previousPoint[1]){
+			pointList[dataIndex]=[nowPoint[0],relativeCoordinates[1]];
 			}
-			pointList[dataIndex] = myChart.convertFromPixel('grid', this.position);
+			//pointList[dataIndex]= myChart.convertFromPixel('grid', this.position);
+			//console.log('%c onPointDragging', 'background: blue; color: red',dataIndex, this.position)
+			//console.log('%c pointList[dataIndex]', 'background: blue; color: red', pointList[dataIndex],event)
+			for (let index = 0; index < pointList.length; index++) {
+				//pointList[index];
+				if(index>dataIndex){
+					var nextPoint=pointList[index];
+					if(nextPoint[1]<pointList[dataIndex][1]){
+						pointList[index]=[nextPoint[0],pointList[dataIndex][1]];
+					}
+				}
+				// if(index<dataIndex){
+				// 	var previousPoint=pointList[index];
+				// 	if(previousPoint[1]<pointList[dataIndex][1]){
+				// 		pointList[index]=[previousPoint[0],pointList[dataIndex][1]];
+				// 	}
+				// }
+			}
+
+			updatePosition();
+			console.log('%c pointList', 'background: blue; color: red', pointList,relativeCoordinates
+			)
+
 			myChart.setOption({
 				series: [{
-					id: 'a',
+					id: 'series_id',
 					data: pointList
 				}]
 			});
 		}
 
-		// function onPointDragging(dataIndex, dx, dy) {
-		// 	console.log(123455,dataIndex, dx, dy)
-		// 	data[dataIndex] = myChart.convertFromPixel('grid', this.position);
-		// 	myChart.setOption({
-		// 		series: [{
-		// 			id: 'a',
-		// 			data: data
-		// 		}]
-		// 	});
-		// }
 
-		// function onPointDragging(dataIndex, pos, item) {
-		// 	data[dataIndex] = myChart.convertFromPixel('grid', pos);
-		// 	console.log(123455,data[dataIndex - 1],pos,item)
-		// 	if(data[dataIndex][0] <= data[dataIndex - 1][0])
-		// 		data[dataIndex][0] = data[dataIndex - 1][0] + 2
-		// 	if(data[dataIndex][0] >= data[dataIndex + 1][0])
-		// 		data[dataIndex][0] = data[dataIndex + 1][0] - 2
-		// 	// Update data
-		// 	myChart.setOption({
-		// 		series: [
-		// 			{
-		// 				id: 'a',
-		// 				data: data
-		// 			}
-		// 		]
-		// 	});
-		// }
+
 		option && myChart.setOption(option);
 	}
 }
