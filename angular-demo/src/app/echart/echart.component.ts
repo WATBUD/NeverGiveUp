@@ -192,7 +192,7 @@ export class EchartComponent implements OnInit {
 			//pointList[dataIndex][0]=44;
 			var nowPoint=pointList[dataIndex];
 			var previousPoint=pointList[dataIndex-1];
-			if(relativeCoordinates[1]<=previousPoint[1]){
+			if(relativeCoordinates[1]<previousPoint[1]){
 				updatePosition();
 				return;
 			}
@@ -200,7 +200,7 @@ export class EchartComponent implements OnInit {
 
 
 
-			if(nowPoint[1]>previousPoint[1]){
+			if(nowPoint[1]>=previousPoint[1]){
 			pointList[dataIndex]=[nowPoint[0],relativeCoordinates[1]];
 			}
 			//pointList[dataIndex]= myChart.convertFromPixel('grid', this.position);
