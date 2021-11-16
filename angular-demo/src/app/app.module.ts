@@ -16,6 +16,7 @@ import { EntryPageComponent } from './EntryPage';
 import { ScrollDemo1Component } from './ScrollDemoFolder/ScrollDemo1';
 import { DemoListUIComponent } from './DemoListUI/DemoListUI.component';
 import { TableDemo1Component } from './TableDemoFolder/TableDemo1';
+import { EchartComponent } from './echart/echart.component';
 import { NumpadKeyboardComponent } from './numpad-keyboard/NumpadKeyboard';
 import { NativeComponent } from './native/native.component';
 import { M_NumpadSelectModule } from './M_NumpadSelect/M_NumpadSelect.module';
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'native', component: NativeComponent },
   { path: 'black-hole', component: BlackHoleComponent },
   { path: 'httprequest', component: HTTPRequestComponent },
+  { path: 'Line_Graph', component: EchartComponent },
   
 ];
 @NgModule({
@@ -54,6 +56,7 @@ const routes: Routes = [
     NativeComponent,
     BlackHoleComponent,
     HTTPRequestComponent,
+    EchartComponent,
   ],
   imports: [
     BrowserModule,
