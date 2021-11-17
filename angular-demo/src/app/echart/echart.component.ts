@@ -185,25 +185,18 @@ export class EchartComponent implements OnInit {
 				return;
 			}
 			if(relativeCoordinates[1]>99||relativeCoordinates[1]<0){
-			updatePosition();
+			updatePosition(); 
 				return;
 			}
-			//pointList[dataIndex]=[2,2];
-			//pointList[dataIndex][0]=44;
 			var nowPoint=pointList[dataIndex];
 			var previousPoint=pointList[dataIndex-1];
 			if(relativeCoordinates[1]<previousPoint[1]){
 				updatePosition();
 				return;
 			}
-
-
-
-
 			if(nowPoint[1]>=previousPoint[1]){
 			pointList[dataIndex]=[nowPoint[0],relativeCoordinates[1]];
 			}
-			//pointList[dataIndex]= myChart.convertFromPixel('grid', this.position);
 			//console.log('%c onPointDragging', 'background: blue; color: red',dataIndex, this.position)
 			//console.log('%c pointList[dataIndex]', 'background: blue; color: red', pointList[dataIndex],event)
 			for (let index = 0; index < pointList.length; index++) {
@@ -214,12 +207,6 @@ export class EchartComponent implements OnInit {
 						pointList[index]=[nextPoint[0],pointList[dataIndex][1]];
 					}
 				}
-				// if(index<dataIndex){
-				// 	var previousPoint=pointList[index];
-				// 	if(previousPoint[1]<pointList[dataIndex][1]){
-				// 		pointList[index]=[previousPoint[0],pointList[dataIndex][1]];
-				// 	}
-				// }
 			}
 
 			updatePosition();
@@ -233,9 +220,6 @@ export class EchartComponent implements OnInit {
 				}]
 			});
 		}
-
-
-
 		option && myChart.setOption(option);
 	}
 }
