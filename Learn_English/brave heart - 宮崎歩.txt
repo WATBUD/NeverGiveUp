@@ -4,8 +4,8 @@ Ni ge ta ri.    a  ki ra me ru ko to wa.         mo~
 一    瞬    あ れ ば で き る か  ら　    歩(a ru)き  続(tsu zu)け よう
 Is   shu n. a  re ba de ki ru ka ra.             ki.           ke you
 
-君(Ki mi)に  し か  で き な い   コ ト が あ る　 青(a o)い星(ho shi)に
-         ni shi ka. de ki na i~  ko to ga a ru.         i          ni
+君(Ki mi)に  し か  で き な い   コ ト が あ る　 青(a o)い 星(ho shi)に
+         ni shi ka. de ki na i~  ko to ga a ru.         i.          ni
 
 光(Hikari) が な く せ ぬ    よう に
            ge na ku se nu~  you  ni~~
@@ -13,24 +13,24 @@ Is   shu n. a  re ba de ki ru ka ra.             ki.           ke you
 つ  か め！ 描(e ga)い た 夢(yume)を
 Tsu ka me!          i ta         wo
 
-ま も れ！大事(da i ji)な 友(tomo)を
-Ma mo re!
-             na         wo
+ま も れ！大事(da i ji)な 友(to mo)を
+Ma mo re!             na          wo
+
 た く ま  し い  自 分   に  な れ る さ
 Ta ku ma shi i  ji bu n ni~ na re ru sa~~
 
-知  ら ない   パ ワ ー が 宿  る　  ハ ート  に  火 が つ  いた ら
-Shi ra nai~  pa wa a ga yado ru~  ha a to. ni hi ga tsu i ta ra
+知  ら ない   パ ワ ー が  宿  る　  ハ ート  に  火 が つ  いた ら
+Shi ra nai~  pa wa a ga ya do ru~  ha a to. ni hi ga tsu i ta ra
 
-どん な願(ne ga)いも　 噓 じ ゃ な い
-Don  na         i mo~ u  so ja na i
+どん な願(ne ga)いも　 噓(u so)じゃ な い
+Don  na         i mo~         ja na i
 
 き っと か  な う か ら…
 ki tto  ka na u  ka ra…
 
 show me your brave heart
 show me your brave heart~~
-
+//-----------------------2------------------------//
 晴 れ の 日   ば か り じゃ ない か ら　  た ま に
 Ha re no hi. ba ka ri  ja  nai ka ra~  ta ma ni~
 
@@ -43,8 +43,8 @@ I ki          ni~             na n~ ka na i ke do~ da ka ra ji yuu
 ど こ へ だ って 行 け る   君(ki mi)も
 Do ko e da.tte. yu ke ru.           mo~
 
-は し  れ！ 風   よ り  速(ha ya)く
-Ha shi re! kaze yo ri          ku
+は し  れ！ 風(ka ze)よ り   速(ha ya)く
+Ha shi re!          yo ri.          ku
 
 め ざ  せ！空(sora)よ り  遠(to o)く
 Me za se!         yo ri          ku
@@ -61,7 +61,7 @@ Ki tto ya. mu ka ra~~~~
 
 show me your brave heart
 show me your brave heart~
-
+//-----------------------3------------------------//
 つ   かめ！ 眩(ma bu)しい  明日(a su)を
 Tsu ka me!          shi            wo.
 
@@ -71,7 +71,7 @@ Ma mo re!        su ru           wo.
 た く ま  し い  自 分  に   な れ る さ
 Ta ku ma shi i  ji bun ni~ na re ru sa~~~~~
 
-こ わ せ！  弱(yo wa)気 な   君(kimi)を
+こ わ せ！  弱(yo wa)気 な   君(ki mi)を
 Ko wa se!.          ki na.          wo
 
 く ず せ！ ぶ つ  か る  壁(ka be)を
