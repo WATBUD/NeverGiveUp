@@ -2,21 +2,23 @@ I need to borrow NUM from you 我需要跟你借NUM
 
 I have something to look for you 我有事找你
 
-When we click the button, the area on the right When we click the button, the area on the right will change
 
-When we reset to default, this area will remember the user settings and will not be cleared 當我們reset to default,這區域會記住使用者設定,不會清空
+When we reset to default, this area will remember the user settings and will not be cleared 
+當我們reset to default,這區域會記住使用者設定,不會清空
+
 
 I have other projects to show you 我有別的專案給你看
+
+sorry, could you speak up please? 抱歉，可以請你大聲點嗎？
+
 
 So we can see here 所以我們可以看到這邊
 
 My hearing is not good 我聽力不好
 
-I am sorry I did not say clearly
+I am sorry I didn't say clearly 抱歉我没有说清楚
 
-Could you say that again   可以請你再說一次嗎？
-
-sorry, could you speak up please? 抱歉，可以請你大聲點嗎？
+Could you say that again?   可以請你再說一次嗎？
 
 I still didn’t get that. 我還是沒有聽懂
 
@@ -24,8 +26,23 @@ I'm sorry,my English is not very good 很抱歉，我的英文不好
 
 Leave it to me and we will check it 交給我 我們會檢查看看
 
+Can you speak slower? 你可以說慢一點嗎?
+
+var pos={
+first :第一
+second :第二
+third :第三
+}
+The {{pos}} question is the last question 第{{pos}}個問題，是上次的問題
+
+1.When we import more than 10 projects, the program will crash.
 
 
+2-1.If we do not modify the macro name, the macro delay is invalid.
+
+2-2.We must modify the macro name, the macro can be delayed
+
+1.Let me give you an example, let's look at it as a horizontal line
 
 
 
