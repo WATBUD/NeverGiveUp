@@ -34,8 +34,8 @@ show me your brave heart~~
 晴 れ の 日   ば か り じゃ ない か ら　  た ま に
 Ha re no hi. ba ka ri  ja  nai ka ra~  ta ma ni~
 
-冷(Tsu ma)た い   雨(a~ me)も  振 る け れ ど　 傘(ka sa). ひ ろ  げ よう
-          ta i.            mo fu ru ke re do.            hi ro ge  you
+冷(Tsu ma)た い   雨(a~ me)も  振 る け れ ど　 傘(ka sa). ひ ろ  げ よ う
+          ta i.            mo fu ru ke re do.            hi ro ge  yo u
 
 生き 方(ka ta)に   地図(chi zu)な ん か な い け ど　だ  から  自 由
 I ki          ni~             na n~ ka na i ke do~ da ka ra ji yuu
@@ -46,7 +46,7 @@ Do ko e da.tte. yu ke ru.           mo~
 は し  れ！ 風(ka ze)よ り   速(ha ya)く
 Ha shi re!          yo ri.          ku
 
-め ざ  せ！空(sora)よ り  遠(to o)く
+め ざ  せ！空(so ra)よ り  遠(to o)く
 Me za se!         yo ri          ku
 
 新(A ta ra)~ し い  自 分  に    逢 え る  さ
