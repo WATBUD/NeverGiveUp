@@ -28,6 +28,13 @@ Leave it to me and we will check it 交給我 我們會檢查看看
 
 Can you speak slower? 你可以說慢一點嗎?
 
+So as long as I finish this now, there will be no other problems?所以我現在只要修完這個 就沒有其他問題了?
+
+ignore me,I'm just looking.不要理我,我只是看看
+
+
+He will show the picture to highlight the error on the log
+
 var pos={
 first :第一
 second :第二
