@@ -33,6 +33,10 @@ So as long as I finish this now, there will be no other problems?所以我現在
 ignore me,I'm just looking.不要理我,我只是看看
 
 
+Every time I quarrel with you, you are so beautiful, I can't bear to interrupt 每次跟你吵架,你美的不可方物,我不忍打斷
+
+
+
 He will show the picture to highlight the error on the log
 
 var pos={
